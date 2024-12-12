@@ -1,6 +1,6 @@
 [project]
 name = "python-terminusgps"
-version = "1.0.1"
+version = "1.0.2"
 description = "Provides abstractions/utilities for working with Wialon and Authorize.NET APIs."
 readme = "README.md"
 authors = [ {name = "Blake Nall", email = "blake@terminusgps.com" } ]
