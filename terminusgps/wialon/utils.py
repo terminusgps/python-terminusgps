@@ -13,10 +13,12 @@ def is_unique(value: str, session: WialonSession, items_type: str = "avl_unit") 
     return not bool(result)
 
 
-def gen_wialon_password(length: int = 32) -> str:
+def gen_wialon_password(length: int = 16) -> str:
     """Generates a Wialon compliant password."""
     if length > 64:
         raise ValueError(f"Passwords cannot be greater than 64 chars. Got '{length}'.")
+    if length < 4:
+        raise ValueError(f"Password cannot be less than 4 chars. Got '{length}'.")
 
     symbols: str = "!@#$%^*()[]-_+"
     alphabet: str = string.ascii_letters + string.digits + symbols
