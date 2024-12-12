@@ -1,3 +1,5 @@
+from typing import Any
+
 import terminusgps.wialon.flags as flags
 from terminusgps.wialon.session import WialonSession
 
@@ -108,3 +110,10 @@ class WialonBase:
 
     def delete(self) -> None:
         self.session.wialon_api.item_delete_item(**{"itemId": self.id})
+
+    @property
+    def cfields(self) -> dict[str, Any]:
+        response = self.session.wialon_api.core_search_item(
+            **{"id": self.id, "flags": flags.DATAFLAG_UNIT_CUSTOM_FIELDS}
+        )
+        return response.get("item", {}).get("flds")
