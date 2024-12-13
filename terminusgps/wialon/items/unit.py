@@ -1,4 +1,5 @@
 from urllib.parse import quote_plus
+
 from terminusgps.wialon import flags
 from terminusgps.wialon.items.base import WialonBase, repopulate
 
@@ -78,3 +79,12 @@ class WialonUnit(WialonBase):
         self.session.wialon_api.unit_update_phone(
             **{"itemId": self.id, "phoneNumber": quote_plus(phone)}
         )
+
+    def get_phone_numbers(self) -> list[str]:
+        phones = []
+        if self.phone:
+            phones.append(self.phone)
+        for field in self.cfields | self.afields:
+            if field["n"] == "to_number":
+                phones.append(field["v"])
+        return phones

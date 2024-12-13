@@ -47,9 +47,7 @@ class WialonUser(WialonBase):
     def has_access(self, other_item: WialonBase) -> bool:
         response = self._get_access_response(hw_type=other_item.hw_type)
         items = [key for key in response.keys()]
-        if str(other_item.id) in items:
-            return True
-        return False
+        return True if str(other_item.id) in items else False
 
     def assign_phone(self, phone: str) -> None:
         self.add_cproperty(("phone", quote_plus(phone)))

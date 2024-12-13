@@ -2,15 +2,7 @@ from typing import Any
 
 import terminusgps.wialon.flags as flags
 from terminusgps.wialon.session import WialonSession
-
-
-def repopulate(func):
-    def wrapper(self: WialonBase, *args, **kwargs):
-        result = func(self, *args, **kwargs)
-        self.populate()
-        return result
-
-    return wrapper
+from terminusgps.wialon.utils import repopulate
 
 
 class WialonBase:
@@ -118,9 +110,24 @@ class WialonBase:
     def delete(self) -> None:
         self.session.wialon_api.item_delete_item(**{"itemId": self.id})
 
-    @property
-    def cfields(self) -> dict[str, Any]:
+    def _get_cfields(self) -> dict:
         response = self.session.wialon_api.core_search_item(
             **{"id": self.id, "flags": flags.DATAFLAG_UNIT_CUSTOM_FIELDS}
         )
-        return response.get("item", {}).get("flds")
+        return response["item"]["flds"]
+
+    def _get_afields(self) -> dict:
+        response = self.session.wialon_api.core_search_item(
+            **{"id": self.id, "flags": flags.DATAFLAG_UNIT_ADMIN_FIELDS}
+        )
+        return response["item"]["aflds"]
+
+    @property
+    def cfields(self) -> dict:
+        fields = self._get_cfields()
+        return {field["n"]: field["v"] for _, field in fields.items()}
+
+    @property
+    def afields(self) -> dict:
+        fields = self._get_afields()
+        return {field["n"]: field["v"] for _, field in fields.items()}

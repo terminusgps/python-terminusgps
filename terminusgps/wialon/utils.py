@@ -5,6 +5,15 @@ from .session import WialonSession
 from .flags import DATAFLAG_UNIT_BASE
 
 
+def repopulate(func):
+    def wrapper(self, *args, **kwargs):
+        result = func(self, *args, **kwargs)
+        self.populate()
+        return result
+
+    return wrapper
+
+
 def is_unique(value: str, session: WialonSession, items_type: str = "avl_unit") -> bool:
     """Determines if the value is unique among Wialon objects of type 'items_type'."""
     result = session.wialon_api.core_check_unique(
