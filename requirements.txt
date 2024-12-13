@@ -2,6 +2,8 @@
 #    uv pip compile pyproject.toml -o requirements.txt
 argparse==1.4.0
     # via python-terminusgps (pyproject.toml)
+asgiref==3.8.1
+    # via django
 authorizenet==1.1.5
     # via python-terminusgps (pyproject.toml)
 boto3==1.35.80
@@ -14,6 +16,8 @@ certifi==2024.8.30
     # via requests
 charset-normalizer==3.4.0
     # via requests
+django==5.1.4
+    # via python-terminusgps (pyproject.toml)
 future==1.0.0
     # via python-wialon
 idna==3.10
@@ -38,6 +42,8 @@ simplejson==3.19.3
     # via python-wialon
 six==1.17.0
     # via python-dateutil
+sqlparse==0.5.3
+    # via django
 urllib3==2.2.3
     # via
     #   botocore

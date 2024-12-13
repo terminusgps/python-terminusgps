@@ -16,6 +16,7 @@ dependencies = [
     "argparse>=1.4.0",
     "authorizenet>=1.1.5",
     "boto3>=1.35.80",
+    "django>=5.1.4",
     "python-wialon>=1.2.4",
 ]
 
