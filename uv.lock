@@ -176,7 +176,7 @@ wheels = [
 
 [[package]]
 name = "python-terminusgps"
-version = "1.1.0"
+version = "1.1.1"
 source = { editable = "." }
 dependencies = [
     { name = "argparse" },
@@ -190,7 +190,7 @@ dependencies = [
 requires-dist = [
     { name = "argparse", specifier = ">=1.4.0" },
     { name = "authorizenet", specifier = ">=1.1.5" },
-    { name = "boto3", specifier = ">=1.35.80" },
+    { name = "boto3", specifier = ">=1.34.144" },
     { name = "django", specifier = ">=5.1.4" },
     { name = "python-wialon", specifier = ">=1.2.4" },
 ]
