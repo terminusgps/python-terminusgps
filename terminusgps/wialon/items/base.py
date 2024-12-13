@@ -4,7 +4,17 @@ import terminusgps.wialon.flags as flags
 from terminusgps.wialon.session import WialonSession
 
 
+def repopulate(func):
+    def wrapper(self: WialonBase, *args, **kwargs):
+        result = func(self, *args, **kwargs)
+        self.populate()
+        return result
+
+    return wrapper
+
+
 class WialonBase:
+    @repopulate
     def __init__(
         self, *, id: str | None = None, session: WialonSession, **kwargs
     ) -> None:
@@ -14,7 +24,6 @@ class WialonBase:
             self._id = self.create(**kwargs)
         else:
             self._id = id
-        self.populate()
 
     def __str__(self) -> str:
         return f"{self.__class__}:{self.id}"
@@ -31,9 +40,7 @@ class WialonBase:
         response = self.session.wialon_api.core_check_accessors(
             **{"items": [other_item.id], "flags": False}
         )
-        if self.id in response.keys():
-            return True
-        return False
+        return True if self.id in response.keys() else False
 
     def create(self) -> int | None:
         """Creates a Wialon object and returns the newly created Wialon object's id."""
@@ -48,11 +55,11 @@ class WialonBase:
         self.name = item.get("nm", None)
         self.uid = item.get("uid", None)
 
+    @repopulate
     def rename(self, new_name: str) -> None:
         self.session.wialon_api.item_update_name(
             **{"itemId": self.id, "name": new_name}
         )
-        self.populate()
 
     def add_afield(self, field: tuple[str, str]) -> None:
         self.session.wialon_api.item_update_admin_field(
