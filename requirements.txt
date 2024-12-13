@@ -4,6 +4,12 @@ argparse==1.4.0
     # via python-terminusgps (pyproject.toml)
 authorizenet==1.1.5
     # via python-terminusgps (pyproject.toml)
+boto3==1.35.80
+    # via python-terminusgps (pyproject.toml)
+botocore==1.35.80
+    # via
+    #   boto3
+    #   s3transfer
 certifi==2024.8.30
     # via requests
 charset-normalizer==3.4.0
@@ -12,15 +18,27 @@ future==1.0.0
     # via python-wialon
 idna==3.10
     # via requests
+jmespath==1.0.1
+    # via
+    #   boto3
+    #   botocore
 lxml==4.9.4
     # via authorizenet
+python-dateutil==2.9.0.post0
+    # via botocore
 python-wialon==1.2.4
     # via python-terminusgps (pyproject.toml)
 pyxb-x==1.2.6.2
     # via authorizenet
 requests==2.32.3
     # via authorizenet
+s3transfer==0.10.4
+    # via boto3
 simplejson==3.19.3
     # via python-wialon
+six==1.17.0
+    # via python-dateutil
 urllib3==2.2.3
-    # via requests
+    # via
+    #   botocore
+    #   requests

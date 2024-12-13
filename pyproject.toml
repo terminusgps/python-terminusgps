@@ -1,7 +1,7 @@
 [project]
 name = "python-terminusgps"
-version = "1.0.2"
-description = "Provides abstractions/utilities for working with Wialon and Authorize.NET APIs."
+version = "1.1.0"
+description = "Provides abstractions/utilities for working with Wialon API, Authorize.NET API, AWS API, and more."
 readme = "README.md"
 authors = [ {name = "Blake Nall", email = "blake@terminusgps.com" } ]
 classifiers = [
@@ -15,6 +15,7 @@ requires-python = ">=3.12"
 dependencies = [
     "argparse>=1.4.0",
     "authorizenet>=1.1.5",
+    "boto3>=1.35.80",
     "python-wialon>=1.2.4",
 ]
 
