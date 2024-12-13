@@ -1,6 +1,8 @@
 import os
+
 from wialon.api import Wialon, WialonError
-from terminusgps.wialon.errors import WialonLogoutError, WialonLoginError
+
+from .errors import WialonLogoutError, WialonLoginError
 
 
 class WialonSession:

@@ -1,8 +1,8 @@
 import secrets
 import string
-import flags
 
 from .session import WialonSession
+from .flags import DATAFLAG_UNIT_BASE
 
 
 def is_unique(value: str, session: WialonSession, items_type: str = "avl_unit") -> bool:
@@ -45,7 +45,7 @@ def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
                 "or_logic": 0,
             },
             "force": 0,
-            "flags": flags.DATAFLAG_UNIT_BASE,
+            "flags": DATAFLAG_UNIT_BASE,
             "from": 0,
             "to": 0,
         }
