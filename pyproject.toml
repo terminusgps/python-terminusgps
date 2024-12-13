@@ -20,6 +20,10 @@ dependencies = [
     "python-wialon>=1.2.4",
 ]
 
+[project.urls]
+Documentation = "https://app.terminusgps.com/docs/apps/python-terminusgps"
+Repository = "https://github.com/terminusgps/python-terminusgps"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
