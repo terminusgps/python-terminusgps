@@ -28,9 +28,9 @@ class WialonBase:
     def id(self) -> int | None:
         return int(self._id) if self._id else None
 
-    def has_access(self, other_item: "WialonBase") -> bool:
+    def has_access(self, other: "WialonBase") -> bool:
         response = self.session.wialon_api.core_check_accessors(
-            **{"items": [other_item.id], "flags": False}
+            **{"items": [other.id], "flags": False}
         )
         return True if self.id in response.keys() else False
 

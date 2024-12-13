@@ -44,21 +44,22 @@ class WialonUser(WialonBase):
         response = self._get_access_response(hw_type="avl_unit_group")
         return [key for key in response.keys()]
 
-    def has_access(self, other_item: WialonBase) -> bool:
-        response = self._get_access_response(hw_type=other_item.hw_type)
-        items = [key for key in response.keys()]
-        return True if str(other_item.id) in items else False
+    def has_access(self, other: WialonBase) -> bool:
+        response: dict = self._get_access_response(hw_type=other.hw_type)
+        items: list[str] = [key for key in response.keys()]
+        return True if str(other.id) in items else False
 
     def assign_phone(self, phone: str) -> None:
         self.add_cproperty(("phone", quote_plus(phone)))
 
     def assign_email(self, email: str) -> None:
+        """Assigns an email address to the Wialon user."""
         self.add_cproperty(("email", email))
 
-    def assign_item(
+    def grant_access(
         self, item: WialonBase, access_mask: int = constants.ACCESSMASK_UNIT_BASIC
     ) -> None:
-        """Assigns an item to this user according to the supplied access mask integer."""
+        """Grants item access to the Wialon user according to the access mask integer."""
         self.session.wialon_api.user_update_item_access(
             **{"userId": self.id, "itemId": item.id, "accessMask": access_mask}
         )
