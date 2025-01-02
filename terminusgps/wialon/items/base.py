@@ -1,5 +1,3 @@
-from typing import Any
-
 import terminusgps.wialon.flags as flags
 from terminusgps.wialon.session import WialonSession
 from terminusgps.wialon.utils import repopulate

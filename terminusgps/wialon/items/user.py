@@ -7,8 +7,8 @@ from terminusgps.wialon import constants
 
 class WialonUser(WialonBase):
     def create(self, **kwargs) -> int | None:
-        if not kwargs.get("owner_id"):
-            raise ValueError("'owner_id' is required on creation.")
+        if not kwargs.get("creator_id"):
+            raise ValueError("'creator_id' is required on creation.")
         if not kwargs.get("name"):
             raise ValueError("'name' is required on creation.")
         if not kwargs.get("password"):
@@ -16,7 +16,7 @@ class WialonUser(WialonBase):
 
         response = self.session.wialon_api.core_create_user(
             **{
-                "creatorId": kwargs["owner_id"],
+                "creatorId": kwargs["creator_id"],
                 "name": kwargs["name"],
                 "password": kwargs["password"],
                 "dataFlags": flags.DATAFLAG_UNIT_BASE,
