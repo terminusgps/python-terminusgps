@@ -4,7 +4,6 @@ from terminusgps.wialon.utils import repopulate
 
 
 class WialonBase:
-    @repopulate
     def __init__(
         self, *, id: str | None = None, session: WialonSession, **kwargs
     ) -> None:

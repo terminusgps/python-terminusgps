@@ -24,7 +24,6 @@ class WialonUnit(WialonBase):
         return response.get("item", {}).get("id")
 
     def populate(self) -> None:
-        super().populate()
         unit_data = self.session.wialon_api.core_search_item(
             **{"id": self.id, "flags": flags.DATAFLAG_UNIT_ADVANCED_PROPERTIES}
         )
