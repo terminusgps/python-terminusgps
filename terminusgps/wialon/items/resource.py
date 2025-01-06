@@ -16,7 +16,7 @@ class WialonResource(WialonBase):
                 "creatorId": kwargs["creator_id"],
                 "name": kwargs["name"],
                 "dataFlags": kwargs["flags"],
-                "skipCreatorCheck": True,
+                "skipCreatorCheck": int(True),
             }
         )
         return response.get("item", {}).get("id")
