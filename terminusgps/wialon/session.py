@@ -1,12 +1,15 @@
-import os
-
 from wialon.api import Wialon, WialonError
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 
 from .errors import WialonLogoutError, WialonLoginError
 
 
 class WialonSession:
     def __init__(self, token: str | None = None, sid: str | None = None) -> None:
+        if not hasattr(settings, "WIALON_TOKEN"):
+            raise ImproperlyConfigured("'WIALON_TOKEN' setting is required.")
+
         self.token = token
         self.wialon_api = Wialon(
             scheme="https", host="hst-api.wialon.com", port=443, sid=sid
@@ -22,10 +25,11 @@ class WialonSession:
 
     @token.setter
     def token(self, value: str | None = None) -> None:
-        self._token = value if value else os.getenv("WIALON_TOKEN")
+        self._token = value if value else settings.WIALON_TOKEN
 
     def __enter__(self) -> "WialonSession":
-        self.login(self.token)
+        if not self.wialon_api.sid:
+            self.login(self.token)
         return self
 
     def __exit__(self, exc_type, exc_value, exc_tb) -> None:
