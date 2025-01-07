@@ -149,4 +149,9 @@ class WialonUnitGroup(WialonBase):
                 "to": 0,
             }
         )
-        return [str(unit_id) for unit_id in response.get("items")[0].get("u", [])]
+        items = [
+            unit_id
+            for unit_id in response.get("items")[0].get("u", [])
+            if response.get("items")
+        ]
+        return items
