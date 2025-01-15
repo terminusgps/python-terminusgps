@@ -17,6 +17,16 @@ class WialonLoginError(WialonBaseError):
         super().__init__(message, wialon_err)
 
 
+class WialonSessionDuplicationError(WialonBaseError):
+    def __init__(
+        self, session_id: str | None, wialon_err: WialonError | None = None
+    ) -> None:
+        message = f"Failed to duplicate the Wialon session: '#{session_id}'\n"
+        if wialon_err:
+            message += str(wialon_err)
+        super().__init__(message, wialon_err)
+
+
 class WialonLogoutError(WialonBaseError):
     def __init__(self, session_id: str, wialon_err: WialonError | None = None) -> None:
         message = f"Failed to logout of the Wialon API session: '{session_id}'\n"

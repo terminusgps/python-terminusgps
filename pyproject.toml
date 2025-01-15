@@ -1,6 +1,6 @@
 [project]
 name = "python-terminusgps"
-version = "1.5.3"
+version = "1.5.4"
 description = "Provides abstractions/utilities for working with Wialon API, Authorize.NET API, AWS API, and more."
 readme = "README.md"
 authors = [ {name = "Blake Nall", email = "blake@terminusgps.com" } ]
@@ -64,3 +64,9 @@ indent-style = "space"
 line-ending = "auto"
 docstring-code-format = false
 skip-magic-trailing-comma = true
+
+[dependency-groups]
+dev = [
+    "sphinx-rtd-theme>=3.0.2",
+    "sphinx>=8.1.3",
+]
