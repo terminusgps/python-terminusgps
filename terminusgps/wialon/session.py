@@ -1,5 +1,4 @@
 from wialon.api import Wialon, WialonError
-from pprint import pprint
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
@@ -243,7 +242,6 @@ class WialonSession:
         assert not self.active, "Cannot login to an active session."
         try:
             response = self.wialon_api.token_login(**{"token": token, "fl": flags})
-            pprint(response)
         except WialonError as e:
             raise WialonLoginError(token, e)
         else:
