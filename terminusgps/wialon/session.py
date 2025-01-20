@@ -2,7 +2,12 @@ from wialon.api import Wialon, WialonError
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
-from .errors import WialonLogoutError, WialonLoginError, WialonSessionDuplicationError
+from .errors import (
+    WialonLogoutError,
+    WialonLoginError,
+    WialonSessionDuplicationError,
+    WialonSessionInvalidError,
+)
 
 
 class WialonSession:
@@ -32,7 +37,6 @@ class WialonSession:
             raise ImproperlyConfigured("'WIALON_ADMIN_ID' setting is required.")
 
         self.wialon_api = Wialon(scheme=scheme, host=host, port=port, sid=sid)
-        self.active = bool(sid)
         self.token = token
         self._username = None
         self._gis_sid = None
@@ -47,6 +51,24 @@ class WialonSession:
 
     def __exit__(self, *args, **kwargs) -> None:
         self.logout()
+
+    @property
+    def active(self) -> bool:
+        """
+        Whether or not the Wialon session is currently active.
+
+        :type: :py:obj:`bool`
+        :value: :py:obj:`False`
+        """
+        is_active = False
+
+        try:
+            response = self.wialon_api.core_duplicate(**{"restore": 1})
+            is_active = bool(response)
+        except WialonError as e:
+            raise WialonSessionInvalidError(self.id, e)
+        finally:
+            return is_active
 
     @property
     def gis_geocode(self) -> str | None:
@@ -198,32 +220,31 @@ class WialonSession:
     def token(self, value: str | None = None) -> None:
         self._token = value if value else settings.WIALON_TOKEN
 
-    def duplicate(
-        self, user_id: str | None = None, continue_session: bool = False
-    ) -> None:
+    def duplicate(self, username: str | None = None, continued: bool = False) -> str:
         """
         Duplicates the active Wialon API session.
 
-        :param user_id: A Wialon user to operate as in the session.
-        :type user_id: :py:obj:`str` | :py:obj:`None`
+        :param username: A Wialon user to operate as in the session.
+        :type username: :py:obj:`str` | :py:obj:`None`
         :param continue_session: Whether or not the original session id should be valid after duplication.
         :type continue_session: :py:obj:`bool`
         :raises WialonSessionDuplicationError: If the Wialon session was not duplicated.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
+        :raises AssertionError: If the session was already active.
+        :returns: The new session id.
+        :rtype: :py:obj:`str`
 
         """
         try:
-            login_response = self.wialon_api.core_duplicate(
-                **{"operateAs": user_id, "continueCurrentSession": continue_session}
+            assert self.active, "Cannot duplicate an inactive session."
+            response = self.wialon_api.core_duplicate(
+                **{"operateAs": username, "continueCurrentSession": continued}
             )
-        except WialonError as e:
+            self._set_login_response(response)
+            return response.get("eid")
+        except (WialonError, AssertionError) as e:
             raise WialonSessionDuplicationError(self.id, e)
-        else:
-            self._set_login_response(login_response)
-            self.active = True
 
-    def login(self, token: str, flags: int = sum([0x1, 0x2, 0x20])) -> None:
+    def login(self, token: str, flags: int = sum([0x1, 0x2, 0x20])) -> str:
         """
         Logs into the Wialon API and starts a new session.
 
@@ -235,18 +256,17 @@ class WialonSession:
         :type flags: :py:obj:`int`
         :raises WialonLoginError: If the login fails.
         :raises AssertionError: If the session was already active.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
+        :returns: The new session id.
+        :rtype: :py:obj:`str`
 
         """
-        assert not self.active, "Cannot login to an active session."
         try:
+            assert not self.active, "Cannot login to an active session."
             response = self.wialon_api.token_login(**{"token": token, "fl": flags})
-        except WialonError as e:
-            raise WialonLoginError(token, e)
-        else:
             self._set_login_response(response)
-            self.active = True
+            return response.get("eid")
+        except (WialonError, AssertionError) as e:
+            raise WialonLoginError(token, e)
 
     def logout(self) -> None:
         """
@@ -265,7 +285,7 @@ class WialonSession:
         """
         Sets the Wialon API session's attributes based on a login response.
 
-        :param login_response: A Wialon API response to :py:meth:`login`.
+        :param login_response: A response returned from :py:meth:`login` or :py:meth:`duplicate`.
         :type login_response: :py:obj:`dict`
         :returns: Nothing.
         :rtype: :py:obj:`None`
@@ -289,8 +309,8 @@ class WialonSession:
 
 def main() -> None:
     session = WialonSession()
-    session.login(settings.WIALON_TOKEN)
-    session.duplicate(user_id="28944309")
+    session.login(token=settings.WIALON_TOKEN)
+    session.duplicate(username="chrissyron@gmail.com", continued=False)
     session.logout()
     return
 
