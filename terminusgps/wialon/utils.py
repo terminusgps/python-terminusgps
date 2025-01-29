@@ -50,7 +50,6 @@ def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
             "to": 0,
         }
     )
-    print(f"{response = }")
     if response.get("totalItemsCount", 0) != 1:
         return None
     return response["items"][0].get("id")
