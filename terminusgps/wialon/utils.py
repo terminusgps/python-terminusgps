@@ -38,10 +38,10 @@ def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
         **{
             "spec": {
                 "itemsType": "avl_unit",
-                "propName": "sys_unique_id",
-                "propValueMask": f"={iccid}",
-                "sortType": "sys_unique_id",
-                "propType": "property",
+                "propName": "rel_admin_field_value",
+                "propValueMask": str(iccid),
+                "sortType": "admin_fields",
+                "propType": "adminfield",
                 "or_logic": 0,
             },
             "force": 0,
@@ -50,6 +50,18 @@ def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
             "to": 0,
         }
     )
+    print(f"{response = }")
     if response.get("totalItemsCount", 0) != 1:
         return None
     return response["items"][0].get("id")
+
+
+def main() -> None:
+    with WialonSession() as session:
+        wialon_id = get_id_from_iccid("89015809000307608963", session)
+        print(f"{wialon_id = }")
+    return
+
+
+if __name__ == "__main__":
+    main()
