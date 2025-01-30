@@ -1,8 +1,32 @@
 import secrets
 import string
 
+from typing import Any
 from .session import WialonSession
 from .flags import DATAFLAG_UNIT_BASE
+
+from terminusgps.wialon.items import (
+    WialonUser,
+    WialonUnit,
+    WialonUnitGroup,
+    WialonResource,
+)
+
+
+def get_wialon_cls(items_type: str) -> Any:
+    """Returns a Wialon object class based on items_type."""
+    match items_type:
+        case "user":
+            wialon_cls = WialonUser
+        case "avl_unit":
+            wialon_cls = WialonUnit
+        case "avl_unit_group":
+            wialon_cls = WialonUnitGroup
+        case "avl_resource":
+            wialon_cls = WialonResource
+        case _:
+            raise ValueError(f"Invalid items_type '{items_type}'")
+    return wialon_cls
 
 
 def is_unique(value: str, session: WialonSession, items_type: str = "avl_unit") -> bool:
@@ -50,9 +74,9 @@ def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
             "to": 0,
         }
     )
-    if response.get("totalItemsCount", 0) != 1:
-        return None
-    return response["items"][0].get("id")
+
+    if response.get("totalItemsCount", 0) == 1:
+        return response["items"][0].get("id")
 
 
 def main() -> None:
