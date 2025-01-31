@@ -12,6 +12,7 @@ class WialonBase:
             self._id = self.create(**kwargs)
         else:
             self._id = id
+        self.populate()
 
     def __str__(self) -> str:
         return str(self.id)

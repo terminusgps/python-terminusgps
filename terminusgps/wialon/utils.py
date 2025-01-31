@@ -13,6 +13,19 @@ from terminusgps.wialon.items import (
 )
 
 
+def get_hw_type_id(name: str, session: WialonSession) -> int | None:
+    response = session.wialon_api.core_get_hw_types(
+        **{
+            "filterType": "id",
+            "filterValue": "name,id",
+            "includeType": "true",
+            "ignoreRename": "true",
+        }
+    )
+    hw_types = {item.get("name"): item.get("id") for item in response}
+    return int(hw_types.get(name)) if name in hw_types.keys() else None
+
+
 def get_wialon_cls(items_type: str) -> Any:
     """Returns a Wialon object class based on items_type."""
     match items_type:

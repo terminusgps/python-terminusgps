@@ -1,3 +1,5 @@
+import threading
+
 from wialon.api import Wialon, WialonError
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
@@ -15,6 +17,7 @@ class WialonSession:
         self,
         token: str | None = None,
         sid: str | None = None,
+        uid: str | None = None,
         scheme: str = "https",
         host: str = "hst-api.wialon.com",
         port: int = 443,
@@ -38,6 +41,7 @@ class WialonSession:
 
         self.wialon_api = Wialon(scheme=scheme, host=host, port=port, sid=sid)
         self.token = token
+        self.login_id = uid
         self._username = None
         self._gis_sid = None
         self._hw_gp_ip = None
@@ -46,7 +50,7 @@ class WialonSession:
 
     def __enter__(self) -> "WialonSession":
         assert self.token, "Wialon API token was not set"
-        self.login(self.token)
+        self.login(self.token, self.login_id)
         return self
 
     def __exit__(self, *args, **kwargs) -> None:
@@ -250,8 +254,6 @@ class WialonSession:
 
         :param token: An active Wialon API token.
         :type token: :py:obj:`str`
-        :param user_id: A user to operate as in the Wialon API session.
-        :type user_id: :py:obj:`str` | :py:obj:`None`
         :param flags: A login response flag integer.
         :type flags: :py:obj:`int`
         :raises WialonLoginError: If the login fails.
@@ -307,13 +309,24 @@ class WialonSession:
         self._wsdk_version = login_response.get("wsdk_version")
 
 
-def main() -> None:
-    session = WialonSession()
-    session.login(token=settings.WIALON_TOKEN)
-    session.duplicate(username="chrissyron@gmail.com", continued=False)
-    session.logout()
-    return
+class WialonSessionManager:
+    _instance = None
+    _lock = threading.Lock()
+    _session = None
 
+    def __new__(cls) -> "WialonSessionManager":
+        with cls._lock:
+            if not cls._instance:
+                cls._instance = super().__new__(cls)
+        return cls._instance
 
-if __name__ == "__main__":
-    main()
+    def get_session(self, sid: str | None = None) -> WialonSession:
+        if not hasattr(settings, "WIALON_TOKEN"):
+            raise ImproperlyConfigured("'WIALON_TOKEN' setting is required.")
+
+        with self._lock:
+            if not self._session or not self._session.active:
+                self._session = WialonSession(sid=sid)
+                if not self._session.active:
+                    self._session.login(settings.WIALON_TOKEN)
+        return self._session

@@ -13,8 +13,8 @@ class WialonUnit(WialonBase):
         :type creator_id: :py:obj:`int`
         :param name: A new name for the unit.
         :type name: :py:obj:`str`
-        :param hw_type: A Wialon hardware type.
-        :type hw_type: :py:obj:`str`
+        :param hw_type_id: A Wialon hardware type ID.
+        :type hw_type_id: :py:obj:`str`
         :returns: The Wialon id for the new unit.
         :rtype: :py:obj:`int` | :py:obj:`None`
 
@@ -23,14 +23,14 @@ class WialonUnit(WialonBase):
             raise ValueError("'creator_id' is required on creation.")
         if not kwargs.get("name"):
             raise ValueError("'name' is required on creation.")
-        if not kwargs.get("hw_type"):
-            raise ValueError("'hw_type' is required on creation.")
+        if not kwargs.get("hw_type_id"):
+            raise ValueError("'hw_type_id' is required on creation.")
 
         response = self.session.wialon_api.core_create_unit(
             **{
                 "creatorId": kwargs["creator_id"],
                 "name": kwargs["name"],
-                "hwTypeId": kwargs["hw_type"],
+                "hwTypeId": kwargs["hw_type_id"],
                 "dataFlags": flags.DATAFLAG_UNIT_BASE,
             }
         )
