@@ -50,23 +50,33 @@ def is_unique(value: str, session: WialonSession, items_type: str = "avl_unit") 
     return not bool(result)
 
 
-def gen_wialon_password(length: int = 16) -> str:
+def gen_wialon_password(length: int = 32) -> str:
     """Generates a Wialon compliant password."""
-    if length > 64:
-        raise ValueError(f"Passwords cannot be greater than 64 chars. Got '{length}'.")
-    if length < 4:
-        raise ValueError(f"Password cannot be less than 4 chars. Got '{length}'.")
+    min_length, max_length = 4, 64
+    if length > max_length:
+        raise ValueError(
+            f"Password cannot be greater than {max_length} characters in length. Got {length}."
+        )
+    elif length < min_length:
+        raise ValueError(
+            f"Password cannot be less than {min_length} characters in length. Got {length}."
+        )
 
-    symbols: str = "!@#$%^*()[]-_+"
-    alphabet: str = string.ascii_letters + string.digits + symbols
-    password: str = "".join(secrets.choice(alphabet) for _ in range(length - 4))
-    return (
-        password
-        + secrets.choice(string.ascii_lowercase)
-        + secrets.choice(string.ascii_uppercase)
-        + secrets.choice(string.digits)
-        + secrets.choice(symbols)
-    )
+    s0 = list(string.ascii_uppercase)
+    s1 = list(string.ascii_lowercase)
+    s2 = list(string.digits)
+    s3 = list("!@#$%^*()[]-_+")
+
+    while True:
+        password = "".join([secrets.choice(s0 + s1 + s2 + s3) for _ in range(length)])
+        if (
+            any(c.islower() for c in password)
+            and any(c.isupper() for c in password)
+            and sum(c.isdigit() for c in password) >= 3
+            and any(c in s3 for c in password)
+        ):
+            break
+    return password
 
 
 def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
