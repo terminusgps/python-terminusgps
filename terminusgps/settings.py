@@ -1,6 +1,8 @@
 from os import getenv
 
-DEBUG = False
+DEBUG = True
 SECRET_KEY = "xem*6no%8d9%^qzt2f3x3ar-uq4_+7h9myc$t0!+4%bj5us6f)"
 WIALON_ADMIN_ID = getenv("WIALON_ADMIN_ID")
 WIALON_TOKEN = getenv("WIALON_TOKEN")
+MERCHANT_AUTH_LOGIN_ID = getenv("MERCHANT_AUTH_LOGIN_ID")
+MERCHANT_AUTH_TRANSACTION_KEY = getenv("MERCHANT_AUTH_TRANSACTION_KEY")
