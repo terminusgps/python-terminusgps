@@ -7,7 +7,7 @@ class AuthorizenetProfileBase:
         self, merchant_id: int | str, id: int | str | None = None, **kwargs
     ) -> None:
         self.merchant_id = merchant_id
-        self.id = id if id else str(self.create(**kwargs))
+        self.id = str(id) if id else str(self.create(**kwargs))
 
     def __str__(self) -> str:
         return f"#{self.id}"
@@ -59,4 +59,4 @@ class AuthorizenetCustomerProfileBase(AuthorizenetProfileBase):
 
     @property
     def default(self) -> str:
-        return "true" if self._default else "false"
+        return str(self._default).lower()
