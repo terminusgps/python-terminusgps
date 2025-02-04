@@ -58,6 +58,7 @@ class PaymentProfile(AuthorizenetCustomerProfileBase):
                 billTo=billing_addr, payment=payment, default=self.default
             ),
             validationMode=self.validationMode,
+            defaultPaymentProfile=self.default,
         )
         controller = createCustomerPaymentProfileController(request)
         response = self.execute_controller(controller)

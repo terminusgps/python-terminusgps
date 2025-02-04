@@ -43,7 +43,7 @@ class AddressProfile(AuthorizenetCustomerProfileBase):
             merchantAuthentication=self.merchantAuthentication,
             customerProfileId=self.customerProfileId,
             address=addr,
-            default=self.default,
+            defaultShippingAddress=self.default,
         )
         controller = createCustomerShippingAddressController(request)
         response = self.execute_controller(controller)
