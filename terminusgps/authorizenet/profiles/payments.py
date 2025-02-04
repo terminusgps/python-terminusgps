@@ -52,13 +52,11 @@ class PaymentProfile(AuthorizenetCustomerProfileBase):
     ) -> int:
         """Executes a :py:obj:`~authorizenet.apicontractsv1.createCustomerPaymentProfileRequest` using the Authorize.NET API."""
         request = createCustomerPaymentProfileRequest(
-            merchantAuthentication=self.merchantAuthentication,
             customerProfileId=self.customerProfileId,
-            paymentProfile=paymentProfile(
-                billTo=billing_addr, payment=payment, default=self.default
-            ),
-            validationMode=self.validationMode,
             defaultPaymentProfile=self.default,
+            merchantAuthentication=self.merchantAuthentication,
+            paymentProfile=paymentProfile(billTo=billing_addr, payment=payment),
+            validationMode=self.validationMode,
         )
         controller = createCustomerPaymentProfileController(request)
         response = self.execute_controller(controller)
