@@ -3,8 +3,8 @@ from authorizenet.apicontractsv1 import (
     customerAddressType,
     deleteCustomerPaymentProfileRequest,
     getCustomerPaymentProfileRequest,
-    paymentProfile,
     paymentType,
+    customerPaymentProfileType,
     validateCustomerPaymentProfileRequest,
     updateCustomerPaymentProfileRequest,
 )
@@ -55,7 +55,9 @@ class PaymentProfile(AuthorizenetCustomerProfileBase):
             customerProfileId=self.customerProfileId,
             defaultPaymentProfile=self.default,
             merchantAuthentication=self.merchantAuthentication,
-            paymentProfile=paymentProfile(billTo=billing_addr, payment=payment),
+            paymentProfile=customerPaymentProfileType(
+                billTo=billing_addr, payment=payment
+            ),
             validationMode=self.validationMode,
         )
         controller = createCustomerPaymentProfileController(request)
