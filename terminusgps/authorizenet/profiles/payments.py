@@ -62,7 +62,7 @@ class PaymentProfile(AuthorizenetCustomerProfileBase):
         )
         controller = createCustomerPaymentProfileController(request)
         response = self.execute_controller(controller)
-        return int(response.get("customerPaymentProfileId"))
+        return int(response.customerPaymentProfileId)
 
     def _authorizenet_update_payment_profile(
         self, billing_addr: customerAddressType, payment: paymentType

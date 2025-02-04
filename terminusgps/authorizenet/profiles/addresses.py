@@ -47,7 +47,7 @@ class AddressProfile(AuthorizenetCustomerProfileBase):
         )
         controller = createCustomerShippingAddressController(request)
         response = self.execute_controller(controller)
-        return int(response.get("customerAddressId"))
+        return int(response.customerAddressId)
 
     def _authorizenet_update_shipping_address(self, addr: customerAddressType) -> None:
         assert self.id, "'id' was not set."
