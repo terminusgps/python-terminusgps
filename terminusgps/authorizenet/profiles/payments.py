@@ -53,10 +53,9 @@ class PaymentProfile(AuthorizenetCustomerProfileBase):
         """Executes a :py:obj:`~authorizenet.apicontractsv1.createCustomerPaymentProfileRequest` using the Authorize.NET API."""
         request = createCustomerPaymentProfileRequest(
             customerProfileId=self.customerProfileId,
-            defaultPaymentProfile=self.default,
             merchantAuthentication=self.merchantAuthentication,
             paymentProfile=customerPaymentProfileType(
-                billTo=billing_addr, payment=payment
+                billTo=billing_addr, payment=payment, defaultPaymentProfile=self.default
             ),
             validationMode=self.validationMode,
         )
@@ -72,7 +71,7 @@ class PaymentProfile(AuthorizenetCustomerProfileBase):
         request = updateCustomerPaymentProfileRequest(
             merchantAuthentication=self.merchantAuthentication,
             customerProfileId=self.customerProfileId,
-            paymentProfile=paymentProfile(
+            paymentProfile=customerPaymentProfileType(
                 billTo=billing_addr,
                 payment=payment,
                 defaultPaymentProfile=self.default,
