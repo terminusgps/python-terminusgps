@@ -1,25 +1,26 @@
+from authorizenet import apicontractsv1, apicontrollers
 from authorizenet.apicontractsv1 import (
-    createCustomerPaymentProfileRequest,
     customerAddressType,
-    deleteCustomerPaymentProfileRequest,
-    getCustomerPaymentProfileRequest,
-    paymentType,
     customerPaymentProfileType,
-    validateCustomerPaymentProfileRequest,
-    updateCustomerPaymentProfileRequest,
+    paymentType,
 )
-from authorizenet.apicontrollers import (
-    createCustomerPaymentProfileController,
-    deleteCustomerPaymentProfileController,
-    getCustomerPaymentProfileController,
-    updateCustomerPaymentProfileController,
-    validateCustomerPaymentProfileController,
-)
-from terminusgps.authorizenet.profiles.base import AuthorizenetCustomerProfileBase
+
+from terminusgps.authorizenet.profiles.base import AuthorizenetSubProfileBase
 
 
-class PaymentProfile(AuthorizenetCustomerProfileBase):
+class PaymentProfile(AuthorizenetSubProfileBase):
     def create(self, **kwargs) -> int:
+        """
+        Creates an Authorize.NET payment profile.
+
+        :param billing_addr: An Authorize.NET customer address.
+        :type billing_addr: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
+        :param payment: An Authorize.NET API payment.
+        :type payment: :py:obj:`~authorizenet.apicontractsv1.paymentType`
+        :returns: The new payment profile's id.
+        :rtype: :py:obj:`int`
+
+        """
         billing_addr = kwargs.get("billing_addr")
         payment = kwargs.get("payment")
         if not billing_addr:
@@ -36,22 +37,24 @@ class PaymentProfile(AuthorizenetCustomerProfileBase):
                 f"'payment' must be customerAddressType, got '{type(payment)}'"
             )
 
-        return self._authorizenet_create_payment_profile(billing_addr, payment)
+        response = self._authorizenet_create_payment_profile(billing_addr, payment)
+        return int(response.customerPaymentProfileId)
 
-    def update(self, billing_addr: customerAddressType, payment: paymentType) -> None:
-        self._authorizenet_update_payment_profile(billing_addr, payment)
+    def update(self, billing_addr: customerAddressType, payment: paymentType) -> dict:
+        """Updates the Authorize.NET payment profile."""
+        return self._authorizenet_update_payment_profile(billing_addr, payment)
 
-    def delete(self) -> None:
-        self._authorizenet_delete_payment_profile()
+    def delete(self) -> dict:
+        """Deletes the Authorize.NET payment profile."""
+        return self._authorizenet_delete_payment_profile()
 
     def get_details(self, issuer_info: bool = False) -> dict:
         return self._authorizenet_get_payment_profile(issuer_info)
 
     def _authorizenet_create_payment_profile(
         self, billing_addr: customerAddressType, payment: paymentType
-    ) -> int:
-        """Executes a :py:obj:`~authorizenet.apicontractsv1.createCustomerPaymentProfileRequest` using the Authorize.NET API."""
-        request = createCustomerPaymentProfileRequest(
+    ) -> dict:
+        request = apicontractsv1.createCustomerPaymentProfileRequest(
             customerProfileId=self.customerProfileId,
             merchantAuthentication=self.merchantAuthentication,
             paymentProfile=customerPaymentProfileType(
@@ -59,16 +62,29 @@ class PaymentProfile(AuthorizenetCustomerProfileBase):
             ),
             validationMode=self.validationMode,
         )
-        controller = createCustomerPaymentProfileController(request)
+        controller = apicontrollers.createCustomerPaymentProfileController(request)
         response = self.execute_controller(controller)
-        return int(response.customerPaymentProfileId)
+        return response
+
+    def _authorizenet_get_payment_profile(self, issuer_info: bool = False) -> dict:
+        assert self.id, "'id' was not set."
+
+        request = apicontractsv1.getCustomerPaymentProfileRequest(
+            merchantAuthentication=self.merchantAuthentication,
+            customerProfileId=self.customerProfileId,
+            customerPaymentProfileId=self.id,
+            includeIssuerInfo=str(issuer_info).lower(),
+        )
+        controller = apicontrollers.getCustomerPaymentProfileController(request)
+        response = self.execute_controller(controller)
+        return response
 
     def _authorizenet_update_payment_profile(
         self, billing_addr: customerAddressType, payment: paymentType
-    ) -> None:
-        """Executes an :py:obj:`~authorizenet.apicontractsv1.updateCustomerPaymentProfileRequest` using the Authorize.NET API."""
+    ) -> dict:
         assert self.id, "'id' was not set."
-        request = updateCustomerPaymentProfileRequest(
+
+        request = apicontractsv1.updateCustomerPaymentProfileRequest(
             merchantAuthentication=self.merchantAuthentication,
             customerProfileId=self.customerProfileId,
             paymentProfile=customerPaymentProfileType(
@@ -79,40 +95,31 @@ class PaymentProfile(AuthorizenetCustomerProfileBase):
             ),
             validationMode=self.validationMode,
         )
-        controller = updateCustomerPaymentProfileController(request)
-        self.execute_controller(controller)
+        controller = apicontrollers.updateCustomerPaymentProfileController(request)
+        response = self.execute_controller(controller)
+        return response
 
-    def _authorizenet_get_payment_profile(self, issuer_info: bool = False) -> dict:
-        """Executes a :py:obj:`~authorizenet.apicontractsv1.getCustomerPaymentProfileRequest` using the Authorize.NET API."""
+    def _authorizenet_validate_payment_profile(self) -> dict:
         assert self.id, "'id' was not set."
-        request = getCustomerPaymentProfileRequest(
-            merchantAuthentication=self.merchantAuthentication,
-            customerProfileId=self.customerProfileId,
-            customerPaymentProfileId=self.id,
-            includeIssuerInfo=str(issuer_info).lower(),
-        )
-        controller = getCustomerPaymentProfileController(request)
-        return self.execute_controller(controller)
 
-    def _authorizenet_validate_payment_profile(self) -> None:
-        """Executes a :py:obj:`~authorizenet.apicontractsv1.validateCustomerPaymentProfileRequest` using the Authorize.NET API."""
-        assert self.id, "'id' was not set."
-        request = validateCustomerPaymentProfileRequest(
+        request = apicontractsv1.validateCustomerPaymentProfileRequest(
             merchantAuthentication=self.merchantAuthentication,
             customerProfileId=self.customerProfileId,
             customerPaymentProfileId=self.id,
             validationMode=self.validationMode,
         )
-        controller = validateCustomerPaymentProfileController(request)
-        self.execute_controller(controller)
+        controller = apicontrollers.validateCustomerPaymentProfileController(request)
+        response = self.execute_controller(controller)
+        return response
 
-    def _authorizenet_delete_payment_profile(self) -> None:
-        """Executes a :py:obj:`~authorizenet.apicontractsv1.deleteCustomerPaymentProfileRequest` using the Authorize.NET API."""
+    def _authorizenet_delete_payment_profile(self) -> dict:
         assert self.id, "'id' was not set."
-        request = deleteCustomerPaymentProfileRequest(
+
+        request = apicontractsv1.deleteCustomerPaymentProfileRequest(
             merchantAuthentication=self.merchantAuthentication,
             customerProfileId=self.customerProfileId,
             customerPaymentProfileId=self.id,
         )
-        controller = deleteCustomerPaymentProfileController(request)
-        self.execute_controller(controller)
+        controller = apicontrollers.deleteCustomerPaymentProfileController(request)
+        response = self.execute_controller(controller)
+        return response
