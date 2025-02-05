@@ -7,9 +7,11 @@ from ..auth import get_merchant_auth, get_environment, get_validation_mode
 
 
 class AuthorizenetProfileBase:
-    def __init__(self, merchant_id: int | str, id: int | str | None = None) -> None:
+    def __init__(
+        self, merchant_id: int | str, id: int | str | None = None, **kwargs
+    ) -> None:
         self._merchantCustomerId = merchant_id
-        self._id = id
+        self._id = str(id) if id else self.create(**kwargs)
 
     def __str__(self) -> str:
         return f"#{self.id}"
