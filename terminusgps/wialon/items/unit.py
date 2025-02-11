@@ -133,11 +133,20 @@ class WialonUnit(WialonBase):
             **{"itemId": self.id, "phoneNumber": quote_plus(phone)}
         )
 
+    def clean_phone_numbers(self, phones: list[str]) -> list[str]:
+        cleaned_phones = []
+        for num in phones:
+            if "," in num:
+                cleaned_phones.extend(num.split(","))
+            else:
+                cleaned_phones.append(num)
+        return cleaned_phones
+
     def get_phone_numbers(self) -> list[str]:
         """
         Retrieves all phone numbers assigned to this Wialon unit.
 
-        This includes the usually assigned phone number + custom/admin fields labeled ``to_number``.
+        This includes any attached drivers, custom fields, and normally assigned unit phone numbers.
 
         :raises WialonError: If something goes wrong with Wialon.
         :returns: A list of phone numbers.
@@ -145,8 +154,41 @@ class WialonUnit(WialonBase):
 
         """
 
-        phones = []
-        for field in self.cfields | self.afields:
-            if field["n"] == "to_number":
-                phones.append(field["v"])
-        return phones
+        phone_numbers = []
+        phones_0 = self._get_driver_phone_numbers()
+        phones_1 = self._get_cfield_phone_numbers()
+
+        if phones_0:
+            phone_numbers.extend(phones_0)
+        if phones_1:
+            phone_numbers.extend(phones_1)
+        return list(dict.fromkeys(phone_numbers))  # Removes duplicate phone numbers
+
+    def _get_cfield_phone_numbers(self) -> list[str] | None:
+        """
+        Retrives any phone numbers saved in the unit's custom 'to_number' field.
+
+        :raises WialonError: If something goes wrong with Wialon.
+        :returns: A list of phone numbers, if the unit has custom phone number fields.
+        :rtype: :py:obj:`list` | :py:obj:`None`
+
+        """
+        for key, value in self.cfields.items():
+            if key == "to_number":
+                return self.clean_phone_numbers([value])
+
+    def _get_driver_phone_numbers(self) -> list[str] | None:
+        """
+        Retrieves any phone numbers assigned to drivers attached to the unit.
+
+        :raises WialonError: If something goes wrong with Wialon.
+        :returns: A list of phone numbers, if the unit has attached drivers with phone numbers.
+        :rtype: :py:obj:`list` | :py:obj:`None`
+
+        """
+        response = self.session.wialon_api.resource_get_unit_drivers(
+            **{"unitId": self.id}
+        )
+        if response:
+            dirty_phones = [driver[0].get("ph") for _, driver in response.items()]
+            return self.clean_phone_numbers(dirty_phones)

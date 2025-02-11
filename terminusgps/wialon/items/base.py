@@ -1,17 +1,15 @@
-import terminusgps.wialon.flags as flags
+from abc import abstractmethod
+from terminusgps.wialon import flags
 from terminusgps.wialon.session import WialonSession
 
 
 class WialonBase:
-    def __init__(
-        self, *, id: str | None = None, session: WialonSession, **kwargs
-    ) -> None:
-        self._session = session
+    def __init__(self, id: str | int, session: WialonSession, **kwargs) -> None:
+        if isinstance(id, str) and not id.isdigit():
+            raise ValueError(f"'id' must be a digit. Got '{id}'.")
 
-        if not id:
-            self._id = self.create(**kwargs)
-        else:
-            self._id = id
+        self._session = session
+        self._id = str(id if id else self.create(**kwargs))
         self.populate()
 
     def __str__(self) -> str:
@@ -20,7 +18,7 @@ class WialonBase:
     def populate(self) -> None:
         response = self.session.wialon_api.core_search_item(
             **{"id": str(self.id), "flags": 0x1}
-        )["item"]
+        ).get("item", {})
         self.name = response.get("nm")
         self.hw_type = response.get("cls")
         self.access_lvl = response.get("uacl")
@@ -59,8 +57,9 @@ class WialonBase:
         )
         return True if self.id in response.keys() else False
 
+    @abstractmethod
     def create(self) -> int | None:
-        """Creates a Wialon object and returns the newly created Wialon object's id."""
+        """Creates a Wialon object and returns its id."""
         raise NotImplementedError("Subclasses must implement this method.")
 
     def rename(self, new_name: str) -> None:

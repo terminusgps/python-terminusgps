@@ -50,7 +50,7 @@ class WialonSession:
 
     def __enter__(self) -> "WialonSession":
         assert self.token, "Wialon API token was not set"
-        self.login(self.token, self.login_id)
+        self.login(self.token)
         return self
 
     def __exit__(self, *args, **kwargs) -> None:
@@ -321,9 +321,6 @@ class WialonSessionManager:
         return cls._instance
 
     def get_session(self, sid: str | None = None) -> WialonSession:
-        if not hasattr(settings, "WIALON_TOKEN"):
-            raise ImproperlyConfigured("'WIALON_TOKEN' setting is required.")
-
         with self._lock:
             if not self._session or not self._session.active:
                 self._session = WialonSession(sid=sid)
