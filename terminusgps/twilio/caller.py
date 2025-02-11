@@ -9,14 +9,14 @@ from twilio.http.async_http_client import AsyncTwilioHttpClient
 
 class TwilioCaller:
     def __init__(self) -> None:
+        self.client_sid = settings.TWILIO_SID
+        self.client_token = settings.TWILIO_TOKEN
         self.from_number = settings.TWILIO_FROM_NUMBER
-        self.messaging_service_sid = settings.TWILIO_MESSAGING_SID
+        self.messaging_sid = settings.TWILIO_MESSAGING_SID
 
     def __enter__(self) -> "TwilioCaller":
         self.client = twilio.rest.Client(
-            settings.TWILIO_SID,
-            settings.TWILIO_TOKEN,
-            http_client=AsyncTwilioHttpClient(),
+            self.client_sid, self.client_token, http_client=AsyncTwilioHttpClient()
         )
         return self
 
@@ -52,5 +52,5 @@ class TwilioCaller:
             to=to_number,
             from_=self.from_number,
             body=message,
-            messaging_service_sid=self.messaging_service_sid,
+            messaging_service_sid=self.messaging_sid,
         )

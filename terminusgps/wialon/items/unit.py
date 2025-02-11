@@ -144,9 +144,9 @@ class WialonUnit(WialonBase):
 
     def get_phone_numbers(self) -> list[str]:
         """
-        Retrieves all phone numbers assigned to this Wialon unit.
+        Retrieves all phone numbers assigned to the unit.
 
-        This includes any attached drivers, custom fields, and normally assigned unit phone numbers.
+        This includes any attached drivers, custom/admin fields, or otherwise assigned phone numbers.
 
         :raises WialonError: If something goes wrong with Wialon.
         :returns: A list of phone numbers.
@@ -154,28 +154,48 @@ class WialonUnit(WialonBase):
 
         """
 
-        phone_numbers = []
-        phones_0 = self._get_driver_phone_numbers()
-        phones_1 = self._get_cfield_phone_numbers()
+        phone_numbers: list[str] = []
+        phones_0: list[str] | None = self._get_driver_phone_numbers()
+        phones_1: list[str] | None = self._get_cfield_phone_numbers()
+        phones_2: list[str] | None = self._get_afield_phone_numbers()
 
-        if phones_0:
+        if phones_0 is not None:
             phone_numbers.extend(phones_0)
-        if phones_1:
+        if phones_1 is not None:
             phone_numbers.extend(phones_1)
+        if phones_2 is not None:
+            phone_numbers.extend(phones_2)
         return list(dict.fromkeys(phone_numbers))  # Removes duplicate phone numbers
 
-    def _get_cfield_phone_numbers(self) -> list[str] | None:
+    def _get_afield_phone_numbers(self, key: str = "to_number") -> list[str] | None:
         """
-        Retrives any phone numbers saved in the unit's custom 'to_number' field.
+        Retrives any phone numbers saved in an admin field by key.
 
+        :param key: An admin field key. Default is ``"to_number"``.
+        :type key: :py:obj:`str`
+        :raises WialonError: If something goes wrong with Wialon.
+        :returns: A list of phone numbers, if the unit has admin phone number fields.
+        :rtype: :py:obj:`list` | :py:obj:`None`
+
+        """
+        for field_name, field_val in self.afields.items():
+            if field_name == key:
+                return self.clean_phone_numbers([field_val])
+
+    def _get_cfield_phone_numbers(self, key: str = "to_number") -> list[str] | None:
+        """
+        Retrives any phone numbers saved in a custom field by key.
+
+        :param key: A custom field key. Default is ``"to_number"``.
+        :type key: :py:obj:`str`
         :raises WialonError: If something goes wrong with Wialon.
         :returns: A list of phone numbers, if the unit has custom phone number fields.
         :rtype: :py:obj:`list` | :py:obj:`None`
 
         """
-        for key, value in self.cfields.items():
-            if key == "to_number":
-                return self.clean_phone_numbers([value])
+        for field_name, field_val in self.cfields.items():
+            if field_name == key:
+                return self.clean_phone_numbers([field_val])
 
     def _get_driver_phone_numbers(self) -> list[str] | None:
         """
