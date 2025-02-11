@@ -1,4 +1,5 @@
 from abc import abstractmethod
+
 from terminusgps.wialon import flags
 from terminusgps.wialon.session import WialonSession
 

@@ -1,8 +1,7 @@
 from urllib.parse import quote_plus
 
-from terminusgps.wialon import flags
+from terminusgps.wialon import constants, flags
 from terminusgps.wialon.items.base import WialonBase
-from terminusgps.wialon import constants
 
 
 class WialonUser(WialonBase):

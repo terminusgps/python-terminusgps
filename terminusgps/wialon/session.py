@@ -2,7 +2,6 @@ import threading
 
 from wialon.api import Wialon, WialonError
 from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
 
 from .errors import (
     WialonLogoutError,
@@ -34,10 +33,6 @@ class WialonSession:
         :rtype: :py:obj:`None`
 
         """
-        if not hasattr(settings, "WIALON_TOKEN"):
-            raise ImproperlyConfigured("'WIALON_TOKEN' setting is required.")
-        if not hasattr(settings, "WIALON_ADMIN_ID"):
-            raise ImproperlyConfigured("'WIALON_ADMIN_ID' setting is required.")
 
         self.wialon_api = Wialon(scheme=scheme, host=host, port=port, sid=sid)
         self.token = token

@@ -3,17 +3,8 @@ from typing import Any
 import asyncio
 import twilio.rest
 
-from django.conf import settings, ImproperlyConfigured
+from django.conf import settings
 from twilio.http.async_http_client import AsyncTwilioHttpClient
-
-if not hasattr(settings, "TWILIO_FROM_NUMBER"):
-    raise ImproperlyConfigured("'TWILIO_FROM_NUMBER' setting is required.")
-if not hasattr(settings, "TWILIO_MESSAGING_SID"):
-    raise ImproperlyConfigured("'TWILIO_MESSAGING_SID' setting is required.")
-if not hasattr(settings, "TWILIO_SID"):
-    raise ImproperlyConfigured("'TWILIO_SID' setting is required.")
-if not hasattr(settings, "TWILIO_TOKEN"):
-    raise ImproperlyConfigured("'TWILIO_TOKEN' setting is required.")
 
 
 class TwilioCaller:
