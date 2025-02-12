@@ -5,7 +5,14 @@ from terminusgps.wialon.session import WialonSession
 
 
 class WialonBase:
-    def __init__(self, id: str | int, session: WialonSession, **kwargs) -> None:
+    def __init__(
+        self,
+        id: str | int | None = None,
+        session: WialonSession | None = None,
+        **kwargs,
+    ) -> None:
+        if session is None:
+            raise ValueError("A valid Wialon API session is required.")
         if isinstance(id, str) and not id.isdigit():
             raise ValueError(f"'id' must be a digit. Got '{id}'.")
 
@@ -59,7 +66,7 @@ class WialonBase:
         return True if self.id in response.keys() else False
 
     @abstractmethod
-    def create(self) -> int | None:
+    def create(self, *args, **kwargs) -> int | None:
         """Creates a Wialon object and returns its id."""
         raise NotImplementedError("Subclasses must implement this method.")
 
