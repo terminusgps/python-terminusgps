@@ -22,10 +22,33 @@ class WialonResource(WialonBase):
 
     @property
     def is_account(self) -> bool:
+        """
+        Whether or not the resource is an account.
+
+        :type: :py:obj:`bool`
+
+        """
         response = self.session.wialon_api.core_search_item(
             **{"id": self.id, "flags": flags.DATAFLAG_RESOURCE_BILLING_PROPERTIES}
         )
         return response.get("item", {}).get("bact") == self.id
+
+    def is_migrated(self, unit: WialonBase) -> bool:
+        """
+        Checks if a unit is migrated into the account.
+
+        :param unit: A Wialon object.
+        :type unit: :py:obj:`~terminusgps.wialon.items.base.WialonBase`
+        :returns: Whether or not the unit is migrated into the account.
+        :rtype: :py:obj:`bool`
+
+        """
+        assert self.is_account, "The resource is not an acccount"
+        response = self.session.wialon_api.account_list_change_accounts(
+            **{"units": [unit.id]}
+        )
+        results = [self.id == int(item.get("id")) for item in response]
+        return any(results)
 
     def migrate_unit(self, unit: WialonBase) -> None:
         """

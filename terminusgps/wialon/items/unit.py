@@ -133,15 +133,6 @@ class WialonUnit(WialonBase):
             **{"itemId": self.id, "phoneNumber": quote_plus(phone)}
         )
 
-    def clean_phone_numbers(self, phones: list[str]) -> list[str]:
-        cleaned_phones = []
-        for num in phones:
-            if "," in num:
-                cleaned_phones.extend(num.split(","))
-            else:
-                cleaned_phones.append(num)
-        return cleaned_phones
-
     def get_phone_numbers(self) -> list[str]:
         """
         Retrieves all phone numbers assigned to the unit.
@@ -166,6 +157,15 @@ class WialonUnit(WialonBase):
         if phones_2 is not None:
             phone_numbers.extend(phones_2)
         return list(dict.fromkeys(phone_numbers))  # Removes duplicate phone numbers
+
+    def clean_phone_numbers(self, phones: list[str]) -> list[str]:
+        cleaned_phones = []
+        for num in phones:
+            if "," in num:
+                cleaned_phones.extend(num.split(","))
+            else:
+                cleaned_phones.append(num)
+        return cleaned_phones
 
     def _get_afield_phone_numbers(self, key: str = "to_number") -> list[str] | None:
         """
