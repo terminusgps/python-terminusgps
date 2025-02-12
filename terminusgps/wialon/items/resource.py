@@ -23,6 +23,7 @@ class WialonResource(WialonBase):
     def delete(self) -> None:
         if self.is_account:
             self.delete_account()
+            return
         super().delete()
 
     @property
