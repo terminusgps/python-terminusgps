@@ -20,6 +20,11 @@ class WialonResource(WialonBase):
         )
         return response.get("item", {}).get("id")
 
+    def delete(self) -> None:
+        if self.is_account:
+            self.delete_account()
+        super().delete()
+
     @property
     def is_account(self) -> bool:
         """
