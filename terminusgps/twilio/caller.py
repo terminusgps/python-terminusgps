@@ -37,7 +37,6 @@ class TwilioCaller:
                 )
             case _:
                 raise ValueError(f"Unsupported TwilioCaller method '{method}'.")
-
         return task
 
     async def create_call(self, to_number: str, message: str) -> None:

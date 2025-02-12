@@ -50,12 +50,31 @@ class WialonResource(WialonBase):
         results = [self.id == int(item.get("id")) for item in response]
         return any(results)
 
+    def set_dealer_rights(self, enabled: bool = False) -> None:
+        """
+        Sets dealer rights on the account.
+
+        :param enabled: :py:obj:`True` to enable dealer rights, :py:obj:`False` to disable dealer rights. Default is :py:obj:`False`.
+        :type enabled: :py:obj:`bool`
+        :raises AssertionError: If the resource is not an account.
+        :raises WialonError: If something goes wrong with Wialon.
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
+        assert self.is_account, "The resource is not an account"
+        self.session.wialon_api.account_update_dealer_rights(
+            **{"itemId": self.id, "enable": str(enabled).lower()}
+        )
+
     def migrate_unit(self, unit: WialonBase) -> None:
         """
         Migrates a :py:obj:`WialonUnit` into the account.
 
         :param unit: A Wialon object.
         :type unit: :py:obj:`~terminusgps.wialon.items.base.WialonBase`
+        :raises AssertionError: If the resource is not an account.
+        :raises WialonError: If something goes wrong with Wialon.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -71,6 +90,8 @@ class WialonResource(WialonBase):
 
         :param new_plan: The name of a billing plan.
         :type new_plan: :py:obj:`str`
+        :raises AssertionError: If the resource is not an account.
+        :raises WialonError: If something goes wrong with Wialon.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -86,11 +107,13 @@ class WialonResource(WialonBase):
 
         :param billing_plan: The name of a billing plan.
         :type billing_plan: :py:obj:`str`
+        :raises AssertionError: If the resource is already account.
+        :raises WialonError: If something goes wrong with Wialon.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        assert self.is_account, "The resource is already an account"
+        assert not self.is_account, "The resource is already an account"
         self.session.wialon_api.account_create_account(
             **{"itemId": self.id, "plan": billing_plan}
         )
@@ -99,6 +122,8 @@ class WialonResource(WialonBase):
         """
         Deletes the account if it exists, as well as any micro-objects and macro-objects it contains.
 
+        :raises AssertionError: If the resource is not an account.
+        :raises WialonError: If something goes wrong with Wialon.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -110,6 +135,8 @@ class WialonResource(WialonBase):
         """
         Enables the Wialon account.
 
+        :raises AssertionError: If the resource is not an account.
+        :raises WialonError: If something goes wrong with Wialon.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -123,6 +150,8 @@ class WialonResource(WialonBase):
         """
         Disables the Wialon account.
 
+        :raises AssertionError: If the resource is not an account.
+        :raises WialonError: If something goes wrong with Wialon.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -138,6 +167,8 @@ class WialonResource(WialonBase):
 
         :param days: Number of days to set the counter to. Default is ``0``.
         :type days: :py:obj:`int`
+        :raises AssertionError: If the resource is not an account.
+        :raises WialonError: If something goes wrong with Wialon.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -153,6 +184,8 @@ class WialonResource(WialonBase):
 
         :param days: Number of days to add to the account. Default is ``30``.
         :type days: :py:obj:`int`
+        :raises AssertionError: If the resource is not an account.
+        :raises WialonError: If something goes wrong with Wialon.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -182,6 +215,8 @@ class WialonResource(WialonBase):
         :type block_balance_val: :py:obj:`float`
         :param deny_balance_val: Minimum amount on the account's balance before denying the account.
         :type deny_balance_val: :py:obj:`float`
+        :raises AssertionError: If the resource is not an account.
+        :raises WialonError: If something goes wrong with Wialon.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
