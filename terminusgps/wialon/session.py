@@ -282,6 +282,9 @@ class WialonSession:
         """
         self.logger.debug(f"Logging out of Wialon API session '{self.id}'...")
         response: dict = self.wialon_api.core_logout({})
+        self.logger.info(
+            f"Called the Wialon API {self.wialon_api.num_calls} times during session '{self.id}'."
+        )
         if response.get("error") != 0:
             self.logger.critical(response.get("error"))
             raise WialonLogoutError(str(self.id))
