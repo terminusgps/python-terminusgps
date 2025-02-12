@@ -15,13 +15,19 @@ class Wialon(WialonAPI):
     def __init__(self, log_level: int = logging.INFO, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.logger = self.create_logger(log_level)
+        self.callstack = []
+
+    @property
+    def num_calls(self) -> int:
+        return len(self.callstack)
 
     def call(self, action_name: str, *argc, **kwargs) -> Any:
         self.logger.debug(f"Executing '{action_name}'...")
+        self.callstack.append(action_name)
         try:
             return super().call(action_name, *argc, **kwargs)
         except WialonError as e:
-            self.logger.critical(e)
+            self.logger.critical(f"Failed to execute '{action_name}':'{e}'")
             raise
 
     def create_logger(self, log_level: int) -> logging.Logger:
