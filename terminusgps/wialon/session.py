@@ -317,10 +317,12 @@ class WialonSessionManager:
                 cls._instance = super().__new__(cls)
         return cls._instance
 
-    def get_session(self, sid: str | None = None) -> WialonSession:
+    def get_session(
+        self, sid: str | None = None, log_level: int = logging.INFO
+    ) -> WialonSession:
         with self._lock:
             if not self._session:
-                self._session = WialonSession(sid=sid)
+                self._session = WialonSession(sid=sid, log_level=log_level)
         return self._session
 
 
