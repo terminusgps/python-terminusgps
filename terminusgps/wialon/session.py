@@ -1,14 +1,40 @@
 import threading
+import logging
+from typing import Any
 
-from wialon.api import Wialon, WialonError
+from wialon.api import WialonError
+from wialon.api import Wialon as WialonAPI
 from django.conf import settings
 
-from .errors import (
-    WialonLogoutError,
-    WialonLoginError,
-    WialonSessionDuplicationError,
-    WialonSessionInvalidError,
-)
+from .errors import WialonLogoutError, WialonLoginError
+
+logger = logging.getLogger(__name__)
+
+
+class Wialon(WialonAPI):
+    def __init__(self, log_level: int = logging.INFO, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.logger = self.create_logger(log_level)
+
+    def call(self, action_name: str, *argc, **kwargs) -> Any:
+        self.logger.debug(f"Executing '{action_name}'...")
+        try:
+            return super().call(action_name, *argc, **kwargs)
+        except WialonError as e:
+            self.logger.critical(e)
+            raise
+
+    def create_logger(self, log_level: int) -> logging.Logger:
+        logger = logging.getLogger(self.__class__.__name__)
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter(
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        )
+
+        logger.setLevel(log_level)
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+        return logger
 
 
 class WialonSession:
@@ -20,6 +46,7 @@ class WialonSession:
         scheme: str = "https",
         host: str = "hst-api.wialon.com",
         port: int = 443,
+        log_level: int = logging.INFO,
     ) -> None:
         """
         Starts or continues a Wialon API session.
@@ -34,7 +61,9 @@ class WialonSession:
 
         """
 
-        self.wialon_api = Wialon(scheme=scheme, host=host, port=port, sid=sid)
+        self.wialon_api = Wialon(
+            scheme=scheme, host=host, port=port, sid=sid, log_level=log_level
+        )
         self.token = token
         self.login_id = uid
         self._username = None
@@ -42,6 +71,19 @@ class WialonSession:
         self._hw_gp_ip = None
         self._wsdk_version = None
         self._uid = None
+        self.logger = self.create_logger(log_level)
+
+    def create_logger(self, log_level: int) -> logging.Logger:
+        logger = logging.getLogger(self.__class__.__name__)
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter(
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        )
+
+        logger.setLevel(log_level)
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+        return logger
 
     def __enter__(self) -> "WialonSession":
         assert self.token, "Wialon API token was not set"
@@ -50,24 +92,6 @@ class WialonSession:
 
     def __exit__(self, *args, **kwargs) -> None:
         self.logout()
-
-    @property
-    def active(self) -> bool:
-        """
-        Whether or not the Wialon session is currently active.
-
-        :type: :py:obj:`bool`
-        :value: :py:obj:`False`
-        """
-        is_active = False
-
-        try:
-            response = self.wialon_api.core_duplicate(**{"restore": 1})
-            is_active = bool(response)
-        except WialonError as e:
-            raise WialonSessionInvalidError(self.id, e)
-        finally:
-            return is_active
 
     @property
     def gis_geocode(self) -> str | None:
@@ -219,30 +243,6 @@ class WialonSession:
     def token(self, value: str | None = None) -> None:
         self._token = value if value else settings.WIALON_TOKEN
 
-    def duplicate(self, username: str | None = None, continued: bool = False) -> str:
-        """
-        Duplicates the active Wialon API session.
-
-        :param username: A Wialon user to operate as in the session.
-        :type username: :py:obj:`str` | :py:obj:`None`
-        :param continue_session: Whether or not the original session id should be valid after duplication.
-        :type continue_session: :py:obj:`bool`
-        :raises WialonSessionDuplicationError: If the Wialon session was not duplicated.
-        :raises AssertionError: If the session was already active.
-        :returns: The new session id.
-        :rtype: :py:obj:`str`
-
-        """
-        try:
-            assert self.active, "Cannot duplicate an inactive session."
-            response = self.wialon_api.core_duplicate(
-                **{"operateAs": username, "continueCurrentSession": continued}
-            )
-            self._set_login_response(response)
-            return response.get("eid")
-        except (WialonError, AssertionError) as e:
-            raise WialonSessionDuplicationError(self.id, e)
-
     def login(self, token: str, flags: int = sum([0x1, 0x2, 0x20])) -> str:
         """
         Logs into the Wialon API and starts a new session.
@@ -252,17 +252,17 @@ class WialonSession:
         :param flags: A login response flag integer.
         :type flags: :py:obj:`int`
         :raises WialonLoginError: If the login fails.
-        :raises AssertionError: If the session was already active.
         :returns: The new session id.
         :rtype: :py:obj:`str`
 
         """
+        self.logger.debug("Logging into Wialon API session...")
         try:
-            assert not self.active, "Cannot login to an active session."
             response = self.wialon_api.token_login(**{"token": token, "fl": flags})
             self._set_login_response(response)
             return response.get("eid")
         except (WialonError, AssertionError) as e:
+            self.logger.critical(e)
             raise WialonLoginError(token, e)
 
     def logout(self) -> None:
@@ -274,8 +274,10 @@ class WialonSession:
         :rtype: :py:obj:`None`
 
         """
+        self.logger.debug(f"Logging out of Wialon API session '{self.id}'...")
         response: dict = self.wialon_api.core_logout({})
         if response.get("error") != 0:
+            self.logger.critical(response.get("error"))
             raise WialonLogoutError(str(self.id))
 
     def _set_login_response(self, login_response: dict) -> None:
@@ -317,8 +319,19 @@ class WialonSessionManager:
 
     def get_session(self, sid: str | None = None) -> WialonSession:
         with self._lock:
-            if not self._session or not self._session.active:
+            if not self._session:
                 self._session = WialonSession(sid=sid)
-                if not self._session.active:
-                    self._session.login(settings.WIALON_TOKEN)
         return self._session
+
+
+def main() -> None:
+    from terminusgps.wialon.items import WialonUnit
+
+    with WialonSession(log_level=logging.DEBUG) as session:
+        unit = WialonUnit(id="28082258", session=session)
+        unit.add_cfield(("to_number", "+17133049421"))
+    return
+
+
+if __name__ == "__main__":
+    main()

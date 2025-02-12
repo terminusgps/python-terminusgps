@@ -1,5 +1,6 @@
 from terminusgps.wialon import flags
 from terminusgps.wialon.items.base import WialonBase
+from terminusgps.wialon.session import WialonSession
 
 
 class WialonResource(WialonBase):

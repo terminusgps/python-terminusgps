@@ -19,35 +19,11 @@ class WialonLoginError(WialonBaseError):
         return super().__init__(message, wialon_err)
 
 
-class WialonSessionDuplicationError(WialonBaseError):
-    def __init__(
-        self,
-        session_id: str | None,
-        wialon_err: WialonError | AssertionError | None = None,
-    ) -> None:
-        message = f"Failed to duplicate the Wialon session: '#{session_id}'\n"
-        if wialon_err:
-            message += str(wialon_err)
-        return super().__init__(message, wialon_err)
-
-
 class WialonLogoutError(WialonBaseError):
     def __init__(
         self, session_id: str, wialon_err: WialonError | AssertionError | None = None
     ) -> None:
         message = f"Failed to logout of the Wialon API session: '{session_id}'\n"
-        if wialon_err:
-            message += str(wialon_err)
-        return super().__init__(message, wialon_err)
-
-
-class WialonSessionInvalidError(WialonBaseError):
-    def __init__(
-        self,
-        session_id: str | None,
-        wialon_err: WialonError | AssertionError | None = None,
-    ) -> None:
-        message = f"The session was invalid/expired: '{session_id}'\n"
         if wialon_err:
             message += str(wialon_err)
         return super().__init__(message, wialon_err)
