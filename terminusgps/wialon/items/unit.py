@@ -1,3 +1,4 @@
+import logging
 from urllib.parse import quote_plus
 
 from terminusgps.wialon import flags
@@ -35,6 +36,12 @@ class WialonUnit(WialonBase):
             }
         )
         return response.get("item", {}).get("id")
+
+    @property
+    def available_commands(self) -> dict:
+        return self.session.wialon_api.core_get_hw_cmds(
+            **{"deviceTypeId": 0, "unitId": self.id}
+        )
 
     def execute_command(
         self,
