@@ -1,4 +1,3 @@
-import logging
 from urllib.parse import quote_plus
 
 from terminusgps.wialon import flags
