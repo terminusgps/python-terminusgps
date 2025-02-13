@@ -1,19 +1,26 @@
 import secrets
 import string
+import warnings
+from typing import Type
 
-from typing import Any
-from .session import WialonSession
-from .flags import DATAFLAG_UNIT_BASE
-
-from terminusgps.wialon.items import (
-    WialonUser,
-    WialonUnit,
-    WialonUnitGroup,
-    WialonResource,
-)
+from terminusgps.wialon import items, flags
+from terminusgps.wialon.items.base import WialonBase
+from terminusgps.wialon.session import WialonSession
 
 
 def get_hw_type_id(name: str, session: WialonSession) -> int | None:
+    """
+    Takes a Wialon hardware type name and returns its id, if it exists.
+
+    :param name: The name of a Wialon hardware type.
+    :type name: :py:obj:`str`
+    :param session: A valid Wialon API session.
+    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :raises WialonError: If something goes wrong with Wialon.
+    :returns: A Wialon hardware type id, if it was found.
+    :rtype: :py:obj:`int` | :py:obj:`None`
+
+    """
     response = session.wialon_api.core_get_hw_types(
         **{
             "filterType": "id",
@@ -26,24 +33,79 @@ def get_hw_type_id(name: str, session: WialonSession) -> int | None:
     return int(hw_types.get(name)) if name in hw_types.keys() else None
 
 
-def get_wialon_cls(items_type: str) -> Any:
-    """Returns a Wialon object class based on items_type."""
+def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
+    """
+    Takes a Wialon unit's IMEI # and returns its unit id, if it exists.
+
+    :param iccid: A unique id.
+    :type iccid: :py:obj:`str`
+    :param session: A valid Wialon API session.
+    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :raises WialonError: If something goes wrong with Wialon.
+    :returns: A Wialon object id, if it was found.
+    :rtype: :py:obj:`str` | :py:obj:`None`
+
+    """
+    response = session.wialon_api.core_search_items(
+        **{
+            "spec": {
+                "itemsType": "avl_unit",
+                "propName": "rel_admin_field_value",
+                "propValueMask": str(iccid),
+                "sortType": "admin_fields",
+                "propType": "adminfield",
+                "or_logic": 0,
+            },
+            "force": 0,
+            "flags": flags.DATAFLAG_UNIT_BASE,
+            "from": 0,
+            "to": 0,
+        }
+    )
+
+    if response.get("totalItemsCount", 0) == 1:
+        return response["items"][0].get("id")
+
+
+def get_wialon_cls(items_type: str) -> Type[WialonBase]:
+    """
+    Returns a Wialon object class based on items_type.
+
+    :param items_type: A Wialon object type.
+    :type items_type: :py:obj:`str`
+    :returns: A subclass of :py:obj:`~terminusgps.wialon.items.base.WialonBase`.
+    :rtype: :py:obj:`~terminusgps.wialon.items.base.WialonBase`
+
+    """
     match items_type:
         case "user":
-            wialon_cls = WialonUser
+            wialon_cls = items.WialonUser
         case "avl_unit":
-            wialon_cls = WialonUnit
+            wialon_cls = items.WialonUnit
         case "avl_unit_group":
-            wialon_cls = WialonUnitGroup
+            wialon_cls = items.WialonUnitGroup
         case "avl_resource":
-            wialon_cls = WialonResource
+            wialon_cls = items.WialonResource
         case _:
             raise ValueError(f"Invalid items_type '{items_type}'")
     return wialon_cls
 
 
 def is_unique(value: str, session: WialonSession, items_type: str = "avl_unit") -> bool:
-    """Determines if the value is unique among Wialon objects of type 'items_type'."""
+    """
+    Determines if the value is unique among Wialon objects of type 'items_type'.
+
+    :param value: A value whose uniqueness is unknown.
+    :type value: :py:obj:`str`
+    :param session: A valid Wialon API session.
+    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :param items_type: The type of Wialon objects to validate the value against. Default is ``"avl_unit"``.
+    :type items_type: :py:obj:`str`
+    :returns: Whether or not the value is unique among 'items_type'.
+    :rtype: :py:obj:`bool`
+
+
+    """
     result = session.wialon_api.core_check_unique(
         **{"type": items_type, "value": value.strip()}
     ).get("result")
@@ -51,8 +113,42 @@ def is_unique(value: str, session: WialonSession, items_type: str = "avl_unit") 
 
 
 def gen_wialon_password(length: int = 32) -> str:
-    """Generates a Wialon compliant password."""
-    min_length, max_length = 4, 64
+    """
+    DEPRECATED: Use :py:func:`~terminusgps.wialon.utils.generate_wialon_password` instead.
+
+    Generates a Wialon compliant password of random characters.
+
+    Password length can be between ``8`` and ``64`` characters.
+
+    :param length: Length of the generated password. Default is ``32``.
+    :type length: :py:obj:`int`
+    :raises ValueError: If the provided length is invalid.
+    :returns: A Wialon compliant password.
+    :rtype: :py:obj:`str`
+
+    """
+    warnings.warn(
+        "gen_wialon_password is deprecated and will be removed in a future version. Use generate_wialon_password instead.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return generate_wialon_password(length)
+
+
+def generate_wialon_password(length: int = 32) -> str:
+    """
+    Generates a Wialon compliant password of random characters.
+
+    Password length can be between ``8`` and ``64`` characters.
+
+    :param length: Length of the generated password. Default is ``32``.
+    :type length: :py:obj:`int`
+    :raises ValueError: If the provided length is invalid.
+    :returns: A Wialon compliant password.
+    :rtype: :py:obj:`str`
+
+    """
+    min_length, max_length = 8, 64
     if length > max_length:
         raise ValueError(
             f"Password cannot be greater than {max_length} characters in length. Got {length}."
@@ -77,37 +173,3 @@ def gen_wialon_password(length: int = 32) -> str:
         ):
             break
     return password
-
-
-def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
-    """Takes a Wialon unit's IMEI # and returns its unit id, if it exists."""
-    response = session.wialon_api.core_search_items(
-        **{
-            "spec": {
-                "itemsType": "avl_unit",
-                "propName": "rel_admin_field_value",
-                "propValueMask": str(iccid),
-                "sortType": "admin_fields",
-                "propType": "adminfield",
-                "or_logic": 0,
-            },
-            "force": 0,
-            "flags": DATAFLAG_UNIT_BASE,
-            "from": 0,
-            "to": 0,
-        }
-    )
-
-    if response.get("totalItemsCount", 0) == 1:
-        return response["items"][0].get("id")
-
-
-def main() -> None:
-    with WialonSession() as session:
-        wialon_id = get_id_from_iccid("89015809000307608963", session)
-        print(f"{wialon_id = }")
-    return
-
-
-if __name__ == "__main__":
-    main()
