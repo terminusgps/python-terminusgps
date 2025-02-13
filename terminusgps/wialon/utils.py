@@ -1,7 +1,7 @@
 import secrets
 import string
 import warnings
-from typing import Type
+import typing
 
 from terminusgps.wialon import items, flags
 from terminusgps.wialon.items.base import WialonBase
@@ -67,7 +67,7 @@ def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
         return response["items"][0].get("id")
 
 
-def get_wialon_cls(items_type: str) -> Type[WialonBase]:
+def get_wialon_cls(items_type: str) -> typing.Type[WialonBase]:
     """
     Returns a Wialon object class based on items_type.
 
@@ -112,29 +112,6 @@ def is_unique(value: str, session: WialonSession, items_type: str = "avl_unit") 
     return not bool(result)
 
 
-def gen_wialon_password(length: int = 32) -> str:
-    """
-    DEPRECATED: Use :py:func:`~terminusgps.wialon.utils.generate_wialon_password` instead.
-
-    Generates a Wialon compliant password of random characters.
-
-    Password length can be between ``8`` and ``64`` characters.
-
-    :param length: Length of the generated password. Default is ``32``.
-    :type length: :py:obj:`int`
-    :raises ValueError: If the provided length is invalid.
-    :returns: A Wialon compliant password.
-    :rtype: :py:obj:`str`
-
-    """
-    warnings.warn(
-        "gen_wialon_password is deprecated and will be removed in a future version. Use generate_wialon_password instead.",
-        DeprecationWarning,
-        stacklevel=2,
-    )
-    return generate_wialon_password(length)
-
-
 def generate_wialon_password(length: int = 32) -> str:
     """
     Generates a Wialon compliant password of random characters.
@@ -173,3 +150,26 @@ def generate_wialon_password(length: int = 32) -> str:
         ):
             break
     return password
+
+
+def gen_wialon_password(length: int = 32) -> str:
+    """
+    DEPRECATED: Use :py:func:`~terminusgps.wialon.utils.generate_wialon_password` instead.
+
+    Generates a Wialon compliant password of random characters.
+
+    Password length can be between ``8`` and ``64`` characters.
+
+    :param length: Length of the generated password. Default is ``32``.
+    :type length: :py:obj:`int`
+    :raises ValueError: If the provided length is invalid.
+    :returns: A Wialon compliant password.
+    :rtype: :py:obj:`str`
+
+    """
+    warnings.warn(
+        "gen_wialon_password is deprecated and will be removed in a future version. Use generate_wialon_password instead.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return generate_wialon_password(length)

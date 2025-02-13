@@ -1,25 +1,24 @@
 import threading
 import logging
-
-from typing import Any
-from dataclasses import dataclass
-from datetime import datetime
+import typing
+import dataclasses
+import datetime
 
 from wialon.api import WialonError
 from wialon.api import Wialon as WialonAPI
 from django.conf import settings
 from django.utils import timezone
 
-from .errors import WialonLogoutError, WialonLoginError
+from terminusgps.wialon.errors import WialonLogoutError, WialonLoginError
 
 
-@dataclass
+@dataclasses.dataclass
 class WialonAPICall:
     action: str
-    timestamp: datetime
+    timestamp: datetime.datetime
     args: tuple
     kwargs: dict
-    result: Any = None
+    result: typing.Any = None
     error: Exception | None = None
 
 
@@ -45,7 +44,7 @@ class Wialon(WialonAPI):
     def failure_rate(self) -> float:
         return len(self.failed_calls) / self.total_calls
 
-    def call(self, action_name: str, *argc, **kwargs) -> Any:
+    def call(self, action_name: str, *argc, **kwargs) -> typing.Any:
         self.logger.info(f"Executing '{action_name}'...")
         self.logger.debug(f"Executing '{action_name}' using: '{kwargs}'")
         call_record = WialonAPICall(
