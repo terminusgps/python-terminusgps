@@ -21,10 +21,34 @@ class WialonResource(WialonBase):
         return response.get("item", {}).get("id")
 
     def delete(self) -> None:
-        if self.is_account:
-            self.delete_account()
-            return
-        super().delete()
+        """
+        Deletes all micro-objects assigned to the resource.
+
+        If the resource is an account, instead deletes all macro-objects and micro-objects assigned to the account.
+
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
+        self.delete_account() if self.is_account else super().delete()
+
+    @property
+    def is_dealer(self) -> bool:
+        """
+        Whether or not the resource/account has dealer rights.
+
+        If the resource is **not** an account, this always returns :py:obj:`False`.
+
+        :type: :py:obj:`bool`
+
+        """
+        if not self.is_account:
+            return False  # Resources cannot have dealer rights
+        return bool(
+            self.session.wialon_api.get_account_data(
+                **{"itemId": self.id, "type": 1}
+            ).get("dealerRights")
+        )
 
     @property
     def is_account(self) -> bool:
@@ -59,6 +83,8 @@ class WialonResource(WialonBase):
     def set_dealer_rights(self, enabled: bool = False) -> None:
         """
         Sets dealer rights on the account.
+
+        You **probably don't** need to use this method.
 
         :param enabled: :py:obj:`True` to enable dealer rights, :py:obj:`False` to disable dealer rights. Default is :py:obj:`False`.
         :type enabled: :py:obj:`bool`
@@ -123,6 +149,7 @@ class WialonResource(WialonBase):
         self.session.wialon_api.account_create_account(
             **{"itemId": self.id, "plan": billing_plan}
         )
+        self.set_settings_flags()
 
     def delete_account(self) -> None:
         """
