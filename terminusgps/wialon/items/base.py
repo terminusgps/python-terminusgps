@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from typing import Type
 
 from terminusgps.wialon import flags
 from terminusgps.wialon.session import WialonSession
@@ -24,6 +25,7 @@ class WialonBase:
         return str(self.id)
 
     def populate(self) -> None:
+        """Retrieves and saves the latest data for the item from Wialon."""
         response = self.session.wialon_api.core_search_item(
             **{"id": str(self.id), "flags": 0x1}
         ).get("item", {})
@@ -53,7 +55,7 @@ class WialonBase:
 
         return int(self._id) if self._id else None
 
-    def has_access(self, other: "WialonBase") -> bool:
+    def has_access(self, other: Type["WialonBase"]) -> bool:
         """
         Checks if this Wialon object has access to ``other``.
 
@@ -74,7 +76,7 @@ class WialonBase:
         """
         Renames the Wialon object to the new name.
 
-        :param new_name: A new name for this object.
+        :param new_name: A new name.
         :type new_name: :py:obj:`str`
         :returns: Nothing.
         :rtype: :py:obj:`None`
@@ -215,24 +217,27 @@ class WialonBase:
 
         self.session.wialon_api.item_delete_item(**{"itemId": self.id})
 
-    def _get_cfields(self) -> dict:
-        response = self.session.wialon_api.core_search_item(
-            **{"id": self.id, "flags": flags.DATAFLAG_UNIT_CUSTOM_FIELDS}
-        )
-        return response["item"]["flds"]
-
-    def _get_afields(self) -> dict:
-        response = self.session.wialon_api.core_search_item(
-            **{"id": self.id, "flags": flags.DATAFLAG_UNIT_ADMIN_FIELDS}
-        )
-        return response["item"]["aflds"]
-
     @property
     def cfields(self) -> dict:
-        fields = self._get_cfields()
-        return {field["n"]: field["v"] for _, field in fields.items()}
+        """Custom fields associated with the Wialon object."""
+        fields = (
+            self.session.wialon_api.core_search_item(
+                **{"id": self.id, "flags": flags.DATAFLAG_UNIT_CUSTOM_FIELDS}
+            )
+            .get("item", {})
+            .get("cfields")
+        )
+
+        return {field["n"]: field["v"] for _, field in fields.items()} if fields else {}
 
     @property
     def afields(self) -> dict:
-        fields = self._get_afields()
-        return {field["n"]: field["v"] for _, field in fields.items()}
+        """Admin fields associated with the Wialon object."""
+        fields = (
+            self.session.wialon_api.core_search_item(
+                **{"id": self.id, "flags": flags.DATAFLAG_UNIT_ADMIN_FIELDS}
+            )
+            .get("item", {})
+            .get("afields")
+        )
+        return {field["n"]: field["v"] for _, field in fields.items()} if fields else {}
