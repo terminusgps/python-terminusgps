@@ -180,3 +180,31 @@ class WialonUser(WialonBase):
                 "newPassword": new_password,
             }
         )
+
+    def verify_auth(self, destination: str, method: str = "email") -> str:
+        """
+        Sends an authentication code to ``destination`` via ``method``.
+
+        ``Method`` can be ``"email"`` or ``"sms"``.
+
+        :param destination: The email or phone number to send an auth code to.
+        :type destination: :py:obj:`str`
+        :param method: Email or sms. Default is ``"email"``.
+        :type method: :py:obj:`str`
+        :raises ValueError: If the method isn't ``"email"`` or ``"sms"``.
+        :raises WialonError: If something goes wrong with Wialon.
+        :returns: An auth code.
+        :rtype: :py:obj:`str`
+
+        """
+        if method != "email" or "sms":
+            raise ValueError(f"Invalid method '{method}'.")
+
+        response = self.session.wialon_api.user_verify_auth(
+            **{
+                "userId": self.id,
+                "type": 1 if method == "email" else 0,
+                "destination": destination,
+            }
+        )
+        return response.get("code")
