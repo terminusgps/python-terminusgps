@@ -1,3 +1,4 @@
+from .notification import WialonNotification
 from .resource import WialonResource
 from .retranslator import WialonRetranslator
 from .route import WialonRoute
