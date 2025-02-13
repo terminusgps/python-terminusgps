@@ -367,16 +367,3 @@ class WialonSessionManager:
             if not self._session:
                 self._session = WialonSession(sid=sid, log_level=log_level)
         return self._session
-
-
-def main() -> None:
-    from terminusgps.wialon.items import WialonUnit
-
-    with WialonSession(log_level=logging.DEBUG) as session:
-        unit = WialonUnit(id="28082258", session=session)
-        unit.add_cfield(("to_number", "+17133049421"))
-    return
-
-
-if __name__ == "__main__":
-    main()

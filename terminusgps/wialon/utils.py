@@ -91,6 +91,29 @@ def get_wialon_cls(items_type: str) -> typing.Type[WialonBase]:
     return wialon_cls
 
 
+def get_vin_info(vin_number: str, session: WialonSession) -> dict:
+    """
+    Retrieves vehicle data from a VIN number.
+
+    :param value: A vehicle's VIN number.
+    :type value: :py:obj:`str`
+    :param session: A valid Wialon API session.
+    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :returns: A dictionary of vehicle information, if any was found.
+    :rtype: :py:obj:`dict`
+
+    """
+    response = session.wialon_api.unit_get_vin_info(**{"vin": vin_number}).get(
+        "vin_lookup_result"
+    )
+
+    return (
+        {field.get("n"): field.get("v") for field in response.get("pflds")}
+        if "error" not in response.keys()
+        else {}
+    )
+
+
 def is_unique(value: str, session: WialonSession, items_type: str = "avl_unit") -> bool:
     """
     Determines if the value is unique among Wialon objects of type 'items_type'.
@@ -103,7 +126,6 @@ def is_unique(value: str, session: WialonSession, items_type: str = "avl_unit") 
     :type items_type: :py:obj:`str`
     :returns: Whether or not the value is unique among 'items_type'.
     :rtype: :py:obj:`bool`
-
 
     """
     result = session.wialon_api.core_check_unique(
@@ -173,13 +195,3 @@ def gen_wialon_password(length: int = 32) -> str:
         stacklevel=2,
     )
     return generate_wialon_password(length)
-
-
-__all__ = [
-    "get_hw_type_id",
-    "get_id_from_iccid",
-    "get_wialon_cls",
-    "is_unique",
-    "generate_wialon_password",
-    "gen_wialon_password",
-]
