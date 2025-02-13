@@ -295,13 +295,13 @@ class WialonSession:
         :rtype: :py:obj:`str`
 
         """
-        self.logger.debug("Logging into Wialon API session...")
         try:
             response = self.wialon_api.token_login(**{"token": token, "fl": flags})
             self._set_login_response(response)
+            self.logger.info(f"Logged into Wialon API session '{response.get('eid')}'")
             return response.get("eid")
         except (WialonError, AssertionError) as e:
-            self.logger.critical(e)
+            self.logger.critical(f"Failed to login to Wialon API: '{e}'")
             raise WialonLoginError(token, e)
 
     def logout(self) -> None:
@@ -316,10 +316,12 @@ class WialonSession:
         self.logger.debug(f"Logging out of Wialon API session '{self.id}'...")
         response: dict = self.wialon_api.core_logout({})
         self.logger.info(
-            f"Called the Wialon API {self.wialon_api.total_calls} times during session '{self.id}'."
+            f"Logged out of session '{self.id}' after {self.wialon_api.total_calls} Wialon API calls."
         )
         if response.get("error") != 0:
-            self.logger.warning(response.get("error"))
+            self.logger.warning(
+                f"Failed to logout of session: '{response.get('message')}'"
+            )
             raise WialonLogoutError(str(self.id))
 
     def _set_login_response(self, login_response: dict) -> None:
