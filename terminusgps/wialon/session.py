@@ -55,11 +55,13 @@ class Wialon(WialonAPI):
         try:
             result = super().call(action_name, *argc, **kwargs)
             call_record.result = result
-            self.call_history.append(call_record)
             return result
         except WialonError as e:
             self.logger.warning(f"Failed to execute '{action_name}': '{e}'")
+            call_record.error = e
             raise
+        finally:
+            self.call_history.append(call_record)
 
     def create_logger(self, log_level: int) -> logging.Logger:
         logger = logging.getLogger(self.__class__.__name__)
