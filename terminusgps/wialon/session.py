@@ -12,8 +12,6 @@ from django.utils import timezone
 
 from .errors import WialonLogoutError, WialonLoginError
 
-logger = logging.getLogger(__name__)
-
 
 @dataclass
 class WialonAPICall:
@@ -28,8 +26,8 @@ class WialonAPICall:
 class Wialon(WialonAPI):
     def __init__(self, log_level: int = logging.INFO, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self.logger = self.create_logger(log_level)
         self.call_history: list[WialonAPICall] = []
+        self.logger = self.create_logger(log_level)
 
     @property
     def total_calls(self) -> int:
@@ -313,11 +311,11 @@ class WialonSession:
         :rtype: :py:obj:`None`
 
         """
-        self.logger.debug(f"Logging out of Wialon API session '{self.id}'...")
         response: dict = self.wialon_api.core_logout({})
         self.logger.info(
             f"Logged out of session '{self.id}' after {self.wialon_api.total_calls} Wialon API calls."
         )
+        self.logger.debug(f"Failure rate: {self.wialon_api.failure_rate}%")
         if response.get("error") != 0:
             self.logger.warning(
                 f"Failed to logout of session: '{response.get('message')}'"
