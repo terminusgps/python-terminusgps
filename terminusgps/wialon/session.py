@@ -1,33 +1,66 @@
 import threading
 import logging
+
 from typing import Any
+from dataclasses import dataclass
+from datetime import datetime
 
 from wialon.api import WialonError
 from wialon.api import Wialon as WialonAPI
 from django.conf import settings
+from django.utils import timezone
 
 from .errors import WialonLogoutError, WialonLoginError
 
 logger = logging.getLogger(__name__)
 
 
+@dataclass
+class WialonAPICall:
+    action: str
+    timestamp: datetime
+    args: tuple
+    kwargs: dict
+    result: Any = None
+    error: Exception | None = None
+
+
 class Wialon(WialonAPI):
     def __init__(self, log_level: int = logging.INFO, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.logger = self.create_logger(log_level)
-        self.callstack = []
+        self.call_history: list[WialonAPICall] = []
 
     @property
-    def num_calls(self) -> int:
-        return len(self.callstack)
+    def total_calls(self) -> int:
+        return len(self.call_history)
+
+    @property
+    def successful_calls(self) -> list[WialonAPICall | None]:
+        return [call for call in self.call_history if not call.error]
+
+    @property
+    def failed_calls(self) -> list[WialonAPICall | None]:
+        return [call for call in self.call_history if call.error]
+
+    @property
+    def failure_rate(self) -> float:
+        return len(self.failed_calls) / self.total_calls
 
     def call(self, action_name: str, *argc, **kwargs) -> Any:
-        self.logger.debug(f"Executing '{action_name}'...")
-        self.callstack.append(action_name)
+        self.logger.info(f"Executing '{action_name}'...")
+        self.logger.debug(f"Executing '{action_name}' using: '{kwargs}'")
+        call_record = WialonAPICall(
+            action=action_name, timestamp=timezone.now(), args=argc, kwargs=kwargs
+        )
+
         try:
-            return super().call(action_name, *argc, **kwargs)
+            result = super().call(action_name, *argc, **kwargs)
+            call_record.result = result
+            self.call_history.append(call_record)
+            return result
         except WialonError as e:
-            self.logger.critical(f"Failed to execute '{action_name}':'{e}'")
+            self.logger.warning(f"Failed to execute '{action_name}': '{e}'")
             raise
 
     def create_logger(self, log_level: int) -> logging.Logger:
@@ -283,10 +316,10 @@ class WialonSession:
         self.logger.debug(f"Logging out of Wialon API session '{self.id}'...")
         response: dict = self.wialon_api.core_logout({})
         self.logger.info(
-            f"Called the Wialon API {self.wialon_api.num_calls} times during session '{self.id}'."
+            f"Called the Wialon API {self.wialon_api.total_calls} times during session '{self.id}'."
         )
         if response.get("error") != 0:
-            self.logger.critical(response.get("error"))
+            self.logger.warning(response.get("error"))
             raise WialonLogoutError(str(self.id))
 
     def _set_login_response(self, login_response: dict) -> None:
