@@ -18,7 +18,6 @@ ACCESSMASK_UNIT_BASIC: int = sum(
     ]
 )
 
-
 ACCESSMASK_UNIT_MIGRATION: int = sum(
     [
         flags.ACCESSFLAG_DELETE_ITEM,
