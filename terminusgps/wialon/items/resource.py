@@ -27,7 +27,7 @@ class WialonResource(WialonBase):
                 "dataFlags": flags.DATAFLAG_UNIT_BASE,
             }
         )
-        return response.get("item", {}).get("id")
+        return int(response.get("item", {}).get("id")) if response.get("item") else None
 
     def delete(self) -> None:
         """
@@ -70,7 +70,7 @@ class WialonResource(WialonBase):
         response = self.session.wialon_api.core_search_item(
             **{"id": self.id, "flags": flags.DATAFLAG_RESOURCE_BILLING_PROPERTIES}
         )
-        return response.get("item", {}).get("bact") == self.id
+        return int(response.get("item", {}).get("bact")) == self.id
 
     def is_migrated(self, unit: WialonBase) -> bool:
         """
