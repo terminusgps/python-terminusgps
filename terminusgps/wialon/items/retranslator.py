@@ -3,13 +3,13 @@ from terminusgps.wialon.items.base import WialonBase
 
 
 class WialonRetranslator(WialonBase):
-    def create(self, **kwargs) -> int | None:
+    def create(self, creator_id: str | int, name: str, config: dict) -> int | None:
         """
         Creates a Wialon retranslator.
 
-        :param creator_id: A Wialon user that will create the retranslator.
-        :type creator_id: :py:obj:`str`
-        :param name: A name for the new retranslator.
+        :param creator_id: A Wialon user id.
+        :type creator_id: :py:obj:`str` | :py:obj:`int`
+        :param name: A name for the retranslator.
         :type name: :py:obj:`str`
         :param config: A Wialon retranslator configuration object.
         :type config: :py:obj:`dict`
@@ -19,22 +19,18 @@ class WialonRetranslator(WialonBase):
         :rtype: :py:obj:`None`
 
         """
-        if not kwargs.get("creator_id"):
-            raise ValueError("'creator_id' is required on creation.")
-        if not kwargs.get("name"):
-            raise ValueError("'name' is required on creation.")
-        if not kwargs.get("config"):
-            raise ValueError("'config' is required on creation.")
+        if isinstance(creator_id, str) and not creator_id.isdigit():
+            raise ValueError(f"'creator_id' must be a digit, got '{creator_id}'.")
 
         response = self.session.wialon_api.core_create_retranslator(
             **{
-                "creatorId": kwargs["creator_id"],
-                "name": kwargs["name"],
-                "config": kwargs["config"],
+                "creatorId": creator_id,
+                "name": name,
+                "config": config,
                 "dataFlags": flags.DATAFLAG_UNIT_BASE,
             }
         )
-        return response.get("item", {}).get("id")
+        return int(response.get("item", {}).get("id")) if response.get("item") else None
 
     def update_config(self, new_config: dict) -> None:
         """

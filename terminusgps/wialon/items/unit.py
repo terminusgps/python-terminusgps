@@ -5,36 +5,36 @@ from terminusgps.wialon.items.base import WialonBase
 
 
 class WialonUnit(WialonBase):
-    def create(self, **kwargs) -> int | None:
+    def create(
+        self, creator_id: str | int, name: str, hw_type_id: str | int
+    ) -> int | None:
         """
         Creates a new Wialon unit.
 
         :param creator_id: A Wialon user id.
-        :type creator_id: :py:obj:`int`
-        :param name: A new name for the unit.
+        :type creator_id: :py:obj:`str` | :py:obj:`int`
+        :param name: A name for the unit.
         :type name: :py:obj:`str`
         :param hw_type_id: A Wialon hardware type ID.
-        :type hw_type_id: :py:obj:`str`
+        :type hw_type_id: :py:obj:`str` | :py:obj:`int`
         :returns: The Wialon id for the new unit.
         :rtype: :py:obj:`int` | :py:obj:`None`
 
         """
-        if not kwargs.get("creator_id"):
-            raise ValueError("'creator_id' is required on creation.")
-        if not kwargs.get("name"):
-            raise ValueError("'name' is required on creation.")
-        if not kwargs.get("hw_type_id"):
-            raise ValueError("'hw_type_id' is required on creation.")
+        if isinstance(creator_id, str) and not creator_id.isdigit():
+            raise ValueError(f"'creator_id' must be a digit, got '{creator_id}'.")
+        if isinstance(hw_type_id, str) and not hw_type_id.isdigit():
+            raise ValueError(f"'hw_type_id' must be a digit, got '{hw_type_id}'.")
 
         response = self.session.wialon_api.core_create_unit(
             **{
-                "creatorId": kwargs["creator_id"],
-                "name": kwargs["name"],
-                "hwTypeId": kwargs["hw_type_id"],
+                "creatorId": creator_id,
+                "name": name,
+                "hwTypeId": hw_type_id,
                 "dataFlags": flags.DATAFLAG_UNIT_BASE,
             }
         )
-        return response.get("item", {}).get("id")
+        return int(response.get("item", {}).get("id")) if response.get("item") else None
 
     @property
     def available_commands(self) -> dict:

@@ -5,37 +5,34 @@ from terminusgps.wialon.items.base import WialonBase
 
 
 class WialonUser(WialonBase):
-    def create(self, **kwargs) -> int | None:
+    def create(self, creator_id: str | int, name: str, password: str) -> int | None:
         """
         Creates a new Wialon user.
 
         :param creator_id: A Wialon user id.
-        :type creator_id: :py:obj:`int`
+        :type creator_id: :py:obj:`str` | :py:obj:`int`
         :param name: A name for the user.
         :type name: :py:obj:`str`
-        :param name: A password for the user.
-        :type name: :py:obj:`str`
+        :param password: A password for the user.
+        :type password: :py:obj:`str`
+        :raises ValueError: If ``creator_id`` is not a digit.
         :raises WialonError: If something goes wrong with Wialon.
-        :returns: The Wialon id for the new user.
+        :returns: The Wialon id for the new user, if it was created.
         :rtype: :py:obj:`int` | :py:obj:`None`
 
         """
-        if not kwargs.get("creator_id"):
-            raise ValueError("'creator_id' is required on creation.")
-        if not kwargs.get("name"):
-            raise ValueError("'name' is required on creation.")
-        if not kwargs.get("password"):
-            raise ValueError("'password' is required on creation.")
+        if isinstance(creator_id, str) and not creator_id.isdigit():
+            raise ValueError(f"'creator_id' must be a digit, got '{creator_id}'.")
 
         response = self.session.wialon_api.core_create_user(
             **{
-                "creatorId": kwargs["creator_id"],
-                "name": kwargs["name"],
-                "password": kwargs["password"],
+                "creatorId": creator_id,
+                "name": name,
+                "password": password,
                 "dataFlags": flags.DATAFLAG_UNIT_BASE,
             }
         )
-        return response.get("item", {}).get("id")
+        return int(response.get("item", {}).get("id")) if response.get("item") else None
 
     def _get_access_response(self, hw_type: str) -> dict:
         """

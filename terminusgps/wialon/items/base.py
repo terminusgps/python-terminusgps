@@ -7,18 +7,13 @@ from terminusgps.wialon.session import WialonSession
 
 class WialonBase:
     def __init__(
-        self,
-        id: str | int | None = None,
-        session: WialonSession | None = None,
-        **kwargs,
+        self, id: str | int | None, session: WialonSession, *args, **kwargs
     ) -> None:
-        if session is None:
-            raise ValueError("A valid Wialon API session is required.")
         if isinstance(id, str) and not id.isdigit():
             raise ValueError(f"'id' must be a digit. Got '{id}'.")
 
         self._session = session
-        self._id = str(id if id else self.create(**kwargs))
+        self._id = str(id if id else self.create(*args, **kwargs))
         self.populate()
 
     def __str__(self) -> str:
