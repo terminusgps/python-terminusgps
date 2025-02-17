@@ -102,7 +102,7 @@ class WialonSession:
         self.wialon_api = Wialon(
             scheme=scheme, host=host, port=port, sid=sid, log_level=log_level
         )
-        self.token = token
+        self._token = token or settings.WIALON_TOKEN
         self.login_id = uid
         self._username = None
         self._gis_sid = None
@@ -275,11 +275,7 @@ class WialonSession:
         :value: :confval:`WIALON_TOKEN`
 
         """
-        return self._token
-
-    @token.setter
-    def token(self, value: str | None = None) -> None:
-        self._token = value if value else settings.WIALON_TOKEN
+        return str(self._token)
 
     def login(self, token: str, flags: int = sum([0x1, 0x2, 0x20])) -> str:
         """
@@ -367,3 +363,20 @@ class WialonSessionManager:
             if not self._session:
                 self._session = WialonSession(sid=sid, log_level=log_level)
         return self._session
+
+
+def main() -> None:
+    # Usage example
+    session = WialonSession()  # Instantiate session
+    session.login(settings.WIALON_TOKEN)  # Login to session
+    session.wialon_api.avl_evts()  # Call Wialon API
+    session.logout()  # Logout of session
+
+    # Alternatively, use a context manager to handle logging in and out
+    with WialonSession() as session:
+        session.wialon_api.avl_evts()  # Call Wialon API, logout when scope ends
+    return
+
+
+if __name__ == "__main__":
+    main()
