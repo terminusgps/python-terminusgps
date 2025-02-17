@@ -57,7 +57,7 @@ class WialonUnitGroup(WialonBase):
         :rtype: :py:obj:`bool`
 
         """
-        return True if str(item.id) in self.items else False
+        return True if item.id in self.items else False
 
     def add_item(self, item: WialonBase) -> None:
         """
