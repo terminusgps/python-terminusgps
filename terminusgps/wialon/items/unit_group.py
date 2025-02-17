@@ -1,4 +1,3 @@
-from typing import Type
 from terminusgps.wialon import flags
 from terminusgps.wialon.items.base import WialonBase
 
@@ -47,7 +46,7 @@ class WialonUnitGroup(WialonBase):
             **{"itemId": self.id, "units": new_items}
         )
 
-    def is_member(self, item: Type[WialonBase]) -> bool:
+    def is_member(self, item: WialonBase) -> bool:
         """
         Determines whether or not ``item`` is a member of the group.
 
@@ -60,7 +59,7 @@ class WialonUnitGroup(WialonBase):
         """
         return True if str(item.id) in self.items else False
 
-    def add_item(self, item: Type[WialonBase]) -> None:
+    def add_item(self, item: WialonBase) -> None:
         """
         Adds a Wialon item to the group.
 
@@ -74,7 +73,7 @@ class WialonUnitGroup(WialonBase):
         new_items: list[str] = self.items.copy() + [str(item.id)]
         self.set_items(new_items)
 
-    def rm_item(self, item: Type[WialonBase]) -> None:
+    def rm_item(self, item: WialonBase) -> None:
         """
         Removes a Wialon unit from the group, if it's a member of the group.
 
@@ -116,3 +115,38 @@ class WialonUnitGroup(WialonBase):
             }
         )
         return [unit_id for unit_id in response.get("items")[0].get("u", [])]
+
+
+def main() -> None:
+    import logging
+
+    from django.utils import timezone
+    from django.conf import settings
+    from terminusgps.wialon.session import WialonSession
+    from terminusgps.wialon.items import WialonUnit
+    from terminusgps.wialon.utils import get_hw_type_id
+
+    timestamp = f"{timezone.now():%Y_%m_%d_%H:%M:%S}"
+    with WialonSession(log_level=logging.DEBUG) as session:
+        unit = WialonUnit(
+            id=None,
+            session=session,
+            creator_id=settings.WIALON_ADMIN_ID,
+            name=f"test_unit_{timestamp}",
+            hw_type_id=get_hw_type_id("Test HW", session=session),
+        )
+        group = WialonUnitGroup(
+            id=None,
+            session=session,
+            creator_id=settings.WIALON_ADMIN_ID,
+            name=f"test_group_{timestamp}",
+        )
+        group.add_item(unit)
+        print(f"{group.items = }")
+        unit.delete()
+        group.delete()
+    return
+
+
+if __name__ == "__main__":
+    main()
