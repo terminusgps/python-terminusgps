@@ -45,8 +45,7 @@ class Wialon(WialonAPI):
         return len(self.failed_calls) / self.total_calls
 
     def call(self, action_name: str, *argc, **kwargs) -> typing.Any:
-        self.logger.info(f"Executing '{action_name}'...")
-        self.logger.debug(f"Executing '{action_name}' using: '{kwargs}'")
+        self.logger.debug(f"Executing '{action_name}'...")
         call_record = WialonAPICall(
             action=action_name, timestamp=timezone.now(), args=argc, kwargs=kwargs
         )
@@ -54,6 +53,7 @@ class Wialon(WialonAPI):
         try:
             result = super().call(action_name, *argc, **kwargs)
             call_record.result = result
+            self.logger.debug(f"Executed '{action_name}' successfully.")
             return result
         except WialonError as e:
             self.logger.warning(f"Failed to execute '{action_name}': '{e}'")

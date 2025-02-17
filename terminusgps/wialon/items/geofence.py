@@ -4,6 +4,9 @@ from terminusgps.wialon.items.base import WialonBase
 
 
 class WialonGeofence(WialonBase):
+    def __new__(cls) -> "WialonGeofence":
+        raise NotImplementedError()
+
     class WialonGeofenceShape(models.IntegerChoices):
         LINE = 1
         POLYGON = 2
