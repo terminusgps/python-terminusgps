@@ -39,16 +39,31 @@ class WialonUnit(WialonBase):
     def populate(self) -> None:
         super().populate()
         response = self.session.wialon_api.core_search_item(
-            **{"id": self.id, "flags": flags.DATAFLAG_UNIT_ADVANCED_PROPERTIES}
+            **{
+                "id": self.id,
+                "flags": sum(
+                    [flags.DATAFLAG_UNIT_ADVANCED_PROPERTIES, flags.DATAFLAG_UNIT_IMAGE]
+                ),
+            }
         ).get("item", {})
         self._imei_number = response.get("uid")
         self._active = response.get("act", False)
+        self._image_uri = response.get("uri")
+
+    def get_position(self) -> dict:
+        return self.session.wialon_api.core_search_item(
+            **{"id": self.id, "flags": flags.DATAFLAG_UNIT_POSITION}
+        )
 
     @property
     def available_commands(self) -> dict:
         return self.session.wialon_api.core_get_hw_cmds(
             **{"deviceTypeId": 0, "unitId": self.id}
         )
+
+    @property
+    def image_uri(self) -> str:
+        return self._image_uri
 
     @property
     def imei_number(self) -> int | None:
