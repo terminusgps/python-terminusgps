@@ -36,11 +36,30 @@ class WialonUnit(WialonBase):
         )
         return int(response.get("item", {}).get("id")) if response.get("item") else None
 
+    def populate(self) -> None:
+        super().populate()
+        response = self.session.wialon_api.core_search_item(
+            **{"id": self.id, "flags": flags.DATAFLAG_UNIT_ADVANCED_PROPERTIES}
+        ).get("item", {})
+        self._imei_number = response.get("uid")
+        self._active = response.get("act", False)
+
     @property
     def available_commands(self) -> dict:
         return self.session.wialon_api.core_get_hw_cmds(
             **{"deviceTypeId": 0, "unitId": self.id}
         )
+
+    @property
+    def imei_number(self) -> int | None:
+        if self._imei_number:
+            return int(self._imei_number)
+
+    @property
+    def active(self) -> bool:
+        if self._active:
+            return bool(self._active)
+        return False
 
     def execute_command(
         self,
