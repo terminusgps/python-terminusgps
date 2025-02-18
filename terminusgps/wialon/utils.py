@@ -50,10 +50,10 @@ def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
         **{
             "spec": {
                 "itemsType": "avl_unit",
-                "propName": "rel_admin_field_value",
-                "propValueMask": str(iccid),
-                "sortType": "admin_fields",
-                "propType": "adminfield",
+                "propName": "sys_unique_id",
+                "propValueMask": f"*{iccid}*",
+                "sortType": "sys_unique_id",
+                "propType": "property",
                 "or_logic": 0,
             },
             "force": 0,
