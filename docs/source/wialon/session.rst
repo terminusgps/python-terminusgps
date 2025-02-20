@@ -4,9 +4,11 @@ Wialon API Sessions
 .. autoclass:: terminusgps.wialon.session.WialonSession
    :members:
    :class-doc-from: init
+   :autoclasstoc:
 
 .. autoclass:: terminusgps.wialon.session.WialonSessionManager
    :members:
+   :autoclasstoc:
 
 
 =====

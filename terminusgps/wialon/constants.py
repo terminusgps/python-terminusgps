@@ -17,6 +17,7 @@ ACCESSMASK_RESOURCE_BASIC: int = sum(
         flags.ACCESSFLAG_RESOURCE_VIEW_TRAILERS,
     ]
 )
+"""Basic resource permissions"""
 
 ACCESSMASK_UNIT_BASIC: int = sum(
     [
@@ -35,6 +36,7 @@ ACCESSMASK_UNIT_BASIC: int = sum(
         flags.ACCESSFLAG_UNIT_EXPORT_MESSAGES,
     ]
 )
+"""Basic unit permissions"""
 
 ACCESSMASK_UNIT_MIGRATION: int = sum(
     [
@@ -45,3 +47,4 @@ ACCESSMASK_UNIT_MIGRATION: int = sum(
         flags.ACCESSFLAG_VIEW_ITEM_BASIC,
     ]
 )
+"""Unit migration permissions"""

@@ -172,26 +172,3 @@ def generate_wialon_password(length: int = 32) -> str:
         ):
             break
     return password
-
-
-def gen_wialon_password(length: int = 32) -> str:
-    """
-    DEPRECATED: Use :py:func:`~terminusgps.wialon.utils.generate_wialon_password` instead.
-
-    Generates a Wialon compliant password of random characters.
-
-    Password length can be between ``8`` and ``64`` characters.
-
-    :param length: Length of the generated password. Default is ``32``.
-    :type length: :py:obj:`int`
-    :raises ValueError: If the provided length is invalid.
-    :returns: A Wialon compliant password.
-    :rtype: :py:obj:`str`
-
-    """
-    warnings.warn(
-        "gen_wialon_password is deprecated and will be removed in a future version. Use generate_wialon_password instead.",
-        DeprecationWarning,
-        stacklevel=2,
-    )
-    return generate_wialon_password(length)

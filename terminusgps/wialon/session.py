@@ -101,11 +101,13 @@ class WialonSession:
         ).get_logger()
 
     def __enter__(self) -> "WialonSession":
+        """Logs into the Wialon API using a token set in :py:meth:`__init__`."""
         assert self.token, "Wialon API token was not set"
         self.login(self.token)
         return self
 
     def __exit__(self, *args, **kwargs) -> None:
+        """Logs out of the session by calling :py:meth:`logout`."""
         self.logout()
 
     @property

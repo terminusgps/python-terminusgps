@@ -5,7 +5,7 @@ Usage Examples
 Create a new unit and rename it
 ===============================
 
-1. Import :py:obj:`~terminusgps.wialon.session.WialonSession` and :py:obj:`~terminusgps.wialon.items.WialonUnit`.
+1. Import :py:obj:`~terminusgps.wialon.session.WialonSession` and :py:obj:`~terminusgps.wialon.items.unit.WialonUnit`.
 
 Let's also import :py:obj:`~terminusgps.wialon.utils.generate_wialon_password` so we don't have to come up with a valid Wialon password ourselves.
 

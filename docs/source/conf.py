@@ -16,6 +16,7 @@ release = "20.5.2"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
+    "autoclasstoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
@@ -40,4 +41,6 @@ exclude_patterns = []
 
 html_theme = "sphinxawesome_theme"
 html_permalinks_icon = Icons.permalinks_icon
+pygments_style = "sas"
+pygments_style_dark = "lightbulb"
 html_static_path = ["_static"]
