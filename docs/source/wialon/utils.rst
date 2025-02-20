@@ -5,16 +5,9 @@ Utilities
 Functions
 =========
 
-.. currentmodule:: terminusgps.wialon.utils
-
-.. autosummary::
-
-   get_hw_type_id
-   get_id_from_iccid
-   get_wialon_cls
-   get_vin_info
-   is_unique
-   generate_wialon_password
+.. automodule:: terminusgps.wialon.utils
+   :members:
+   :exclude-members: gen_wialon_password
 
 =====
 Usage

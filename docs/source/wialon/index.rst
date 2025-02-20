@@ -9,7 +9,9 @@ Wialon API
 
     constants.rst
     errors.rst
+    examples.rst
     flags.rst
     items.rst
     session.rst
+    settings.rst
     utils.rst

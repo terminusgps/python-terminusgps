@@ -1,6 +1,8 @@
 Flags
 =====
 
+.. automodule:: terminusgps.wialon.flags
+
 .. currentmodule:: terminusgps.wialon.flags
 
 ============
