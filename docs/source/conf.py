@@ -10,7 +10,7 @@ from sphinxawesome_theme.postprocess import Icons
 project = "python-terminusgps"
 copyright = "2025, Terminus GPS, LLC"
 author = "Terminus GPS, LLC"
-release = "20.5.2"
+release = "20.6.1"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
