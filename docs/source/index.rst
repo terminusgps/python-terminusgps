@@ -6,6 +6,23 @@
 python-terminusgps documentation
 ================================
 
+============
+Installation
+============
+
+Use pip to install from `PyPI <https://pypi.org/project/python-terminusgps/>`_.
+
+.. code:: bash
+
+   pip install python-terminusgps
+
+In Python, all subpackages are nested within :py:mod:`terminusgps`:
+
+.. code:: python
+
+   from terminusgps.aws.secrets import get_secret
+   from terminusgps.wialon.session import WialonSession
+
 .. toctree::
     :maxdepth: 2
     :caption: Contents:

@@ -12,7 +12,7 @@ Items
 
 .. autoclass:: terminusgps.wialon.items.resource.WialonResource
    :members:
-   
+
 .. autoclass:: terminusgps.wialon.items.retranslator.WialonRetranslator
    :members:
 
