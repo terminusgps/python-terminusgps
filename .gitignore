@@ -1,5 +1,6 @@
 .*
 !.gitignore
+!.readthedocs.yaml
 
 # Python-generated files
 __pycache__/
