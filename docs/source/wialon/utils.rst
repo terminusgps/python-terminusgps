@@ -7,7 +7,6 @@ Functions
 
 .. automodule:: terminusgps.wialon.utils
    :members:
-   :exclude-members: gen_wialon_password
 
 =====
 Usage
