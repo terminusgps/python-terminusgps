@@ -29,7 +29,6 @@ propcache==0.2.1
 pygments==2.19.1
 pyjwt==2.10.1
 python-dateutil==2.9.0.post0
--e file:///home/blake/Projects/python-terminusgps
 python-wialon==1.2.4
 pyxb-x==1.2.6.3
 requests==2.32.3
