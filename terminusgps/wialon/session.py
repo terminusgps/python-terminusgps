@@ -342,20 +342,3 @@ class WialonSessionManager:
             if not self._session:
                 self._session = WialonSession(sid=sid, log_level=log_level)
         return self._session
-
-
-def main() -> None:
-    # Usage example
-    session = WialonSession(log_level=logging.DEBUG)  # Instantiate session
-    session.login(settings.WIALON_TOKEN)  # Login to session
-    session.wialon_api.avl_evts()  # Call Wialon API
-    session.logout()  # Logout of session
-
-    # Alternatively, use a context manager to handle logging in and out
-    with WialonSession() as session:
-        session.wialon_api.avl_evts()  # Call Wialon API, logout when scope ends
-    return
-
-
-if __name__ == "__main__":
-    main()
