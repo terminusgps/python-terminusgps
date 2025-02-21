@@ -556,14 +556,13 @@ wheels = [
 
 [[package]]
 name = "python-terminusgps"
-version = "20.6.1"
+version = "20.6.2"
 source = { editable = "." }
 dependencies = [
     { name = "argparse" },
     { name = "authorizenet" },
     { name = "boto3" },
     { name = "django" },
-    { name = "lxml" },
     { name = "python-wialon" },
     { name = "twilio" },
 ]
@@ -581,7 +580,6 @@ requires-dist = [
     { name = "authorizenet", specifier = ">=1.1.5" },
     { name = "boto3", specifier = ">=1.34.144" },
     { name = "django", specifier = ">=5.1.5" },
-    { name = "lxml", specifier = "==4.9.4" },
     { name = "python-wialon", specifier = ">=1.2.4" },
     { name = "twilio", specifier = ">=9.4.5" },
 ]

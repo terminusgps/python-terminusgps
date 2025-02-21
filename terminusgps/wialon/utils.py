@@ -1,6 +1,5 @@
 import secrets
 import string
-import warnings
 import typing
 
 from terminusgps.wialon import items, flags

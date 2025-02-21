@@ -15,5 +15,4 @@ Wialon API
     flags.rst
     items.rst
     session.rst
-    settings.rst
     utils.rst
