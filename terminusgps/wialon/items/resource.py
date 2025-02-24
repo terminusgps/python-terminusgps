@@ -287,8 +287,6 @@ class WialonResource(WialonBase):
         desc: str = "",
         phone: str = "",
         mobile_auth_code: str = "",
-        image_checksum: str = "",
-        image_ratio: str = "",
         custom_fields: dict[str, str] | None = None,
     ) -> None:
         """
@@ -331,17 +329,13 @@ class WialonResource(WialonBase):
             params.update({"p": quote_plus(phone)})
         if custom_fields:
             params.update({"jp": custom_fields})
-        response = self.session.wialon_api.resource_update_driver(**params)
-        print(f"{response = }")
+        self.session.wialon_api.resource_update_driver(**params)
 
     def create_passenger(
         self,
         name: str,
         code: str,
         phone: str = "",
-        timezone: int | None = None,
-        image_checksum: str = "",
-        image_ratio: float | None = None,
         custom_fields: dict[str, str] | None = None,
     ) -> None:
         """
@@ -353,12 +347,6 @@ class WialonResource(WialonBase):
         :type code: :py:obj:`str`
         :param phone: A phone number beginning in a country code. No spaces.
         :type phone: :py:obj:`str`
-        :param timezone: A timezone integer.
-        :type timezone: :py:obj:`int` | :py:obj:`None`
-        :param image_checksum: Checksum for passenger image.
-        :type image_checksum: :py:obj:`str`
-        :param image_ratio: Passenger image aspect ratio.
-        :type image_ratio: :py:obj:`float` | :py:obj:`None`
         :param custom_fields: Additional custom fields to add to the passenger.
         :type custom_fields: :py:obj:`dict` | :py:obj:`None`
         :raises WialonError: If something goes wrong calling the Wialon API.
@@ -371,14 +359,61 @@ class WialonResource(WialonBase):
             "id": 0,
             "callMode": "create",
             "c": code,
-            "ck": image_checksum,
-            "r": image_ratio,
             "n": name,
         }
         if phone:
             params.update({"p": quote_plus(phone)})
-        if timezone:
-            params.update({"tz": timezone})
         if custom_fields:
             params.update({"jp": custom_fields})
         self.session.wialon_api.resource_update_tag(**params)
+
+    def update_attachable_drivers(self, units: list[str | int]) -> None:
+        """Updates the pool of units for the resource to attach drivers to the new unit list."""
+        self.session.wialon_api.update_driver_units(
+            **{"itemId": self.id, "units": units}
+        )
+
+    def update_attachable_passengers(self, units: list[str | int]) -> None:
+        """Updates the pool of units for the resource to attach passengers to the new unit list."""
+        self.session.wialon_api.update_tag_units(**{"itemId": self.id, "units": units})
+
+    def create_trailer(
+        self,
+        name: str,
+        code: str,
+        desc: str = "",
+        phone: str = "",
+        custom_fields: dict[str, str] | None = None,
+    ) -> None:
+        """
+        Creates a trailer for the resource.
+
+        :param name: A name for the new trailer.
+        :type name: :py:obj:`str`
+        :param code: A unique code for the new trailer.
+        :type code: :py:obj:`str`
+        :param desc: A description for the trailer.
+        :type desc: :py:obj:`str`
+        :param phone: A phone number beginning in a country code. No spaces.
+        :type phone: :py:obj:`str`
+        :param custom_fields: Additional custom fields to add to the trailer.
+        :type custom_fields: :py:obj:`dict` | :py:obj:`None`
+        :raises WialonError: If something goes wrong calling the Wialon API.
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
+        params = {
+            "itemId": self.id,
+            "id": 0,
+            "callMode": "create",
+            "c": code,
+            "ds": desc,
+            "n": name,
+            "f": 1,
+        }
+        if phone:
+            params.update({"p": quote_plus(phone)})
+        if custom_fields:
+            params.update({"jp": custom_fields})
+        self.session.wialon_api.resource_update_trailer(**params)
