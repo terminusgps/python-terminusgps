@@ -302,10 +302,6 @@ class WialonResource(WialonBase):
         :type phone: :py:obj:`str`
         :param mobile_auth_code: Authentication code for Wialon mobile app.
         :type mobile_auth_code: :py:obj:`str`
-        :param image_checksum: Checksum for driver image.
-        :type image_checksum: :py:obj:`str`
-        :param image_ratio: Driver image aspect ratio.
-        :type image_ratio: :py:obj:`float` | :py:obj:`None`
         :param custom_fields: Additional custom fields to add to the driver.
         :type custom_fields: :py:obj:`dict` | :py:obj:`None`
         :raises WialonError: If something goes wrong calling the Wialon API.
