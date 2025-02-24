@@ -273,6 +273,56 @@
 </div>
 </section>
 </section>
+<section id="add-a-driver-to-a-resource">
+<h2>Add a driver to a resource<a class="headerlink" href="#add-a-driver-to-a-resource" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#add-a-driver-to-a-resource'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<section id="import-wialonsession-and-wialonresource">
+<h3>1. Import <a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a> and <a class="reference internal" href="items.html#terminusgps.wialon.items.resource.WialonResource" title="terminusgps.wialon.items.resource.WialonResource"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonResource</span></code></a>.<a class="headerlink" href="#import-wialonsession-and-wialonresource" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#import-wialonsession-and-wialonresource'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.session</span><span class="w"> </span><span class="kn">import</span> <span class="n">WialonSession</span>
+</span><span id="line-2"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.items</span><span class="w"> </span><span class="kn">import</span> <span class="n">WialonResource</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="instantiate-a-wialonresource-object">
+<h3>2. Instantiate a <a class="reference internal" href="items.html#terminusgps.wialon.items.resource.WialonResource" title="terminusgps.wialon.items.resource.WialonResource"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonResource</span></code></a> object.<a class="headerlink" href="#instantiate-a-wialonresource-object" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#instantiate-a-wialonresource-object'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">with</span> <span class="n">WialonSession</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="s2">"my_secure_wialon_token"</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+</span><span id="line-2">    <span class="n">resource</span> <span class="o">=</span> <span class="n">WialonResource</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">"12345678"</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="call-create-driver">
+<h3>3. Call <a class="reference internal" href="items.html#terminusgps.wialon.items.resource.WialonResource.create_driver" title="terminusgps.wialon.items.resource.WialonResource.create_driver"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_driver()</span></code></a>.<a class="headerlink" href="#call-create-driver" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#call-create-driver'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">with</span> <span class="n">WialonSession</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="s2">"my_secure_wialon_token"</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+</span><span id="line-2">    <span class="o">...</span>
+</span><span id="line-3">    <span class="n">resource</span><span class="o">.</span><span class="n">create_driver</span><span class="p">(</span>
+</span><span id="line-4">        <span class="n">name</span><span class="o">=</span><span class="s2">"test_driver"</span><span class="p">,</span>
+</span><span id="line-5">        <span class="n">code</span><span class="o">=</span><span class="s2">"1234"</span><span class="p">,</span>
+</span><span id="line-6">        <span class="n">desc</span><span class="o">=</span><span class="s2">"A test driver."</span><span class="p">,</span>
+</span><span id="line-7">        <span class="n">phone</span><span class="o">=</span><span class="s2">"+15555555555"</span><span class="p">,</span>
+</span><span id="line-8">        <span class="n">mobile_auth_code</span><span class="o">=</span><span class="s2">"1234"</span><span class="p">,</span>
+</span><span id="line-9">        <span class="n">custom_fields</span><span class="o">=</span><span class="p">{</span><span class="s2">"my_field_key"</span><span class="p">:</span> <span class="s2">"my_field_value"</span><span class="p">}</span>
+</span><span id="line-10">    <span class="p">)</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>Full code example<a class="headerlink" href="#id2" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#id2'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.session</span><span class="w"> </span><span class="kn">import</span> <span class="n">WialonSession</span>
+</span><span id="line-2"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.items</span><span class="w"> </span><span class="kn">import</span> <span class="n">WialonResource</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="k">with</span> <span class="n">WialonSession</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="s2">"my_secure_wialon_token"</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+</span><span id="line-5">    <span class="n">resource</span> <span class="o">=</span> <span class="n">WialonResource</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">"12345678"</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span>
+</span><span id="line-6">    <span class="n">resource</span><span class="o">.</span><span class="n">create_driver</span><span class="p">(</span>
+</span><span id="line-7">        <span class="n">name</span><span class="o">=</span><span class="s2">"test_driver"</span><span class="p">,</span>
+</span><span id="line-8">        <span class="n">code</span><span class="o">=</span><span class="s2">"1234"</span><span class="p">,</span>
+</span><span id="line-9">        <span class="n">desc</span><span class="o">=</span><span class="s2">"A test driver."</span><span class="p">,</span>
+</span><span id="line-10">        <span class="n">phone</span><span class="o">=</span><span class="s2">"+15555555555"</span><span class="p">,</span>
+</span><span id="line-11">        <span class="n">mobile_auth_code</span><span class="o">=</span><span class="s2">"1234"</span><span class="p">,</span>
+</span><span id="line-12">        <span class="n">custom_fields</span><span class="o">=</span><span class="p">{</span><span class="s2">"my_field_key"</span><span class="p">:</span> <span class="s2">"my_field_value"</span><span class="p">}</span>
+</span><span id="line-13">    <span class="p">)</span>
+</span></code></pre></div>
+</div>
+</section>
+</section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
@@ -293,6 +343,13 @@
 <li><a :data-current="activeSection === '#transform-the-resource-into-an-account-and-enable-it'" class="reference internal" href="#transform-the-resource-into-an-account-and-enable-it">6. Transform the resource into an account and enable it.</a></li>
 <li><a :data-current="activeSection === '#migrate-the-unit-into-the-account'" class="reference internal" href="#migrate-the-unit-into-the-account">7. Migrate the unit into the account.</a></li>
 <li><a :data-current="activeSection === '#id1'" class="reference internal" href="#id1">Full code example</a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#add-a-driver-to-a-resource'" class="reference internal" href="#add-a-driver-to-a-resource">Add a driver to a resource</a><ul>
+<li><a :data-current="activeSection === '#import-wialonsession-and-wialonresource'" class="reference internal" href="#import-wialonsession-and-wialonresource">1. Import <code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonResource</span></code>.</a></li>
+<li><a :data-current="activeSection === '#instantiate-a-wialonresource-object'" class="reference internal" href="#instantiate-a-wialonresource-object">2. Instantiate a <code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonResource</span></code> object.</a></li>
+<li><a :data-current="activeSection === '#call-create-driver'" class="reference internal" href="#call-create-driver">3. Call <code class="xref py py-meth docutils literal notranslate"><span class="pre">create_driver()</span></code>.</a></li>
+<li><a :data-current="activeSection === '#id2'" class="reference internal" href="#id2">Full code example</a></li>
 </ul>
 </li>
 </ul>

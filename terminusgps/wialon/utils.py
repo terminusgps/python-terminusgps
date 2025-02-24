@@ -32,7 +32,7 @@ def get_hw_type_id(name: str, session: WialonSession) -> int | None:
     return int(hw_types.get(name)) if name in hw_types.keys() else None
 
 
-def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
+def get_id_from_imei(imei: str, session: WialonSession) -> str | None:
     """
     Takes a Wialon unit's IMEI # and returns its unit id, if it exists.
 
@@ -50,7 +50,7 @@ def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
             "spec": {
                 "itemsType": "avl_unit",
                 "propName": "sys_unique_id",
-                "propValueMask": f"*{iccid}*",
+                "propValueMask": f"*{imei}*",
                 "sortType": "sys_unique_id",
                 "propType": "property",
                 "or_logic": 0,
@@ -64,6 +64,24 @@ def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
 
     if response.get("totalItemsCount", 0) == 1:
         return response["items"][0].get("id")
+
+
+def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
+    """
+    DEPRECATED: Use :py:func:`~terminusgps.wialon.utils.get_id_from_imei`.
+
+    Takes a Wialon unit's IMEI # and returns its unit id, if it exists.
+
+    :param iccid: A unique id.
+    :type iccid: :py:obj:`str`
+    :param session: A valid Wialon API session.
+    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :raises WialonError: If something goes wrong with Wialon.
+    :returns: A Wialon object id, if it was found.
+    :rtype: :py:obj:`str` | :py:obj:`None`
+
+    """
+    return get_id_from_imei(imei=iccid, session=session)
 
 
 def get_wialon_cls(items_type: str) -> typing.Type[WialonBase]:

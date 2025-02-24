@@ -184,3 +184,61 @@ Full code example
         account_resource.create_account("terminusgps_ext_hist")
         account_resource.enable()
         account_resource.migrate_unit(unit)
+
+==========================
+Add a driver to a resource
+==========================
+------------------------------------------------------------------------------------------------------------------------------
+1. Import :py:obj:`~terminusgps.wialon.session.WialonSession` and :py:obj:`~terminusgps.wialon.items.resource.WialonResource`.
+------------------------------------------------------------------------------------------------------------------------------
+
+.. code:: python
+
+    from terminusgps.wialon.session import WialonSession
+    from terminusgps.wialon.items import WialonResource
+
+------------------------------------------------------------------------------------
+2. Instantiate a :py:obj:`~terminusgps.wialon.items.resource.WialonResource` object.
+------------------------------------------------------------------------------------
+
+.. code:: python
+
+    with WialonSession(token="my_secure_wialon_token") as session:
+        resource = WialonResource(id="12345678", session=session)
+
+-----------------------------------------------------------------------------------
+3. Call :py:meth:`~terminusgps.wialon.items.resource.WialonResource.create_driver`.
+-----------------------------------------------------------------------------------
+
+.. code:: python
+
+    with WialonSession(token="my_secure_wialon_token") as session:
+        ...
+        resource.create_driver(
+            name="test_driver",
+            code="1234",
+            desc="A test driver.",
+            phone="+15555555555",
+            mobile_auth_code="1234",
+            custom_fields={"my_field_key": "my_field_value"}
+        )
+
+-----------------
+Full code example
+-----------------
+
+.. code:: python
+
+    from terminusgps.wialon.session import WialonSession
+    from terminusgps.wialon.items import WialonResource
+
+    with WialonSession(token="my_secure_wialon_token") as session:
+        resource = WialonResource(id="12345678", session=session)
+        resource.create_driver(
+            name="test_driver",
+            code="1234",
+            desc="A test driver.",
+            phone="+15555555555",
+            mobile_auth_code="1234",
+            custom_fields={"my_field_key": "my_field_value"}
+        )
