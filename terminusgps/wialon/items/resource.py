@@ -1,9 +1,13 @@
+from urllib.parse import quote_plus
+
 from terminusgps.wialon import flags
 from terminusgps.wialon.items.base import WialonBase
 
 
 class WialonResource(WialonBase):
-    def create(self, creator_id: str | int, name: str) -> int | None:
+    def create(
+        self, creator_id: str | int, name: str, skip_creator_check: bool = False
+    ) -> int | None:
         """
         Creates a new Wialon resource.
 
@@ -11,6 +15,8 @@ class WialonResource(WialonBase):
         :type creator_id: :py:obj:`int` | :py:obj:`str`
         :param name: A name for the resource.
         :type name: :py:obj:`str`
+        :param skip_creator_check: Bypass object creation restrictions while creating the resource.
+        :type skip_creator_check: :py:obj:`bool`
         :raises ValueError: If ``creator_id`` is not a digit.
         :raises WialonError: If something goes wrong with Wialon.
         :returns: The Wialon id for the new resource, if it was created.
@@ -25,6 +31,7 @@ class WialonResource(WialonBase):
                 "creatorId": creator_id,
                 "name": name,
                 "dataFlags": flags.DATAFLAG_UNIT_BASE,
+                "skipCreatorCheck": int(skip_creator_check),
             }
         )
         return int(response.get("item", {}).get("id")) if response.get("item") else None
@@ -272,3 +279,106 @@ class WialonResource(WialonBase):
                 "denyBalance": deny_balance_val,
             }
         )
+
+    def create_driver(
+        self,
+        name: str,
+        code: str = "",
+        desc: str = "",
+        phone: str = "",
+        mobile_auth_code: str = "",
+        image_checksum: str = "",
+        image_ratio: str = "",
+        custom_fields: dict[str, str] | None = None,
+    ) -> None:
+        """
+        Creates a driver for the resource.
+
+        :param name: A name for the new driver.
+        :type name: :py:obj:`str`
+        :param code: A unique code for the new driver.
+        :type code: :py:obj:`str`
+        :param desc: Description for the driver.
+        :type desc: :py:obj:`str`
+        :param phone: A phone number beginning in a country code. No spaces.
+        :type phone: :py:obj:`str`
+        :param mobile_auth_code: Authentication code for Wialon mobile app.
+        :type mobile_auth_code: :py:obj:`str`
+        :param image_checksum: Checksum for driver image.
+        :type image_checksum: :py:obj:`str`
+        :param image_ratio: Driver image aspect ratio.
+        :type image_ratio: :py:obj:`float` | :py:obj:`None`
+        :param custom_fields: Additional custom fields to add to the driver.
+        :type custom_fields: :py:obj:`dict` | :py:obj:`None`
+        :raises WialonError: If something goes wrong calling the Wialon API.
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
+        params = {
+            "itemId": self.id,
+            "id": 0,
+            "callMode": "create",
+            "ej": {"apps": []},
+            "c": code,
+            "ds": desc,
+            "n": name,
+            "f": 1,
+            "pwd": mobile_auth_code,
+        }
+
+        if phone:
+            params.update({"p": quote_plus(phone)})
+        if custom_fields:
+            params.update({"jp": custom_fields})
+        response = self.session.wialon_api.resource_update_driver(**params)
+        print(f"{response = }")
+
+    def create_passenger(
+        self,
+        name: str,
+        code: str,
+        phone: str = "",
+        timezone: int | None = None,
+        image_checksum: str = "",
+        image_ratio: float | None = None,
+        custom_fields: dict[str, str] | None = None,
+    ) -> None:
+        """
+        Creates a passenger/tag for the resource.
+
+        :param name: A name for the new passenger.
+        :type name: :py:obj:`str`
+        :param code: A unique code for the new passenger.
+        :type code: :py:obj:`str`
+        :param phone: A phone number beginning in a country code. No spaces.
+        :type phone: :py:obj:`str`
+        :param timezone: A timezone integer.
+        :type timezone: :py:obj:`int` | :py:obj:`None`
+        :param image_checksum: Checksum for passenger image.
+        :type image_checksum: :py:obj:`str`
+        :param image_ratio: Passenger image aspect ratio.
+        :type image_ratio: :py:obj:`float` | :py:obj:`None`
+        :param custom_fields: Additional custom fields to add to the passenger.
+        :type custom_fields: :py:obj:`dict` | :py:obj:`None`
+        :raises WialonError: If something goes wrong calling the Wialon API.
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
+        params = {
+            "itemId": self.id,
+            "id": 0,
+            "callMode": "create",
+            "c": code,
+            "ck": image_checksum,
+            "r": image_ratio,
+            "n": name,
+        }
+        if phone:
+            params.update({"p": quote_plus(phone)})
+        if timezone:
+            params.update({"tz": timezone})
+        if custom_fields:
+            params.update({"jp": custom_fields})
+        self.session.wialon_api.resource_update_tag(**params)

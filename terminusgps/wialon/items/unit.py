@@ -199,6 +199,7 @@ class WialonUnit(WialonBase):
         return list(dict.fromkeys(phone_numbers))  # Removes duplicate phone numbers
 
     def clean_phone_numbers(self, phones: list[str]) -> list[str]:
+        """Takes a list of phone numbers and returns a list of clean phone numbers."""
         cleaned_phones = []
         for num in phones:
             if "," in num:
