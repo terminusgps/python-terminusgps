@@ -200,13 +200,11 @@ class WialonUnit(WialonBase):
 
     def clean_phone_numbers(self, phones: list[str]) -> list[str]:
         """Takes a list of phone numbers and returns a list of clean phone numbers."""
-        cleaned_phones = []
-        for num in phones:
-            if "," in num:
-                cleaned_phones.extend(num.split(","))
-            else:
-                cleaned_phones.append(num)
-        return cleaned_phones
+        return [
+            clean_num
+            for num in phones
+            for clean_num in (num.split(",") if "," in num else [num])
+        ]
 
     def _get_afield_phone_numbers(self, key: str = "to_number") -> list[str] | None:
         """
