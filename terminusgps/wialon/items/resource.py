@@ -58,12 +58,14 @@ class WialonResource(WialonBase):
         :type: :py:obj:`bool`
 
         """
-        if not self.is_account:
-            return False  # Resources cannot have dealer rights
-        return bool(
-            self.session.wialon_api.get_account_data(
-                **{"itemId": self.id, "type": 1}
-            ).get("dealerRights")
+        return (
+            bool(
+                self.session.wialon_api.get_account_data(
+                    **{"itemId": self.id, "type": 1}
+                ).get("dealerRights")
+            )
+            if self.is_account
+            else False
         )
 
     @property
