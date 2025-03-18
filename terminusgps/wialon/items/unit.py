@@ -249,5 +249,5 @@ class WialonUnit(WialonBase):
             **{"unitId": self.id}
         )
         if response:
-            dirty_phones = [driver[0].get("ph") for _, driver in response.items()]
+            dirty_phones = [driver[0].get("ph") for driver in response.values()]
             return self.clean_phone_numbers(dirty_phones)
