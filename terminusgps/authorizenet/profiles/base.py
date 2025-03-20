@@ -36,18 +36,42 @@ class AuthorizenetProfileBase:
 
     @property
     def merchantCustomerId(self) -> str:
+        """
+        An internally designated customer id.
+
+        :type: :py:obj:`str`
+
+        """
         return str(self._merchantCustomerId)
 
     @property
     def id(self) -> str:
+        """
+        An Authorizenet generated id.
+
+        :type: :py:obj:`str`
+
+        """
         return str(self._id)
 
     @property
     def merchantAuthentication(self) -> merchantAuthenticationType:
+        """
+        Merchant authentication for Authorizenet API calls.
+
+        :type: :py:obj:`~authorizenet.apicontractsv1.merchantAuthenticationType`
+
+        """
         return get_merchant_auth()
 
     @property
     def environment(self) -> str:
+        """
+        Environment for Authorizenet API calls to execute within.
+
+        :type: :py:obj:`str`
+
+        """
         return get_environment()
 
     @abstractmethod
@@ -73,12 +97,30 @@ class AuthorizenetSubProfileBase(AuthorizenetProfileBase):
 
     @property
     def validationMode(self) -> str:
+        """
+        The validation mode for Authorizenet API calls.
+
+        :type: :py:obj:`str`
+
+        """
         return get_validation_mode()
 
     @property
     def default(self) -> str:
+        """
+        Whether or not the sub profile is set as default in Authorizenet.
+
+        :type: :py:obj:`str`
+
+        """
         return str(self._default).lower()
 
     @property
     def customerProfileId(self) -> str:
+        """
+        An Authorizenet generated customer profile id.
+
+        :py:obj:`str`
+
+        """
         return str(self._customerProfileId)
