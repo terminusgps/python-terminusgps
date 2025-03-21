@@ -1,54 +1,28 @@
-from authorizenet import apicontractsv1, apicontrollers, apicontrollersbase
-from terminusgps.authorizenet.auth import get_merchant_auth, get_environment
+from authorizenet import apicontractsv1, apicontrollers
+
+from terminusgps.authorizenet.auth import get_merchant_auth
+from terminusgps.authorizenet.utils import ControllerExecutionMixin
 
 
-class Subscription:
-    def __init__(self, name: str, id: str | int | None = None, **kwargs) -> None:
-        if id is not None and isinstance(id, str) and not id.isdigit():
+class Subscription(ControllerExecutionMixin):
+    def __init__(self, id: str | int | None = None, *args, **kwargs) -> None:
+        if id and isinstance(id, str) and not id.isdigit():
             raise ValueError(f"'id' must be a digit, got '{id}'.")
-        self.name = name
-        self.id = str(id if id else self.create(**kwargs))
-
-    @property
-    def merchantAuthentication(self) -> apicontractsv1.merchantAuthenticationType:
-        return get_merchant_auth()
-
-    @property
-    def environment(self) -> str:
-        return get_environment()
-
-    def execute_controller(
-        self, controller: apicontrollersbase.APIOperationBase
-    ) -> dict:
-        """
-        Executes an Authorize.NET controller and returns its response.
-
-        :param controller: An Authorize.NET API controller.
-        :raises ValueError: If the API call fails.
-        :returns: The Authorize.NET API response.
-        :rtype: :py:obj:`dict`
-
-        """
-        controller.setenvironment(self.environment)
-        controller.execute()
-        response = controller.getresponse()
-
-        if response.messages.resultCode != "Ok":
-            raise ValueError(response.messages.message[0]["text"].text)
-        return response
+        self.id = int(id) if id else self.create(*args, **kwargs)
 
     def create(
         self,
-        schedule: apicontractsv1.paymentScheduleType,
+        name: str,
         amount: str,
+        schedule: apicontractsv1.paymentScheduleType,
         payment: apicontractsv1.paymentType,
         address: apicontractsv1.customerAddressType,
         trial_amount: str = "0.00",
     ) -> int:
         request = apicontractsv1.ARBCreateSubscriptionRequest(
-            merchantAuthentication=self.merchantAuthentication,
+            merchantAuthentication=get_merchant_auth(),
             subscription=apicontractsv1.ARBSubscriptionType(
-                name=self.name,
+                name=name,
                 paymentSchedule=schedule,
                 amount=amount,
                 trialAmount=trial_amount,

@@ -2,7 +2,7 @@ import secrets
 import string
 import typing
 
-from terminusgps.wialon import items, flags
+from terminusgps.wialon import flags, items
 from terminusgps.wialon.items.base import WialonBase
 from terminusgps.wialon.session import WialonSession
 
@@ -15,7 +15,7 @@ def get_hw_type_id(name: str, session: WialonSession) -> int | None:
     :type name: :py:obj:`str`
     :param session: A valid Wialon API session.
     :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
-    :raises WialonError: If something goes wrong with Wialon.
+    :raises WialonError: If something goes wrong during a Wialon API call.
     :returns: A Wialon hardware type id, if it was found.
     :rtype: :py:obj:`int` | :py:obj:`None`
 
@@ -34,18 +34,22 @@ def get_hw_type_id(name: str, session: WialonSession) -> int | None:
 
 def get_id_from_imei(imei: str, session: WialonSession) -> str | None:
     """
-    Takes a Wialon unit's IMEI # and returns its unit id, if it exists.
+    Takes a Wialon unit's IMEI # and returns its unit id.
 
-    :param iccid: A unique id.
-    :type iccid: :py:obj:`str`
+    :param imei: A Wialon unit's IMEI #.
+    :type imei: :py:obj:`str`
     :param session: A valid Wialon API session.
     :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
-    :raises WialonError: If something goes wrong with Wialon.
+    :raises ValueError: If ``imei`` contains non-digit characters.
+    :raises WialonError: If something goes wrong during a Wialon API call.
     :returns: A Wialon object id, if it was found.
     :rtype: :py:obj:`str` | :py:obj:`None`
 
     """
-    response = session.wialon_api.core_search_items(
+    if not imei.isdigit():
+        raise ValueError(f"'imei' must be a digit, got '{imei}'.")
+
+    results = session.wialon_api.core_search_items(
         **{
             "spec": {
                 "itemsType": "avl_unit",
@@ -62,8 +66,8 @@ def get_id_from_imei(imei: str, session: WialonSession) -> str | None:
         }
     )
 
-    if response.get("totalItemsCount", 0) == 1:
-        return response["items"][0].get("id")
+    if results.get("totalItemsCount", 0) == 1:
+        return results["items"][0].get("id")
 
 
 def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
@@ -76,7 +80,7 @@ def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
     :type iccid: :py:obj:`str`
     :param session: A valid Wialon API session.
     :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
-    :raises WialonError: If something goes wrong with Wialon.
+    :raises WialonError: If something goes wrong during a Wialon API call.
     :returns: A Wialon object id, if it was found.
     :rtype: :py:obj:`str` | :py:obj:`None`
 
@@ -96,16 +100,15 @@ def get_wialon_cls(items_type: str) -> typing.Type[WialonBase]:
     """
     match items_type:
         case "user":
-            wialon_cls = items.WialonUser
+            return items.WialonUser
         case "avl_unit":
-            wialon_cls = items.WialonUnit
+            return items.WialonUnit
         case "avl_unit_group":
-            wialon_cls = items.WialonUnitGroup
+            return items.WialonUnitGroup
         case "avl_resource":
-            wialon_cls = items.WialonResource
+            return items.WialonResource
         case _:
-            raise ValueError(f"Invalid items_type '{items_type}'")
-    return wialon_cls
+            raise ValueError(f"Invalid items_type, got '{items_type}'.")
 
 
 def get_vin_info(vin_number: str, session: WialonSession) -> dict:
@@ -123,7 +126,6 @@ def get_vin_info(vin_number: str, session: WialonSession) -> dict:
     response = session.wialon_api.unit_get_vin_info(**{"vin": vin_number}).get(
         "vin_lookup_result"
     )
-
     return (
         {field.get("n"): field.get("v") for field in response.get("pflds")}
         if "error" not in response.keys()
@@ -135,31 +137,38 @@ def is_unique(value: str, session: WialonSession, items_type: str = "avl_unit") 
     """
     Determines if the value is unique among Wialon objects of type 'items_type'.
 
-    :param value: A value whose uniqueness is unknown.
+    :param value: A Wialon object name.
     :type value: :py:obj:`str`
     :param session: A valid Wialon API session.
     :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
-    :param items_type: The type of Wialon objects to validate the value against. Default is ``"avl_unit"``.
+    :param items_type: Type of Wialon objects to validate the value against. Default is ``"avl_unit"``.
     :type items_type: :py:obj:`str`
+    :raises WialonError: If something goes wrong during a Wialon API call.
     :returns: Whether or not the value is unique among 'items_type'.
     :rtype: :py:obj:`bool`
 
     """
-    result = session.wialon_api.core_check_unique(
-        **{"type": items_type, "value": value.strip()}
-    ).get("result")
-    return not bool(result)
+    return not bool(
+        session.wialon_api.core_check_unique(
+            **{"type": items_type, "value": value.strip()}
+        ).get("result")
+    )
 
 
 def generate_wialon_password(length: int = 32) -> str:
     """
-    Generates a Wialon compliant password of random characters.
+    Generates a Wialon compliant password between ``8`` and ``64`` characters.
 
-    Password length can be between ``8`` and ``64`` characters.
+    The generated password will contain:
+
+        - At least one uppercase letter.
+        - At least one lowercase letter.
+        - At least one special symbol.
+        - At least three digits.
 
     :param length: Length of the generated password. Default is ``32``.
     :type length: :py:obj:`int`
-    :raises ValueError: If the provided length is invalid.
+    :raises ValueError: If :py:length is less than ``8`` or greater than ``64``.
     :returns: A Wialon compliant password.
     :rtype: :py:obj:`str`
 

@@ -1,6 +1,5 @@
 from authorizenet.apicontractsv1 import merchantAuthenticationType
 from authorizenet.constants import constants
-
 from django.conf import settings
 
 

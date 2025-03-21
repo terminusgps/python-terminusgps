@@ -106,6 +106,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../authorizenet/index.html">Authorizenet API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../authorizenet/auth.html">Authorizenet API Authentication</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../authorizenet/profiles.html">Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../authorizenet/utils.html">Utilities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../aws/index.html">AWS API</a><ul>
@@ -172,7 +173,7 @@
 </span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
 </span><span id="line-3"><span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 </span><span id="line-4">
-</span><span id="line-5"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon</span><span class="w"> </span><span class="kn">import</span> <span class="n">items</span><span class="p">,</span> <span class="n">flags</span>
+</span><span id="line-5"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon</span><span class="w"> </span><span class="kn">import</span> <span class="n">flags</span><span class="p">,</span> <span class="n">items</span>
 </span><span id="line-6"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.items.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">WialonBase</span>
 </span><span id="line-7"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.session</span><span class="w"> </span><span class="kn">import</span> <span class="n">WialonSession</span>
 </span><span id="line-8">
@@ -187,7 +188,7 @@
 </span><span id="line-15"><span class="sd">    :type name: :py:obj:`str`</span>
 </span><span id="line-16"><span class="sd">    :param session: A valid Wialon API session.</span>
 </span><span id="line-17"><span class="sd">    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`</span>
-</span><span id="line-18"><span class="sd">    :raises WialonError: If something goes wrong with Wialon.</span>
+</span><span id="line-18"><span class="sd">    :raises WialonError: If something goes wrong during a Wialon API call.</span>
 </span><span id="line-19"><span class="sd">    :returns: A Wialon hardware type id, if it was found.</span>
 </span><span id="line-20"><span class="sd">    :rtype: :py:obj:`int` | :py:obj:`None`</span>
 </span><span id="line-21">
@@ -209,176 +210,185 @@
 <a class="viewcode-back" href="../../../wialon/utils.html#terminusgps.wialon.utils.get_id_from_imei">[docs]</a>
 </span><span id="line-35"><span class="k">def</span><span class="w"> </span><span class="nf">get_id_from_imei</span><span class="p">(</span><span class="n">imei</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">WialonSession</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="line-36"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-37"><span class="sd">    Takes a Wialon unit&#39;s IMEI # and returns its unit id, if it exists.</span>
+</span><span id="line-37"><span class="sd">    Takes a Wialon unit&#39;s IMEI # and returns its unit id.</span>
 </span><span id="line-38">
-</span><span id="line-39"><span class="sd">    :param iccid: A unique id.</span>
-</span><span id="line-40"><span class="sd">    :type iccid: :py:obj:`str`</span>
+</span><span id="line-39"><span class="sd">    :param imei: A Wialon unit&#39;s IMEI #.</span>
+</span><span id="line-40"><span class="sd">    :type imei: :py:obj:`str`</span>
 </span><span id="line-41"><span class="sd">    :param session: A valid Wialon API session.</span>
 </span><span id="line-42"><span class="sd">    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`</span>
-</span><span id="line-43"><span class="sd">    :raises WialonError: If something goes wrong with Wialon.</span>
-</span><span id="line-44"><span class="sd">    :returns: A Wialon object id, if it was found.</span>
-</span><span id="line-45"><span class="sd">    :rtype: :py:obj:`str` | :py:obj:`None`</span>
-</span><span id="line-46">
-</span><span id="line-47"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-48">    <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_search_items</span><span class="p">(</span>
-</span><span id="line-49">        <span class="o">**</span><span class="p">{</span>
-</span><span id="line-50">            <span class="s2">&quot;spec&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span id="line-51">                <span class="s2">&quot;itemsType&quot;</span><span class="p">:</span> <span class="s2">&quot;avl_unit&quot;</span><span class="p">,</span>
-</span><span id="line-52">                <span class="s2">&quot;propName&quot;</span><span class="p">:</span> <span class="s2">&quot;sys_unique_id&quot;</span><span class="p">,</span>
-</span><span id="line-53">                <span class="s2">&quot;propValueMask&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;*</span><span class="si">{</span><span class="n">imei</span><span class="si">}</span><span class="s2">*&quot;</span><span class="p">,</span>
-</span><span id="line-54">                <span class="s2">&quot;sortType&quot;</span><span class="p">:</span> <span class="s2">&quot;sys_unique_id&quot;</span><span class="p">,</span>
-</span><span id="line-55">                <span class="s2">&quot;propType&quot;</span><span class="p">:</span> <span class="s2">&quot;property&quot;</span><span class="p">,</span>
-</span><span id="line-56">                <span class="s2">&quot;or_logic&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-</span><span id="line-57">            <span class="p">},</span>
-</span><span id="line-58">            <span class="s2">&quot;force&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-</span><span id="line-59">            <span class="s2">&quot;flags&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">DATAFLAG_UNIT_BASE</span><span class="p">,</span>
-</span><span id="line-60">            <span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-</span><span id="line-61">            <span class="s2">&quot;to&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-</span><span id="line-62">        <span class="p">}</span>
-</span><span id="line-63">    <span class="p">)</span>
-</span><span id="line-64">
-</span><span id="line-65">    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;totalItemsCount&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-</span><span id="line-66">        <span class="k">return</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span></div>
-
-</span><span id="line-67">
+</span><span id="line-43"><span class="sd">    :raises ValueError: If ``imei`` contains non-digit characters.</span>
+</span><span id="line-44"><span class="sd">    :raises WialonError: If something goes wrong during a Wialon API call.</span>
+</span><span id="line-45"><span class="sd">    :returns: A Wialon object id, if it was found.</span>
+</span><span id="line-46"><span class="sd">    :rtype: :py:obj:`str` | :py:obj:`None`</span>
+</span><span id="line-47">
+</span><span id="line-48"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-49">    <span class="k">if</span> <span class="ow">not</span> <span class="n">imei</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+</span><span id="line-50">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;imei&#39; must be a digit, got &#39;</span><span class="si">{</span><span class="n">imei</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+</span><span id="line-51">
+</span><span id="line-52">    <span class="n">results</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_search_items</span><span class="p">(</span>
+</span><span id="line-53">        <span class="o">**</span><span class="p">{</span>
+</span><span id="line-54">            <span class="s2">&quot;spec&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="line-55">                <span class="s2">&quot;itemsType&quot;</span><span class="p">:</span> <span class="s2">&quot;avl_unit&quot;</span><span class="p">,</span>
+</span><span id="line-56">                <span class="s2">&quot;propName&quot;</span><span class="p">:</span> <span class="s2">&quot;sys_unique_id&quot;</span><span class="p">,</span>
+</span><span id="line-57">                <span class="s2">&quot;propValueMask&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;*</span><span class="si">{</span><span class="n">imei</span><span class="si">}</span><span class="s2">*&quot;</span><span class="p">,</span>
+</span><span id="line-58">                <span class="s2">&quot;sortType&quot;</span><span class="p">:</span> <span class="s2">&quot;sys_unique_id&quot;</span><span class="p">,</span>
+</span><span id="line-59">                <span class="s2">&quot;propType&quot;</span><span class="p">:</span> <span class="s2">&quot;property&quot;</span><span class="p">,</span>
+</span><span id="line-60">                <span class="s2">&quot;or_logic&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span id="line-61">            <span class="p">},</span>
+</span><span id="line-62">            <span class="s2">&quot;force&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span id="line-63">            <span class="s2">&quot;flags&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">DATAFLAG_UNIT_BASE</span><span class="p">,</span>
+</span><span id="line-64">            <span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span id="line-65">            <span class="s2">&quot;to&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span id="line-66">        <span class="p">}</span>
+</span><span id="line-67">    <span class="p">)</span>
 </span><span id="line-68">
+</span><span id="line-69">    <span class="k">if</span> <span class="n">results</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;totalItemsCount&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="line-70">        <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span></div>
+
+</span><span id="line-71">
+</span><span id="line-72">
 <div class="viewcode-block" id="get_id_from_iccid">
 <a class="viewcode-back" href="../../../wialon/utils.html#terminusgps.wialon.utils.get_id_from_iccid">[docs]</a>
-</span><span id="line-69"><span class="k">def</span><span class="w"> </span><span class="nf">get_id_from_iccid</span><span class="p">(</span><span class="n">iccid</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">WialonSession</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-70"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-71"><span class="sd">    DEPRECATED: Use :py:func:`~terminusgps.wialon.utils.get_id_from_imei`.</span>
-</span><span id="line-72">
-</span><span id="line-73"><span class="sd">    Takes a Wialon unit&#39;s IMEI # and returns its unit id, if it exists.</span>
-</span><span id="line-74">
-</span><span id="line-75"><span class="sd">    :param iccid: A unique id.</span>
-</span><span id="line-76"><span class="sd">    :type iccid: :py:obj:`str`</span>
-</span><span id="line-77"><span class="sd">    :param session: A valid Wialon API session.</span>
-</span><span id="line-78"><span class="sd">    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`</span>
-</span><span id="line-79"><span class="sd">    :raises WialonError: If something goes wrong with Wialon.</span>
-</span><span id="line-80"><span class="sd">    :returns: A Wialon object id, if it was found.</span>
-</span><span id="line-81"><span class="sd">    :rtype: :py:obj:`str` | :py:obj:`None`</span>
-</span><span id="line-82">
-</span><span id="line-83"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-84">    <span class="k">return</span> <span class="n">get_id_from_imei</span><span class="p">(</span><span class="n">imei</span><span class="o">=</span><span class="n">iccid</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span></div>
-
-</span><span id="line-85">
+</span><span id="line-73"><span class="k">def</span><span class="w"> </span><span class="nf">get_id_from_iccid</span><span class="p">(</span><span class="n">iccid</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">WialonSession</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-74"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-75"><span class="sd">    DEPRECATED: Use :py:func:`~terminusgps.wialon.utils.get_id_from_imei`.</span>
+</span><span id="line-76">
+</span><span id="line-77"><span class="sd">    Takes a Wialon unit&#39;s IMEI # and returns its unit id, if it exists.</span>
+</span><span id="line-78">
+</span><span id="line-79"><span class="sd">    :param iccid: A unique id.</span>
+</span><span id="line-80"><span class="sd">    :type iccid: :py:obj:`str`</span>
+</span><span id="line-81"><span class="sd">    :param session: A valid Wialon API session.</span>
+</span><span id="line-82"><span class="sd">    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`</span>
+</span><span id="line-83"><span class="sd">    :raises WialonError: If something goes wrong during a Wialon API call.</span>
+</span><span id="line-84"><span class="sd">    :returns: A Wialon object id, if it was found.</span>
+</span><span id="line-85"><span class="sd">    :rtype: :py:obj:`str` | :py:obj:`None`</span>
 </span><span id="line-86">
+</span><span id="line-87"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-88">    <span class="k">return</span> <span class="n">get_id_from_imei</span><span class="p">(</span><span class="n">imei</span><span class="o">=</span><span class="n">iccid</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span></div>
+
+</span><span id="line-89">
+</span><span id="line-90">
 <div class="viewcode-block" id="get_wialon_cls">
 <a class="viewcode-back" href="../../../wialon/utils.html#terminusgps.wialon.utils.get_wialon_cls">[docs]</a>
-</span><span id="line-87"><span class="k">def</span><span class="w"> </span><span class="nf">get_wialon_cls</span><span class="p">(</span><span class="n">items_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Type</span><span class="p">[</span><span class="n">WialonBase</span><span class="p">]:</span>
-</span><span id="line-88"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-89"><span class="sd">    Returns a Wialon object class based on items_type.</span>
-</span><span id="line-90">
-</span><span id="line-91"><span class="sd">    :param items_type: A Wialon object type.</span>
-</span><span id="line-92"><span class="sd">    :type items_type: :py:obj:`str`</span>
-</span><span id="line-93"><span class="sd">    :returns: A subclass of :py:obj:`~terminusgps.wialon.items.base.WialonBase`.</span>
-</span><span id="line-94"><span class="sd">    :rtype: :py:obj:`~terminusgps.wialon.items.base.WialonBase`</span>
-</span><span id="line-95">
-</span><span id="line-96"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-97">    <span class="k">match</span> <span class="n">items_type</span><span class="p">:</span>
-</span><span id="line-98">        <span class="k">case</span> <span class="s2">&quot;user&quot;</span><span class="p">:</span>
-</span><span id="line-99">            <span class="n">wialon_cls</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="n">WialonUser</span>
-</span><span id="line-100">        <span class="k">case</span> <span class="s2">&quot;avl_unit&quot;</span><span class="p">:</span>
-</span><span id="line-101">            <span class="n">wialon_cls</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="n">WialonUnit</span>
-</span><span id="line-102">        <span class="k">case</span> <span class="s2">&quot;avl_unit_group&quot;</span><span class="p">:</span>
-</span><span id="line-103">            <span class="n">wialon_cls</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="n">WialonUnitGroup</span>
-</span><span id="line-104">        <span class="k">case</span> <span class="s2">&quot;avl_resource&quot;</span><span class="p">:</span>
-</span><span id="line-105">            <span class="n">wialon_cls</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="n">WialonResource</span>
-</span><span id="line-106">        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
-</span><span id="line-107">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid items_type &#39;</span><span class="si">{</span><span class="n">items_type</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
-</span><span id="line-108">    <span class="k">return</span> <span class="n">wialon_cls</span></div>
+</span><span id="line-91"><span class="k">def</span><span class="w"> </span><span class="nf">get_wialon_cls</span><span class="p">(</span><span class="n">items_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Type</span><span class="p">[</span><span class="n">WialonBase</span><span class="p">]:</span>
+</span><span id="line-92"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-93"><span class="sd">    Returns a Wialon object class based on items_type.</span>
+</span><span id="line-94">
+</span><span id="line-95"><span class="sd">    :param items_type: A Wialon object type.</span>
+</span><span id="line-96"><span class="sd">    :type items_type: :py:obj:`str`</span>
+</span><span id="line-97"><span class="sd">    :returns: A subclass of :py:obj:`~terminusgps.wialon.items.base.WialonBase`.</span>
+</span><span id="line-98"><span class="sd">    :rtype: :py:obj:`~terminusgps.wialon.items.base.WialonBase`</span>
+</span><span id="line-99">
+</span><span id="line-100"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-101">    <span class="k">match</span> <span class="n">items_type</span><span class="p">:</span>
+</span><span id="line-102">        <span class="k">case</span> <span class="s2">&quot;user&quot;</span><span class="p">:</span>
+</span><span id="line-103">            <span class="k">return</span> <span class="n">items</span><span class="o">.</span><span class="n">WialonUser</span>
+</span><span id="line-104">        <span class="k">case</span> <span class="s2">&quot;avl_unit&quot;</span><span class="p">:</span>
+</span><span id="line-105">            <span class="k">return</span> <span class="n">items</span><span class="o">.</span><span class="n">WialonUnit</span>
+</span><span id="line-106">        <span class="k">case</span> <span class="s2">&quot;avl_unit_group&quot;</span><span class="p">:</span>
+</span><span id="line-107">            <span class="k">return</span> <span class="n">items</span><span class="o">.</span><span class="n">WialonUnitGroup</span>
+</span><span id="line-108">        <span class="k">case</span> <span class="s2">&quot;avl_resource&quot;</span><span class="p">:</span>
+</span><span id="line-109">            <span class="k">return</span> <span class="n">items</span><span class="o">.</span><span class="n">WialonResource</span>
+</span><span id="line-110">        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+</span><span id="line-111">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid items_type, got &#39;</span><span class="si">{</span><span class="n">items_type</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span></div>
 
-</span><span id="line-109">
-</span><span id="line-110">
+</span><span id="line-112">
+</span><span id="line-113">
 <div class="viewcode-block" id="get_vin_info">
 <a class="viewcode-back" href="../../../wialon/utils.html#terminusgps.wialon.utils.get_vin_info">[docs]</a>
-</span><span id="line-111"><span class="k">def</span><span class="w"> </span><span class="nf">get_vin_info</span><span class="p">(</span><span class="n">vin_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">WialonSession</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-</span><span id="line-112"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-113"><span class="sd">    Retrieves vehicle data from a VIN number.</span>
-</span><span id="line-114">
-</span><span id="line-115"><span class="sd">    :param value: A vehicle&#39;s VIN number.</span>
-</span><span id="line-116"><span class="sd">    :type value: :py:obj:`str`</span>
-</span><span id="line-117"><span class="sd">    :param session: A valid Wialon API session.</span>
-</span><span id="line-118"><span class="sd">    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`</span>
-</span><span id="line-119"><span class="sd">    :returns: A dictionary of vehicle information, if any was found.</span>
-</span><span id="line-120"><span class="sd">    :rtype: :py:obj:`dict`</span>
-</span><span id="line-121">
-</span><span id="line-122"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-123">    <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">unit_get_vin_info</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;vin&quot;</span><span class="p">:</span> <span class="n">vin_number</span><span class="p">})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-</span><span id="line-124">        <span class="s2">&quot;vin_lookup_result&quot;</span>
-</span><span id="line-125">    <span class="p">)</span>
-</span><span id="line-126">
-</span><span id="line-127">    <span class="k">return</span> <span class="p">(</span>
-</span><span id="line-128">        <span class="p">{</span><span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">):</span> <span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;v&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pflds&quot;</span><span class="p">)}</span>
-</span><span id="line-129">        <span class="k">if</span> <span class="s2">&quot;error&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-</span><span id="line-130">        <span class="k">else</span> <span class="p">{}</span>
-</span><span id="line-131">    <span class="p">)</span></div>
+</span><span id="line-114"><span class="k">def</span><span class="w"> </span><span class="nf">get_vin_info</span><span class="p">(</span><span class="n">vin_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">WialonSession</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span id="line-115"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-116"><span class="sd">    Retrieves vehicle data from a VIN number.</span>
+</span><span id="line-117">
+</span><span id="line-118"><span class="sd">    :param value: A vehicle&#39;s VIN number.</span>
+</span><span id="line-119"><span class="sd">    :type value: :py:obj:`str`</span>
+</span><span id="line-120"><span class="sd">    :param session: A valid Wialon API session.</span>
+</span><span id="line-121"><span class="sd">    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`</span>
+</span><span id="line-122"><span class="sd">    :returns: A dictionary of vehicle information, if any was found.</span>
+</span><span id="line-123"><span class="sd">    :rtype: :py:obj:`dict`</span>
+</span><span id="line-124">
+</span><span id="line-125"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-126">    <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">unit_get_vin_info</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;vin&quot;</span><span class="p">:</span> <span class="n">vin_number</span><span class="p">})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+</span><span id="line-127">        <span class="s2">&quot;vin_lookup_result&quot;</span>
+</span><span id="line-128">    <span class="p">)</span>
+</span><span id="line-129">    <span class="k">return</span> <span class="p">(</span>
+</span><span id="line-130">        <span class="p">{</span><span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">):</span> <span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;v&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pflds&quot;</span><span class="p">)}</span>
+</span><span id="line-131">        <span class="k">if</span> <span class="s2">&quot;error&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</span><span id="line-132">        <span class="k">else</span> <span class="p">{}</span>
+</span><span id="line-133">    <span class="p">)</span></div>
 
-</span><span id="line-132">
-</span><span id="line-133">
+</span><span id="line-134">
+</span><span id="line-135">
 <div class="viewcode-block" id="is_unique">
 <a class="viewcode-back" href="../../../wialon/utils.html#terminusgps.wialon.utils.is_unique">[docs]</a>
-</span><span id="line-134"><span class="k">def</span><span class="w"> </span><span class="nf">is_unique</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">WialonSession</span><span class="p">,</span> <span class="n">items_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;avl_unit&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="line-135"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-136"><span class="sd">    Determines if the value is unique among Wialon objects of type &#39;items_type&#39;.</span>
-</span><span id="line-137">
-</span><span id="line-138"><span class="sd">    :param value: A value whose uniqueness is unknown.</span>
-</span><span id="line-139"><span class="sd">    :type value: :py:obj:`str`</span>
-</span><span id="line-140"><span class="sd">    :param session: A valid Wialon API session.</span>
-</span><span id="line-141"><span class="sd">    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`</span>
-</span><span id="line-142"><span class="sd">    :param items_type: The type of Wialon objects to validate the value against. Default is ``&quot;avl_unit&quot;``.</span>
-</span><span id="line-143"><span class="sd">    :type items_type: :py:obj:`str`</span>
-</span><span id="line-144"><span class="sd">    :returns: Whether or not the value is unique among &#39;items_type&#39;.</span>
-</span><span id="line-145"><span class="sd">    :rtype: :py:obj:`bool`</span>
-</span><span id="line-146">
-</span><span id="line-147"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-148">    <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_check_unique</span><span class="p">(</span>
-</span><span id="line-149">        <span class="o">**</span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">items_type</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">value</span><span class="o">.</span><span class="n">strip</span><span class="p">()}</span>
-</span><span id="line-150">    <span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">)</span>
-</span><span id="line-151">    <span class="k">return</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+</span><span id="line-136"><span class="k">def</span><span class="w"> </span><span class="nf">is_unique</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">WialonSession</span><span class="p">,</span> <span class="n">items_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;avl_unit&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="line-137"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-138"><span class="sd">    Determines if the value is unique among Wialon objects of type &#39;items_type&#39;.</span>
+</span><span id="line-139">
+</span><span id="line-140"><span class="sd">    :param value: A Wialon object name.</span>
+</span><span id="line-141"><span class="sd">    :type value: :py:obj:`str`</span>
+</span><span id="line-142"><span class="sd">    :param session: A valid Wialon API session.</span>
+</span><span id="line-143"><span class="sd">    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`</span>
+</span><span id="line-144"><span class="sd">    :param items_type: Type of Wialon objects to validate the value against. Default is ``&quot;avl_unit&quot;``.</span>
+</span><span id="line-145"><span class="sd">    :type items_type: :py:obj:`str`</span>
+</span><span id="line-146"><span class="sd">    :raises WialonError: If something goes wrong during a Wialon API call.</span>
+</span><span id="line-147"><span class="sd">    :returns: Whether or not the value is unique among &#39;items_type&#39;.</span>
+</span><span id="line-148"><span class="sd">    :rtype: :py:obj:`bool`</span>
+</span><span id="line-149">
+</span><span id="line-150"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-151">    <span class="k">return</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span>
+</span><span id="line-152">        <span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_check_unique</span><span class="p">(</span>
+</span><span id="line-153">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">items_type</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">value</span><span class="o">.</span><span class="n">strip</span><span class="p">()}</span>
+</span><span id="line-154">        <span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">)</span>
+</span><span id="line-155">    <span class="p">)</span></div>
 
-</span><span id="line-152">
-</span><span id="line-153">
+</span><span id="line-156">
+</span><span id="line-157">
 <div class="viewcode-block" id="generate_wialon_password">
 <a class="viewcode-back" href="../../../wialon/utils.html#terminusgps.wialon.utils.generate_wialon_password">[docs]</a>
-</span><span id="line-154"><span class="k">def</span><span class="w"> </span><span class="nf">generate_wialon_password</span><span class="p">(</span><span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="line-155"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-156"><span class="sd">    Generates a Wialon compliant password of random characters.</span>
-</span><span id="line-157">
-</span><span id="line-158"><span class="sd">    Password length can be between ``8`` and ``64`` characters.</span>
-</span><span id="line-159">
-</span><span id="line-160"><span class="sd">    :param length: Length of the generated password. Default is ``32``.</span>
-</span><span id="line-161"><span class="sd">    :type length: :py:obj:`int`</span>
-</span><span id="line-162"><span class="sd">    :raises ValueError: If the provided length is invalid.</span>
-</span><span id="line-163"><span class="sd">    :returns: A Wialon compliant password.</span>
-</span><span id="line-164"><span class="sd">    :rtype: :py:obj:`str`</span>
-</span><span id="line-165">
-</span><span id="line-166"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-167">    <span class="n">min_length</span><span class="p">,</span> <span class="n">max_length</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">64</span>
-</span><span id="line-168">    <span class="k">if</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="n">max_length</span><span class="p">:</span>
-</span><span id="line-169">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-</span><span id="line-170">            <span class="sa">f</span><span class="s2">&quot;Password cannot be greater than </span><span class="si">{</span><span class="n">max_length</span><span class="si">}</span><span class="s2"> characters in length. Got </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2">.&quot;</span>
-</span><span id="line-171">        <span class="p">)</span>
-</span><span id="line-172">    <span class="k">elif</span> <span class="n">length</span> <span class="o">&lt;</span> <span class="n">min_length</span><span class="p">:</span>
-</span><span id="line-173">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-</span><span id="line-174">            <span class="sa">f</span><span class="s2">&quot;Password cannot be less than </span><span class="si">{</span><span class="n">min_length</span><span class="si">}</span><span class="s2"> characters in length. Got </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2">.&quot;</span>
-</span><span id="line-175">        <span class="p">)</span>
-</span><span id="line-176">
-</span><span id="line-177">    <span class="n">s0</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">)</span>
-</span><span id="line-178">    <span class="n">s1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span><span class="p">)</span>
-</span><span id="line-179">    <span class="n">s2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">digits</span><span class="p">)</span>
-</span><span id="line-180">    <span class="n">s3</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s2">&quot;!@#$%^*()[]-_+&quot;</span><span class="p">)</span>
-</span><span id="line-181">
-</span><span id="line-182">    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span><span id="line-183">        <span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">secrets</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">s0</span> <span class="o">+</span> <span class="n">s1</span> <span class="o">+</span> <span class="n">s2</span> <span class="o">+</span> <span class="n">s3</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)])</span>
-</span><span id="line-184">        <span class="k">if</span> <span class="p">(</span>
-</span><span id="line-185">            <span class="nb">any</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">islower</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">password</span><span class="p">)</span>
-</span><span id="line-186">            <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">isupper</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">password</span><span class="p">)</span>
-</span><span id="line-187">            <span class="ow">and</span> <span class="nb">sum</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">password</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span>
-</span><span id="line-188">            <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">s3</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">password</span><span class="p">)</span>
-</span><span id="line-189">        <span class="p">):</span>
-</span><span id="line-190">            <span class="k">break</span>
-</span><span id="line-191">    <span class="k">return</span> <span class="n">password</span></div>
+</span><span id="line-158"><span class="k">def</span><span class="w"> </span><span class="nf">generate_wialon_password</span><span class="p">(</span><span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="line-159"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-160"><span class="sd">    Generates a Wialon compliant password between ``8`` and ``64`` characters.</span>
+</span><span id="line-161">
+</span><span id="line-162"><span class="sd">    The generated password will contain:</span>
+</span><span id="line-163">
+</span><span id="line-164"><span class="sd">        - At least one uppercase letter.</span>
+</span><span id="line-165"><span class="sd">        - At least one lowercase letter.</span>
+</span><span id="line-166"><span class="sd">        - At least one special symbol.</span>
+</span><span id="line-167"><span class="sd">        - At least three digits.</span>
+</span><span id="line-168">
+</span><span id="line-169"><span class="sd">    :param length: Length of the generated password. Default is ``32``.</span>
+</span><span id="line-170"><span class="sd">    :type length: :py:obj:`int`</span>
+</span><span id="line-171"><span class="sd">    :raises ValueError: If :py:length is less than ``8`` or greater than ``64``.</span>
+</span><span id="line-172"><span class="sd">    :returns: A Wialon compliant password.</span>
+</span><span id="line-173"><span class="sd">    :rtype: :py:obj:`str`</span>
+</span><span id="line-174">
+</span><span id="line-175"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-176">    <span class="n">min_length</span><span class="p">,</span> <span class="n">max_length</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">64</span>
+</span><span id="line-177">    <span class="k">if</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="n">max_length</span><span class="p">:</span>
+</span><span id="line-178">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span><span id="line-179">            <span class="sa">f</span><span class="s2">&quot;Password cannot be greater than </span><span class="si">{</span><span class="n">max_length</span><span class="si">}</span><span class="s2"> characters in length. Got </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2">.&quot;</span>
+</span><span id="line-180">        <span class="p">)</span>
+</span><span id="line-181">    <span class="k">elif</span> <span class="n">length</span> <span class="o">&lt;</span> <span class="n">min_length</span><span class="p">:</span>
+</span><span id="line-182">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span><span id="line-183">            <span class="sa">f</span><span class="s2">&quot;Password cannot be less than </span><span class="si">{</span><span class="n">min_length</span><span class="si">}</span><span class="s2"> characters in length. Got </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2">.&quot;</span>
+</span><span id="line-184">        <span class="p">)</span>
+</span><span id="line-185">
+</span><span id="line-186">    <span class="n">s0</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">)</span>
+</span><span id="line-187">    <span class="n">s1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span><span class="p">)</span>
+</span><span id="line-188">    <span class="n">s2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">digits</span><span class="p">)</span>
+</span><span id="line-189">    <span class="n">s3</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s2">&quot;!@#$%^*()[]-_+&quot;</span><span class="p">)</span>
+</span><span id="line-190">
+</span><span id="line-191">    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="line-192">        <span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">secrets</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">s0</span> <span class="o">+</span> <span class="n">s1</span> <span class="o">+</span> <span class="n">s2</span> <span class="o">+</span> <span class="n">s3</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)])</span>
+</span><span id="line-193">        <span class="k">if</span> <span class="p">(</span>
+</span><span id="line-194">            <span class="nb">any</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">islower</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">password</span><span class="p">)</span>
+</span><span id="line-195">            <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">isupper</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">password</span><span class="p">)</span>
+</span><span id="line-196">            <span class="ow">and</span> <span class="nb">sum</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">password</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span>
+</span><span id="line-197">            <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">s3</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">password</span><span class="p">)</span>
+</span><span id="line-198">        <span class="p">):</span>
+</span><span id="line-199">            <span class="k">break</span>
+</span><span id="line-200">    <span class="k">return</span> <span class="n">password</span></div>
 
 </span></code></pre></div>
     </div></div>
@@ -389,7 +399,7 @@
       <div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
         <p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2025, Terminus GPS, LLC&nbsp;Built with <a class="font-medium underline underline-offset-4"
     href="https://www.sphinx-doc.org"
-    rel="noreferrer">Sphinx 8.2.1</a></p>
+    rel="noreferrer">Sphinx 8.2.3</a></p>
 </div>
 </div>
 </footer>

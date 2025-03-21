@@ -24,5 +24,5 @@ Usage
 
     # Retrieve unit id from IMEI #
     with WialonSession() as session:
-        unit_id = get_id_from_iccid("869084062183235", session=session)
+        unit_id = get_id_from_imei("869084062183235", session=session)
         print(f"{unit_id = }") # unit_id = 28006231

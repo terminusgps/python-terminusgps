@@ -1,81 +1,40 @@
 from abc import abstractmethod
+from typing import override
 
-from authorizenet.apicontractsv1 import merchantAuthenticationType
-from authorizenet.apicontrollersbase import APIOperationBase
+from authorizenet import apicontractsv1
 
-from ..auth import get_merchant_auth, get_environment, get_validation_mode
+from terminusgps.authorizenet.auth import get_merchant_auth, get_validation_mode
+from terminusgps.authorizenet.utils import ControllerExecutionMixin
 
 
-class AuthorizenetProfileBase:
+class AuthorizenetProfileBase(ControllerExecutionMixin):
     def __init__(
-        self, merchant_id: int | str, id: int | str | None = None, **kwargs
+        self, merchant_id: int | str, id: int | str | None = None, *args, **kwargs
     ) -> None:
         self._merchantCustomerId = merchant_id
-        self._id = str(id) if id else self.create(**kwargs)
+        self._id = int(id) if id else self.create(*args, **kwargs)
 
+    @override
     def __str__(self) -> str:
         return f"#{self.id}"
 
-    def execute_controller(self, controller: APIOperationBase) -> dict:
-        """
-        Executes an Authorize.NET controller and returns its response.
-
-        :param controller: An Authorize.NET API controller.
-        :raises ValueError: If the API call fails.
-        :returns: The Authorize.NET API response.
-        :rtype: :py:obj:`dict`
-
-        """
-        controller.setenvironment(self.environment)
-        controller.execute()
-        response = controller.getresponse()
-
-        if response.messages.resultCode != "Ok":
-            raise ValueError(response.messages.message[0]["text"].text)
-        return response
-
     @property
     def merchantCustomerId(self) -> str:
-        """
-        An internally designated customer id.
-
-        :type: :py:obj:`str`
-
-        """
+        """An internally designated customer id."""
         return str(self._merchantCustomerId)
 
     @property
     def id(self) -> str:
-        """
-        An Authorizenet generated id.
-
-        :type: :py:obj:`str`
-
-        """
+        """An Authorizenet generated id."""
         return str(self._id)
 
     @property
-    def merchantAuthentication(self) -> merchantAuthenticationType:
-        """
-        Merchant authentication for Authorizenet API calls.
-
-        :type: :py:obj:`~authorizenet.apicontractsv1.merchantAuthenticationType`
-
-        """
+    def merchantAuthentication(self) -> apicontractsv1.merchantAuthenticationType:
+        """Merchant authentication for Authorizenet API calls."""
         return get_merchant_auth()
 
-    @property
-    def environment(self) -> str:
-        """
-        Environment for Authorizenet API calls to execute within.
-
-        :type: :py:obj:`str`
-
-        """
-        return get_environment()
-
     @abstractmethod
-    def create(self, **kwargs) -> int:
+    def create(self, *args, **kwargs) -> int:
         raise NotImplementedError("Subclasses must implement this method.")
 
     @abstractmethod
@@ -93,34 +52,19 @@ class AuthorizenetSubProfileBase(AuthorizenetProfileBase):
     ) -> None:
         self._customerProfileId = customer_profile_id
         self._default = default
-        return super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     @property
     def validationMode(self) -> str:
-        """
-        The validation mode for Authorizenet API calls.
-
-        :type: :py:obj:`str`
-
-        """
+        """The validation mode for Authorizenet API calls."""
         return get_validation_mode()
 
     @property
     def default(self) -> str:
-        """
-        Whether or not the sub profile is set as default in Authorizenet.
-
-        :type: :py:obj:`str`
-
-        """
+        """Whether or not the sub profile is set as default in Authorizenet."""
         return str(self._default).lower()
 
     @property
     def customerProfileId(self) -> str:
-        """
-        An Authorizenet generated customer profile id.
-
-        :py:obj:`str`
-
-        """
+        """An Authorizenet generated customer profile id."""
         return str(self._customerProfileId)

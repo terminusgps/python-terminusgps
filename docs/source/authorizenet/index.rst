@@ -9,3 +9,4 @@ Authorizenet API
 
     auth.rst
     profiles.rst
+    utils.rst

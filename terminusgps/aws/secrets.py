@@ -1,5 +1,6 @@
-import boto3
 import json
+
+import boto3
 
 
 def get_secret(name: str, region: str = "us-east-1") -> dict[str, str]:

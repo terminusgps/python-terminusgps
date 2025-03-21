@@ -1,7 +1,6 @@
 import dataclasses
 import datetime
 import logging
-import threading
 import typing
 
 from django.conf import settings
@@ -80,7 +79,7 @@ class WialonSession:
         :type host: :py:obj:`str`
         :param port: Wialon API host port. Default is ``443``.
         :type port: :py:obj:`int`
-        :param log_level: Severity level at which log messages should be handled. Default is ``20`` (logging.INFO).
+        :param log_level: Logging severity level. Default is ``20`` (logging.INFO).
         :type log_level: :py:obj:`int`
         :returns: Nothing.
         :rtype: :py:obj:`None`
@@ -106,7 +105,7 @@ class WialonSession:
         self.login(self.token)
         return self
 
-    def __exit__(self, *args, **kwargs) -> None:
+    def __exit__(self, exc_type, exc_value, exc_traceback) -> None:
         """Logs out of the session by calling :py:meth:`logout`."""
         self.logout()
 
@@ -324,23 +323,3 @@ class WialonSession:
         self._username = login_response.get("au")
         self._video_service_url = login_response.get("video_service_url")
         self._wsdk_version = login_response.get("wsdk_version")
-
-
-class WialonSessionManager:
-    _instance = None
-    _lock = threading.Lock()
-    _session = None
-
-    def __new__(cls) -> "WialonSessionManager":
-        with cls._lock:
-            if not cls._instance:
-                cls._instance = super().__new__(cls)
-        return cls._instance
-
-    def get_session(
-        self, sid: str | None = None, log_level: int = logging.INFO
-    ) -> WialonSession:
-        with self._lock:
-            if not self._session:
-                self._session = WialonSession(sid=sid, log_level=log_level)
-        return self._session

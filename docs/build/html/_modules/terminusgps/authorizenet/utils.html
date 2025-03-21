@@ -12,9 +12,9 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
   
-    <title>terminusgps.aws.secrets | python-terminusgps 21.1.0 documentation</title>
-    <meta property="og:title" content="terminusgps.aws.secrets | python-terminusgps 21.1.0 documentation" />
-    <meta name="twitter:title" content="terminusgps.aws.secrets | python-terminusgps 21.1.0 documentation" />
+    <title>terminusgps.authorizenet.utils | python-terminusgps 21.1.0 documentation</title>
+    <meta property="og:title" content="terminusgps.authorizenet.utils | python-terminusgps 21.1.0 documentation" />
+    <meta name="twitter:title" content="terminusgps.authorizenet.utils | python-terminusgps 21.1.0 documentation" />
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d691ff6c" />
       <link rel="stylesheet" type="text/css" href="../../../_static/theme.css?v=42baaae4" />
       <link rel="stylesheet" type="text/css" href="../../../_static/autoclasstoc.css?v=08871587" />
@@ -164,22 +164,83 @@
        href="../../index.html">Module code</a>
     
 <div class="mr-1">/</div><span aria-current="page"
-        class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">terminusgps.aws.secrets</span>
+        class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">terminusgps.authorizenet.utils</span>
 </nav>
 
     <div id="content" role="main">
-      <h1>Source code for terminusgps.aws.secrets</h1><div class="highlight"><pre>
-<span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">boto3</span>
-</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+      <h1>Source code for terminusgps.authorizenet.utils</h1><div class="highlight"><pre>
+<span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">authorizenet</span><span class="w"> </span><span class="kn">import</span> <span class="n">apicontractsv1</span><span class="p">,</span> <span class="n">apicontrollers</span>
+</span><span id="line-2"><span class="kn">from</span><span class="w"> </span><span class="nn">authorizenet.apicontrollersbase</span><span class="w"> </span><span class="kn">import</span> <span class="n">APIOperationBase</span>
 </span><span id="line-3">
-</span><span id="line-4">
-<div class="viewcode-block" id="get_secret">
-<a class="viewcode-back" href="../../../aws/secrets.html#terminusgps.aws.secrets.get_secret">[docs]</a>
-</span><span id="line-5"><span class="k">def</span><span class="w"> </span><span class="nf">get_secret</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">region</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;us-east-1&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-6"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Logs into the default AWS CLI session and returns a secret value.&quot;&quot;&quot;</span>
-</span><span id="line-7">    <span class="n">client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="n">service_name</span><span class="o">=</span><span class="s2">&quot;secretsmanager&quot;</span><span class="p">,</span> <span class="n">region_name</span><span class="o">=</span><span class="n">region</span><span class="p">)</span>
-</span><span id="line-8">    <span class="n">secret</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_secret_value</span><span class="p">(</span><span class="n">SecretId</span><span class="o">=</span><span class="n">name</span><span class="p">)[</span><span class="s2">&quot;SecretString&quot;</span><span class="p">]</span>
-</span><span id="line-9">    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">secret</span><span class="p">)</span></div>
+</span><span id="line-4"><span class="kn">from</span><span class="w"> </span><span class="nn">.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_environment</span><span class="p">,</span> <span class="n">get_merchant_auth</span>
+</span><span id="line-5">
+</span><span id="line-6">
+<div class="viewcode-block" id="ControllerExecutionError">
+<a class="viewcode-back" href="../../../authorizenet/utils.html#terminusgps.authorizenet.utils.ControllerExecutionError">[docs]</a>
+</span><span id="line-7"><span class="k">class</span><span class="w"> </span><span class="nc">ControllerExecutionError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+</span><span id="line-8"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when an Authorizenet API controller fails to execute.&quot;&quot;&quot;</span>
+</span><span id="line-9">
+</span><span id="line-10">    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-11">        <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">code</span>
+</span><span id="line-12">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="line-13">
+</span><span id="line-14">    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="line-15">        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+</span><span id="line-16">
+</span><span id="line-17">
+<div class="viewcode-block" id="ControllerExecutionMixin">
+<a class="viewcode-back" href="../../../authorizenet/utils.html#terminusgps.authorizenet.utils.ControllerExecutionMixin">[docs]</a>
+</span><span id="line-18"><span class="k">class</span><span class="w"> </span><span class="nc">ControllerExecutionMixin</span><span class="p">:</span>
+<div class="viewcode-block" id="ControllerExecutionMixin.execute_controller">
+<a class="viewcode-back" href="../../../authorizenet/utils.html#terminusgps.authorizenet.utils.ControllerExecutionMixin.execute_controller">[docs]</a>
+</span><span id="line-19">    <span class="nd">@staticmethod</span>
+</span><span id="line-20">    <span class="k">def</span><span class="w"> </span><span class="nf">execute_controller</span><span class="p">(</span><span class="n">controller</span><span class="p">:</span> <span class="n">APIOperationBase</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-21"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-22"><span class="sd">        Executes an Authorizenet controller and returns its response.</span>
+</span><span id="line-23">
+</span><span id="line-24"><span class="sd">        :param controller: An Authorizenet API controller.</span>
+</span><span id="line-25"><span class="sd">        :type controller: :py:obj:`~authorizenet.apicontrollersbase.APIOperationBase`</span>
+</span><span id="line-26"><span class="sd">        :raises ControllerExecutionError: If the API call fails.</span>
+</span><span id="line-27"><span class="sd">        :returns: An Authorizenet API response, if any.</span>
+</span><span id="line-28"><span class="sd">        :rtype: :py:obj:`dict` | :py:obj:`None`</span>
+</span><span id="line-29">
+</span><span id="line-30"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-31">        <span class="n">controller</span><span class="o">.</span><span class="n">setenvironment</span><span class="p">(</span><span class="n">get_environment</span><span class="p">())</span>
+</span><span id="line-32">        <span class="n">controller</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</span><span id="line-33">        <span class="n">response</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+</span><span id="line-34">
+</span><span id="line-35">        <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">response</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">resultCode</span> <span class="o">!=</span> <span class="s2">&quot;Ok&quot;</span><span class="p">:</span>
+</span><span id="line-36">            <span class="k">raise</span> <span class="n">ControllerExecutionError</span><span class="p">(</span>
+</span><span id="line-37">                <span class="n">message</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">message</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+</span><span id="line-38">                <span class="n">code</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">message</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;code&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+</span><span id="line-39">            <span class="p">)</span>
+</span><span id="line-40">        <span class="k">return</span> <span class="n">response</span></div>
+</div>
+
+</span><span id="line-41">
+</span><span id="line-42">
+<div class="viewcode-block" id="get_customer_profile_ids">
+<a class="viewcode-back" href="../../../authorizenet/utils.html#terminusgps.authorizenet.utils.get_customer_profile_ids">[docs]</a>
+</span><span id="line-43"><span class="k">def</span><span class="w"> </span><span class="nf">get_customer_profile_ids</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+</span><span id="line-44"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-45"><span class="sd">    Returns a list of all customer profile ids in Authorizenet.</span>
+</span><span id="line-46">
+</span><span id="line-47"><span class="sd">    :raises ValueError: If something goes wrong calling the Authorizenet API.</span>
+</span><span id="line-48"><span class="sd">    :returns: A list of all customer profile ids in Authorizenet.</span>
+</span><span id="line-49"><span class="sd">    :rtype: :py:obj:`list`</span>
+</span><span id="line-50">
+</span><span id="line-51"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-52">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">getCustomerProfileIdsRequest</span><span class="p">(</span>
+</span><span id="line-53">        <span class="n">merchantAuthentication</span><span class="o">=</span><span class="n">get_merchant_auth</span><span class="p">()</span>
+</span><span id="line-54">    <span class="p">)</span>
+</span><span id="line-55">    <span class="n">controller</span> <span class="o">=</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">getCustomerProfileIdsController</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+</span><span id="line-56">    <span class="n">controller</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</span><span id="line-57">    <span class="n">response</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+</span><span id="line-58">
+</span><span id="line-59">    <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">response</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">resultCode</span> <span class="o">!=</span> <span class="s2">&quot;Ok&quot;</span><span class="p">:</span>
+</span><span id="line-60">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">message</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span><span id="line-61">    <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()]</span></div>
 
 </span></code></pre></div>
     </div></div>
