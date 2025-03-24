@@ -1,6 +1,6 @@
 from authorizenet import apicontractsv1, apicontrollers
 
-from terminusgps.authorizenet.profiles.base import AuthorizenetSubProfileBase
+from .base import AuthorizenetSubProfileBase
 
 
 class PaymentProfile(AuthorizenetSubProfileBase):
@@ -8,36 +8,58 @@ class PaymentProfile(AuthorizenetSubProfileBase):
 
     def create(
         self,
-        billing_addr: apicontractsv1.customerAddressType,
+        address: apicontractsv1.customerAddressType,
         payment: apicontractsv1.paymentType,
     ) -> int:
         """
         Creates an Authorizenet payment profile and returns its id.
 
-        :param billing_addr: A billing address.
-        :type billing_addr: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
+        :param address: A billing address.
+        :type address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
         :param payment: A payment object.
         :type payment: :py:obj:`~authorizenet.apicontractsv1.paymentType`
+        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
+        :raises ValueError: If the Authorizenet API response was not retrieved.
         :returns: The new payment profile's id.
         :rtype: :py:obj:`int`
 
         """
-        response = self._authorizenet_create_payment_profile(billing_addr, payment)
+        response = self._authorizenet_create_payment_profile(address, payment)
+        if response is None:
+            raise ValueError("Failed to retrieve Authorizenet API response.")
         return int(response.customerPaymentProfileId)
 
     def update(
         self,
-        billing_addr: apicontractsv1.customerAddressType,
+        address: apicontractsv1.customerAddressType,
         payment: apicontractsv1.paymentType,
-    ) -> dict:
-        """Updates the Authorizenet payment profile."""
-        return self._authorizenet_update_payment_profile(billing_addr, payment)
+    ) -> dict | None:
+        """
+        Updates the Authorizenet payment profile.
 
-    def delete(self) -> dict:
-        """Deletes the Authorizenet payment profile."""
+        :param address: A billing address.
+        :type address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
+        :param payment: A payment method.
+        :type payment: :py:obj:`~authorizenet.apicontractsv1.paymentType`
+        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
+        :returns: An Authorizenet API reponse, if any.
+        :rtype: :py:obj:`dict` | :py:obj:`None`
+
+        """
+        return self._authorizenet_update_payment_profile(address, payment)
+
+    def delete(self) -> dict | None:
+        """
+        Deletes the Authorizenet payment profile.
+
+        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
+        :returns: An Authorizenet API response, if any.
+        :rtype: :py:obj:`dict` | :py:obj:`None`
+
+        """
         return self._authorizenet_delete_payment_profile()
 
-    def get_details(self, issuer_info: bool = False) -> dict:
+    def get_details(self, issuer_info: bool = False) -> dict | None:
         return self._authorizenet_get_payment_profile(issuer_info)
 
     def _authorizenet_get_transaction_list_for_customer(
@@ -46,9 +68,11 @@ class PaymentProfile(AuthorizenetSubProfileBase):
         ordering: str = "submitTimeUTC",
         offset: int = 1,
         descending: bool = False,
-    ) -> dict:
+    ) -> dict | None:
         """
         Executes a :py:obj:`~authorizenet.apicontractsv1.getTransactionListForCustomerRequest` using the Authorizenet API.
+
+        `getTransactionListForCustomerRequest <https://developer.authorize.net/api/reference/index.html#transaction-reporting-get-transaction-list>`_
 
         :param limit: Total number of transactions to retrieve. Default is ``100``.
         :type limit: :py:obj:`int`
@@ -60,8 +84,9 @@ class PaymentProfile(AuthorizenetSubProfileBase):
         :type descending: :py:obj:`bool`
         :raises ValueError: If ``ordering`` is invalid.
         :raises AssertionError: If :py:attr:`id` wasn't set.
-        :returns: An Authorizenet API response.
-        :rtype: :py:obj:`dict`
+        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
+        :returns: An Authorizenet API response, if any.
+        :rtype: :py:obj:`dict` | :py:obj:`None`
 
         """
         ordering_options: tuple[str, str] = ("id", "submitTimeUTC")
@@ -78,52 +103,55 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             paging={"limit": str(limit), "offset": str(offset)},
         )
         controller = apicontrollers.getTransactionListForCustomerController(request)
-        response = self.execute_controller(controller)
-        return response
+        return self.execute_controller(controller)
 
     def _authorizenet_create_payment_profile(
         self,
-        billing_addr: apicontractsv1.customerAddressType,
+        address: apicontractsv1.customerAddressType,
         payment: apicontractsv1.paymentType,
-    ) -> dict:
+    ) -> dict | None:
         """
         Executes a :py:obj:`~authorizenet.apicontractsv1.createCustomerPaymentProfileRequest` using the Authorizenet API.
 
-        :param billing_addr: A customer address.
-        :type billing_addr: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
+        `createCustomerPaymentProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-create-customer-payment-profile>`_
+
+        :param address: A billing address.
+        :type address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
         :param payment: A payment method.
         :type payment: :py:obj:`~authorizenet.apicontractsv1.paymentType`
-        :raises AssertionError: If :py:attr:`id` wasn't set.
-        :raises : If :py:attr:`id` wasn't set.
-        :returns: An Authorizenet API response.
-        :rtype: :py:obj:`dict`
+        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
+        :returns: An Authorizenet API response, if any.
+        :rtype: :py:obj:`dict` | :py:obj:`None`
 
         """
         request = apicontractsv1.createCustomerPaymentProfileRequest(
             customerProfileId=self.customerProfileId,
             merchantAuthentication=self.merchantAuthentication,
             paymentProfile=apicontractsv1.customerPaymentProfileType(
-                billTo=billing_addr, payment=payment, defaultPaymentProfile=self.default
+                billTo=address, payment=payment, defaultPaymentProfile=self.default
             ),
             validationMode=self.validationMode,
         )
         controller = apicontrollers.createCustomerPaymentProfileController(request)
-        response = self.execute_controller(controller)
-        return response
+        return self.execute_controller(controller)
 
-    def _authorizenet_get_payment_profile(self, issuer_info: bool = False) -> dict:
+    def _authorizenet_get_payment_profile(
+        self, issuer_info: bool = False
+    ) -> dict | None:
         """
         Executes a :py:obj:`~authorizenet.apicontractsv1.getCustomerPaymentProfileRequest` using the Authorizenet API.
+
+        `getCustomerPaymentProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-payment-profile>`_
 
         :param issuer_info: Whether or not to include issuer information in the response.
         :type issuer_info: :py:obj:`bool`
         :raises AssertionError: If :py:attr:`id` wasn't set.
-        :returns: An Authorizenet API response.
-        :rtype: :py:obj:`dict`
+        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
+        :returns: An Authorizenet API response, if any.
+        :rtype: :py:obj:`dict` | :py:obj:`None`
 
         """
         assert self.id, "'id' was not set."
-
         request = apicontractsv1.getCustomerPaymentProfileRequest(
             merchantAuthentication=self.merchantAuthentication,
             customerProfileId=self.customerProfileId,
@@ -131,24 +159,26 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             includeIssuerInfo=str(issuer_info).lower(),
         )
         controller = apicontrollers.getCustomerPaymentProfileController(request)
-        response = self.execute_controller(controller)
-        return response
+        return self.execute_controller(controller)
 
     def _authorizenet_update_payment_profile(
         self,
-        billing_addr: apicontractsv1.customerAddressType,
+        address: apicontractsv1.customerAddressType,
         payment: apicontractsv1.paymentType,
-    ) -> dict:
+    ) -> dict | None:
         """
-        Executes a :py:obj:`~authorizenet.apicontractsv1.validateCustomerPaymentProfileRequest` using the Authorizenet API.
+        Executes a :py:obj:`~authorizenet.apicontractsv1.updateCustomerPaymentProfileRequest` using the Authorizenet API.
 
-        :param billing_addr: A customer address.
-        :type billing_addr: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
+        `updateCustomerPaymentProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-update-customer-payment-profile>`_
+
+        :param address: A customer address.
+        :type address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
         :param payment: A payment method.
         :type payment: :py:obj:`~authorizenet.apicontractsv1.paymentType`
         :raises AssertionError: If :py:attr:`id` wasn't set.
-        :returns: An Authorizenet API response.
-        :rtype: :py:obj:`dict`
+        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
+        :returns: An Authorizenet API response, if any.
+        :rtype: :py:obj:`dict` | :py:obj:`None`
 
         """
         assert self.id, "'id' was not set."
@@ -157,7 +187,7 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             merchantAuthentication=self.merchantAuthentication,
             customerProfileId=self.customerProfileId,
             paymentProfile=apicontractsv1.customerPaymentProfileType(
-                billTo=billing_addr,
+                billTo=address,
                 payment=payment,
                 defaultPaymentProfile=self.default,
                 customerPaymentProfileId=self.id,
@@ -165,20 +195,22 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             validationMode=self.validationMode,
         )
         controller = apicontrollers.updateCustomerPaymentProfileController(request)
-        response = self.execute_controller(controller)
-        return response
+        return self.execute_controller(controller)
 
-    def _authorizenet_validate_payment_profile(self) -> dict:
+    def _authorizenet_validate_payment_profile(self) -> dict | None:
         """
         Executes a :py:obj:`~authorizenet.apicontractsv1.validateCustomerPaymentProfileRequest` using the Authorizenet API.
 
+        `validateCustomerPaymentProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-validate-customer-payment-profile>`_
+
         :raises AssertionError: If :py:attr:`id` wasn't set.
-        :returns: An Authorizenet API response.
-        :rtype: :py:obj:`dict`
+        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
+        :returns: An Authorizenet API response, if any.
+        :rtype: :py:obj:`dict` | :py:obj:`None`
+
 
         """
         assert self.id, "'id' was not set."
-
         request = apicontractsv1.validateCustomerPaymentProfileRequest(
             merchantAuthentication=self.merchantAuthentication,
             customerProfileId=self.customerProfileId,
@@ -186,16 +218,18 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             validationMode=self.validationMode,
         )
         controller = apicontrollers.validateCustomerPaymentProfileController(request)
-        response = self.execute_controller(controller)
-        return response
+        return self.execute_controller(controller)
 
-    def _authorizenet_delete_payment_profile(self) -> dict:
+    def _authorizenet_delete_payment_profile(self) -> dict | None:
         """
         Executes a :py:obj:`~authorizenet.apicontractsv1.deleteCustomerPaymentProfileRequest` using the Authorizenet API.
 
+        `deleteCustomerPaymentProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-delete-customer-payment-profile>`_
+
         :raises AssertionError: If :py:attr:`id` wasn't set.
-        :returns: An Authorizenet API response.
-        :rtype: :py:obj:`dict`
+        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
+        :returns: An Authorizenet API response, if any.
+        :rtype: :py:obj:`dict` | :py:obj:`None`
 
         """
         assert self.id, "'id' was not set."
@@ -206,5 +240,4 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             customerPaymentProfileId=self.id,
         )
         controller = apicontrollers.deleteCustomerPaymentProfileController(request)
-        response = self.execute_controller(controller)
-        return response
+        return self.execute_controller(controller)

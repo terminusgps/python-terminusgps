@@ -1,27 +1,30 @@
 from authorizenet import apicontractsv1, apicontrollers
 from authorizenet.apicontractsv1 import customerProfileType
 
-from terminusgps.authorizenet.profiles.base import AuthorizenetProfileBase
-from terminusgps.authorizenet.utils import get_customer_profile_ids
+from ..utils import ControllerExecutionError, get_customer_profile_ids
+from .base import AuthorizenetProfileBase
 
 
 class CustomerProfile(AuthorizenetProfileBase):
     """An Authorizenet customer profile."""
 
-    def create(self, email: str, desc: str | None = None) -> int:
+    def create(self, email: str, desc: str = "") -> int:
         """
-        Creates a customer profile using the Authorizenet API and returns its id.
+        Creates a customer profile and returns its id.
 
         :param email: An email address.
         :type email: :py:obj:`str`
         :param desc: An optional description.
-        :type desc: :py:obj:`str` | :py:obj:`None`
+        :type desc: :py:obj:`str`
         :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
+        :raises ValueError: If the Authorizenet API response was not retrieved.
         :returns: The new customer profile id.
         :rtype: :py:obj:`int`
 
         """
         response = self._authorizenet_create_customer_profile(email=email, desc=desc)
+        if response is None:
+            raise ValueError("Failed to retrieve Authorizenet API response.")
         return int(response.customerProfileId)
 
     def update(self, email: str, desc: str = "") -> None:
@@ -30,7 +33,7 @@ class CustomerProfile(AuthorizenetProfileBase):
 
         :param email: An email address.
         :type email: :py:obj:`str`
-        :param desc: An optional description. Default is ``""``
+        :param desc: An optional description.
         :type desc: :py:obj:`str`
         :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
         :returns: Nothing.
@@ -50,29 +53,23 @@ class CustomerProfile(AuthorizenetProfileBase):
         """
         self._authorizenet_delete_customer_profile()
 
-    def get_payment_profiles(self) -> list[dict] | None:
-        """
-        Returns a list of the customer's payment profiles.
+    @property
+    def payment_profiles(self) -> list[dict] | None:
+        """A list of the customer's payment profiles, if any."""
+        try:
+            response = self._authorizenet_get_customer_profile(issuer_info=False)
+            return response.get("paymentProfiles") if response else None
+        except ControllerExecutionError:
+            return
 
-        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
-        :returns: A list of customer payment profiles, if they exist.
-        :rtype: :py:obj:`list` | :py:obj:`None`
-
-        """
-        response = self._authorizenet_get_customer_profile(issuer_info=False)
-        return response.get("paymentProfiles") if response else None
-
-    def get_addresses(self) -> list[dict] | None:
-        """
-        Returns a list of the customer's address profiles.
-
-        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
-        :returns: A list of customer shipping addresses, if they exist.
-        :rtype: :py:obj:`list` | :py:obj:`None`
-
-        """
-        response = self._authorizenet_get_customer_profile(issuer_info=False)
-        return response.get("shipToList") if response else None
+    @property
+    def address_profiles(self) -> list[dict] | None:
+        """A list of the customer's address profiles, if any."""
+        try:
+            response = self._authorizenet_get_customer_profile(issuer_info=False)
+            return response.get("shipToList") if response else None
+        except ControllerExecutionError:
+            return
 
     @property
     def exists(self) -> bool:
@@ -109,7 +106,6 @@ class CustomerProfile(AuthorizenetProfileBase):
         :type email: :py:obj:`str`
         :param desc: An optional description.
         :type desc: :py:obj:`str`
-        :raises AssertionError: If :py:attr:`id` wasn't set.
         :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
         :returns: An Authorizenet API response, if any.
         :rtype: :py:obj:`dict` | :py:obj:`None`

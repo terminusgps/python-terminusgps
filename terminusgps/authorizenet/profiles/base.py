@@ -3,8 +3,8 @@ from typing import override
 
 from authorizenet import apicontractsv1
 
-from terminusgps.authorizenet.auth import get_merchant_auth, get_validation_mode
-from terminusgps.authorizenet.utils import ControllerExecutionMixin
+from ..auth import get_merchant_auth, get_validation_mode
+from ..utils import ControllerExecutionMixin
 
 
 class AuthorizenetProfileBase(ControllerExecutionMixin):

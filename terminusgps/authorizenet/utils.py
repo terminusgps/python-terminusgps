@@ -2,17 +2,7 @@ from authorizenet import apicontractsv1, apicontrollers
 from authorizenet.apicontrollersbase import APIOperationBase
 
 from .auth import get_environment, get_merchant_auth
-
-
-class ControllerExecutionError(Exception):
-    """Raised when an Authorizenet API controller fails to execute."""
-
-    def __init__(self, message: str, code: str, *args, **kwargs) -> None:
-        self.code = code
-        super().__init__(message, *args, **kwargs)
-
-    def __str__(self) -> str:
-        return f"{self.code}: {self.message}"
+from .errors import ControllerExecutionError
 
 
 class ControllerExecutionMixin:
@@ -57,5 +47,8 @@ def get_customer_profile_ids() -> list[int]:
     response = controller.getresponse()
 
     if response is not None and response.messages.resultCode != "Ok":
-        raise ValueError(response.messages.message["text"].text)
+        raise ControllerExecutionError(
+            message=response.messages.message[0]["text"].text,
+            code=response.messages.message[0]["code"].text,
+        )
     return [int(id) for id in response.ids.getchildren()]

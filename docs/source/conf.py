@@ -5,12 +5,20 @@
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+import os
+import sys
+
+import django
 from sphinxawesome_theme.postprocess import Icons
+
+sys.path.insert(0, os.path.abspath("../.."))
+os.environ["DJANGO_SETTINGS_MODULE"] = "terminusgps.settings"
+django.setup()
 
 project = "python-terminusgps"
 copyright = "2025, Terminus GPS, LLC"
 author = "Terminus GPS, LLC"
-release = "21.1.0"
+release = "23.0.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

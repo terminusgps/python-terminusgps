@@ -1,12 +1,12 @@
 from authorizenet import apicontractsv1, apicontrollers
 
-from terminusgps.authorizenet.auth import get_merchant_auth
-from terminusgps.authorizenet.utils import ControllerExecutionMixin
+from ..auth import get_merchant_auth
+from ..utils import ControllerExecutionMixin
 
 
 class Subscription(ControllerExecutionMixin):
     def __init__(self, id: str | int | None = None, *args, **kwargs) -> None:
-        if id and isinstance(id, str) and not id.isdigit():
+        if id is not None and isinstance(id, str) and not id.isdigit():
             raise ValueError(f"'id' must be a digit, got '{id}'.")
         self.id = int(id) if id else self.create(*args, **kwargs)
 
@@ -15,8 +15,9 @@ class Subscription(ControllerExecutionMixin):
         name: str,
         amount: str,
         schedule: apicontractsv1.paymentScheduleType,
-        payment: apicontractsv1.paymentType,
-        address: apicontractsv1.customerAddressType,
+        profile_id: int | str,
+        payment_id: int | str,
+        address_id: int | str,
         trial_amount: str = "0.00",
     ) -> int:
         request = apicontractsv1.ARBCreateSubscriptionRequest(
@@ -26,8 +27,11 @@ class Subscription(ControllerExecutionMixin):
                 paymentSchedule=schedule,
                 amount=amount,
                 trialAmount=trial_amount,
-                payment=payment,
-                bill_to=address,
+                profile=apicontractsv1.customerProfileIdType(
+                    customerProfileId=str(profile_id),
+                    customerPaymentProfileId=str(payment_id),
+                    customerAddressId=str(address_id),
+                ),
             ),
         )
         controller = apicontrollers.ARBCreateSubscriptionController(request)
