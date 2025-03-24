@@ -17,7 +17,9 @@ class WialonUnit(WialonBase):
         :type name: :py:obj:`str`
         :param hw_type_id: A Wialon hardware type ID.
         :type hw_type_id: :py:obj:`str` | :py:obj:`int`
-        :returns: The Wialon id for the new unit.
+        :raises ValueError: If ``creator_id`` is a :py:obj:`str` but not a digit.
+        :raises ValueError: If ``hw_type_id`` is a :py:obj:`str` but not a digit.
+        :returns: An id for the new unit.
         :rtype: :py:obj:`int` | :py:obj:`None`
 
         """
@@ -56,22 +58,35 @@ class WialonUnit(WialonBase):
         )
 
     @property
+    def exists(self) -> bool:
+        """Whether or not the unit exists in Wialon."""
+        return bool(
+            self.session.wialon_api.core_search_item(
+                **{"id": self.id, "flags": flags.DATAFLAG_UNIT_BASE}
+            ).get("item", False)
+        )
+
+    @property
     def available_commands(self) -> dict:
+        """Assigned commands to the unit."""
         return self.session.wialon_api.core_get_hw_cmds(
             **{"deviceTypeId": 0, "unitId": self.id}
         )
 
     @property
     def image_uri(self) -> str:
+        """An image URI for the unit."""
         return self._image_uri
 
     @property
     def imei_number(self) -> int | None:
+        """The unit's IMEI number."""
         if self._imei_number:
             return int(self._imei_number)
 
     @property
     def active(self) -> bool:
+        """Whether or not the unit is active."""
         if self._active:
             return bool(self._active)
         return False
@@ -85,7 +100,7 @@ class WialonUnit(WialonBase):
         param: dict | None = None,
     ) -> None:
         """
-        Executes a command on this Wialon unit.
+        Executes a command on the unit.
 
         :param name: A Wialon command name.
         :type name: :py:obj:`str`
@@ -115,7 +130,7 @@ class WialonUnit(WialonBase):
 
     def set_access_password(self, password: str) -> None:
         """
-        Sets a new access password for this Wialon unit.
+        Sets a new access password for the unit.
 
         :param password: A new access password.
         :type name: :py:obj:`str`
@@ -131,7 +146,7 @@ class WialonUnit(WialonBase):
 
     def activate(self) -> None:
         """
-        Activates this Wialon unit.
+        Activates the unit.
 
         :raises WialonError: If something goes wrong with Wialon.
         :returns: Nothing.
@@ -145,7 +160,7 @@ class WialonUnit(WialonBase):
 
     def deactivate(self) -> None:
         """
-        Deactivates this Wialon unit.
+        Deactivates the unit.
 
         :raises WialonError: If something goes wrong with Wialon.
         :returns: Nothing.
@@ -159,7 +174,7 @@ class WialonUnit(WialonBase):
 
     def assign_phone(self, phone: str) -> None:
         """
-        Assigns a phone number to this Wialon unit.
+        Assigns a phone number to the unit.
 
         :param phone: A phone number beginning with a country code.
         :type phone: :py:obj:`str`

@@ -120,10 +120,11 @@ class WialonUnitGroup(WialonBase):
 def main() -> None:
     import logging
 
-    from django.utils import timezone
     from django.conf import settings
-    from terminusgps.wialon.session import WialonSession
+    from django.utils import timezone
+
     from terminusgps.wialon.items import WialonUnit
+    from terminusgps.wialon.session import WialonSession
     from terminusgps.wialon.utils import get_hw_type_id
 
     timestamp = f"{timezone.now():%Y_%m_%d_%H:%M:%S}"
