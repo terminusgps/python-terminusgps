@@ -58,7 +58,7 @@ class CustomerProfile(AuthorizenetProfileBase):
         """A list of the customer's payment profiles, if any."""
         try:
             response = self._authorizenet_get_customer_profile(issuer_info=False)
-            return response.get("paymentProfiles") if response else None
+            return response.paymentProfiles if response else None
         except ControllerExecutionError:
             return
 
@@ -67,7 +67,7 @@ class CustomerProfile(AuthorizenetProfileBase):
         """A list of the customer's address profiles, if any."""
         try:
             response = self._authorizenet_get_customer_profile(issuer_info=False)
-            return response.get("shipToList") if response else None
+            return response.shipToList if response else None
         except ControllerExecutionError:
             return
 
