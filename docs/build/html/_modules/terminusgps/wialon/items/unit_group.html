@@ -12,9 +12,9 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
   
-    <title>terminusgps.wialon.items.unit_group | python-terminusgps 21.1.0 documentation</title>
-    <meta property="og:title" content="terminusgps.wialon.items.unit_group | python-terminusgps 21.1.0 documentation" />
-    <meta name="twitter:title" content="terminusgps.wialon.items.unit_group | python-terminusgps 21.1.0 documentation" />
+    <title>terminusgps.wialon.items.unit_group | python-terminusgps 24.1.0 documentation</title>
+    <meta property="og:title" content="terminusgps.wialon.items.unit_group | python-terminusgps 24.1.0 documentation" />
+    <meta name="twitter:title" content="terminusgps.wialon.items.unit_group | python-terminusgps 24.1.0 documentation" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d691ff6c" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/theme.css?v=42baaae4" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/autoclasstoc.css?v=08871587" />
@@ -40,7 +40,7 @@
     </a><header
   class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
     <div class="hidden mr-4 md:flex">
-      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 21.1.0 documentation</span>
+      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 24.1.0 documentation</span>
       </a></div><button
       class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden"
       type="button" @click="showSidebar = true">
@@ -95,7 +95,7 @@
   class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky"
   :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }">
 
-    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 21.1.0 documentation</span>
+    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 24.1.0 documentation</span>
     </a>
 
     <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
@@ -106,6 +106,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../authorizenet/index.html">Authorizenet API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../authorizenet/auth.html">Authorizenet API Authentication</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../authorizenet/profiles.html">Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../authorizenet/utils.html">Utilities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../aws/index.html">AWS API</a><ul>
@@ -146,7 +147,7 @@
      class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
   <a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground"
      href="../../../../index.html">
-    <span class="hidden md:inline">python-terminusgps 21.1.0 documentation</span>
+    <span class="hidden md:inline">python-terminusgps 24.1.0 documentation</span>
     <svg xmlns="http://www.w3.org/2000/svg"
          height="18"
          width="18"
@@ -308,36 +309,37 @@
 </span><span id="line-120"><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="line-121">    <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 </span><span id="line-122">
-</span><span id="line-123">    <span class="kn">from</span><span class="w"> </span><span class="nn">django.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">timezone</span>
-</span><span id="line-124">    <span class="kn">from</span><span class="w"> </span><span class="nn">django.conf</span><span class="w"> </span><span class="kn">import</span> <span class="n">settings</span>
-</span><span id="line-125">    <span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.session</span><span class="w"> </span><span class="kn">import</span> <span class="n">WialonSession</span>
+</span><span id="line-123">    <span class="kn">from</span><span class="w"> </span><span class="nn">django.conf</span><span class="w"> </span><span class="kn">import</span> <span class="n">settings</span>
+</span><span id="line-124">    <span class="kn">from</span><span class="w"> </span><span class="nn">django.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">timezone</span>
+</span><span id="line-125">
 </span><span id="line-126">    <span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.items</span><span class="w"> </span><span class="kn">import</span> <span class="n">WialonUnit</span>
-</span><span id="line-127">    <span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_hw_type_id</span>
-</span><span id="line-128">
-</span><span id="line-129">    <span class="n">timestamp</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="si">:</span><span class="s2">%Y_%m_%d_%H:%M:%S</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span id="line-130">    <span class="k">with</span> <span class="n">WialonSession</span><span class="p">(</span><span class="n">log_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-</span><span id="line-131">        <span class="n">unit</span> <span class="o">=</span> <span class="n">WialonUnit</span><span class="p">(</span>
-</span><span id="line-132">            <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-</span><span id="line-133">            <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">,</span>
-</span><span id="line-134">            <span class="n">creator_id</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">WIALON_ADMIN_ID</span><span class="p">,</span>
-</span><span id="line-135">            <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;test_unit_</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-</span><span id="line-136">            <span class="n">hw_type_id</span><span class="o">=</span><span class="n">get_hw_type_id</span><span class="p">(</span><span class="s2">&quot;Test HW&quot;</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">),</span>
-</span><span id="line-137">        <span class="p">)</span>
-</span><span id="line-138">        <span class="n">group</span> <span class="o">=</span> <span class="n">WialonUnitGroup</span><span class="p">(</span>
-</span><span id="line-139">            <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-</span><span id="line-140">            <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">,</span>
-</span><span id="line-141">            <span class="n">creator_id</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">WIALON_ADMIN_ID</span><span class="p">,</span>
-</span><span id="line-142">            <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;test_group_</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-</span><span id="line-143">        <span class="p">)</span>
-</span><span id="line-144">        <span class="n">group</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span>
-</span><span id="line-145">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">group</span><span class="o">.</span><span class="n">items</span><span class="w"> </span><span class="si">= }</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="line-146">        <span class="n">unit</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
-</span><span id="line-147">        <span class="n">group</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
-</span><span id="line-148">    <span class="k">return</span>
-</span><span id="line-149">
+</span><span id="line-127">    <span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.session</span><span class="w"> </span><span class="kn">import</span> <span class="n">WialonSession</span>
+</span><span id="line-128">    <span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_hw_type_id</span>
+</span><span id="line-129">
+</span><span id="line-130">    <span class="n">timestamp</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="si">:</span><span class="s2">%Y_%m_%d_%H:%M:%S</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="line-131">    <span class="k">with</span> <span class="n">WialonSession</span><span class="p">(</span><span class="n">log_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+</span><span id="line-132">        <span class="n">unit</span> <span class="o">=</span> <span class="n">WialonUnit</span><span class="p">(</span>
+</span><span id="line-133">            <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="line-134">            <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">,</span>
+</span><span id="line-135">            <span class="n">creator_id</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">WIALON_ADMIN_ID</span><span class="p">,</span>
+</span><span id="line-136">            <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;test_unit_</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="line-137">            <span class="n">hw_type_id</span><span class="o">=</span><span class="n">get_hw_type_id</span><span class="p">(</span><span class="s2">&quot;Test HW&quot;</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">),</span>
+</span><span id="line-138">        <span class="p">)</span>
+</span><span id="line-139">        <span class="n">group</span> <span class="o">=</span> <span class="n">WialonUnitGroup</span><span class="p">(</span>
+</span><span id="line-140">            <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="line-141">            <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">,</span>
+</span><span id="line-142">            <span class="n">creator_id</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">WIALON_ADMIN_ID</span><span class="p">,</span>
+</span><span id="line-143">            <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;test_group_</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="line-144">        <span class="p">)</span>
+</span><span id="line-145">        <span class="n">group</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span>
+</span><span id="line-146">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">group</span><span class="o">.</span><span class="n">items</span><span class="w"> </span><span class="si">= }</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="line-147">        <span class="n">unit</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</span><span id="line-148">        <span class="n">group</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</span><span id="line-149">    <span class="k">return</span>
 </span><span id="line-150">
-</span><span id="line-151"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-</span><span id="line-152">    <span class="n">main</span><span class="p">()</span>
+</span><span id="line-151">
+</span><span id="line-152"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span id="line-153">    <span class="n">main</span><span class="p">()</span>
 </span></code></pre></div>
     </div></div>
         </main>
@@ -353,7 +355,7 @@
 </footer>
   </div>
   
-    <script src="../../../../_static/documentation_options.js?v=c54a4614"></script>
+    <script src="../../../../_static/documentation_options.js?v=7b1888c8"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script defer="defer" src="../../../../_static/theme.js?v=073f68d9"></script>
