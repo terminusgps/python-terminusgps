@@ -47,6 +47,16 @@ class AddressProfile(AuthorizenetSubProfileBase):
         """
         return self._authorizenet_delete_shipping_address()
 
+    def get_details(self) -> dict | None:
+        """
+        Gets details for the Authorizenet address profile.
+
+        :returns: An Authorizenet API response, if any.
+        :rtype: :py:obj:`dict` | :py:obj:`None`
+
+        """
+        return self._authorizenet_get_shipping_address()
+
     def _authorizenet_get_shipping_address(self) -> dict | None:
         """
         Executes a :py:obj:`~authorizenet.apicontractsv1.getCustomerShippingAddressRequest` using the Authorizenet API.
