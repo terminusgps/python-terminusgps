@@ -34,18 +34,20 @@ class TwilioCaller:
         self.logger.debug(
             f"Creating '{method}' notification targeting '{to_number}'..."
         )
+
         match method:
             case "sms":
-                task = asyncio.create_task(
+                return asyncio.create_task(
                     self.create_sms(to_number=to_number, message=message)
                 )
             case "call" | "phone":
-                task = asyncio.create_task(
+                return asyncio.create_task(
                     self.create_call(to_number=to_number, message=message)
                 )
+            case "log":
+                return asyncio.create_task(self.create_log(message=message))
             case _:
                 raise ValueError(f"Unsupported TwilioCaller method '{method}'.")
-        return task
 
     async def create_call(self, to_number: str, message: str) -> None:
         await self.client.calls.create_async(
@@ -61,3 +63,6 @@ class TwilioCaller:
             body=message,
             messaging_service_sid=self.messaging_sid,
         )
+
+    async def create_log(self, message: str) -> None:
+        self.logger.info(message)
