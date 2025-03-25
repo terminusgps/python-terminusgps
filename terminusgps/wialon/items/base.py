@@ -217,24 +217,17 @@ class WialonBase:
     @property
     def cfields(self) -> dict:
         """Custom fields associated with the Wialon object."""
-        fields = (
-            self.session.wialon_api.core_search_item(
-                **{"id": self.id, "flags": flags.DATAFLAG_UNIT_CUSTOM_FIELDS}
-            )
-            .get("item", {})
-            .get("cfields")
+        response = self.session.wialon_api.core_search_item(
+            **{"id": self.id, "flags": flags.DATAFLAG_UNIT_CUSTOM_FIELDS}
         )
-
-        return {field["n"]: field["v"] for _, field in fields.items()} if fields else {}
+        fields = response.get("item", {}).get("flds") if response is not None else {}
+        return {field["n"]: field["v"] for field in fields.values()} if fields else {}
 
     @property
     def afields(self) -> dict:
         """Admin fields associated with the Wialon object."""
-        fields = (
-            self.session.wialon_api.core_search_item(
-                **{"id": self.id, "flags": flags.DATAFLAG_UNIT_ADMIN_FIELDS}
-            )
-            .get("item", {})
-            .get("afields")
+        response = self.session.wialon_api.core_search_item(
+            **{"id": self.id, "flags": flags.DATAFLAG_UNIT_ADMIN_FIELDS}
         )
-        return {field["n"]: field["v"] for _, field in fields.items()} if fields else {}
+        fields = response.get("item", {}).get("aflds") if response is not None else {}
+        return {field["n"]: field["v"] for field in fields.values()} if fields else {}
