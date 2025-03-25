@@ -47,10 +47,12 @@ class WialonUnit(WialonBase):
                     [flags.DATAFLAG_UNIT_ADVANCED_PROPERTIES, flags.DATAFLAG_UNIT_IMAGE]
                 ),
             }
-        ).get("item", {})
-        self._imei_number = response.get("uid")
-        self._active = response.get("act", False)
-        self._image_uri = response.get("uri")
+        )
+        if response is not None:
+            item = response.get("item", {})
+            self._imei_number = item.get("uid")
+            self._active = item.get("act", False)
+            self._image_uri = item.get("uri")
 
     def get_position(self) -> dict:
         return self.session.wialon_api.core_search_item(
