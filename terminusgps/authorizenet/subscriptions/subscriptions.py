@@ -36,4 +36,6 @@ class Subscription(ControllerExecutionMixin):
         )
         controller = apicontrollers.ARBCreateSubscriptionController(request)
         response = self.execute_controller(controller)
+        if response is None:
+            raise ValueError("Failed to retrieve Authorizenet API response.")
         return int(response.subscriptionId)

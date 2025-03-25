@@ -1,18 +1,23 @@
+import asyncio
+import logging
 from typing import Any
 
-import asyncio
 import twilio.rest
-
 from django.conf import settings
 from twilio.http.async_http_client import AsyncTwilioHttpClient
 
+from terminusgps.twilio.logger import TwilioLogger
+
 
 class TwilioCaller:
-    def __init__(self) -> None:
+    def __init__(self, log_level: int = logging.CRITICAL) -> None:
         self.client_sid = settings.TWILIO_SID
         self.client_token = settings.TWILIO_TOKEN
         self.from_number = settings.TWILIO_FROM_NUMBER
         self.messaging_sid = settings.TWILIO_MESSAGING_SID
+        self.logger = TwilioLogger(
+            logging.getLogger(self.__class__.__name__), level=log_level
+        ).get_logger()
 
     def __enter__(self) -> "TwilioCaller":
         self.client = twilio.rest.Client(
@@ -26,6 +31,9 @@ class TwilioCaller:
     async def create_notification(
         self, to_number: str, message: str, method: str = "sms"
     ) -> asyncio.Task[Any]:
+        self.logger.debug(
+            f"Creating '{method}' notification targeting '{to_number}'..."
+        )
         match method:
             case "sms":
                 task = asyncio.create_task(
