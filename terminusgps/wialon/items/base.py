@@ -23,10 +23,12 @@ class WialonBase:
         """Retrieves and saves the latest data for the item from Wialon."""
         response = self.session.wialon_api.core_search_item(
             **{"id": str(self.id), "flags": 0x1}
-        ).get("item", {})
-        self.name = response.get("nm")
-        self.hw_type = response.get("cls")
-        self.access_lvl = response.get("uacl")
+        )
+        if response is not None:
+            item = response.get("item", {})
+            self.name = item.get("nm")
+            self.hw_type = item.get("cls")
+            self.access_lvl = item.get("uacl")
 
     @property
     def session(self) -> WialonSession:
