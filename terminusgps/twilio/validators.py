@@ -11,6 +11,12 @@ def validate_phone_number(value: str) -> None:
             code="invalid",
             params={"value": value},
         )
+    if not value[1:].isdigit():
+        raise ValidationError(
+            _("Phone number must be '+' followed by a digit, got '%(value)s'"),
+            code="invalid",
+            params={"value": value},
+        )
     if len(value) < min_length:
         raise ValidationError(
             _("Phone number cannot be less than %(min)s characters, got %(len)s."),

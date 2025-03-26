@@ -128,78 +128,71 @@ class WialonBase:
             }
         )
 
-    def add_cfield(self, field: tuple[str, str]) -> None:
+    def add_cfield(self, key: str, value: str) -> None:
         """
         Adds a custom field to the Wialon object.
 
-        :param field: A tuple containing the name of the field and the value of the field.
-        :type field: :py:obj:`tuple`
+        :param key: A key (name) for the custom field.
+        :type key: :py:obj:`str`
+        :param value: A value for the custom field.
+        :type value: :py:obj:`str`
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
 
         self.session.wialon_api.item_update_custom_field(
-            **{
-                "itemId": self.id,
-                "id": 0,
-                "callMode": "create",
-                "n": field[0],
-                "v": field[1],
-            }
+            **{"itemId": self.id, "id": 0, "callMode": "create", "n": key, "v": value}
         )
 
-    def update_cfield(self, field_id: int, field: tuple[str, str]) -> None:
+    def update_cfield(self, id: int, key: str, value: str) -> None:
         """
         Updates a custom field by id.
 
-        :param field_id: The admin field id.
-        :type field_id: :py:obj:`int`
-        :param field: A tuple containing the name of the field and the value of the field.
-        :type field: :py:obj:`tuple`
+        :param id: The admin field id.
+        :type id: :py:obj:`int`
+        :param field: A key (name) for the custom field.
+        :type field: :py:obj:`str`
+        :param field: A value for the custom field.
+        :type field: :py:obj:`str`
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-
         self.session.wialon_api.item_update_custom_field(
-            **{
-                "itemId": self.id,
-                "id": field_id,
-                "callMode": "update",
-                "n": field[0],
-                "v": field[1],
-            }
+            **{"itemId": self.id, "id": id, "callMode": "update", "n": key, "v": value}
         )
 
-    def add_cproperty(self, property: tuple[str, str]) -> None:
+    def add_cproperty(self, key: str, value: str) -> None:
         """
         Adds a custom property to the Wialon object.
 
-        :param property: A tuple containing the name of the property and the value of the property.
-        :type property: :py:obj:`tuple`
+        :param key: A key (name) for the custom property.
+        :type key: :py:obj:`str`
+        :param value: A value for the custom property.
+        :type value: :py:obj:`str`
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-
         self.session.wialon_api.item_update_custom_property(
-            **{"itemId": self.id, "name": property[0], "value": property[1]}
+            **{"itemId": self.id, "name": key, "value": value}
         )
 
-    def add_profile_field(self, field: tuple[str, str]) -> None:
+    def add_profile_field(self, key: str, value: str) -> None:
         """
         Adds a profile field to the Wialon object.
 
-        :param field: A tuple containing the name of the field and the value of the field.
-        :type field: :py:obj:`tuple`
+        :param key: A key (name) for the profile field.
+        :type key: :py:obj:`str`
+        :param value: A value for the profile field.
+        :type value: :py:obj:`str`
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-
         self.session.wialon_api.item_update_profile_field(
-            **{"itemId": self.id, "n": field[0], "v": field[1]}
+            **{"itemId": self.id, "n": key, "v": value}
         )
 
     def delete(self) -> None:
@@ -211,12 +204,11 @@ class WialonBase:
         :rtype: :py:obj:`None`
 
         """
-
         self.session.wialon_api.item_delete_item(**{"itemId": self.id})
 
     @property
-    def cfields(self) -> dict:
-        """Custom fields associated with the Wialon object."""
+    def cfields(self) -> dict[str, str]:
+        """Custom fields for the Wialon object."""
         response = self.session.wialon_api.core_search_item(
             **{"id": self.id, "flags": flags.DATAFLAG_UNIT_CUSTOM_FIELDS}
         )
@@ -224,8 +216,8 @@ class WialonBase:
         return {field["n"]: field["v"] for field in fields.values()} if fields else {}
 
     @property
-    def afields(self) -> dict:
-        """Admin fields associated with the Wialon object."""
+    def afields(self) -> dict[str, str]:
+        """Admin fields for the Wialon object."""
         response = self.session.wialon_api.core_search_item(
             **{"id": self.id, "flags": flags.DATAFLAG_UNIT_ADMIN_FIELDS}
         )

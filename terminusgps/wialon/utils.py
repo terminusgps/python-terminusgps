@@ -49,7 +49,7 @@ def get_id_from_imei(imei: str, session: WialonSession) -> str | None:
     if not imei.isdigit():
         raise ValueError(f"'imei' must be a digit, got '{imei}'.")
 
-    results = session.wialon_api.core_search_items(
+    results: dict[str, typing.Any] | None = session.wialon_api.core_search_items(
         **{
             "spec": {
                 "itemsType": "avl_unit",
@@ -66,7 +66,7 @@ def get_id_from_imei(imei: str, session: WialonSession) -> str | None:
         }
     )
 
-    if results.get("totalItemsCount", 0) == 1:
+    if results and results.get("totalItemsCount", 0) == 1:
         return results["items"][0].get("id")
 
 
@@ -88,27 +88,25 @@ def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
     return get_id_from_imei(imei=iccid, session=session)
 
 
-def get_wialon_cls(items_type: str) -> typing.Type[WialonBase]:
+def get_wialon_cls(items_type: str) -> typing.Type[WialonBase] | None:
     """
-    Returns a Wialon object class based on items_type.
+    Returns a Wialon object class based on ``items_type``.
+
+    Valid ``items_type`` are ``"user"``, ``"avl_unit"``, ``"avl_unit_group"`` and ``"avl_resource"``.
 
     :param items_type: A Wialon object type.
     :type items_type: :py:obj:`str`
     :returns: A subclass of :py:obj:`~terminusgps.wialon.items.base.WialonBase`.
-    :rtype: :py:obj:`~terminusgps.wialon.items.base.WialonBase`
+    :rtype: :py:obj:`~terminusgps.wialon.items.base.WialonBase` | :py:obj:`None`
 
     """
-    match items_type:
-        case "user":
-            return items.WialonUser
-        case "avl_unit":
-            return items.WialonUnit
-        case "avl_unit_group":
-            return items.WialonUnitGroup
-        case "avl_resource":
-            return items.WialonResource
-        case _:
-            raise ValueError(f"Invalid items_type, got '{items_type}'.")
+    items_map: dict[str, typing.Type[WialonBase]] = {
+        "user": items.WialonUser,
+        "avl_unit": items.WialonUnit,
+        "avl_unit_group": items.WialonUnitGroup,
+        "avl_resource": items.WialonResource,
+    }
+    return items_map.get(items_type)
 
 
 def get_vin_info(vin_number: str, session: WialonSession) -> dict:
@@ -123,14 +121,17 @@ def get_vin_info(vin_number: str, session: WialonSession) -> dict:
     :rtype: :py:obj:`dict`
 
     """
-    response = session.wialon_api.unit_get_vin_info(**{"vin": vin_number}).get(
-        "vin_lookup_result"
+    response: dict[str, typing.Any] | None = session.wialon_api.unit_get_vin_info(
+        **{"vin": vin_number}
     )
-    return (
-        {field.get("n"): field.get("v") for field in response.get("pflds")}
-        if "error" not in response.keys()
-        else {}
-    )
+
+    if response is None or "error" in response.get("vin_lookup_result", {}).keys():
+        return {}
+
+    return {
+        field.get("n"): field.get("v")
+        for field in response.get("vin_lookup_result", {}).get("pflds")
+    }
 
 
 def is_unique(value: str, session: WialonSession, items_type: str = "avl_unit") -> bool:
@@ -148,11 +149,13 @@ def is_unique(value: str, session: WialonSession, items_type: str = "avl_unit") 
     :rtype: :py:obj:`bool`
 
     """
-    return not bool(
-        session.wialon_api.core_check_unique(
-            **{"type": items_type, "value": value.strip()}
-        ).get("result")
+    response = session.wialon_api.core_check_unique(
+        **{"type": items_type, "value": value.strip()}
     )
+
+    if not response:
+        return False
+    return bool(response.get("result"))
 
 
 def generate_wialon_password(length: int = 32) -> str:

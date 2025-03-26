@@ -3,10 +3,9 @@ import datetime
 import logging
 import typing
 
+import wialon.api
 from django.conf import settings
 from django.utils import timezone
-from wialon.api import Wialon as WialonBase
-from wialon.api import WialonError
 
 from terminusgps.wialon.logger import WialonLogger
 
@@ -21,7 +20,7 @@ class WialonAPICall:
     error: Exception | None = None
 
 
-class Wialon(WialonBase):
+class Wialon(wialon.api.Wialon):
     def __init__(self, log_level: int = logging.INFO, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.call_history: list[WialonAPICall] = []
@@ -48,7 +47,7 @@ class Wialon(WialonBase):
             call_record.result = result
             self.logger.debug(f"Executed '{action_name}' successfully.")
             return result
-        except WialonError as e:
+        except wialon.api.WialonError as e:
             call_record.error = e
             self.logger.warning(f"Failed to execute '{action_name}': '{e}'")
             return
@@ -275,7 +274,7 @@ class WialonSession:
             self._set_login_response(response)
             self.logger.debug(f"Logged into Wialon API session '{response.get('eid')}'")
             return response.get("eid")
-        except (WialonError, AssertionError) as e:
+        except (wialon.api.WialonError, AssertionError) as e:
             self.logger.critical(f"Failed to login to Wialon API: '{e}'")
             raise
 

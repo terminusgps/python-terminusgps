@@ -48,7 +48,7 @@ class WialonUnit(WialonBase):
                 ),
             }
         )
-        if response is not None:
+        if response:
             item = response.get("item", {})
             self._imei_number = item.get("uid")
             self._active = item.get("act", False)
@@ -194,7 +194,7 @@ class WialonUnit(WialonBase):
         """
         Retrieves all phone numbers assigned to the unit.
 
-        This includes any attached drivers, custom/admin fields, or otherwise assigned phone numbers.
+        This includes any attached drivers, custom/admin fields or otherwise assigned phone numbers.
 
         :raises WialonError: If something goes wrong with Wialon.
         :returns: A list of phone numbers.
