@@ -6,9 +6,9 @@ from ..utils import ControllerExecutionMixin
 
 class Subscription(ControllerExecutionMixin):
     def __init__(self, id: str | int | None = None, *args, **kwargs) -> None:
-        if id is not None and isinstance(id, str) and not id.isdigit():
+        if id and isinstance(id, str) and not id.isdigit():
             raise ValueError(f"'id' must be a digit, got '{id}'.")
-        self.id = int(id) if id else self.create(*args, **kwargs)
+        self.id = int(id if id else self.create(*args, **kwargs))
 
     def create(
         self,
