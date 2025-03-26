@@ -124,36 +124,41 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="terminusgps.twilio.caller.TwilioCaller">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">terminusgps.twilio.caller.</span></span><span class="sig-name descname"><span class="pre">TwilioCaller</span></span><a class="reference internal" href="../_modules/terminusgps/twilio/caller.html#TwilioCaller"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.twilio.caller.TwilioCaller" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.twilio.caller.TwilioCaller'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd><p>An asyncronous phone messager/caller.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="terminusgps.twilio.caller.TwilioCaller.create_notification">
-<span class="sig-name descname"><span class="pre">create_notification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">method="sms"</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task" title="(in Python v3.13)"><span class="pre">asyncio.Task</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/twilio/caller.html#TwilioCaller.create_notification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.twilio.caller.TwilioCaller.create_notification" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.twilio.caller.TwilioCaller.create_notification'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd><p>Creates a task that must be awaited in an asyncronous event loop in order to be executed.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>to_number</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A phone number, starting with a ‘+’ and country code.</p></li>
-<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A message to send to <cite>to_number</cite>.</p></li>
-<li><p><strong>method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Notification method to use. Default is <code class="docutils literal notranslate"><span class="pre">"sms"</span></code>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An awaitable notification task.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio.Task</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
+<dd><div class="autoclasstoc docutils container">
+<p class="rubric">Public Methods:</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code>()</p></td>
+<td><p>Sets Twilio messaging session variables.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__enter__</span></code>()</p></td>
+<td><p>Creates an asyncronous Twilio client.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__exit__</span></code>(exc_type, exc_value, exc_tb)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.twilio.caller.TwilioCaller.create_notification" title="terminusgps.twilio.caller.TwilioCaller.create_notification"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_notification</span></code></a>(to_number, message[, method])</p></td>
+<td><p>Returns an awaitable notification task.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.twilio.caller.TwilioCaller.create_call" title="terminusgps.twilio.caller.TwilioCaller.create_call"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_call</span></code></a>(to_number, message)</p></td>
+<td><p>Calls <code class="docutils literal notranslate"><span class="pre">to_number</span></code> and reads <code class="docutils literal notranslate"><span class="pre">message</span></code> aloud.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.twilio.caller.TwilioCaller.create_sms" title="terminusgps.twilio.caller.TwilioCaller.create_sms"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_sms</span></code></a>(to_number, message)</p></td>
+<td><p>Texts <code class="docutils literal notranslate"><span class="pre">message</span></code> to <code class="docutils literal notranslate"><span class="pre">to_number</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils"/>
 <dl class="py method">
 <dt class="sig sig-object py" id="terminusgps.twilio.caller.TwilioCaller.create_call">
-<span class="sig-name descname"><span class="pre">create_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/twilio/caller.html#TwilioCaller.create_call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.twilio.caller.TwilioCaller.create_call" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.twilio.caller.TwilioCaller.create_call'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd><p>Creates a phone call task.</p>
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/twilio/caller.html#TwilioCaller.create_call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.twilio.caller.TwilioCaller.create_call" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.twilio.caller.TwilioCaller.create_call'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>Calls <code class="docutils literal notranslate"><span class="pre">to_number</span></code> and reads <code class="docutils literal notranslate"><span class="pre">message</span></code> aloud.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>to_number</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A phone number, starting with a ‘+’ and country code.</p></li>
-<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A message to send to <cite>to_number</cite>.</p></li>
+<li><p><strong>to_number</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A phone number.</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A message to be read aloud.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -165,14 +170,35 @@
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="terminusgps.twilio.caller.TwilioCaller.create_sms">
-<span class="sig-name descname"><span class="pre">create_sms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/twilio/caller.html#TwilioCaller.create_sms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.twilio.caller.TwilioCaller.create_sms" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.twilio.caller.TwilioCaller.create_sms'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd><p>Creates an sms message task.</p>
+<dt class="sig sig-object py" id="terminusgps.twilio.caller.TwilioCaller.create_notification">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_notification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sms'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Task</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/terminusgps/twilio/caller.html#TwilioCaller.create_notification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.twilio.caller.TwilioCaller.create_notification" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.twilio.caller.TwilioCaller.create_notification'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>Returns an awaitable notification task.</p>
+<p>Available methods are <code class="docutils literal notranslate"><span class="pre">"sms"</span></code>, <code class="docutils literal notranslate"><span class="pre">"call"</span></code> and <code class="docutils literal notranslate"><span class="pre">"phone"</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>to_number</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A phone number, starting with a ‘+’ and country code.</p></li>
-<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A message to send to <cite>to_number</cite>.</p></li>
+<li><p><strong>to_number</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A phone number to notify.</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A notification message.</p></li>
+<li><p><strong>method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A notification method. Default is <code class="docutils literal notranslate"><span class="pre">"sms"</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An awaitable task.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Task</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="terminusgps.twilio.caller.TwilioCaller.create_sms">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_sms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/twilio/caller.html#TwilioCaller.create_sms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.twilio.caller.TwilioCaller.create_sms" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.twilio.caller.TwilioCaller.create_sms'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>Texts <code class="docutils literal notranslate"><span class="pre">message</span></code> to <code class="docutils literal notranslate"><span class="pre">to_number</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>to_number</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A phone number.</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A message to be texted.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -189,8 +215,8 @@
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
 <li><a :data-current="activeSection === '#terminusgps.twilio.caller.TwilioCaller'" class="reference internal" href="#terminusgps.twilio.caller.TwilioCaller"><code class="docutils literal notranslate"><span class="pre">TwilioCaller</span></code></a><ul>
-<li><a :data-current="activeSection === '#terminusgps.twilio.caller.TwilioCaller.create_notification'" class="reference internal" href="#terminusgps.twilio.caller.TwilioCaller.create_notification"><code class="docutils literal notranslate"><span class="pre">TwilioCaller.create_notification()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.twilio.caller.TwilioCaller.create_call'" class="reference internal" href="#terminusgps.twilio.caller.TwilioCaller.create_call"><code class="docutils literal notranslate"><span class="pre">TwilioCaller.create_call()</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.twilio.caller.TwilioCaller.create_notification'" class="reference internal" href="#terminusgps.twilio.caller.TwilioCaller.create_notification"><code class="docutils literal notranslate"><span class="pre">TwilioCaller.create_notification()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.twilio.caller.TwilioCaller.create_sms'" class="reference internal" href="#terminusgps.twilio.caller.TwilioCaller.create_sms"><code class="docutils literal notranslate"><span class="pre">TwilioCaller.create_sms()</span></code></a></li>
 </ul>
 </li>
