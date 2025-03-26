@@ -17,7 +17,6 @@ class WialonUnitGroup(WialonBase):
         :rtype: :py:obj:`int` | :py:obj:`None`
 
         """
-
         if isinstance(creator_id, str) and not creator_id.isdigit():
             raise ValueError(f"'creator_id' must be a digit, got '{creator_id}'.")
 
@@ -28,7 +27,11 @@ class WialonUnitGroup(WialonBase):
                 "dataFlags": flags.DATAFLAG_UNIT_BASE,
             }
         )
-        return int(response.get("item", {}).get("id")) if response.get("item") else None
+        return (
+            int(response.get("item", {}).get("id"))
+            if response and response.get("item")
+            else None
+        )
 
     def set_items(self, new_items: list[str]) -> None:
         """
@@ -41,7 +44,6 @@ class WialonUnitGroup(WialonBase):
         :rtype: :py:obj:`None`
 
         """
-
         self.session.wialon_api.unit_group_update_units(
             **{"itemId": self.id, "units": new_items}
         )
@@ -115,39 +117,3 @@ class WialonUnitGroup(WialonBase):
             }
         )
         return [unit_id for unit_id in response.get("items")[0].get("u", [])]
-
-
-def main() -> None:
-    import logging
-
-    from django.conf import settings
-    from django.utils import timezone
-
-    from terminusgps.wialon.items import WialonUnit
-    from terminusgps.wialon.session import WialonSession
-    from terminusgps.wialon.utils import get_hw_type_id
-
-    timestamp = f"{timezone.now():%Y_%m_%d_%H:%M:%S}"
-    with WialonSession(log_level=logging.DEBUG) as session:
-        unit = WialonUnit(
-            id=None,
-            session=session,
-            creator_id=settings.WIALON_ADMIN_ID,
-            name=f"test_unit_{timestamp}",
-            hw_type_id=get_hw_type_id("Test HW", session=session),
-        )
-        group = WialonUnitGroup(
-            id=None,
-            session=session,
-            creator_id=settings.WIALON_ADMIN_ID,
-            name=f"test_group_{timestamp}",
-        )
-        group.add_item(unit)
-        print(f"{group.items = }")
-        unit.delete()
-        group.delete()
-    return
-
-
-if __name__ == "__main__":
-    main()

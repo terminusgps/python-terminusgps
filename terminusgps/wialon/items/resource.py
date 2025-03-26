@@ -34,7 +34,11 @@ class WialonResource(WialonBase):
                 "skipCreatorCheck": int(skip_creator_check),
             }
         )
-        return int(response.get("item", {}).get("id")) if response.get("item") else None
+        return (
+            int(response.get("item", {}).get("id"))
+            if response and response.get("item")
+            else None
+        )
 
     def delete(self) -> None:
         """

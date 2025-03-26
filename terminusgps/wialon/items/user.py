@@ -32,7 +32,11 @@ class WialonUser(WialonBase):
                 "dataFlags": flags.DATAFLAG_UNIT_BASE,
             }
         )
-        return int(response.get("item", {}).get("id")) if response.get("item") else None
+        return (
+            int(response.get("item", {}).get("id"))
+            if response and response.get("item")
+            else None
+        )
 
     def _get_access_response(self, hw_type: str) -> dict:
         """

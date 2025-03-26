@@ -36,7 +36,11 @@ class WialonUnit(WialonBase):
                 "dataFlags": flags.DATAFLAG_UNIT_BASE,
             }
         )
-        return int(response.get("item", {}).get("id")) if response.get("item") else None
+        return (
+            int(response.get("item", {}).get("id"))
+            if response and response.get("item")
+            else None
+        )
 
     def populate(self) -> None:
         super().populate()
@@ -54,10 +58,15 @@ class WialonUnit(WialonBase):
             self._active = item.get("act", False)
             self._image_uri = item.get("uri")
 
-    def get_position(self) -> dict:
+    def get_position(self) -> dict | None:
         return self.session.wialon_api.core_search_item(
             **{"id": self.id, "flags": flags.DATAFLAG_UNIT_POSITION}
         )
+
+    @property
+    def position(self) -> dict | None:
+        """Current GPS position of the unit."""
+        return self.get_position()
 
     @property
     def exists(self) -> bool:
@@ -118,7 +127,6 @@ class WialonUnit(WialonBase):
         :rtype: :py:obj:`None`
 
         """
-
         self.session.wialon_api.unit_exec_cmd(
             **{
                 "itemId": self.id,
@@ -141,7 +149,6 @@ class WialonUnit(WialonBase):
         :rtype: :py:obj:`None`
 
         """
-
         self.session.wialon_api.unit_update_access_password(
             **{"itemId": self.id, "accessPassword": password}
         )
@@ -155,7 +162,6 @@ class WialonUnit(WialonBase):
         :rtype: :py:obj:`None`
 
         """
-
         self.session.wialon_api.unit_set_active(
             **{"itemId": self.id, "active": int(True)}
         )
@@ -169,7 +175,6 @@ class WialonUnit(WialonBase):
         :rtype: :py:obj:`None`
 
         """
-
         self.session.wialon_api.unit_set_active(
             **{"itemId": self.id, "active": int(False)}
         )
@@ -185,7 +190,6 @@ class WialonUnit(WialonBase):
         :rtype: :py:obj:`None`
 
         """
-
         self.session.wialon_api.unit_update_phone(
             **{"itemId": self.id, "phoneNumber": quote_plus(phone)}
         )
@@ -201,7 +205,6 @@ class WialonUnit(WialonBase):
         :rtype: :py:obj:`list`
 
         """
-
         phone_numbers: list[str] = []
         phones_0: list[str] | None = self._get_driver_phone_numbers()
         phones_1: list[str] | None = self._get_cfield_phone_numbers()
