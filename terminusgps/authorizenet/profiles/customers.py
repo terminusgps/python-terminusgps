@@ -58,7 +58,6 @@ class CustomerProfile(AuthorizenetProfileBase):
         """A list of the customer's payment profile ids, if any."""
         try:
             response = self._authorizenet_get_customer_profile(issuer_info=False)
-            print(f"{response = }")
             return [
                 int(profile.customerPaymentProfileId)
                 for profile in response.profile.paymentProfiles
@@ -71,7 +70,6 @@ class CustomerProfile(AuthorizenetProfileBase):
         """A list of the customer's address profile ids, if any."""
         try:
             response = self._authorizenet_get_customer_profile(issuer_info=False)
-            print(f"{response = }")
             return [
                 int(profile.customerAddressId)
                 for profile in response.profile.shipToList
