@@ -1,5 +1,6 @@
 from authorizenet import apicontractsv1, apicontrollers
 from authorizenet.apicontrollersbase import APIOperationBase
+from django import forms
 
 from .auth import get_environment, get_merchant_auth
 from .errors import ControllerExecutionError
@@ -52,3 +53,18 @@ def get_customer_profile_ids() -> list[int]:
             code=response.messages.message[0]["code"].text,
         )
     return [int(id) for id in response.ids.getchildren()]
+
+
+def generate_customer_address(form: forms.Form) -> apicontractsv1.customerAddressType:
+    """Takes a form and returns a :py:obj:`~authorizenet.apicontractsv1.customerAddressType`."""
+    address: apicontractsv1.customerAddressType = form.cleaned_data["address"]
+    address.firstName = form.cleaned_data["first_name"]
+    address.lastName = form.cleaned_data["last_name"]
+    address.phone = form.cleaned_data["phone"]
+    return address
+
+
+def generate_customer_payment(form: forms.Form) -> apicontractsv1.paymentType:
+    """Takes a form and returns a :py:obj:`~authorizenet.apicontractsv1.paymentType`."""
+    credit_card = form.cleaned_data["credit_card"]
+    return apicontractsv1.paymentType(creditCard=credit_card)
