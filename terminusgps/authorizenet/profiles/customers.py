@@ -54,22 +54,30 @@ class CustomerProfile(AuthorizenetProfileBase):
         self._authorizenet_delete_customer_profile()
 
     @property
-    def payment_profiles(self) -> list[dict] | None:
-        """A list of the customer's payment profiles, if any."""
+    def payment_profile_ids(self) -> list[int]:
+        """A list of the customer's payment profile ids, if any."""
         try:
             response = self._authorizenet_get_customer_profile(issuer_info=False)
-            return response.paymentProfiles if response else None
+            print(f"{response = }")
+            return [
+                int(profile.customerPaymentProfileId)
+                for profile in response.profile.paymentProfiles
+            ]
         except ControllerExecutionError:
-            return
+            return []
 
     @property
-    def address_profiles(self) -> list[dict] | None:
-        """A list of the customer's address profiles, if any."""
+    def address_profile_ids(self) -> list[int]:
+        """A list of the customer's address profile ids, if any."""
         try:
             response = self._authorizenet_get_customer_profile(issuer_info=False)
-            return response.shipToList if response else None
+            print(f"{response = }")
+            return [
+                int(profile.customerAddressId)
+                for profile in response.profile.shipToList
+            ]
         except ControllerExecutionError:
-            return
+            return []
 
     @property
     def exists(self) -> bool:
