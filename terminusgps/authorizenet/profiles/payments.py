@@ -62,6 +62,11 @@ class PaymentProfile(AuthorizenetSubProfileBase):
     def get_details(self, issuer_info: bool = False) -> dict | None:
         return self._authorizenet_get_payment_profile(issuer_info)
 
+    @property
+    def last_4(self) -> int:
+        profile = self.get_details().paymentProfile
+        return int(str(profile.payment.creditCard.cardNumber)[-4:])
+
     def _authorizenet_get_transaction_list_for_customer(
         self,
         limit: int = 100,
