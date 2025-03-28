@@ -158,7 +158,9 @@ class SubscriptionProfile(ControllerExecutionMixin):
     def status(self) -> str | None:
         """Current status of the subscription."""
         response: dict | None = self._authorizenet_get_subscription_status()
-        return str(response.status) if response else None
+        return (
+            str(response.status) if response and response.status is not None else None
+        )
 
     @property
     def transactions(self) -> list | None:
