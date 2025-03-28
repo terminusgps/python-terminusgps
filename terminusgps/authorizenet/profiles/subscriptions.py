@@ -6,7 +6,9 @@ from ..auth import get_merchant_auth
 from ..utils import ControllerExecutionMixin
 
 
-class Subscription(ControllerExecutionMixin):
+class SubscriptionProfile(ControllerExecutionMixin):
+    """An Authorizenet subscription profile."""
+
     def __init__(self, id: str | int | None = None, *args, **kwargs) -> None:
         if id and isinstance(id, str) and not id.isdigit():
             raise ValueError(f"'id' must be a digit, got '{id}'.")
@@ -57,9 +59,8 @@ class Subscription(ControllerExecutionMixin):
         if isinstance(address_id, str) and not address_id.isdigit():
             raise ValueError(f"'address_id' must be a digit, got '{address_id}'.")
 
-        request = apicontractsv1.ARBCreateSubscriptionRequest(
-            merchantAuthentication=self.merchantAuthentication,
-            subscription=apicontractsv1.ARBSubscriptionType(
+        subscription: apicontractsv1.ARBSubscriptionType = (
+            apicontractsv1.ARBSubscriptionType(
                 name=name,
                 paymentSchedule=schedule,
                 amount=amount,
@@ -69,10 +70,9 @@ class Subscription(ControllerExecutionMixin):
                     customerPaymentProfileId=str(payment_id),
                     customerAddressId=str(address_id),
                 ),
-            ),
+            )
         )
-        controller = apicontrollers.ARBCreateSubscriptionController(request)
-        response = self.execute_controller(controller)
+        response = self._authorizenet_create_subscription(subscription)
         if response is None:
             raise ValueError("Failed to retrieve Authorizenet API response.")
         return int(response.subscriptionId)
@@ -88,6 +88,66 @@ class Subscription(ControllerExecutionMixin):
 
         """
         self._authorizenet_cancel_subscription()
+
+    def update(
+        self,
+        name: str,
+        amount: decimal.Decimal,
+        schedule: apicontractsv1.paymentScheduleType,
+        profile_id: int | str,
+        payment_id: int | str,
+        address_id: int | str,
+        trial_amount: decimal.Decimal = decimal.Decimal(
+            0.00, context=decimal.Context(prec=2, rounding=decimal.ROUND_HALF_UP)
+        ),
+    ) -> None:
+        """
+        Updates a subscription in Authorizenet.
+
+        :param name: A name for the subscription.
+        :type name: :py:obj:`str`
+        :param amount: An amount of money paid per occurrence of the subscription.
+        :type amount: :py:obj:`~decimal.Decimal`
+        :param schedule: A payment schedule for the subscription.
+        :type amount: :py:obj:`~authorizenet.apicontractsv1.paymentScheduleType`
+        :param profile_id: An Authoriznet customer profile id.
+        :type profile_id: :py:obj:`int` | :py:obj:`str`
+        :param payment_id: An Authoriznet customer payment profile id.
+        :type payment_id: :py:obj:`int` | :py:obj:`str`
+        :param address_id: An Authoriznet customer address profile id.
+        :type address_id: :py:obj:`int` | :py:obj:`str`
+        :param trial_amount: Trial amount for the subscription. Default is ``0.00``.
+        :type trial_amount: :py:obj:`~decimal.Decimal`
+        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
+        :raises ValueError: If ``profile_id`` wasn't a digit.
+        :raises ValueError: If ``payment_id`` wasn't a digit.
+        :raises ValueError: If ``address_id`` wasn't a digit.
+        :raises ValueError: If the Authorizenet API response was not retrieved.
+        :returns: An Authorizenet subscription id.
+        :rtype: :py:obj:`int`
+
+        """
+        if isinstance(profile_id, str) and not profile_id.isdigit():
+            raise ValueError(f"'profile_id' must be a digit, got '{profile_id}'.")
+        if isinstance(payment_id, str) and not payment_id.isdigit():
+            raise ValueError(f"'payment_id' must be a digit, got '{payment_id}'.")
+        if isinstance(address_id, str) and not address_id.isdigit():
+            raise ValueError(f"'address_id' must be a digit, got '{address_id}'.")
+
+        subscription: apicontractsv1.ARBSubscriptionType = (
+            apicontractsv1.ARBSubscriptionType(
+                name=name,
+                paymentSchedule=schedule,
+                amount=amount,
+                trialAmount=trial_amount,
+                profile=apicontractsv1.customerProfileIdType(
+                    customerProfileId=str(profile_id),
+                    customerPaymentProfileId=str(payment_id),
+                    customerAddressId=str(address_id),
+                ),
+            )
+        )
+        self._authorizenet_update_subscription(subscription)
 
     @property
     def merchantAuthentication(self) -> apicontractsv1.merchantAuthenticationType:
@@ -105,6 +165,27 @@ class Subscription(ControllerExecutionMixin):
         """Transactions for the subscription."""
         response = self._authorizenet_get_subscription(include_transactions=True)
         return response.arbTransactions.getchildren() if response else None
+
+    def _authorizenet_create_subscription(
+        self, subscription: apicontractsv1.ARBSubscriptionType
+    ) -> dict | None:
+        """
+        Executes a :py:obj:`~authorizenet.apicontractsv1.ARBCreateSubscriptionRequest` using the Authorizenet API.
+
+        `ARBCreateSubscriptionRequest <https://developer.authorize.net/api/reference/index.html#recurring-billing-create-a-subscription-from-customer-profile>`_
+
+        :raises AssertionError: If :py:attr:`id` wasn't set.
+        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
+        :returns: An Authorizenet API response, if any.
+        :rtype: :py:obj:`dict` | :py:obj:`None`
+
+        """
+        request = apicontractsv1.ARBCreateSubscriptionRequest(
+            merchantAuthentication=self.merchantAuthentication,
+            subscription=subscription,
+        )
+        controller = apicontrollers.ARBCreateSubscriptionController(request)
+        return self.execute_controller(controller)
 
     def _authorizenet_get_subscription(
         self, include_transactions: bool = False
