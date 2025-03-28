@@ -9,4 +9,5 @@ Authorizenet API
 
     auth.rst
     profiles.rst
+    subscriptions.rst
     utils.rst
