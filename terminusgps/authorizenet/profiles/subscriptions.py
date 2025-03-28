@@ -35,11 +35,11 @@ class SubscriptionProfile(ControllerExecutionMixin):
         :type amount: :py:obj:`~decimal.Decimal`
         :param schedule: A payment schedule for the subscription.
         :type amount: :py:obj:`~authorizenet.apicontractsv1.paymentScheduleType`
-        :param profile_id: An Authoriznet customer profile id.
+        :param profile_id: An Authorizenet customer profile id.
         :type profile_id: :py:obj:`int` | :py:obj:`str`
-        :param payment_id: An Authoriznet customer payment profile id.
+        :param payment_id: An Authorizenet customer payment profile id.
         :type payment_id: :py:obj:`int` | :py:obj:`str`
-        :param address_id: An Authoriznet customer address profile id.
+        :param address_id: An Authorizenet customer address profile id.
         :type address_id: :py:obj:`int` | :py:obj:`str`
         :param trial_amount: Trial amount for the subscription. Default is ``0.00``.
         :type trial_amount: :py:obj:`~decimal.Decimal`
@@ -110,11 +110,11 @@ class SubscriptionProfile(ControllerExecutionMixin):
         :type amount: :py:obj:`~decimal.Decimal`
         :param schedule: A payment schedule for the subscription.
         :type amount: :py:obj:`~authorizenet.apicontractsv1.paymentScheduleType`
-        :param profile_id: An Authoriznet customer profile id.
+        :param profile_id: An Authorizenet customer profile id.
         :type profile_id: :py:obj:`int` | :py:obj:`str`
-        :param payment_id: An Authoriznet customer payment profile id.
+        :param payment_id: An Authorizenet customer payment profile id.
         :type payment_id: :py:obj:`int` | :py:obj:`str`
-        :param address_id: An Authoriznet customer address profile id.
+        :param address_id: An Authorizenet customer address profile id.
         :type address_id: :py:obj:`int` | :py:obj:`str`
         :param trial_amount: Trial amount for the subscription. Default is ``0.00``.
         :type trial_amount: :py:obj:`~decimal.Decimal`
