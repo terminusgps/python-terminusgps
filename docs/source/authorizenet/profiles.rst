@@ -25,3 +25,8 @@ Profiles
    :autoclasstoc:
    :members:
    :private-members:
+
+.. autoclass:: terminusgps.authorizenet.profiles.subscriptions.SubscriptionProfile
+   :autoclasstoc:
+   :members:
+   :private-members:
