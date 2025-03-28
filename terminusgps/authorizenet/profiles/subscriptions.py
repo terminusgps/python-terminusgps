@@ -168,6 +168,22 @@ class SubscriptionProfile(ControllerExecutionMixin):
         response = self._authorizenet_get_subscription(include_transactions=True)
         return response.arbTransactions.getchildren() if response else None
 
+    @property
+    def payment_id(self) -> int | None:
+        """Customer payment profile id for the subscription."""
+        if not self.id:
+            return
+        response = self._authorizenet_get_subscription()
+        return int(response.profile.paymentProfile.customerPaymentProfileId)
+
+    @property
+    def address_id(self) -> int | None:
+        """Customer address profile id for the subscription."""
+        if not self.id:
+            return
+        response = self._authorizenet_get_subscription()
+        return int(response.profile.shippingProfile.customerAddressId)
+
     def _authorizenet_create_subscription(
         self, subscription: apicontractsv1.ARBSubscriptionType
     ) -> dict | None:
