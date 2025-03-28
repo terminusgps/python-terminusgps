@@ -62,7 +62,7 @@ class CustomerProfile(AuthorizenetProfileBase):
                 int(profile.customerPaymentProfileId)
                 for profile in response.profile.paymentProfiles
             ]
-        except ControllerExecutionError:
+        except (ControllerExecutionError, AttributeError):
             return []
 
     @property
@@ -74,7 +74,7 @@ class CustomerProfile(AuthorizenetProfileBase):
                 int(profile.customerAddressId)
                 for profile in response.profile.shipToList
             ]
-        except ControllerExecutionError:
+        except (ControllerExecutionError, AttributeError):
             return []
 
     @property
