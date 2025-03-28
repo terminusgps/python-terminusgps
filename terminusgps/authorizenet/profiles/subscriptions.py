@@ -205,7 +205,7 @@ class SubscriptionProfile(ControllerExecutionMixin):
 
         request = apicontractsv1.ARBGetSubscriptionRequest(
             merchantAuthentication=self.merchantAuthentication,
-            subscriptionId=self.id,
+            subscriptionId=str(self.id),
             includeTransactions=str(include_transactions).lower(),
         )
         controller = apicontrollers.ARBGetSubscriptionController(request)
@@ -226,7 +226,8 @@ class SubscriptionProfile(ControllerExecutionMixin):
         assert self.id, "'id' was not set."
 
         request = apicontractsv1.ARBGetSubscriptionStatusRequest(
-            merchantAuthentication=self.merchantAuthentication, subscriptionId=self.id
+            merchantAuthentication=self.merchantAuthentication,
+            subscriptionId=str(self.id),
         )
         controller = apicontrollers.ARBGetSubscriptionStatusController(request)
         return self.execute_controller(controller)
@@ -249,7 +250,7 @@ class SubscriptionProfile(ControllerExecutionMixin):
 
         request = apicontractsv1.ARBUpdateSubscriptionRequest(
             merchantAuthentication=self.merchantAuthentication,
-            subscriptionId=self.id,
+            subscriptionId=str(self.id),
             subscription=subscription,
         )
         controller = apicontrollers.ARBUpdateSubscriptionController(request)
@@ -270,7 +271,8 @@ class SubscriptionProfile(ControllerExecutionMixin):
         assert self.id, "'id' was not set."
 
         request = apicontractsv1.ARBCancelSubscriptionRequest(
-            merchantAuthentication=self.merchantAuthentication, subscriptionId=self.id
+            merchantAuthentication=self.merchantAuthentication,
+            subscriptionId=str(self.id),
         )
         controller = apicontrollers.ARBCancelSubscriptionController(request)
         return self.execute_controller(controller)

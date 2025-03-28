@@ -12,9 +12,9 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
   
-    <title>terminusgps.authorizenet.profiles.subscriptions | python-terminusgps 28.1.1 documentation</title>
-    <meta property="og:title" content="terminusgps.authorizenet.profiles.subscriptions | python-terminusgps 28.1.1 documentation" />
-    <meta name="twitter:title" content="terminusgps.authorizenet.profiles.subscriptions | python-terminusgps 28.1.1 documentation" />
+    <title>terminusgps.authorizenet.profiles.subscriptions | python-terminusgps 28.1.2 documentation</title>
+    <meta property="og:title" content="terminusgps.authorizenet.profiles.subscriptions | python-terminusgps 28.1.2 documentation" />
+    <meta name="twitter:title" content="terminusgps.authorizenet.profiles.subscriptions | python-terminusgps 28.1.2 documentation" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d691ff6c" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/theme.css?v=42baaae4" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/autoclasstoc.css?v=08871587" />
@@ -40,7 +40,7 @@
     </a><header
   class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
     <div class="hidden mr-4 md:flex">
-      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 28.1.1 documentation</span>
+      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 28.1.2 documentation</span>
       </a></div><button
       class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden"
       type="button" @click="showSidebar = true">
@@ -95,7 +95,7 @@
   class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky"
   :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }">
 
-    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 28.1.1 documentation</span>
+    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 28.1.2 documentation</span>
     </a>
 
     <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
@@ -147,7 +147,7 @@
      class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
   <a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground"
      href="../../../../index.html">
-    <span class="hidden md:inline">python-terminusgps 28.1.1 documentation</span>
+    <span class="hidden md:inline">python-terminusgps 28.1.2 documentation</span>
     <svg xmlns="http://www.w3.org/2000/svg"
          height="18"
          width="18"
@@ -392,7 +392,7 @@
 </span><span id="line-205">
 </span><span id="line-206">        <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">ARBGetSubscriptionRequest</span><span class="p">(</span>
 </span><span id="line-207">            <span class="n">merchantAuthentication</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">merchantAuthentication</span><span class="p">,</span>
-</span><span id="line-208">            <span class="n">subscriptionId</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+</span><span id="line-208">            <span class="n">subscriptionId</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
 </span><span id="line-209">            <span class="n">includeTransactions</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">include_transactions</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
 </span><span id="line-210">        <span class="p">)</span>
 </span><span id="line-211">        <span class="n">controller</span> <span class="o">=</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">ARBGetSubscriptionController</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
@@ -416,60 +416,62 @@
 </span><span id="line-226">        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;&#39;id&#39; was not set.&quot;</span>
 </span><span id="line-227">
 </span><span id="line-228">        <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">ARBGetSubscriptionStatusRequest</span><span class="p">(</span>
-</span><span id="line-229">            <span class="n">merchantAuthentication</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">merchantAuthentication</span><span class="p">,</span> <span class="n">subscriptionId</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span>
-</span><span id="line-230">        <span class="p">)</span>
-</span><span id="line-231">        <span class="n">controller</span> <span class="o">=</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">ARBGetSubscriptionStatusController</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-</span><span id="line-232">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_controller</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span></div>
+</span><span id="line-229">            <span class="n">merchantAuthentication</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">merchantAuthentication</span><span class="p">,</span>
+</span><span id="line-230">            <span class="n">subscriptionId</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
+</span><span id="line-231">        <span class="p">)</span>
+</span><span id="line-232">        <span class="n">controller</span> <span class="o">=</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">ARBGetSubscriptionStatusController</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+</span><span id="line-233">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_controller</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span></div>
 
-</span><span id="line-233">
+</span><span id="line-234">
 <div class="viewcode-block" id="SubscriptionProfile._authorizenet_update_subscription">
 <a class="viewcode-back" href="../../../../authorizenet/profiles.html#terminusgps.authorizenet.profiles.subscriptions.SubscriptionProfile._authorizenet_update_subscription">[docs]</a>
-</span><span id="line-234">    <span class="k">def</span><span class="w"> </span><span class="nf">_authorizenet_update_subscription</span><span class="p">(</span>
-</span><span id="line-235">        <span class="bp">self</span><span class="p">,</span> <span class="n">subscription</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">ARBSubscriptionType</span>
-</span><span id="line-236">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-237"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-238"><span class="sd">        Executes a :py:obj:`~authorizenet.apicontractsv1.ARBUpdateSubscriptionRequest` using the Authorizenet API.</span>
-</span><span id="line-239">
-</span><span id="line-240"><span class="sd">        `ARBUpdateSubscriptionRequest &lt;https://developer.authorize.net/api/reference/index.html#recurring-billing-update-a-subscription&gt;`_</span>
-</span><span id="line-241">
-</span><span id="line-242"><span class="sd">        :raises AssertionError: If :py:attr:`id` wasn&#39;t set.</span>
-</span><span id="line-243"><span class="sd">        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.</span>
-</span><span id="line-244"><span class="sd">        :returns: An Authorizenet API response, if any.</span>
-</span><span id="line-245"><span class="sd">        :rtype: :py:obj:`dict` | :py:obj:`None`</span>
-</span><span id="line-246">
-</span><span id="line-247"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-248">        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;&#39;id&#39; was not set.&quot;</span>
-</span><span id="line-249">
-</span><span id="line-250">        <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">ARBUpdateSubscriptionRequest</span><span class="p">(</span>
-</span><span id="line-251">            <span class="n">merchantAuthentication</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">merchantAuthentication</span><span class="p">,</span>
-</span><span id="line-252">            <span class="n">subscriptionId</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-</span><span id="line-253">            <span class="n">subscription</span><span class="o">=</span><span class="n">subscription</span><span class="p">,</span>
-</span><span id="line-254">        <span class="p">)</span>
-</span><span id="line-255">        <span class="n">controller</span> <span class="o">=</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">ARBUpdateSubscriptionController</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-</span><span id="line-256">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_controller</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span></div>
+</span><span id="line-235">    <span class="k">def</span><span class="w"> </span><span class="nf">_authorizenet_update_subscription</span><span class="p">(</span>
+</span><span id="line-236">        <span class="bp">self</span><span class="p">,</span> <span class="n">subscription</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">ARBSubscriptionType</span>
+</span><span id="line-237">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-238"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-239"><span class="sd">        Executes a :py:obj:`~authorizenet.apicontractsv1.ARBUpdateSubscriptionRequest` using the Authorizenet API.</span>
+</span><span id="line-240">
+</span><span id="line-241"><span class="sd">        `ARBUpdateSubscriptionRequest &lt;https://developer.authorize.net/api/reference/index.html#recurring-billing-update-a-subscription&gt;`_</span>
+</span><span id="line-242">
+</span><span id="line-243"><span class="sd">        :raises AssertionError: If :py:attr:`id` wasn&#39;t set.</span>
+</span><span id="line-244"><span class="sd">        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.</span>
+</span><span id="line-245"><span class="sd">        :returns: An Authorizenet API response, if any.</span>
+</span><span id="line-246"><span class="sd">        :rtype: :py:obj:`dict` | :py:obj:`None`</span>
+</span><span id="line-247">
+</span><span id="line-248"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-249">        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;&#39;id&#39; was not set.&quot;</span>
+</span><span id="line-250">
+</span><span id="line-251">        <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">ARBUpdateSubscriptionRequest</span><span class="p">(</span>
+</span><span id="line-252">            <span class="n">merchantAuthentication</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">merchantAuthentication</span><span class="p">,</span>
+</span><span id="line-253">            <span class="n">subscriptionId</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
+</span><span id="line-254">            <span class="n">subscription</span><span class="o">=</span><span class="n">subscription</span><span class="p">,</span>
+</span><span id="line-255">        <span class="p">)</span>
+</span><span id="line-256">        <span class="n">controller</span> <span class="o">=</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">ARBUpdateSubscriptionController</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+</span><span id="line-257">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_controller</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span></div>
 
-</span><span id="line-257">
+</span><span id="line-258">
 <div class="viewcode-block" id="SubscriptionProfile._authorizenet_cancel_subscription">
 <a class="viewcode-back" href="../../../../authorizenet/profiles.html#terminusgps.authorizenet.profiles.subscriptions.SubscriptionProfile._authorizenet_cancel_subscription">[docs]</a>
-</span><span id="line-258">    <span class="k">def</span><span class="w"> </span><span class="nf">_authorizenet_cancel_subscription</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-259"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-260"><span class="sd">        Executes a :py:obj:`~authorizenet.apicontractsv1.ARBCancelSubscriptionRequest` using the Authorizenet API.</span>
-</span><span id="line-261">
-</span><span id="line-262"><span class="sd">        `ARBCancelSubscriptionRequest &lt;https://developer.authorize.net/api/reference/index.html#recurring-billing-cancel-a-subscription&gt;`_</span>
-</span><span id="line-263">
-</span><span id="line-264"><span class="sd">        :raises AssertionError: If :py:attr:`id` wasn&#39;t set.</span>
-</span><span id="line-265"><span class="sd">        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.</span>
-</span><span id="line-266"><span class="sd">        :returns: An Authorizenet API response, if any.</span>
-</span><span id="line-267"><span class="sd">        :rtype: :py:obj:`dict` | :py:obj:`None`</span>
-</span><span id="line-268">
-</span><span id="line-269"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-270">        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;&#39;id&#39; was not set.&quot;</span>
-</span><span id="line-271">
-</span><span id="line-272">        <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">ARBCancelSubscriptionRequest</span><span class="p">(</span>
-</span><span id="line-273">            <span class="n">merchantAuthentication</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">merchantAuthentication</span><span class="p">,</span> <span class="n">subscriptionId</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span>
-</span><span id="line-274">        <span class="p">)</span>
-</span><span id="line-275">        <span class="n">controller</span> <span class="o">=</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">ARBCancelSubscriptionController</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-</span><span id="line-276">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_controller</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span></div>
+</span><span id="line-259">    <span class="k">def</span><span class="w"> </span><span class="nf">_authorizenet_cancel_subscription</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-260"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-261"><span class="sd">        Executes a :py:obj:`~authorizenet.apicontractsv1.ARBCancelSubscriptionRequest` using the Authorizenet API.</span>
+</span><span id="line-262">
+</span><span id="line-263"><span class="sd">        `ARBCancelSubscriptionRequest &lt;https://developer.authorize.net/api/reference/index.html#recurring-billing-cancel-a-subscription&gt;`_</span>
+</span><span id="line-264">
+</span><span id="line-265"><span class="sd">        :raises AssertionError: If :py:attr:`id` wasn&#39;t set.</span>
+</span><span id="line-266"><span class="sd">        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.</span>
+</span><span id="line-267"><span class="sd">        :returns: An Authorizenet API response, if any.</span>
+</span><span id="line-268"><span class="sd">        :rtype: :py:obj:`dict` | :py:obj:`None`</span>
+</span><span id="line-269">
+</span><span id="line-270"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-271">        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;&#39;id&#39; was not set.&quot;</span>
+</span><span id="line-272">
+</span><span id="line-273">        <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">ARBCancelSubscriptionRequest</span><span class="p">(</span>
+</span><span id="line-274">            <span class="n">merchantAuthentication</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">merchantAuthentication</span><span class="p">,</span>
+</span><span id="line-275">            <span class="n">subscriptionId</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
+</span><span id="line-276">        <span class="p">)</span>
+</span><span id="line-277">        <span class="n">controller</span> <span class="o">=</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">ARBCancelSubscriptionController</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+</span><span id="line-278">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_controller</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span></div>
 </div>
 
 </span></code></pre></div>
@@ -487,7 +489,7 @@
 </footer>
   </div>
   
-    <script src="../../../../_static/documentation_options.js?v=1a071e7f"></script>
+    <script src="../../../../_static/documentation_options.js?v=2dff9415"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script defer="defer" src="../../../../_static/theme.js?v=073f68d9"></script>
