@@ -152,10 +152,7 @@ def is_unique(value: str, session: WialonSession, items_type: str = "avl_unit") 
     response = session.wialon_api.core_check_unique(
         **{"type": items_type, "value": value.strip()}
     )
-
-    if not response:
-        return False
-    return bool(response.get("result"))
+    return not bool(response.get("result")) if response else False
 
 
 def generate_wialon_password(length: int = 32) -> str:
