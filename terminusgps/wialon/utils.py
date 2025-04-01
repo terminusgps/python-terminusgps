@@ -7,6 +7,36 @@ from terminusgps.wialon.items.base import WialonBase
 from terminusgps.wialon.session import WialonSession
 
 
+def get_resource_ids(session: WialonSession) -> list[int] | None:
+    """
+    Returns a list of all resource ids in Wialon.
+
+    :param session: A valid Wialon API session.
+    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :returns: A list of account ids.
+    :rtype: :py:obj:`list`
+
+    """
+    results = session.wialon_api.core_search_items(
+        **{
+            "spec": {
+                "itemsType": "avl_resource",
+                "propName": "sys_id",
+                "propValueMask": "*",
+                "sortType": "sys_id",
+                "propType": "property",
+                "or_logic": False,
+            },
+            "force": 0,
+            "flags": 1,
+            "from": 0,
+            "to": 0,
+        }
+    )
+    if results:
+        return [int(item.get("id")) for item in results.get("items", [])]
+
+
 def get_hw_type_id(name: str, session: WialonSession) -> int | None:
     """
     Takes a Wialon hardware type name and returns its id, if it exists.
