@@ -93,13 +93,9 @@ class SubscriptionProfile(ControllerExecutionMixin):
         self,
         name: str,
         amount: decimal.Decimal,
-        schedule: apicontractsv1.paymentScheduleType,
         profile_id: int | str,
         payment_id: int | str,
         address_id: int | str,
-        trial_amount: decimal.Decimal = decimal.Decimal(
-            0.00, context=decimal.Context(prec=2, rounding=decimal.ROUND_HALF_UP)
-        ),
     ) -> None:
         """
         Updates a subscription in Authorizenet.
@@ -108,16 +104,12 @@ class SubscriptionProfile(ControllerExecutionMixin):
         :type name: :py:obj:`str`
         :param amount: An amount of money paid per occurrence of the subscription.
         :type amount: :py:obj:`~decimal.Decimal`
-        :param schedule: A payment schedule for the subscription.
-        :type amount: :py:obj:`~authorizenet.apicontractsv1.paymentScheduleType`
         :param profile_id: An Authorizenet customer profile id.
         :type profile_id: :py:obj:`int` | :py:obj:`str`
         :param payment_id: An Authorizenet customer payment profile id.
         :type payment_id: :py:obj:`int` | :py:obj:`str`
         :param address_id: An Authorizenet customer address profile id.
         :type address_id: :py:obj:`int` | :py:obj:`str`
-        :param trial_amount: Trial amount for the subscription. Default is ``0.00``.
-        :type trial_amount: :py:obj:`~decimal.Decimal`
         :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
         :raises ValueError: If ``profile_id`` wasn't a digit.
         :raises ValueError: If ``payment_id`` wasn't a digit.
@@ -137,9 +129,7 @@ class SubscriptionProfile(ControllerExecutionMixin):
         subscription: apicontractsv1.ARBSubscriptionType = (
             apicontractsv1.ARBSubscriptionType(
                 name=name,
-                paymentSchedule=schedule,
                 amount=amount,
-                trialAmount=trial_amount,
                 profile=apicontractsv1.customerProfileIdType(
                     customerProfileId=str(profile_id),
                     customerPaymentProfileId=str(payment_id),
