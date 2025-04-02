@@ -18,6 +18,6 @@ def get_aws_connect_jwt(widget_id: str, expires_in: int = 500) -> str:
     )
     header = {"typ": "JWT", "alg": "HS256"}
     encoded_token = jwt.encode(
-        (payload), settings.CONNECT_SECRET, algorithm=header["alg"], headers=header
+        payload, settings.CONNECT_SECRET, algorithm=header["alg"], headers=header
     )
     return encoded_token
