@@ -114,7 +114,7 @@ class SubscriptionProfile(ControllerExecutionMixin):
             return
 
         response = self._authorizenet_get_subscription_status()
-        if response is not None and "status" in response.getchildren():
+        if response is not None and "status" in response.__dir__():
             return response.status
 
     @property
