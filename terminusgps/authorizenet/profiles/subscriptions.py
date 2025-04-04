@@ -89,62 +89,17 @@ class SubscriptionProfile(ControllerExecutionMixin):
         """
         self._authorizenet_cancel_subscription()
 
-    def update(
-        self,
-        name: str | None = None,
-        amount: decimal.Decimal | None = None,
-        profile_id: int | str | None = None,
-        payment_id: int | str | None = None,
-        address_id: int | str | None = None,
-    ) -> None:
+    def update(self, subscription: apicontractsv1.ARBSubscriptionType) -> None:
         """
         Updates a subscription in Authorizenet.
 
-        :param name: A name for the subscription.
-        :type name: :py:obj:`str` | :py:obj:`None`
-        :param amount: An amount of money paid per occurrence of the subscription.
-        :type amount: :py:obj:`~decimal.Decimal` | :py:obj:`None`
-        :param profile_id: An Authorizenet customer profile id.
-        :type profile_id: :py:obj:`int` | :py:obj:`str` | :py:obj:`None`
-        :param payment_id: An Authorizenet customer payment profile id.
-        :type payment_id: :py:obj:`int` | :py:obj:`str` | :py:obj:`None`
-        :param address_id: An Authorizenet customer address profile id.
-        :type address_id: :py:obj:`int` | :py:obj:`str` | :py:obj:`None`
+        :param subscription: A new subscription object.
+        :type subscription: :py:obj:`authorizenet.apicontractsv1.ARBSubscriptionType`
         :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
-        :raises ValueError: If no arguments were provided.
-        :raises ValueError: If ``profile_id`` was provided but wasn't a digit.
-        :raises ValueError: If ``payment_id`` was provided but wasn't a digit.
-        :raises ValueError: If ``address_id`` was provided but wasn't a digit.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        if not any([name, amount, profile_id, payment_id, address_id]):
-            raise ValueError("At least one argument is required.")
-        if profile_id and isinstance(profile_id, str) and not profile_id.isdigit():
-            raise ValueError(f"'profile_id' must be a digit, got '{profile_id}'.")
-        if payment_id and isinstance(payment_id, str) and not payment_id.isdigit():
-            raise ValueError(f"'payment_id' must be a digit, got '{payment_id}'.")
-        if address_id and isinstance(address_id, str) and not address_id.isdigit():
-            raise ValueError(f"'address_id' must be a digit, got '{address_id}'.")
-
-        subscription: apicontractsv1.ARBSubscriptionType = (
-            apicontractsv1.ARBSubscriptionType()
-        )
-
-        if name:
-            subscription.name = name
-        if amount:
-            subscription.amount = amount
-        if any([profile_id, payment_id, address_id]):
-            profile = apicontractsv1.customerProfileIdType()
-            if profile_id:
-                profile.customerProfileId = profile_id
-            if payment_id:
-                profile.customerPaymentProfileId = payment_id
-            if address_id:
-                profile.customerAddressId = address_id
-
         self._authorizenet_update_subscription(subscription)
 
     @property
@@ -155,14 +110,19 @@ class SubscriptionProfile(ControllerExecutionMixin):
     @property
     def status(self) -> str | None:
         """Current status of the subscription."""
-        response: dict | None = self._authorizenet_get_subscription_status()
-        return (
-            str(response.status) if response and response.status is not None else None
-        )
+        if not self.id:
+            return
+
+        response = self._authorizenet_get_subscription_status()
+        if response is not None and "status" in response.getchildren():
+            return response.status
 
     @property
     def transactions(self) -> list | None:
         """Transactions for the subscription."""
+        if not self.id:
+            return
+
         response = self._authorizenet_get_subscription(include_transactions=True)
         if response is not None and "arbTransactions" in response.getchildren():
             return [t for t in response.arbTransactions]
@@ -172,16 +132,20 @@ class SubscriptionProfile(ControllerExecutionMixin):
         """Customer payment profile id for the subscription."""
         if not self.id:
             return
+
         response = self._authorizenet_get_subscription()
-        return int(response.profile.paymentProfile.customerPaymentProfileId)
+        if response is not None and "profile" in response.getchildren():
+            return int(response.profile.paymentProfile.customerPaymentProfileId)
 
     @property
     def address_id(self) -> int | None:
         """Customer address profile id for the subscription."""
         if not self.id:
             return
+
         response = self._authorizenet_get_subscription()
-        return int(response.profile.shippingProfile.customerAddressId)
+        if response is not None and "profile" in response.getchildren():
+            return int(response.profile.shippingProfile.customerAddressId)
 
     def _authorizenet_create_subscription(
         self, subscription: apicontractsv1.ARBSubscriptionType
