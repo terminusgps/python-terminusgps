@@ -44,6 +44,7 @@ def get_customer_profile_ids() -> list[int]:
         merchantAuthentication=get_merchant_auth()
     )
     controller = apicontrollers.getCustomerProfileIdsController(request)
+    controller.setenvironment(get_environment())
     controller.execute()
     response = controller.getresponse()
 
