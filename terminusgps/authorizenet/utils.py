@@ -35,7 +35,7 @@ def get_customer_profile_ids() -> list[int]:
     """
     Returns a list of all customer profile ids in Authorizenet.
 
-    :raises ValueError: If something goes wrong calling the Authorizenet API.
+    :raises ControllerExecutionError: If the API call fails.
     :returns: A list of all customer profile ids in Authorizenet.
     :rtype: :py:obj:`list`
 
