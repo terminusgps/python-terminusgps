@@ -77,12 +77,6 @@ class CustomerProfile(AuthorizenetProfileBase):
         except (ControllerExecutionError, AttributeError):
             return []
 
-    @property
-    def exists(self) -> bool:
-        """Whether or not the customer profile exists in Authorizenet."""
-        profile_ids = get_customer_profile_ids()
-        return int(self.id) in profile_ids if self.id is not None else False
-
     def _authorizenet_get_customer_profile_ids(self) -> dict | None:
         """
         Executes a :py:obj:`~authorizenet.apicontractsv1.getCustomerProfileIdsRequest` using the Authorizenet API.
