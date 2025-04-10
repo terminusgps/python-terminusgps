@@ -124,8 +124,7 @@ class SubscriptionProfile(ControllerExecutionMixin):
             return
 
         response = self._authorizenet_get_subscription(include_transactions=True)
-        if response is not None and "arbTransactions" in response.getchildren():
-            return [t for t in response.arbTransactions]
+        return [t for t in response.subscription.arbTransactions.iterchildren()]
 
     @property
     def payment_id(self) -> int | None:

@@ -1,7 +1,7 @@
 from authorizenet import apicontractsv1, apicontrollers
 from authorizenet.apicontractsv1 import customerProfileType
 
-from ..utils import ControllerExecutionError, get_customer_profile_ids
+from ..utils import ControllerExecutionError
 from .base import AuthorizenetProfileBase
 
 
