@@ -28,6 +28,7 @@ In Python, all subpackages are nested within :py:mod:`terminusgps`:
     :caption: Contents:
 
     settings.rst
+    mixins.rst
     authorizenet/index.rst
     aws/index.rst
     twilio/index.rst
