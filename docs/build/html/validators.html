@@ -7,16 +7,16 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Mixins | python-terminusgps 28.11.0 documentation</title>
-<meta content="Mixins | python-terminusgps 28.11.0 documentation" property="og:title"/>
-<meta content="Mixins | python-terminusgps 28.11.0 documentation" name="twitter:title"/>
+<title>Validators | python-terminusgps 28.11.0 documentation</title>
+<meta content="Validators | python-terminusgps 28.11.0 documentation" property="og:title"/>
+<meta content="Validators | python-terminusgps 28.11.0 documentation" name="twitter:title"/>
 <link href="_static/pygments.css?v=d691ff6c" rel="stylesheet" type="text/css"/>
 <link href="_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="_static/autoclasstoc.css?v=08871587" rel="stylesheet" type="text/css"/>
 <link href="search.html" rel="search" title="Search"/>
 <link href="genindex.html" rel="index" title="Index"/>
-<link href="validators.html" rel="next" title="Validators"/>
-<link href="settings.html" rel="prev" title="Settings"/>
+<link href="authorizenet/index.html" rel="next" title="Authorizenet API"/>
+<link href="mixins.html" rel="prev" title="Mixins"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -72,8 +72,8 @@
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Mixins</a></li>
-<li class="toctree-l1"><a class="reference internal" href="validators.html">Validators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mixins.html">Mixins</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Validators</a></li>
 <li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="authorizenet/index.html">Authorizenet API<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
 <li class="toctree-l2"><a class="reference internal" href="authorizenet/auth.html">Authorizenet API Authentication</a></li>
 <li class="toctree-l2"><a class="reference internal" href="authorizenet/profiles.html">Profiles</a></li>
@@ -117,93 +117,13 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Mixins</span>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Validators</span>
 </nav>
 <div id="content" role="main">
-<section id="mixins">
-<h1>Mixins<a class="headerlink" href="#mixins" title="Link to this heading"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="terminusgps.mixins.HtmxTemplateResponseMixin">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">terminusgps.mixins.</span></span><span class="sig-name descname"><span class="pre">HtmxTemplateResponseMixin</span></span><a class="reference internal" href="_modules/terminusgps/mixins.html#HtmxTemplateResponseMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.mixins.HtmxTemplateResponseMixin" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.mixins.HtmxTemplateResponseMixin'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd><p>Renders a partial HTML template depending on HTTP headers.</p>
-<p><a class="reference external" href="https://htmx.org/docs/">htmx documentation</a></p>
-<div class="autoclasstoc docutils container">
-<p class="rubric">Public Data Attributes:</p>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.mixins.HtmxTemplateResponseMixin.partial_template_name" title="terminusgps.mixins.HtmxTemplateResponseMixin.partial_template_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">partial_template_name</span></code></a></p></td>
-<td><p>A partial template rendered by <a class="reference external" href="https://htmx.org/docs/">htmx</a>.</p></td>
-</tr>
-</tbody>
-</table>
-<details><summary>Inherited from <a class="reference external" href="http://docs.djangoproject.com/en/stable/ref/class-based-views/mixins-simple/#django.views.generic.base.TemplateResponseMixin" title="(in Django v5.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateResponseMixin</span></code></a></summary><table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference external" href="http://docs.djangoproject.com/en/stable/ref/class-based-views/mixins-simple/#django.views.generic.base.TemplateResponseMixin.template_name" title="(in Django v5.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">template_name</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="http://docs.djangoproject.com/en/stable/ref/class-based-views/mixins-simple/#django.views.generic.base.TemplateResponseMixin.template_engine" title="(in Django v5.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">template_engine</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="http://docs.djangoproject.com/en/stable/ref/class-based-views/mixins-simple/#django.views.generic.base.TemplateResponseMixin.content_type" title="(in Django v5.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">content_type</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-</details></div>
-<div class="autoclasstoc docutils container">
-<p class="rubric">Public Methods:</p>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.mixins.HtmxTemplateResponseMixin.render_to_response" title="terminusgps.mixins.HtmxTemplateResponseMixin.render_to_response"><code class="xref py py-obj docutils literal notranslate"><span class="pre">render_to_response</span></code></a>(context, **response_kwargs)</p></td>
-<td><p>Return a response, using the <cite>response_class</cite> for this view, with a template rendered with the given context.</p></td>
-</tr>
-</tbody>
-</table>
-<details><summary>Inherited from <a class="reference external" href="http://docs.djangoproject.com/en/stable/ref/class-based-views/mixins-simple/#django.views.generic.base.TemplateResponseMixin" title="(in Django v5.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateResponseMixin</span></code></a></summary><table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference external" href="http://docs.djangoproject.com/en/stable/ref/class-based-views/mixins-simple/#django.views.generic.base.TemplateResponseMixin.render_to_response" title="(in Django v5.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">render_to_response</span></code></a>(context, **response_kwargs)</p></td>
-<td><p>Return a response, using the <cite>response_class</cite> for this view, with a template rendered with the given context.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="http://docs.djangoproject.com/en/stable/ref/class-based-views/mixins-simple/#django.views.generic.base.TemplateResponseMixin.get_template_names" title="(in Django v5.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_template_names</span></code></a>()</p></td>
-<td><p>Return a list of template names to be used for the request.</p></td>
-</tr>
-</tbody>
-</table>
-</details></div>
-<hr class="docutils"/>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="terminusgps.mixins.HtmxTemplateResponseMixin.partial_template_name">
-<span class="sig-name descname"><span class="pre">partial_template_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#terminusgps.mixins.HtmxTemplateResponseMixin.partial_template_name" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.mixins.HtmxTemplateResponseMixin.partial_template_name'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd><p>A partial template rendered by <a class="reference external" href="https://htmx.org/docs/">htmx</a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
-</dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="terminusgps.mixins.HtmxTemplateResponseMixin.render_to_response">
-<span class="sig-name descname"><span class="pre">render_to_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">response_kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">HttpResponse</span></span></span><a class="reference internal" href="_modules/terminusgps/mixins.html#HtmxTemplateResponseMixin.render_to_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.mixins.HtmxTemplateResponseMixin.render_to_response" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.mixins.HtmxTemplateResponseMixin.render_to_response'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd><p>Return a response, using the <cite>response_class</cite> for this view, with a
-template rendered with the given context.</p>
-<p>Pass response_kwargs to the constructor of the response class.</p>
-</dd></dl>
-</dd></dl>
+<section id="module-terminusgps.validators">
+<span id="validators"></span><h1>Validators<a class="headerlink" href="#module-terminusgps.validators" title="Link to this heading"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
 </section>
-</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
-<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
-<ul>
-<li><a :data-current="activeSection === '#terminusgps.mixins.HtmxTemplateResponseMixin'" class="reference internal" href="#terminusgps.mixins.HtmxTemplateResponseMixin"><code class="docutils literal notranslate"><span class="pre">HtmxTemplateResponseMixin</span></code></a><ul>
-<li><a :data-current="activeSection === '#terminusgps.mixins.HtmxTemplateResponseMixin.partial_template_name'" class="reference internal" href="#terminusgps.mixins.HtmxTemplateResponseMixin.partial_template_name"><code class="docutils literal notranslate"><span class="pre">HtmxTemplateResponseMixin.partial_template_name</span></code></a></li>
-<li><a :data-current="activeSection === '#terminusgps.mixins.HtmxTemplateResponseMixin.render_to_response'" class="reference internal" href="#terminusgps.mixins.HtmxTemplateResponseMixin.render_to_response"><code class="docutils literal notranslate"><span class="pre">HtmxTemplateResponseMixin.render_to_response()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</div>
-</aside>
+</div></div>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">
