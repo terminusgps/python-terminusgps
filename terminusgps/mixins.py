@@ -14,9 +14,7 @@ class HtmxTemplateResponseMixin(TemplateResponseMixin):
 
     partial_template_name: str | None = None
     """
-    A partial template rendered by `htmx`_.
-
-    .. _htmx: https://htmx.org/docs/
+    A partial template rendered by htmx.
 
     :type: :py:obj:`str` | :py:obj:`None`
     :value: :py:obj:`None`

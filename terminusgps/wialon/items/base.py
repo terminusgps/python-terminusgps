@@ -22,7 +22,7 @@ class WialonBase:
     def populate(self) -> None:
         """Retrieves and saves the latest data for the item from Wialon."""
         response = self.session.wialon_api.core_search_item(
-            **{"id": str(self.id), "flags": 0x1}
+            **{"id": str(self.id), "flags": flags.DataFlag.UNIT_BASE.value}
         )
         if response is not None:
             item = response.get("item", {})
@@ -205,7 +205,7 @@ class WialonBase:
     def cfields(self) -> dict[str, str]:
         """Custom fields for the Wialon object."""
         response = self.session.wialon_api.core_search_item(
-            **{"id": self.id, "flags": flags.DATAFLAG_UNIT_CUSTOM_FIELDS}
+            **{"id": self.id, "flags": flags.DataFlag.UNIT_CUSTOM_FIELDS.value}
         )
         fields = response.get("item", {}).get("flds") if response is not None else {}
         return {field["n"]: field["v"] for field in fields.values()} if fields else {}
@@ -214,7 +214,7 @@ class WialonBase:
     def afields(self) -> dict[str, str]:
         """Admin fields for the Wialon object."""
         response = self.session.wialon_api.core_search_item(
-            **{"id": self.id, "flags": flags.DATAFLAG_UNIT_ADMIN_FIELDS}
+            **{"id": self.id, "flags": flags.DataFlag.UNIT_ADMIN_FIELDS.value}
         )
         fields = response.get("item", {}).get("aflds") if response is not None else {}
         return {field["n"]: field["v"] for field in fields.values()} if fields else {}

@@ -27,7 +27,7 @@ class WialonRetranslator(WialonBase):
                 "creatorId": creator_id,
                 "name": name,
                 "config": config,
-                "dataFlags": flags.DATAFLAG_UNIT_BASE,
+                "dataFlags": flags.DataFlag.UNIT_BASE.value,
             }
         )
         return (

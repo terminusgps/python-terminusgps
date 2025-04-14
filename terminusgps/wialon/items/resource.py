@@ -30,7 +30,7 @@ class WialonResource(WialonBase):
             **{
                 "creatorId": creator_id,
                 "name": name,
-                "dataFlags": flags.DATAFLAG_UNIT_BASE,
+                "dataFlags": flags.DataFlag.UNIT_BASE.value,
                 "skipCreatorCheck": int(skip_creator_check),
             }
         )
@@ -81,7 +81,7 @@ class WialonResource(WialonBase):
 
         """
         response = self.session.wialon_api.core_search_item(
-            **{"id": self.id, "flags": flags.DATAFLAG_RESOURCE_BILLING_PROPERTIES}
+            **{"id": self.id, "flags": flags.DataFlag.RESOURCE_BILLING_PROPERTIES.value}
         )
         return int(response.get("item", {}).get("bact")) == self.id
 

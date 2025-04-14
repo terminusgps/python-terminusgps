@@ -26,10 +26,10 @@ class WialonUser(WialonBase):
 
         response = self.session.wialon_api.core_create_user(
             **{
-                "creatorId": creator_id,
+                "creatorId": str(creator_id),
                 "name": name,
                 "password": password,
-                "dataFlags": flags.DATAFLAG_UNIT_BASE,
+                "dataFlags": str(flags.DataFlag.UNIT_BASE.value),
             }
         )
         return (
@@ -110,7 +110,7 @@ class WialonUser(WialonBase):
         :rtype: :py:obj:`None`
 
         """
-        self.add_cproperty(("phone", quote_plus(phone)))
+        self.add_cproperty("phone", quote_plus(phone))
 
     def assign_email(self, email: str) -> None:
         """
@@ -123,7 +123,7 @@ class WialonUser(WialonBase):
         :rtype: :py:obj:`None`
 
         """
-        self.add_cproperty(("email", email))
+        self.add_cproperty("email", email)
 
     def grant_access(
         self, item: WialonBase, access_mask: int = constants.ACCESSMASK_UNIT_BASIC

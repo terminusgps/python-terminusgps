@@ -24,7 +24,7 @@ class WialonRoute(WialonBase):
             **{
                 "creatorId": creator_id,
                 "name": name,
-                "dataFlags": flags.DATAFLAG_UNIT_BASE,
+                "dataFlags": flags.DataFlag.ROUTE_BASE.value,
             }
         )
         return (

@@ -24,7 +24,7 @@ class WialonUnitGroup(WialonBase):
             **{
                 "creatorId": creator_id,
                 "name": name,
-                "dataFlags": flags.DATAFLAG_UNIT_BASE,
+                "dataFlags": flags.DataFlag.UNIT_BASE.value,
             }
         )
         return (
@@ -111,7 +111,7 @@ class WialonUnitGroup(WialonBase):
                     "or_logic": 0,
                 },
                 "force": 1,
-                "flags": flags.DATAFLAG_UNIT_BASE,
+                "flags": flags.DataFlag.UNIT_BASE.value,
                 "from": 0,
                 "to": 0,
             }

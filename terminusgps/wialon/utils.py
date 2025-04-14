@@ -2,8 +2,7 @@ import secrets
 import string
 import typing
 
-from terminusgps.wialon import flags, items
-from terminusgps.wialon.items.base import WialonBase
+from terminusgps.wialon import constants, flags
 from terminusgps.wialon.session import WialonSession
 
 
@@ -90,7 +89,7 @@ def get_id_from_imei(imei: str, session: WialonSession) -> str | None:
                 "or_logic": 0,
             },
             "force": 0,
-            "flags": flags.DATAFLAG_UNIT_BASE,
+            "flags": flags.DataFlag.UNIT_BASE.value,
             "from": 0,
             "to": 0,
         }
@@ -98,45 +97,6 @@ def get_id_from_imei(imei: str, session: WialonSession) -> str | None:
 
     if results and results.get("totalItemsCount", 0) == 1:
         return results["items"][0].get("id")
-
-
-def get_id_from_iccid(iccid: str, session: WialonSession) -> str | None:
-    """
-    DEPRECATED: Use :py:func:`~terminusgps.wialon.utils.get_id_from_imei`.
-
-    Takes a Wialon unit's IMEI # and returns its unit id, if it exists.
-
-    :param iccid: A unique id.
-    :type iccid: :py:obj:`str`
-    :param session: A valid Wialon API session.
-    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
-    :raises WialonError: If something goes wrong during a Wialon API call.
-    :returns: A Wialon object id, if it was found.
-    :rtype: :py:obj:`str` | :py:obj:`None`
-
-    """
-    return get_id_from_imei(imei=iccid, session=session)
-
-
-def get_wialon_cls(items_type: str) -> typing.Type[WialonBase] | None:
-    """
-    Returns a Wialon object class based on ``items_type``.
-
-    Valid ``items_type`` are ``"user"``, ``"avl_unit"``, ``"avl_unit_group"`` and ``"avl_resource"``.
-
-    :param items_type: A Wialon object type.
-    :type items_type: :py:obj:`str`
-    :returns: A subclass of :py:obj:`~terminusgps.wialon.items.base.WialonBase`.
-    :rtype: :py:obj:`~terminusgps.wialon.items.base.WialonBase` | :py:obj:`None`
-
-    """
-    items_map: dict[str, typing.Type[WialonBase]] = {
-        "user": items.WialonUser,
-        "avl_unit": items.WialonUnit,
-        "avl_unit_group": items.WialonUnitGroup,
-        "avl_resource": items.WialonResource,
-    }
-    return items_map.get(items_type)
 
 
 def get_vin_info(vin_number: str, session: WialonSession) -> dict:
@@ -164,7 +124,11 @@ def get_vin_info(vin_number: str, session: WialonSession) -> dict:
     }
 
 
-def is_unique(value: str, session: WialonSession, items_type: str = "avl_unit") -> bool:
+def is_unique(
+    value: str,
+    session: WialonSession,
+    items_type: str = constants.WialonItemsType.UNIT.value,
+) -> bool:
     """
     Determines if the value is unique among Wialon objects of type 'items_type'.
 

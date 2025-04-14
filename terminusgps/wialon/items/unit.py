@@ -33,7 +33,7 @@ class WialonUnit(WialonBase):
                 "creatorId": creator_id,
                 "name": name,
                 "hwTypeId": hw_type_id,
-                "dataFlags": flags.DATAFLAG_UNIT_BASE,
+                "dataFlags": flags.DataFlag.UNIT_BASE,
             }
         )
         return (
@@ -47,9 +47,9 @@ class WialonUnit(WialonBase):
         response = self.session.wialon_api.core_search_item(
             **{
                 "id": self.id,
-                "flags": sum(
-                    [flags.DATAFLAG_UNIT_ADVANCED_PROPERTIES, flags.DATAFLAG_UNIT_IMAGE]
-                ),
+                "flags": (
+                    flags.DataFlag.UNIT_ADVANCED_PROPERTIES | flags.DataFlag.UNIT_IMAGE
+                ).value,
             }
         )
         if response:
@@ -60,7 +60,7 @@ class WialonUnit(WialonBase):
 
     def get_position(self) -> dict | None:
         return self.session.wialon_api.core_search_item(
-            **{"id": self.id, "flags": flags.DATAFLAG_UNIT_POSITION}
+            **{"id": self.id, "flags": flags.DataFlag.UNIT_POSITION.value}
         )
 
     @property
@@ -73,7 +73,7 @@ class WialonUnit(WialonBase):
         """Whether or not the unit exists in Wialon."""
         return bool(
             self.session.wialon_api.core_search_item(
-                **{"id": self.id, "flags": flags.DATAFLAG_UNIT_BASE}
+                **{"id": self.id, "flags": flags.DataFlag.UNIT_BASE.value}
             ).get("item", False)
         )
 

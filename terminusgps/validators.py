@@ -3,6 +3,49 @@ import string
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+from .wialon.session import WialonSession
+
+
+class WialonValidatorBase:
+    def __init__(self) -> None:
+        self.session: WialonSession = WialonSession()
+        self.session.login(self.session.token)
+
+    def __call__(self, value: str) -> None:
+        raise NotImplementedError("Subclasses must implement this method.")
+
+
+class WialonImeiNumberValidator(WialonValidatorBase):
+    def __call__(self, value: str) -> None:
+        response = self.session.wialon_api.core_search_items(
+            **{
+                "spec": {
+                    "itemsType": "avl_unit",
+                    "propName": "sys_id,sys_unique_id",
+                    "propValueMask": f"*,*{value}*",
+                    "sortType": "sys_id,sys_unique_id",
+                },
+                "force": 0,
+                "flags": 1,
+                "from": 0,
+                "to": 0,
+            }
+        )
+        if response is None or not response.get("items"):
+            raise ValidationError(
+                _("IMEI #%(value)s was not found in Wialon."),
+                code="invalid",
+                params={"value": value},
+            )
+
+
+def validate_imei_number(value: str) -> None:
+    """Raises :py:exec:`ValidationError` if the value is an invalid IMEI number."""
+    try:
+        WialonImeiNumberValidator()(value)
+    except ValidationError:
+        raise
+
 
 def validate_vin_number(value: str) -> None:
     """Raises :py:exec:`ValidationError` if the value is an invalid VIN number."""
