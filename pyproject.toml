@@ -18,9 +18,10 @@ dependencies = [
     "boto3>=1.34.144",
     "django>=5.1.5",
     "matplotlib>=3.10.1",
-    "opencv-python>=4.11.0.86",
+    "opencv-contrib-python-headless>=4.11.0.86",
     "pandas>=2.2.3",
     "python-wialon>=1.2.4",
+    "pyzbar>=0.1.9",
     "twilio>=9.4.5",
 ]
 
