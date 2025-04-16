@@ -6,7 +6,69 @@ from terminusgps.wialon import constants, flags
 from terminusgps.wialon.session import WialonSession
 
 
-def get_resource_ids(session: WialonSession) -> list[int] | None:
+def get_units_by_carrier(carrier_name: str, session: WialonSession) -> list[str]:
+    """
+    Returns a list of all unit ids by telecommunications carrier company name.
+
+    :param carrier_name: A telecommunications carrier company name, e.g. ``"US Cell"`` or ``"Conetixx"``.
+    :type carrier_name: :py:obj:`str`
+    :param session: A valid Wialon API session.
+    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :returns: A list of unit ids.
+    :rtype: :py:obj:`list`
+
+    """
+    property: str = constants.WialonItemProperty.ADMIN_FIELD_NAME_VALUE.value
+    results = session.wialon_api.core_search_items(
+        **{
+            "spec": {
+                "itemsType": "avl_unit",
+                "propName": property,
+                "propValueMask": f"carrier:{carrier_name}",
+                "sortType": property,
+            },
+            "force": 0,
+            "flags": flags.DataFlag.UNIT_BASE.value,
+            "from": 0,
+            "to": 0,
+        }
+    )
+    return [item.get("id") for item in results.get("items", [])]
+
+
+def get_unit_by_iccid(iccid: str, session: WialonSession) -> str | None:
+    """
+    Returns a unit id by iccid (SIM card #).
+
+    :param iccid: A SIM card #.
+    :type iccid: :py:obj:`str`
+    :param session: A valid Wialon API session.
+    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :returns: The unit id, if it was found.
+    :rtype: :py:obj:`str` | :py:obj:`None`
+
+    """
+    property: str = constants.WialonItemProperty.ADMIN_FIELD_NAME_VALUE.value
+    results = session.wialon_api.core_search_items(
+        **{
+            "spec": {
+                "itemsType": "avl_unit",
+                "propName": property,
+                "propValueMask": f"iccid:{iccid}",
+                "sortType": property,
+            },
+            "force": 0,
+            "flags": flags.DataFlag.UNIT_BASE.value,
+            "from": 0,
+            "to": 0,
+        }
+    )
+    if results.get("totalItemsCount") != 1:
+        raise ValueError(results)
+    return results.get("items", [{}])[0].get("id")
+
+
+def get_resources(session: WialonSession) -> list[int] | None:
     """
     Returns a list of all resource ids in Wialon.
 
@@ -61,7 +123,7 @@ def get_hw_type_id(name: str, session: WialonSession) -> int | None:
     return int(hw_types.get(name)) if name in hw_types.keys() else None
 
 
-def get_id_from_imei(imei: str, session: WialonSession) -> str | None:
+def get_unit_by_imei(imei: str, session: WialonSession) -> str | None:
     """
     Takes a Wialon unit's IMEI # and returns its unit id.
 
@@ -170,11 +232,11 @@ def generate_wialon_password(length: int = 32) -> str:
     min_length, max_length = 8, 64
     if length > max_length:
         raise ValueError(
-            f"Password cannot be greater than {max_length} characters in length. Got {length}."
+            f"Password cannot be greater than {max_length} characters in length, got {length}."
         )
     elif length < min_length:
         raise ValueError(
-            f"Password cannot be less than {min_length} characters in length. Got {length}."
+            f"Password cannot be less than {min_length} characters in length, got {length}."
         )
 
     s0 = list(string.ascii_uppercase)

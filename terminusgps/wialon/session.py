@@ -269,7 +269,7 @@ class WialonSession:
 
         """
         try:
-            self.logger.info("Logging into Wialon API session...")
+            self.logger.debug("Logging into Wialon API session...")
             response = self.wialon_api.token_login(**{"token": token, "fl": flags})
             self._set_login_response(response)
             self.logger.debug(f"Logged into Wialon API session '{response.get('eid')}'")
@@ -286,7 +286,7 @@ class WialonSession:
         :rtype: :py:obj:`None`
 
         """
-        self.logger.info("Logging out of Wialon API session...")
+        self.logger.debug("Logging out of Wialon API session...")
         response: dict = self.wialon_api.core_logout({})
 
         if response.get("error") != 0:

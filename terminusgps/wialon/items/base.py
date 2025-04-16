@@ -14,7 +14,9 @@ class WialonBase:
 
         self._session = session
         self._id = str(id if id else self.create(*args, **kwargs))
-        self.populate()
+        self._name = None
+        self._hw_type = None
+        self._access_lvl = None
 
     def __str__(self) -> str:
         return str(self.id)
@@ -26,9 +28,30 @@ class WialonBase:
         )
         if response is not None:
             item = response.get("item", {})
-            self.name = item.get("nm")
-            self.hw_type = item.get("cls")
-            self.access_lvl = item.get("uacl")
+            self._name = item.get("nm")
+            self._hw_type = item.get("cls")
+            self._access_lvl = item.get("uacl")
+
+    @property
+    def name(self) -> str:
+        """Name of the Wialon object."""
+        if self._name is None:
+            self.populate()
+        return str(self._name)
+
+    @property
+    def hw_type(self) -> str:
+        """Hardware type of the Wialon object."""
+        if self._hw_type is None:
+            self.populate()
+        return str(self._hw_type)
+
+    @property
+    def access_lvl(self) -> str:
+        """Access level of the Wialon object."""
+        if self._access_lvl is None:
+            self.populate()
+        return str(self._access_lvl)
 
     @property
     def session(self) -> WialonSession:

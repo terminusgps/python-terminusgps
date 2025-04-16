@@ -1,10 +1,18 @@
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, urljoin
+
+from django.conf import settings
 
 from terminusgps.wialon import flags
 from terminusgps.wialon.items.base import WialonBase
 
 
 class WialonUnit(WialonBase):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self._imei_number = None
+        self._active = None
+        self._image_uri = None
+
     def create(
         self, creator_id: str | int, name: str, hw_type_id: str | int
     ) -> int | None:
@@ -48,11 +56,13 @@ class WialonUnit(WialonBase):
             **{
                 "id": self.id,
                 "flags": (
-                    flags.DataFlag.UNIT_ADVANCED_PROPERTIES | flags.DataFlag.UNIT_IMAGE
+                    flags.DataFlag.UNIT_ADVANCED_PROPERTIES
+                    | flags.DataFlag.UNIT_IMAGE
+                    | flags.DataFlag.UNIT_ADMIN_FIELDS
                 ).value,
             }
         )
-        if response:
+        if response is not None:
             item = response.get("item", {})
             self._imei_number = item.get("uid")
             self._active = item.get("act", False)
@@ -79,28 +89,72 @@ class WialonUnit(WialonBase):
 
     @property
     def available_commands(self) -> dict:
-        """Assigned commands to the unit."""
+        """
+        Commands assigned to the unit.
+
+        :type: :py:obj:`dict`
+
+        """
         return self.session.wialon_api.core_get_hw_cmds(
             **{"deviceTypeId": 0, "unitId": self.id}
         )
 
     @property
     def image_uri(self) -> str:
-        """An image URI for the unit."""
-        return self._image_uri
+        """
+        Image URI for the unit.
+
+        :type :py:obj:`str`
+
+        """
+        if self._image_uri is None:
+            self.populate()
+        return str(self._image_uri)
 
     @property
-    def imei_number(self) -> int | None:
-        """The unit's IMEI number."""
-        if self._imei_number:
-            return int(self._imei_number)
+    def imei_number(self) -> str:
+        """
+        IMEI # for the unit.
+
+        :type: :py:obj:`str`
+
+        """
+        if self._imei_number is None:
+            self.populate()
+        return str(self._imei_number)
+
+    @property
+    def iccid(self) -> str | None:
+        """
+        SIM Card # for the unit, if any.
+
+        :type: :py:obj:`str` | :py:obj:`None`
+
+        """
+        return self.afields.get("iccid")
+
+    @property
+    def carrier(self) -> str | None:
+        """
+        Name of the telecommunications company associated with the unit's SIM card, if any.
+
+        :type: :py:obj:`str` | :py:obj:`None`
+
+        """
+        return self.afields.get("carrier")
 
     @property
     def active(self) -> bool:
-        """Whether or not the unit is active."""
-        if self._active:
-            return bool(self._active)
-        return False
+        """Whether or not the unit is activated."""
+        if self._active is None:
+            self.populate()
+        return bool(self._active)
+
+    @property
+    def image_url(self) -> str | None:
+        if hasattr(settings, "WIALON_HOST"):
+            return urljoin(settings.WIALON_HOST, self._image_uri)
+        return urljoin("https://hst-api.wialon.com", self._image_uri)
 
     def execute_command(
         self,
