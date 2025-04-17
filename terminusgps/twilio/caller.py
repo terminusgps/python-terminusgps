@@ -17,30 +17,53 @@ if not hasattr(settings, "TWILIO_MESSAGING_SID"):
 
 
 class TwilioCaller:
-    def __init__(self) -> None:
-        """Sets Twilio messaging session variables."""
-        self.client_sid = settings.TWILIO_SID
-        self.client_token = settings.TWILIO_TOKEN
-        self.from_number = settings.TWILIO_FROM_NUMBER
-        self.messaging_sid = settings.TWILIO_MESSAGING_SID
+    def __init__(
+        self,
+        client_sid: str | None = None,
+        client_token: str | None = None,
+        from_number: str | None = None,
+        messaging_sid: str | None = None,
+    ) -> None:
+        """
+        Sets Twilio client session variables.
+
+        All parameters are optional, default values are pulled from a Django settings module.
+
+        :param client_sid: A Twilio client session id.
+        :type client_sid: :py:obj:`str` | :py:obj:`None`
+        :param client_token: A Twilio client API token.
+        :type client_token: :py:obj:`str` | :py:obj:`None`
+        :param from_number: Phone number used to send notifications.
+        :type from_number: :py:obj:`str` | :py:obj:`None`
+        :param messaging_sid: A Twilio client messaging service session id.
+        :type messaging_sid: :py:obj:`str` | :py:obj:`None`
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
+        self._client_sid = client_sid or settings.TWILIO_SID
+        self._client_token = client_token or settings.TWILIO_TOKEN
+        self._from_number = from_number or settings.TWILIO_FROM_NUMBER
+        self._messaging_sid = messaging_sid or settings.TWILIO_MESSAGING_SID
 
     def __enter__(self) -> "TwilioCaller":
-        """Creates an asyncronous Twilio client."""
+        """Opens a context manager and creates an asyncronous Twilio client."""
         self.client = twilio.rest.Client(
-            self.client_sid, self.client_token, http_client=AsyncTwilioHttpClient()
+            self.client_sid, self._client_token, http_client=AsyncTwilioHttpClient()
         )
         return self
 
     def __exit__(self, exc_type, exc_value, exc_tb) -> None:
+        """Closes the context manager."""
         return None
 
-    async def create_notification(
+    def create_notification(
         self, to_number: str, message: str, method: str = "sms"
     ) -> asyncio.Task[Any]:
         """
         Returns an awaitable notification task.
 
-        Available methods are ``"sms"``, ``"call"`` and ``"phone"``.
+        Valid methods are ``"sms"``, ``"call"`` and ``"phone"``.
 
         :param to_number: A phone number to notify.
         :type to_number: :py:obj:`str`
@@ -48,6 +71,7 @@ class TwilioCaller:
         :type message: :py:obj:`str`
         :param method: A notification method. Default is ``"sms"``.
         :type method: :py:obj:`str`
+        :raises ValueError: If ``method`` is invalid.
         :returns: An awaitable task.
         :rtype: :py:obj:`~asyncio.Task`
 
@@ -100,3 +124,33 @@ class TwilioCaller:
             body=message,
             messaging_service_sid=self.messaging_sid,
         )
+
+    @property
+    def client_sid(self) -> str:
+        """
+        Client session id.
+
+        :type: :py:obj:`str`
+
+        """
+        return self._client_sid
+
+    @property
+    def from_number(self) -> str:
+        """
+        Origin phone number.
+
+        :type: :py:obj:`str`
+
+        """
+        return self._from_number
+
+    @property
+    def messaging_sid(self) -> str:
+        """
+        Messaging service session id.
+
+        :type: :py:obj:`str`
+
+        """
+        return self._messaging_sid
