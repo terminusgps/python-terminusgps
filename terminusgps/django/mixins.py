@@ -24,6 +24,7 @@ class HtmxTemplateResponseMixin(TemplateResponseMixin):
     def render_to_response(
         self, context: dict[str, typing.Any], **response_kwargs: typing.Any
     ) -> HttpResponse:
+        """Sets :py:attr:`template_name` to :py:attr:`partial_template_name` if necessary."""
         htmx_request = self.request.headers.get("HX-Request", False)
         boosted = self.request.headers.get("HX-Boosted", False)
 
