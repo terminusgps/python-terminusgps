@@ -12,7 +12,7 @@ import django
 from sphinxawesome_theme.postprocess import Icons
 
 sys.path.insert(0, os.path.abspath("../.."))
-os.environ["DJANGO_SETTINGS_MODULE"] = "terminusgps.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "terminusgps.django.settings"
 django.setup()
 
 project = "python-terminusgps"

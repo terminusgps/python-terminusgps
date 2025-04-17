@@ -10,6 +10,10 @@ python-terminusgps documentation
 Installation
 ============
 
+`python-terminusgps <https://pypi.org/project/python-terminusgps/>`_ is a collection of SDKs written for use by Terminus GPS.
+
+`Terminus GPS <https://terminusgps.com/>`_ is an IoT hardware/software GPS monitoring company.
+
 Use pip to install from `PyPI <https://pypi.org/project/python-terminusgps/>`_.
 
 .. code:: bash
@@ -20,16 +24,15 @@ In Python, all subpackages are nested within :py:mod:`terminusgps`:
 
 .. code:: python
 
-   from terminusgps.aws.secrets import get_secret
-   from terminusgps.wialon.session import WialonSession
+    from terminusgps.aws.secrets import get_secret # Retrieves a secret from AWS
+    from terminusgps.wialon.session import WialonSession # Creates Wialon API sessions
 
 .. toctree::
     :maxdepth: 2
     :caption: Contents:
 
-    settings.rst
-    mixins.rst
     authorizenet/index.rst
     aws/index.rst
+    django/index.rst
     twilio/index.rst
     wialon/index.rst

@@ -102,8 +102,6 @@
       <div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mixins.html">Mixins</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authorizenet/index.html">Authorizenet API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="authorizenet/auth.html">Authorizenet API Authentication</a></li>
 <li class="toctree-l2"><a class="reference internal" href="authorizenet/profiles.html">Profiles</a></li>
@@ -112,6 +110,11 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="aws/index.html">AWS API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="aws/secrets.html">Secrets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="django/index.html">Django</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="django/mixins.html">Mixins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django/settings.html">Settings</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="twilio/index.html">Twilio API</a><ul>
@@ -319,23 +322,23 @@
     configuration value
 
       <ul style="list-style-type:none">
-        <li><a href="settings.html#confval-DEBUG">DEBUG</a>
+        <li><a href="django/settings.html#confval-DEBUG">DEBUG</a>
 </li>
-        <li><a href="settings.html#confval-MERCHANT_AUTH_LOGIN_ID">MERCHANT_AUTH_LOGIN_ID</a>
+        <li><a href="django/settings.html#confval-MERCHANT_AUTH_LOGIN_ID">MERCHANT_AUTH_LOGIN_ID</a>
 </li>
-        <li><a href="settings.html#confval-MERCHANT_AUTH_TRANSACTION_KEY">MERCHANT_AUTH_TRANSACTION_KEY</a>
+        <li><a href="django/settings.html#confval-MERCHANT_AUTH_TRANSACTION_KEY">MERCHANT_AUTH_TRANSACTION_KEY</a>
 </li>
-        <li><a href="settings.html#confval-TWILIO_FROM_NUMBER">TWILIO_FROM_NUMBER</a>
+        <li><a href="django/settings.html#confval-TWILIO_FROM_NUMBER">TWILIO_FROM_NUMBER</a>
 </li>
-        <li><a href="settings.html#confval-TWILIO_MESSAGING_SID">TWILIO_MESSAGING_SID</a>
+        <li><a href="django/settings.html#confval-TWILIO_MESSAGING_SID">TWILIO_MESSAGING_SID</a>
 </li>
-        <li><a href="settings.html#confval-TWILIO_SID">TWILIO_SID</a>
+        <li><a href="django/settings.html#confval-TWILIO_SID">TWILIO_SID</a>
 </li>
-        <li><a href="settings.html#confval-TWILIO_TOKEN">TWILIO_TOKEN</a>
+        <li><a href="django/settings.html#confval-TWILIO_TOKEN">TWILIO_TOKEN</a>
 </li>
-        <li><a href="settings.html#confval-WIALON_ADMIN_ID">WIALON_ADMIN_ID</a>
+        <li><a href="django/settings.html#confval-WIALON_ADMIN_ID">WIALON_ADMIN_ID</a>
 </li>
-        <li><a href="settings.html#confval-WIALON_TOKEN">WIALON_TOKEN</a>
+        <li><a href="django/settings.html#confval-WIALON_TOKEN">WIALON_TOKEN</a>
 </li>
       </ul></li>
       <li><a href="authorizenet/utils.html#terminusgps.authorizenet.errors.ControllerExecutionError">ControllerExecutionError</a>
@@ -413,7 +416,7 @@
     DEBUG
 
       <ul style="list-style-type:none">
-        <li><a href="settings.html#confval-DEBUG">configuration value</a>
+        <li><a href="django/settings.html#confval-DEBUG">configuration value</a>
 </li>
       </ul></li>
       <li><a href="authorizenet/profiles.html#terminusgps.authorizenet.profiles.base.AuthorizenetSubProfileBase.default">default (terminusgps.authorizenet.profiles.base.AuthorizenetSubProfileBase property)</a>
@@ -560,7 +563,7 @@
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="wialon/session.html#terminusgps.wialon.session.WialonSession.host">host (terminusgps.wialon.session.WialonSession property)</a>
 </li>
-      <li><a href="mixins.html#terminusgps.mixins.HtmxTemplateResponseMixin">HtmxTemplateResponseMixin (class in terminusgps.mixins)</a>
+      <li><a href="django/mixins.html#terminusgps.django.mixins.HtmxTemplateResponseMixin">HtmxTemplateResponseMixin (class in terminusgps.django.mixins)</a>
 </li>
       <li><a href="wialon/session.html#terminusgps.wialon.session.WialonSession.hw_gw_dns">hw_gw_dns (terminusgps.wialon.session.WialonSession property)</a>
 </li>
@@ -659,14 +662,14 @@
     MERCHANT_AUTH_LOGIN_ID
 
       <ul style="list-style-type:none">
-        <li><a href="settings.html#confval-MERCHANT_AUTH_LOGIN_ID">configuration value</a>
+        <li><a href="django/settings.html#confval-MERCHANT_AUTH_LOGIN_ID">configuration value</a>
 </li>
       </ul></li>
       <li>
     MERCHANT_AUTH_TRANSACTION_KEY
 
       <ul style="list-style-type:none">
-        <li><a href="settings.html#confval-MERCHANT_AUTH_TRANSACTION_KEY">configuration value</a>
+        <li><a href="django/settings.html#confval-MERCHANT_AUTH_TRANSACTION_KEY">configuration value</a>
 </li>
       </ul></li>
       <li><a href="authorizenet/profiles.html#terminusgps.authorizenet.profiles.base.AuthorizenetProfileBase.merchantAuthentication">merchantAuthentication (terminusgps.authorizenet.profiles.base.AuthorizenetProfileBase property)</a>
@@ -717,7 +720,7 @@
   <h2 id="P">P</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
-      <li><a href="mixins.html#terminusgps.mixins.HtmxTemplateResponseMixin.partial_template_name">partial_template_name (terminusgps.mixins.HtmxTemplateResponseMixin attribute)</a>
+      <li><a href="django/mixins.html#terminusgps.django.mixins.HtmxTemplateResponseMixin.partial_template_name">partial_template_name (terminusgps.django.mixins.HtmxTemplateResponseMixin attribute)</a>
 </li>
       <li><a href="authorizenet/profiles.html#terminusgps.authorizenet.profiles.subscriptions.SubscriptionProfile.payment_id">payment_id (terminusgps.authorizenet.profiles.subscriptions.SubscriptionProfile property)</a>
 </li>
@@ -767,7 +770,7 @@
 </li>
       <li><a href="wialon/flags.html#terminusgps.wialon.flags.AccessFlag.RENAME_ITEM">RENAME_ITEM (terminusgps.wialon.flags.AccessFlag attribute)</a>
 </li>
-      <li><a href="mixins.html#terminusgps.mixins.HtmxTemplateResponseMixin.render_to_response">render_to_response() (terminusgps.mixins.HtmxTemplateResponseMixin method)</a>
+      <li><a href="django/mixins.html#terminusgps.django.mixins.HtmxTemplateResponseMixin.render_to_response">render_to_response() (terminusgps.django.mixins.HtmxTemplateResponseMixin method)</a>
 </li>
       <li><a href="wialon/constants.html#terminusgps.wialon.constants.WialonItemsType.RESOURCE">RESOURCE (terminusgps.wialon.constants.WialonItemsType attribute)</a>
 </li>
@@ -975,7 +978,7 @@
     TWILIO_FROM_NUMBER
 
       <ul style="list-style-type:none">
-        <li><a href="settings.html#confval-TWILIO_FROM_NUMBER">configuration value</a>
+        <li><a href="django/settings.html#confval-TWILIO_FROM_NUMBER">configuration value</a>
 </li>
       </ul></li>
   </ul></td>
@@ -984,21 +987,21 @@
     TWILIO_MESSAGING_SID
 
       <ul style="list-style-type:none">
-        <li><a href="settings.html#confval-TWILIO_MESSAGING_SID">configuration value</a>
+        <li><a href="django/settings.html#confval-TWILIO_MESSAGING_SID">configuration value</a>
 </li>
       </ul></li>
       <li>
     TWILIO_SID
 
       <ul style="list-style-type:none">
-        <li><a href="settings.html#confval-TWILIO_SID">configuration value</a>
+        <li><a href="django/settings.html#confval-TWILIO_SID">configuration value</a>
 </li>
       </ul></li>
       <li>
     TWILIO_TOKEN
 
       <ul style="list-style-type:none">
-        <li><a href="settings.html#confval-TWILIO_TOKEN">configuration value</a>
+        <li><a href="django/settings.html#confval-TWILIO_TOKEN">configuration value</a>
 </li>
       </ul></li>
       <li><a href="twilio/caller.html#terminusgps.twilio.caller.TwilioCaller">TwilioCaller (class in terminusgps.twilio.caller)</a>
@@ -1198,14 +1201,14 @@
     WIALON_ADMIN_ID
 
       <ul style="list-style-type:none">
-        <li><a href="settings.html#confval-WIALON_ADMIN_ID">configuration value</a>
+        <li><a href="django/settings.html#confval-WIALON_ADMIN_ID">configuration value</a>
 </li>
       </ul></li>
       <li>
     WIALON_TOKEN
 
       <ul style="list-style-type:none">
-        <li><a href="settings.html#confval-WIALON_TOKEN">configuration value</a>
+        <li><a href="django/settings.html#confval-WIALON_TOKEN">configuration value</a>
 </li>
       </ul></li>
       <li><a href="wialon/items.html#terminusgps.wialon.items.base.WialonBase">WialonBase (class in terminusgps.wialon.items.base)</a>

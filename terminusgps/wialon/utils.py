@@ -3,6 +3,8 @@ import string
 import typing
 
 from terminusgps.wialon import constants, flags
+from terminusgps.wialon.items import WialonUnit
+from terminusgps.wialon.items.resource import WialonResource
 from terminusgps.wialon.session import WialonSession
 
 
@@ -41,15 +43,17 @@ def get_carrier_names(session: WialonSession) -> list[str]:
     return sorted(list(frozenset(carrier_names)))
 
 
-def get_units_by_carrier(carrier_name: str, session: WialonSession) -> list[str]:
+def get_units_by_carrier(
+    carrier_name: str, session: WialonSession
+) -> list[WialonUnit] | None:
     """
-    Returns a list of all unit ids by telecommunications carrier company name.
+    Returns a list of all units by telecommunications carrier company name.
 
     :param carrier_name: A telecommunications carrier company name, e.g. ``"US Cell"`` or ``"Conetixx"``.
     :type carrier_name: :py:obj:`str`
     :param session: A valid Wialon API session.
     :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
-    :returns: A list of unit ids.
+    :returns: A list of units, if any were found.
     :rtype: :py:obj:`list`
 
     """
@@ -67,19 +71,23 @@ def get_units_by_carrier(carrier_name: str, session: WialonSession) -> list[str]
             "to": 0,
         }
     )
-    return [item.get("id") for item in results.get("items", [])]
+    if results:
+        return [
+            WialonUnit(id=item.get("id"), session=session)
+            for item in results.get("items", [])
+        ]
 
 
-def get_unit_by_iccid(iccid: str, session: WialonSession) -> int | None:
+def get_unit_by_iccid(iccid: str, session: WialonSession) -> WialonUnit | None:
     """
-    Returns a unit id by iccid (SIM card #).
+    Returns a unit by iccid (SIM card #).
 
     :param iccid: A SIM card #.
     :type iccid: :py:obj:`str`
     :param session: A valid Wialon API session.
     :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
-    :returns: The unit id, if it was found.
-    :rtype: :py:obj:`int` | :py:obj:`None`
+    :returns: The unit, if it was found.
+    :rtype: :py:obj:`~terminusgps.wialon.items.WialonUnit` | :py:obj:`None`
 
     """
     results = session.wialon_api.core_search_items(
@@ -96,17 +104,18 @@ def get_unit_by_iccid(iccid: str, session: WialonSession) -> int | None:
             "to": 0,
         }
     )
-    return int(results.get("items", [{}])[0].get("id"))
+    if results:
+        return WialonUnit(id=results.get("items", [{}])[0].get("id"), session=session)
 
 
-def get_resources(session: WialonSession) -> list[int] | None:
+def get_resources(session: WialonSession) -> list[WialonResource] | None:
     """
-    Returns a list of all resource ids in Wialon.
+    Returns a list of all resources in Wialon.
 
     :param session: A valid Wialon API session.
     :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
-    :returns: A list of account ids.
-    :rtype: :py:obj:`list`
+    :returns: A list of resources, if found.
+    :rtype: :py:obj:`list` | :py:obj:`None`
 
     """
     results = session.wialon_api.core_search_items(
@@ -126,7 +135,10 @@ def get_resources(session: WialonSession) -> list[int] | None:
         }
     )
     if results:
-        return [int(item.get("id")) for item in results.get("items", [])]
+        return [
+            WialonResource(id=item.get("id"), session=session)
+            for item in results.get("items", [])
+        ]
 
 
 def get_hw_type_id(name: str, session: WialonSession) -> int | None:
@@ -154,7 +166,7 @@ def get_hw_type_id(name: str, session: WialonSession) -> int | None:
     return int(hw_types.get(name)) if name in hw_types.keys() else None
 
 
-def get_unit_by_imei(imei: str, session: WialonSession) -> str | None:
+def get_unit_by_imei(imei: str, session: WialonSession) -> WialonUnit | None:
     """
     Takes a Wialon unit's IMEI # and returns its unit id.
 
@@ -189,7 +201,7 @@ def get_unit_by_imei(imei: str, session: WialonSession) -> str | None:
     )
 
     if results and results.get("totalItemsCount", 0) == 1:
-        return results["items"][0].get("id")
+        return WialonUnit(id=results["items"][0].get("id"), session=session)
 
 
 def get_vin_info(vin_number: str, session: WialonSession) -> dict:

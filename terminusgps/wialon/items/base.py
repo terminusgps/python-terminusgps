@@ -22,12 +22,12 @@ class WialonBase:
         return str(self.id)
 
     def __repr__(self) -> str:
-        return f"{type(self).__name__}(id={self.id}, session={self.session})"
+        return f"{type(self).__name__}(id={self.id}, session={self.session.id})"
 
     def populate(self) -> None:
         """Retrieves and saves the latest data for the item from Wialon."""
         response = self.session.wialon_api.core_search_item(
-            **{"id": str(self.id), "flags": flags.DataFlag.UNIT_BASE.value}
+            **{"id": str(self.id), "flags": flags.DataFlag.UNIT_BASE}
         )
         if response is not None:
             item = response.get("item", {})
@@ -109,6 +109,7 @@ class WialonBase:
         self.session.wialon_api.item_update_name(
             **{"itemId": self.id, "name": new_name}
         )
+        self._name = new_name
 
     def add_afield(self, key: str, value: str) -> None:
         """
@@ -231,7 +232,7 @@ class WialonBase:
     def cfields(self) -> dict[str, str]:
         """Custom fields for the Wialon object."""
         response = self.session.wialon_api.core_search_item(
-            **{"id": self.id, "flags": flags.DataFlag.UNIT_CUSTOM_FIELDS.value}
+            **{"id": self.id, "flags": flags.DataFlag.UNIT_CUSTOM_FIELDS}
         )
         fields = response.get("item", {}).get("flds") if response is not None else {}
         return {field["n"]: field["v"] for field in fields.values()} if fields else {}
@@ -240,7 +241,7 @@ class WialonBase:
     def afields(self) -> dict[str, str]:
         """Admin fields for the Wialon object."""
         response = self.session.wialon_api.core_search_item(
-            **{"id": self.id, "flags": flags.DataFlag.UNIT_ADMIN_FIELDS.value}
+            **{"id": self.id, "flags": flags.DataFlag.UNIT_ADMIN_FIELDS}
         )
         fields = response.get("item", {}).get("aflds") if response is not None else {}
         return {field["n"]: field["v"] for field in fields.values()} if fields else {}

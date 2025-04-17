@@ -71,8 +71,6 @@
 <div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../settings.html">Settings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mixins.html">Mixins</a></li>
 <li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../authorizenet/index.html">Authorizenet API<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
 <li class="toctree-l2"><a class="reference internal" href="../authorizenet/auth.html">Authorizenet API Authentication</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../authorizenet/profiles.html">Profiles</a></li>
@@ -81,6 +79,11 @@
 </li>
 <li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../aws/index.html">AWS API<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
 <li class="toctree-l2"><a class="reference internal" href="../aws/secrets.html">Secrets</a></li>
+</ul>
+</li>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../django/index.html">Django<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../django/mixins.html">Mixins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../django/settings.html">Settings</a></li>
 </ul>
 </li>
 <li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../twilio/index.html">Twilio API<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
@@ -129,7 +132,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>) – An optional Wialon API token. Default is <a class="reference internal" href="../settings.html#confval-WIALON_TOKEN"><code class="xref std std-confval docutils literal notranslate"><span class="pre">WIALON_TOKEN</span></code></a>.</p></li>
+<li><p><strong>token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>) – An optional Wialon API token. Default is <a class="reference internal" href="../django/settings.html#confval-WIALON_TOKEN"><code class="xref std std-confval docutils literal notranslate"><span class="pre">WIALON_TOKEN</span></code></a>.</p></li>
 <li><p><strong>sid</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>) – An optional Wialon API session id. If provided, the session is continued.</p></li>
 <li><p><strong>scheme</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – HTTP request scheme to use. Default is <code class="docutils literal notranslate"><span class="pre">"https"</span></code>.</p></li>
 <li><p><strong>host</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Wialon API host url. Default is <code class="docutils literal notranslate"><span class="pre">"hst-api.wialon.com"</span></code>.</p></li>
@@ -389,13 +392,13 @@
 <dt class="sig sig-object py" id="terminusgps.wialon.session.WialonSession.token">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">token</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#terminusgps.wialon.session.WialonSession.token" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.wialon.session.WialonSession.token'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd><p>A Wialon API token set during <code class="xref py py-meth docutils literal notranslate"><span class="pre">WialonSession.__init__()</span></code>.</p>
-<p>Default token value is <a class="reference internal" href="../settings.html#confval-WIALON_TOKEN"><code class="xref std std-confval docutils literal notranslate"><span class="pre">WIALON_TOKEN</span></code></a>.</p>
+<p>Default token value is <a class="reference internal" href="../django/settings.html#confval-WIALON_TOKEN"><code class="xref std std-confval docutils literal notranslate"><span class="pre">WIALON_TOKEN</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p>
 </dd>
 <dt class="field-even">Value<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../settings.html#confval-WIALON_TOKEN"><code class="xref std std-confval docutils literal notranslate"><span class="pre">WIALON_TOKEN</span></code></a></p>
+<dd class="field-even"><p><a class="reference internal" href="../django/settings.html#confval-WIALON_TOKEN"><code class="xref std std-confval docutils literal notranslate"><span class="pre">WIALON_TOKEN</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
