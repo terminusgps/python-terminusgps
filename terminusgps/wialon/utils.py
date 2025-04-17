@@ -6,6 +6,41 @@ from terminusgps.wialon import constants, flags
 from terminusgps.wialon.session import WialonSession
 
 
+def get_carrier_names(session: WialonSession) -> list[str]:
+    """
+    Returns a list of all telecommunication carrier company names present in Wialon.
+
+    :param session: A valid Wialon API session.
+    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :returns: A list of telecommunication carrier company names.
+    :rtype: :py:obj:`list`
+
+    """
+    afname: str = constants.WialonItemProperty.ADMIN_FIELD_NAME
+    afval: str = constants.WialonItemProperty.ADMIN_FIELD_VALUE
+    results: dict = session.wialon_api.core_search_items(
+        **{
+            "spec": {
+                "itemsType": constants.WialonItemsType.UNIT,
+                "propName": ",".join([afname, afval]),
+                "propValueMask": "carrier,*",
+                "sortType": ",".join([afname, afval]),
+            },
+            "force": 0,
+            "flags": flags.DataFlag.UNIT_BASE + flags.DataFlag.UNIT_ADMIN_FIELDS,
+            "from": 0,
+            "to": 0,
+        }
+    )
+    carrier_names: list[str] = [
+        field["v"]
+        for item in results.get("items", [{}])
+        for field in item.get("aflds", {}).values()
+        if field["n"] == "carrier" and field["v"]
+    ]
+    return sorted(list(frozenset(carrier_names)))
+
+
 def get_units_by_carrier(carrier_name: str, session: WialonSession) -> list[str]:
     """
     Returns a list of all unit ids by telecommunications carrier company name.
@@ -18,17 +53,16 @@ def get_units_by_carrier(carrier_name: str, session: WialonSession) -> list[str]
     :rtype: :py:obj:`list`
 
     """
-    property: str = constants.WialonItemProperty.ADMIN_FIELD_NAME_VALUE.value
     results = session.wialon_api.core_search_items(
         **{
             "spec": {
                 "itemsType": "avl_unit",
-                "propName": property,
+                "propName": constants.WialonItemProperty.ADMIN_FIELD_NAME_VALUE,
                 "propValueMask": f"carrier:{carrier_name}",
-                "sortType": property,
+                "sortType": constants.WialonItemProperty.ADMIN_FIELD_NAME_VALUE,
             },
             "force": 0,
-            "flags": flags.DataFlag.UNIT_BASE.value,
+            "flags": flags.DataFlag.UNIT_BASE,
             "from": 0,
             "to": 0,
         }
@@ -36,7 +70,7 @@ def get_units_by_carrier(carrier_name: str, session: WialonSession) -> list[str]
     return [item.get("id") for item in results.get("items", [])]
 
 
-def get_unit_by_iccid(iccid: str, session: WialonSession) -> str | None:
+def get_unit_by_iccid(iccid: str, session: WialonSession) -> int | None:
     """
     Returns a unit id by iccid (SIM card #).
 
@@ -45,27 +79,24 @@ def get_unit_by_iccid(iccid: str, session: WialonSession) -> str | None:
     :param session: A valid Wialon API session.
     :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
     :returns: The unit id, if it was found.
-    :rtype: :py:obj:`str` | :py:obj:`None`
+    :rtype: :py:obj:`int` | :py:obj:`None`
 
     """
-    property: str = constants.WialonItemProperty.ADMIN_FIELD_NAME_VALUE.value
     results = session.wialon_api.core_search_items(
         **{
             "spec": {
                 "itemsType": "avl_unit",
-                "propName": property,
+                "propName": constants.WialonItemProperty.ADMIN_FIELD_NAME_VALUE,
                 "propValueMask": f"iccid:{iccid}",
-                "sortType": property,
+                "sortType": constants.WialonItemProperty.ADMIN_FIELD_NAME_VALUE,
             },
             "force": 0,
-            "flags": flags.DataFlag.UNIT_BASE.value,
+            "flags": flags.DataFlag.UNIT_BASE,
             "from": 0,
             "to": 0,
         }
     )
-    if results.get("totalItemsCount") != 1:
-        raise ValueError(results)
-    return results.get("items", [{}])[0].get("id")
+    return int(results.get("items", [{}])[0].get("id"))
 
 
 def get_resources(session: WialonSession) -> list[int] | None:

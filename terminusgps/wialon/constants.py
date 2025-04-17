@@ -1,4 +1,5 @@
 import enum
+from typing import override
 
 from . import flags
 
@@ -107,6 +108,10 @@ class WialonItemProperty(enum.StrEnum):
     """Whether or not a retranslator is enabled."""
     UNIQUE_ID = "sys_unique_id"
     """Object unique id."""
+
+    @override
+    def __add__(self, other: str) -> str:
+        return ",".join([super().__str__(), str(other)])
 
 
 ACCESSMASK_RESOURCE_BASIC: int = sum(

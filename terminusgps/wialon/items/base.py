@@ -21,6 +21,9 @@ class WialonBase:
     def __str__(self) -> str:
         return str(self.id)
 
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}(id={self.id}, session={self.session})"
+
     def populate(self) -> None:
         """Retrieves and saves the latest data for the item from Wialon."""
         response = self.session.wialon_api.core_search_item(

@@ -98,6 +98,12 @@ class WialonSession:
             logging.getLogger(self.__class__.__name__), level=log_level
         ).get_logger()
 
+    def __str__(self) -> str:
+        return str(self.id)
+
+    def __repr__(self) -> str:
+        return f"{self.__class__}(sid={self.id})"
+
     def __enter__(self) -> "WialonSession":
         """Logs into the Wialon API using a token set in :py:meth:`__init__`."""
         assert self.token, "Wialon API token was not set"
