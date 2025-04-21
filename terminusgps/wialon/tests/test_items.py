@@ -9,11 +9,6 @@ from ..session import WialonSession
 
 class WialonResourceTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        if not hasattr(settings, "WIALON_TOKEN"):
-            self.fail("'WIALON_TOKEN' setting is required.")
-        if not hasattr(settings, "WIALON_ADMIN_ID"):
-            self.fail("'WIALON_ADMIN_ID' setting is required.")
-
         self.session = WialonSession()
         self.session.login(settings.WIALON_TOKEN)
         self.test_timestamp = f"{datetime.now():%Y-%m-%d-%H:%M:%S}"
@@ -35,3 +30,15 @@ class WialonResourceTestCase(unittest.TestCase):
     def test_resource_create_account(self) -> None:
         self.test_resource.create_account("terminusgps_ext_hist")
         self.assertTrue(self.test_resource.is_account)
+
+
+class WialonUnitTestCase(unittest.TestCase):
+    def setUp(self) -> None:
+        self.session = WialonSession()
+        self.session.login(settings.WIALON_TOKEN)
+        self.test_timestamp = f"{datetime.now():%Y-%m-%d-%H:%M:%S}"
+        self.test_unit = items.WialonUnit(
+            id=None,
+            creator_id=settings.WIALON_ADMIN_ID,
+            name=f"test_unit_{self.test_timestamp}",
+        )

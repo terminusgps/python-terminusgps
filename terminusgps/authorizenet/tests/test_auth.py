@@ -18,6 +18,7 @@ class MerchantAuthenticationTestCase(TestCase):
     @override_settings(
         MERCHANT_AUTH_LOGIN_ID=TEST_MERCHANT_AUTH_LOGIN_ID,
         MERCHANT_AUTH_TRANSACTION_KEY=TEST_MERCHANT_AUTH_TRANSACTION_KEY,
+        DEBUG=True,
     )
     def test_merchant_authentication(self) -> None:
         auth_obj: merchantAuthenticationType = auth.get_merchant_auth()
@@ -27,6 +28,7 @@ class MerchantAuthenticationTestCase(TestCase):
 
 
 class ValidationModeTestCase(TestCase):
+    @override_settings(DEBUG=True)
     def test_validation_mode_debug_enabled(self) -> None:
         self.assertTrue(auth.get_validation_mode(), "testMode")
 
@@ -36,6 +38,7 @@ class ValidationModeTestCase(TestCase):
 
 
 class EnvironmentTestCase(TestCase):
+    @override_settings(DEBUG=True)
     def test_environment_debug_enabled(self) -> None:
         self.assertTrue(auth.get_environment(), constants.SANDBOX)
 
