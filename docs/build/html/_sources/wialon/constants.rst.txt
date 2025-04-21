@@ -3,6 +3,9 @@ Constants
 
 .. currentmodule:: terminusgps.wialon.constants
 
+.. autoclass:: WialonMeasurementUnit
+    :members:
+
 .. autoclass:: WialonItemsType
     :members:
 

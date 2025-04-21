@@ -7,9 +7,9 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Items | python-terminusgps 31.2.0 documentation</title>
-<meta content="Items | python-terminusgps 31.2.0 documentation" property="og:title"/>
-<meta content="Items | python-terminusgps 31.2.0 documentation" name="twitter:title"/>
+<title>Items | python-terminusgps 31.3.0 documentation</title>
+<meta content="Items | python-terminusgps 31.3.0 documentation" property="og:title"/>
+<meta content="Items | python-terminusgps 31.3.0 documentation" name="twitter:title"/>
 <link href="../_static/pygments.css?v=d691ff6c" rel="stylesheet" type="text/css"/>
 <link href="../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../_static/autoclasstoc.css?v=08871587" rel="stylesheet" type="text/css"/>
@@ -35,7 +35,7 @@
       Skip to content
     </a><header class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
 <div class="hidden mr-4 md:flex">
-<a class="flex items-center mr-6" href="../index.html"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 31.2.0 documentation</span>
+<a class="flex items-center mr-6" href="../index.html"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 31.3.0 documentation</span>
 </a></div><button @click="showSidebar = true" class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden" type="button">
 <svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
 <path d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z"></path>
@@ -65,7 +65,7 @@
 </div>
 </header>
 <div class="flex-1"><div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }" class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky" id="left-sidebar">
-<a class="!justify-start text-sm md:!hidden bg-background" href="../index.html"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 31.2.0 documentation</span>
+<a class="!justify-start text-sm md:!hidden bg-background" href="../index.html"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 31.3.0 documentation</span>
 </a>
 <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
 <div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
@@ -115,7 +115,7 @@
 <div class="w-full min-w-0 mx-auto">
 <nav aria-label="breadcrumbs" class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
 <a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground" href="../index.html">
-<span class="hidden md:inline">python-terminusgps 31.2.0 documentation</span>
+<span class="hidden md:inline">python-terminusgps 31.3.0 documentation</span>
 <svg aria-label="Home" class="md:hidden" fill="currentColor" height="18" stroke="none" viewbox="0 96 960 960" width="18" xmlns="http://www.w3.org/2000/svg">
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
@@ -179,34 +179,37 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.create" title="terminusgps.wialon.items.base.WialonBase.create"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Creates a Wialon object and returns its id.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.rename" title="terminusgps.wialon.items.base.WialonBase.rename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rename</span></code></a>(new_name)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.set_measurement_unit" title="terminusgps.wialon.items.base.WialonBase.set_measurement_unit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_measurement_unit</span></code></a>([unit, convert])</p></td>
+<td><p>Sets the Wialon object's measurement unit to <code class="docutils literal notranslate"><span class="pre">unit</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.rename" title="terminusgps.wialon.items.base.WialonBase.rename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rename</span></code></a>(new_name)</p></td>
 <td><p>Renames the Wialon object to the new name.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_cfield_id" title="terminusgps.wialon.items.base.WialonBase.get_cfield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cfield_id</span></code></a>(key)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_cfield_id" title="terminusgps.wialon.items.base.WialonBase.get_cfield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cfield_id</span></code></a>(key)</p></td>
 <td><p>Returns a custom field id by its key, if it exists.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_afield_id" title="terminusgps.wialon.items.base.WialonBase.get_afield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_afield_id</span></code></a>(key)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_afield_id" title="terminusgps.wialon.items.base.WialonBase.get_afield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_afield_id</span></code></a>(key)</p></td>
 <td><p>Returns an admin field id by its key, if it exists.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_afield" title="terminusgps.wialon.items.base.WialonBase.add_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_afield</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_afield" title="terminusgps.wialon.items.base.WialonBase.add_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_afield</span></code></a>(key, value)</p></td>
 <td><p>Adds an admin field to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_afield" title="terminusgps.wialon.items.base.WialonBase.update_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_afield</span></code></a>(id, key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_afield" title="terminusgps.wialon.items.base.WialonBase.update_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_afield</span></code></a>(id, key, value)</p></td>
 <td><p>Updates an admin field by id.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cfield" title="terminusgps.wialon.items.base.WialonBase.add_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cfield</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cfield" title="terminusgps.wialon.items.base.WialonBase.add_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cfield</span></code></a>(key, value)</p></td>
 <td><p>Adds a custom field to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_cfield" title="terminusgps.wialon.items.base.WialonBase.update_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cfield</span></code></a>(id, key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_cfield" title="terminusgps.wialon.items.base.WialonBase.update_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cfield</span></code></a>(id, key, value)</p></td>
 <td><p>Updates a custom field by id.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cproperty" title="terminusgps.wialon.items.base.WialonBase.add_cproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cproperty</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cproperty" title="terminusgps.wialon.items.base.WialonBase.add_cproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cproperty</span></code></a>(key, value)</p></td>
 <td><p>Adds a custom property to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_profile_field" title="terminusgps.wialon.items.base.WialonBase.add_profile_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_profile_field</span></code></a>(key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_profile_field" title="terminusgps.wialon.items.base.WialonBase.add_profile_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_profile_field</span></code></a>(key, value)</p></td>
 <td><p>Adds a profile field to the Wialon object.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.delete" title="terminusgps.wialon.items.base.WialonBase.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.delete" title="terminusgps.wialon.items.base.WialonBase.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>()</p></td>
 <td><p>Deletes the Wialon object.</p></td>
 </tr>
 </tbody>
@@ -396,6 +399,25 @@
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="terminusgps.wialon.items.base.WialonBase.set_measurement_unit">
+<span class="sig-name descname"><span class="pre">set_measurement_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="constants.html#terminusgps.wialon.constants.WialonMeasurementUnit" title="terminusgps.wialon.constants.WialonMeasurementUnit"><span class="pre">WialonMeasurementUnit</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">WialonMeasurementUnit.US</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convert</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/wialon/items/base.html#WialonBase.set_measurement_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.wialon.items.base.WialonBase.set_measurement_unit" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.wialon.items.base.WialonBase.set_measurement_unit'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>Sets the Wialon object’s measurement unit to <code class="docutils literal notranslate"><span class="pre">unit</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>unit</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonMeasurementUnit</span></code>) – A Wialon measurement unit.</p></li>
+<li><p><strong>convert</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>) – Whether or not to convert the object’s measurements before setting the new unit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Nothing.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -612,34 +634,37 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.create" title="terminusgps.wialon.items.base.WialonBase.create"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Creates a Wialon object and returns its id.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.rename" title="terminusgps.wialon.items.base.WialonBase.rename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rename</span></code></a>(new_name)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.set_measurement_unit" title="terminusgps.wialon.items.base.WialonBase.set_measurement_unit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_measurement_unit</span></code></a>([unit, convert])</p></td>
+<td><p>Sets the Wialon object's measurement unit to <code class="docutils literal notranslate"><span class="pre">unit</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.rename" title="terminusgps.wialon.items.base.WialonBase.rename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rename</span></code></a>(new_name)</p></td>
 <td><p>Renames the Wialon object to the new name.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_cfield_id" title="terminusgps.wialon.items.base.WialonBase.get_cfield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cfield_id</span></code></a>(key)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_cfield_id" title="terminusgps.wialon.items.base.WialonBase.get_cfield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cfield_id</span></code></a>(key)</p></td>
 <td><p>Returns a custom field id by its key, if it exists.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_afield_id" title="terminusgps.wialon.items.base.WialonBase.get_afield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_afield_id</span></code></a>(key)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_afield_id" title="terminusgps.wialon.items.base.WialonBase.get_afield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_afield_id</span></code></a>(key)</p></td>
 <td><p>Returns an admin field id by its key, if it exists.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_afield" title="terminusgps.wialon.items.base.WialonBase.add_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_afield</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_afield" title="terminusgps.wialon.items.base.WialonBase.add_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_afield</span></code></a>(key, value)</p></td>
 <td><p>Adds an admin field to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_afield" title="terminusgps.wialon.items.base.WialonBase.update_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_afield</span></code></a>(id, key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_afield" title="terminusgps.wialon.items.base.WialonBase.update_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_afield</span></code></a>(id, key, value)</p></td>
 <td><p>Updates an admin field by id.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cfield" title="terminusgps.wialon.items.base.WialonBase.add_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cfield</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cfield" title="terminusgps.wialon.items.base.WialonBase.add_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cfield</span></code></a>(key, value)</p></td>
 <td><p>Adds a custom field to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_cfield" title="terminusgps.wialon.items.base.WialonBase.update_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cfield</span></code></a>(id, key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_cfield" title="terminusgps.wialon.items.base.WialonBase.update_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cfield</span></code></a>(id, key, value)</p></td>
 <td><p>Updates a custom field by id.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cproperty" title="terminusgps.wialon.items.base.WialonBase.add_cproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cproperty</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cproperty" title="terminusgps.wialon.items.base.WialonBase.add_cproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cproperty</span></code></a>(key, value)</p></td>
 <td><p>Adds a custom property to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_profile_field" title="terminusgps.wialon.items.base.WialonBase.add_profile_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_profile_field</span></code></a>(key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_profile_field" title="terminusgps.wialon.items.base.WialonBase.add_profile_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_profile_field</span></code></a>(key, value)</p></td>
 <td><p>Adds a profile field to the Wialon object.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.delete" title="terminusgps.wialon.items.base.WialonBase.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.delete" title="terminusgps.wialon.items.base.WialonBase.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>()</p></td>
 <td><p>Deletes the Wialon object.</p></td>
 </tr>
 </tbody>
@@ -1100,34 +1125,37 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.create" title="terminusgps.wialon.items.base.WialonBase.create"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Creates a Wialon object and returns its id.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.rename" title="terminusgps.wialon.items.base.WialonBase.rename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rename</span></code></a>(new_name)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.set_measurement_unit" title="terminusgps.wialon.items.base.WialonBase.set_measurement_unit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_measurement_unit</span></code></a>([unit, convert])</p></td>
+<td><p>Sets the Wialon object's measurement unit to <code class="docutils literal notranslate"><span class="pre">unit</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.rename" title="terminusgps.wialon.items.base.WialonBase.rename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rename</span></code></a>(new_name)</p></td>
 <td><p>Renames the Wialon object to the new name.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_cfield_id" title="terminusgps.wialon.items.base.WialonBase.get_cfield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cfield_id</span></code></a>(key)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_cfield_id" title="terminusgps.wialon.items.base.WialonBase.get_cfield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cfield_id</span></code></a>(key)</p></td>
 <td><p>Returns a custom field id by its key, if it exists.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_afield_id" title="terminusgps.wialon.items.base.WialonBase.get_afield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_afield_id</span></code></a>(key)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_afield_id" title="terminusgps.wialon.items.base.WialonBase.get_afield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_afield_id</span></code></a>(key)</p></td>
 <td><p>Returns an admin field id by its key, if it exists.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_afield" title="terminusgps.wialon.items.base.WialonBase.add_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_afield</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_afield" title="terminusgps.wialon.items.base.WialonBase.add_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_afield</span></code></a>(key, value)</p></td>
 <td><p>Adds an admin field to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_afield" title="terminusgps.wialon.items.base.WialonBase.update_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_afield</span></code></a>(id, key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_afield" title="terminusgps.wialon.items.base.WialonBase.update_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_afield</span></code></a>(id, key, value)</p></td>
 <td><p>Updates an admin field by id.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cfield" title="terminusgps.wialon.items.base.WialonBase.add_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cfield</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cfield" title="terminusgps.wialon.items.base.WialonBase.add_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cfield</span></code></a>(key, value)</p></td>
 <td><p>Adds a custom field to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_cfield" title="terminusgps.wialon.items.base.WialonBase.update_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cfield</span></code></a>(id, key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_cfield" title="terminusgps.wialon.items.base.WialonBase.update_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cfield</span></code></a>(id, key, value)</p></td>
 <td><p>Updates a custom field by id.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cproperty" title="terminusgps.wialon.items.base.WialonBase.add_cproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cproperty</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cproperty" title="terminusgps.wialon.items.base.WialonBase.add_cproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cproperty</span></code></a>(key, value)</p></td>
 <td><p>Adds a custom property to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_profile_field" title="terminusgps.wialon.items.base.WialonBase.add_profile_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_profile_field</span></code></a>(key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_profile_field" title="terminusgps.wialon.items.base.WialonBase.add_profile_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_profile_field</span></code></a>(key, value)</p></td>
 <td><p>Adds a profile field to the Wialon object.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.delete" title="terminusgps.wialon.items.base.WialonBase.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.delete" title="terminusgps.wialon.items.base.WialonBase.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>()</p></td>
 <td><p>Deletes the Wialon object.</p></td>
 </tr>
 </tbody>
@@ -1310,34 +1338,37 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.create" title="terminusgps.wialon.items.base.WialonBase.create"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Creates a Wialon object and returns its id.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.rename" title="terminusgps.wialon.items.base.WialonBase.rename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rename</span></code></a>(new_name)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.set_measurement_unit" title="terminusgps.wialon.items.base.WialonBase.set_measurement_unit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_measurement_unit</span></code></a>([unit, convert])</p></td>
+<td><p>Sets the Wialon object's measurement unit to <code class="docutils literal notranslate"><span class="pre">unit</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.rename" title="terminusgps.wialon.items.base.WialonBase.rename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rename</span></code></a>(new_name)</p></td>
 <td><p>Renames the Wialon object to the new name.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_cfield_id" title="terminusgps.wialon.items.base.WialonBase.get_cfield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cfield_id</span></code></a>(key)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_cfield_id" title="terminusgps.wialon.items.base.WialonBase.get_cfield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cfield_id</span></code></a>(key)</p></td>
 <td><p>Returns a custom field id by its key, if it exists.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_afield_id" title="terminusgps.wialon.items.base.WialonBase.get_afield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_afield_id</span></code></a>(key)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_afield_id" title="terminusgps.wialon.items.base.WialonBase.get_afield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_afield_id</span></code></a>(key)</p></td>
 <td><p>Returns an admin field id by its key, if it exists.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_afield" title="terminusgps.wialon.items.base.WialonBase.add_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_afield</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_afield" title="terminusgps.wialon.items.base.WialonBase.add_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_afield</span></code></a>(key, value)</p></td>
 <td><p>Adds an admin field to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_afield" title="terminusgps.wialon.items.base.WialonBase.update_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_afield</span></code></a>(id, key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_afield" title="terminusgps.wialon.items.base.WialonBase.update_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_afield</span></code></a>(id, key, value)</p></td>
 <td><p>Updates an admin field by id.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cfield" title="terminusgps.wialon.items.base.WialonBase.add_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cfield</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cfield" title="terminusgps.wialon.items.base.WialonBase.add_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cfield</span></code></a>(key, value)</p></td>
 <td><p>Adds a custom field to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_cfield" title="terminusgps.wialon.items.base.WialonBase.update_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cfield</span></code></a>(id, key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_cfield" title="terminusgps.wialon.items.base.WialonBase.update_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cfield</span></code></a>(id, key, value)</p></td>
 <td><p>Updates a custom field by id.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cproperty" title="terminusgps.wialon.items.base.WialonBase.add_cproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cproperty</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cproperty" title="terminusgps.wialon.items.base.WialonBase.add_cproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cproperty</span></code></a>(key, value)</p></td>
 <td><p>Adds a custom property to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_profile_field" title="terminusgps.wialon.items.base.WialonBase.add_profile_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_profile_field</span></code></a>(key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_profile_field" title="terminusgps.wialon.items.base.WialonBase.add_profile_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_profile_field</span></code></a>(key, value)</p></td>
 <td><p>Adds a profile field to the Wialon object.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.delete" title="terminusgps.wialon.items.base.WialonBase.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.delete" title="terminusgps.wialon.items.base.WialonBase.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>()</p></td>
 <td><p>Deletes the Wialon object.</p></td>
 </tr>
 </tbody>
@@ -1500,34 +1531,37 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.create" title="terminusgps.wialon.items.base.WialonBase.create"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Creates a Wialon object and returns its id.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.rename" title="terminusgps.wialon.items.base.WialonBase.rename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rename</span></code></a>(new_name)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.set_measurement_unit" title="terminusgps.wialon.items.base.WialonBase.set_measurement_unit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_measurement_unit</span></code></a>([unit, convert])</p></td>
+<td><p>Sets the Wialon object's measurement unit to <code class="docutils literal notranslate"><span class="pre">unit</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.rename" title="terminusgps.wialon.items.base.WialonBase.rename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rename</span></code></a>(new_name)</p></td>
 <td><p>Renames the Wialon object to the new name.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_cfield_id" title="terminusgps.wialon.items.base.WialonBase.get_cfield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cfield_id</span></code></a>(key)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_cfield_id" title="terminusgps.wialon.items.base.WialonBase.get_cfield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cfield_id</span></code></a>(key)</p></td>
 <td><p>Returns a custom field id by its key, if it exists.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_afield_id" title="terminusgps.wialon.items.base.WialonBase.get_afield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_afield_id</span></code></a>(key)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_afield_id" title="terminusgps.wialon.items.base.WialonBase.get_afield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_afield_id</span></code></a>(key)</p></td>
 <td><p>Returns an admin field id by its key, if it exists.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_afield" title="terminusgps.wialon.items.base.WialonBase.add_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_afield</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_afield" title="terminusgps.wialon.items.base.WialonBase.add_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_afield</span></code></a>(key, value)</p></td>
 <td><p>Adds an admin field to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_afield" title="terminusgps.wialon.items.base.WialonBase.update_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_afield</span></code></a>(id, key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_afield" title="terminusgps.wialon.items.base.WialonBase.update_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_afield</span></code></a>(id, key, value)</p></td>
 <td><p>Updates an admin field by id.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cfield" title="terminusgps.wialon.items.base.WialonBase.add_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cfield</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cfield" title="terminusgps.wialon.items.base.WialonBase.add_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cfield</span></code></a>(key, value)</p></td>
 <td><p>Adds a custom field to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_cfield" title="terminusgps.wialon.items.base.WialonBase.update_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cfield</span></code></a>(id, key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_cfield" title="terminusgps.wialon.items.base.WialonBase.update_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cfield</span></code></a>(id, key, value)</p></td>
 <td><p>Updates a custom field by id.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cproperty" title="terminusgps.wialon.items.base.WialonBase.add_cproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cproperty</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cproperty" title="terminusgps.wialon.items.base.WialonBase.add_cproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cproperty</span></code></a>(key, value)</p></td>
 <td><p>Adds a custom property to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_profile_field" title="terminusgps.wialon.items.base.WialonBase.add_profile_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_profile_field</span></code></a>(key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_profile_field" title="terminusgps.wialon.items.base.WialonBase.add_profile_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_profile_field</span></code></a>(key, value)</p></td>
 <td><p>Adds a profile field to the Wialon object.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.delete" title="terminusgps.wialon.items.base.WialonBase.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.delete" title="terminusgps.wialon.items.base.WialonBase.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>()</p></td>
 <td><p>Deletes the Wialon object.</p></td>
 </tr>
 </tbody>
@@ -1900,34 +1934,37 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.create" title="terminusgps.wialon.items.base.WialonBase.create"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Creates a Wialon object and returns its id.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.rename" title="terminusgps.wialon.items.base.WialonBase.rename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rename</span></code></a>(new_name)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.set_measurement_unit" title="terminusgps.wialon.items.base.WialonBase.set_measurement_unit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_measurement_unit</span></code></a>([unit, convert])</p></td>
+<td><p>Sets the Wialon object's measurement unit to <code class="docutils literal notranslate"><span class="pre">unit</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.rename" title="terminusgps.wialon.items.base.WialonBase.rename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rename</span></code></a>(new_name)</p></td>
 <td><p>Renames the Wialon object to the new name.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_cfield_id" title="terminusgps.wialon.items.base.WialonBase.get_cfield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cfield_id</span></code></a>(key)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_cfield_id" title="terminusgps.wialon.items.base.WialonBase.get_cfield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cfield_id</span></code></a>(key)</p></td>
 <td><p>Returns a custom field id by its key, if it exists.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_afield_id" title="terminusgps.wialon.items.base.WialonBase.get_afield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_afield_id</span></code></a>(key)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_afield_id" title="terminusgps.wialon.items.base.WialonBase.get_afield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_afield_id</span></code></a>(key)</p></td>
 <td><p>Returns an admin field id by its key, if it exists.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_afield" title="terminusgps.wialon.items.base.WialonBase.add_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_afield</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_afield" title="terminusgps.wialon.items.base.WialonBase.add_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_afield</span></code></a>(key, value)</p></td>
 <td><p>Adds an admin field to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_afield" title="terminusgps.wialon.items.base.WialonBase.update_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_afield</span></code></a>(id, key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_afield" title="terminusgps.wialon.items.base.WialonBase.update_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_afield</span></code></a>(id, key, value)</p></td>
 <td><p>Updates an admin field by id.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cfield" title="terminusgps.wialon.items.base.WialonBase.add_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cfield</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cfield" title="terminusgps.wialon.items.base.WialonBase.add_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cfield</span></code></a>(key, value)</p></td>
 <td><p>Adds a custom field to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_cfield" title="terminusgps.wialon.items.base.WialonBase.update_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cfield</span></code></a>(id, key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_cfield" title="terminusgps.wialon.items.base.WialonBase.update_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cfield</span></code></a>(id, key, value)</p></td>
 <td><p>Updates a custom field by id.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cproperty" title="terminusgps.wialon.items.base.WialonBase.add_cproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cproperty</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cproperty" title="terminusgps.wialon.items.base.WialonBase.add_cproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cproperty</span></code></a>(key, value)</p></td>
 <td><p>Adds a custom property to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_profile_field" title="terminusgps.wialon.items.base.WialonBase.add_profile_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_profile_field</span></code></a>(key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_profile_field" title="terminusgps.wialon.items.base.WialonBase.add_profile_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_profile_field</span></code></a>(key, value)</p></td>
 <td><p>Adds a profile field to the Wialon object.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.delete" title="terminusgps.wialon.items.base.WialonBase.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.delete" title="terminusgps.wialon.items.base.WialonBase.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>()</p></td>
 <td><p>Deletes the Wialon object.</p></td>
 </tr>
 </tbody>
@@ -2112,10 +2149,13 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.user.WialonUser.set_settings_flags" title="terminusgps.wialon.items.user.WialonUser.set_settings_flags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_settings_flags</span></code></a>(flags, flags_mask)</p></td>
 <td><p>Sets the user's settings flags.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.user.WialonUser.update_password" title="terminusgps.wialon.items.user.WialonUser.update_password"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_password</span></code></a>(old_password, new_password)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.user.WialonUser.reset_password" title="terminusgps.wialon.items.user.WialonUser.reset_password"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset_password</span></code></a>(username, email, url)</p></td>
+<td><p>Sends a password reset email for a user to <code class="docutils literal notranslate"><span class="pre">email</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.user.WialonUser.update_password" title="terminusgps.wialon.items.user.WialonUser.update_password"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_password</span></code></a>(old_password, new_password)</p></td>
 <td><p>Updates the password of the user.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.user.WialonUser.verify_auth" title="terminusgps.wialon.items.user.WialonUser.verify_auth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">verify_auth</span></code></a>(destination[, method])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.user.WialonUser.verify_auth" title="terminusgps.wialon.items.user.WialonUser.verify_auth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">verify_auth</span></code></a>(destination[, method])</p></td>
 <td><p>Sends an authentication code to <code class="docutils literal notranslate"><span class="pre">destination</span></code> via <code class="docutils literal notranslate"><span class="pre">method</span></code>.</p></td>
 </tr>
 </tbody>
@@ -2140,34 +2180,37 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.create" title="terminusgps.wialon.items.base.WialonBase.create"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Creates a Wialon object and returns its id.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.rename" title="terminusgps.wialon.items.base.WialonBase.rename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rename</span></code></a>(new_name)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.set_measurement_unit" title="terminusgps.wialon.items.base.WialonBase.set_measurement_unit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_measurement_unit</span></code></a>([unit, convert])</p></td>
+<td><p>Sets the Wialon object's measurement unit to <code class="docutils literal notranslate"><span class="pre">unit</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.rename" title="terminusgps.wialon.items.base.WialonBase.rename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rename</span></code></a>(new_name)</p></td>
 <td><p>Renames the Wialon object to the new name.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_cfield_id" title="terminusgps.wialon.items.base.WialonBase.get_cfield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cfield_id</span></code></a>(key)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_cfield_id" title="terminusgps.wialon.items.base.WialonBase.get_cfield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cfield_id</span></code></a>(key)</p></td>
 <td><p>Returns a custom field id by its key, if it exists.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_afield_id" title="terminusgps.wialon.items.base.WialonBase.get_afield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_afield_id</span></code></a>(key)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.get_afield_id" title="terminusgps.wialon.items.base.WialonBase.get_afield_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_afield_id</span></code></a>(key)</p></td>
 <td><p>Returns an admin field id by its key, if it exists.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_afield" title="terminusgps.wialon.items.base.WialonBase.add_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_afield</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_afield" title="terminusgps.wialon.items.base.WialonBase.add_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_afield</span></code></a>(key, value)</p></td>
 <td><p>Adds an admin field to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_afield" title="terminusgps.wialon.items.base.WialonBase.update_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_afield</span></code></a>(id, key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_afield" title="terminusgps.wialon.items.base.WialonBase.update_afield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_afield</span></code></a>(id, key, value)</p></td>
 <td><p>Updates an admin field by id.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cfield" title="terminusgps.wialon.items.base.WialonBase.add_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cfield</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cfield" title="terminusgps.wialon.items.base.WialonBase.add_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cfield</span></code></a>(key, value)</p></td>
 <td><p>Adds a custom field to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_cfield" title="terminusgps.wialon.items.base.WialonBase.update_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cfield</span></code></a>(id, key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_cfield" title="terminusgps.wialon.items.base.WialonBase.update_cfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cfield</span></code></a>(id, key, value)</p></td>
 <td><p>Updates a custom field by id.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cproperty" title="terminusgps.wialon.items.base.WialonBase.add_cproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cproperty</span></code></a>(key, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_cproperty" title="terminusgps.wialon.items.base.WialonBase.add_cproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cproperty</span></code></a>(key, value)</p></td>
 <td><p>Adds a custom property to the Wialon object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_profile_field" title="terminusgps.wialon.items.base.WialonBase.add_profile_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_profile_field</span></code></a>(key, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.add_profile_field" title="terminusgps.wialon.items.base.WialonBase.add_profile_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_profile_field</span></code></a>(key, value)</p></td>
 <td><p>Adds a profile field to the Wialon object.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.delete" title="terminusgps.wialon.items.base.WialonBase.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.delete" title="terminusgps.wialon.items.base.WialonBase.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>()</p></td>
 <td><p>Deletes the Wialon object.</p></td>
 </tr>
 </tbody>
@@ -2290,6 +2333,26 @@
 </dl>
 </dd></dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="terminusgps.wialon.items.user.WialonUser.reset_password">
+<span class="sig-name descname"><span class="pre">reset_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/wialon/items/user.html#WialonUser.reset_password"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.wialon.items.user.WialonUser.reset_password" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.wialon.items.user.WialonUser.reset_password'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>Sends a password reset email for a user to <code class="docutils literal notranslate"><span class="pre">email</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A Wialon user name.</p></li>
+<li><p><strong>email</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A Wialon user email.</p></li>
+<li><p><strong>url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A password reset URL for the user.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Nothing.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
 <dt class="sig sig-object py" id="terminusgps.wialon.items.user.WialonUser.set_settings_flags">
 <span class="sig-name descname"><span class="pre">set_settings_flags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/wialon/items/user.html#WialonUser.set_settings_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.wialon.items.user.WialonUser.set_settings_flags" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.wialon.items.user.WialonUser.set_settings_flags'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd><p>Sets the user’s settings flags.</p>
@@ -2408,6 +2471,7 @@
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.base.WialonBase.has_access'" class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.has_access"><code class="docutils literal notranslate"><span class="pre">WialonBase.has_access()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.base.WialonBase.populate'" class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.populate"><code class="docutils literal notranslate"><span class="pre">WialonBase.populate()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.base.WialonBase.rename'" class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.rename"><code class="docutils literal notranslate"><span class="pre">WialonBase.rename()</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.wialon.items.base.WialonBase.set_measurement_unit'" class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.set_measurement_unit"><code class="docutils literal notranslate"><span class="pre">WialonBase.set_measurement_unit()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.base.WialonBase.update_afield'" class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_afield"><code class="docutils literal notranslate"><span class="pre">WialonBase.update_afield()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.base.WialonBase.update_cfield'" class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.update_cfield"><code class="docutils literal notranslate"><span class="pre">WialonBase.update_cfield()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.base.WialonBase.access_lvl'" class="reference internal" href="#terminusgps.wialon.items.base.WialonBase.access_lvl"><code class="docutils literal notranslate"><span class="pre">WialonBase.access_lvl</span></code></a></li>
@@ -2494,6 +2558,7 @@
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.user.WialonUser.create'" class="reference internal" href="#terminusgps.wialon.items.user.WialonUser.create"><code class="docutils literal notranslate"><span class="pre">WialonUser.create()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.user.WialonUser.grant_access'" class="reference internal" href="#terminusgps.wialon.items.user.WialonUser.grant_access"><code class="docutils literal notranslate"><span class="pre">WialonUser.grant_access()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.user.WialonUser.has_access'" class="reference internal" href="#terminusgps.wialon.items.user.WialonUser.has_access"><code class="docutils literal notranslate"><span class="pre">WialonUser.has_access()</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.wialon.items.user.WialonUser.reset_password'" class="reference internal" href="#terminusgps.wialon.items.user.WialonUser.reset_password"><code class="docutils literal notranslate"><span class="pre">WialonUser.reset_password()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.user.WialonUser.set_settings_flags'" class="reference internal" href="#terminusgps.wialon.items.user.WialonUser.set_settings_flags"><code class="docutils literal notranslate"><span class="pre">WialonUser.set_settings_flags()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.user.WialonUser.update_password'" class="reference internal" href="#terminusgps.wialon.items.user.WialonUser.update_password"><code class="docutils literal notranslate"><span class="pre">WialonUser.update_password()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.user.WialonUser.verify_auth'" class="reference internal" href="#terminusgps.wialon.items.user.WialonUser.verify_auth"><code class="docutils literal notranslate"><span class="pre">WialonUser.verify_auth()</span></code></a></li>
@@ -2514,7 +2579,7 @@
 </div>
 </footer>
 </div>
-<script src="../_static/documentation_options.js?v=c8770c65"></script>
+<script src="../_static/documentation_options.js?v=b9a2463c"></script>
 <script src="../_static/doctools.js?v=9bcbadda"></script>
 <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../_static/theme.js?v=073f68d9"></script>
