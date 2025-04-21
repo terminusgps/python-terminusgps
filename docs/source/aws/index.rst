@@ -8,3 +8,4 @@ AWS API
     :caption: Contents:
 
     secrets.rst
+    utils.rst
