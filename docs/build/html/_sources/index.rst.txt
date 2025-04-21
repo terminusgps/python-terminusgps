@@ -10,7 +10,7 @@ python-terminusgps documentation
 Installation
 ============
 
-`python-terminusgps <https://pypi.org/project/python-terminusgps/>`_ is a collection of SDKs written for use by Terminus GPS.
+`python-terminusgps <https://pypi.org/project/python-terminusgps/>`_ is a collection of API libraries written for use by Terminus GPS.
 
 `Terminus GPS <https://terminusgps.com/>`_ is an IoT hardware/software GPS monitoring company.
 
