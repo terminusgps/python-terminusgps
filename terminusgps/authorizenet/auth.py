@@ -2,6 +2,11 @@ from authorizenet.apicontractsv1 import merchantAuthenticationType
 from authorizenet.constants import constants
 from django.conf import settings
 
+from terminusgps.django import settings as default_settings
+
+if not settings.configured:
+    settings.configure(default_settings)
+
 
 def get_merchant_auth() -> merchantAuthenticationType:
     """
