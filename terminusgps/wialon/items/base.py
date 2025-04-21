@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from typing import Type
 
-from terminusgps.wialon import flags
+from terminusgps.wialon import constants, flags
 from terminusgps.wialon.session import WialonSession
 
 
@@ -118,6 +118,26 @@ class WialonBase:
     def create(self, *args, **kwargs) -> int | None:
         """Creates a Wialon object and returns its id."""
         raise NotImplementedError("Subclasses must implement this method.")
+
+    def set_measurement_unit(
+        self,
+        unit: constants.WialonMeasurementUnit = constants.WialonMeasurementUnit.US,
+        convert: bool = False,
+    ) -> None:
+        """
+        Sets the Wialon object's measurement unit to ``unit``.
+
+        :param unit: A Wialon measurement unit.
+        :type unit: :py:obj:`~terminusgps.constants.WialonMeasurementUnit`
+        :param convert: Whether or not to convert the object's measurements before setting the new unit.
+        :type convert: :py:obj:`bool`
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
+        self.session.wialon_api.item_update_measure_units(
+            **{"itemId": str(self.id), "type": unit, "flags": int(convert)}
+        )
 
     def rename(self, new_name: str) -> None:
         """

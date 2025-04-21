@@ -161,6 +161,24 @@ class WialonUser(WialonBase):
             **{"userId": self.id, "flags": flags, "flagsMask": flags_mask}
         )
 
+    def reset_password(self, username: str, email: str, url: str) -> None:
+        """
+        Sends a password reset email for a user to ``email``.
+
+        :param username: A Wialon user name.
+        :type username: :py:obj:`str`
+        :param email: A Wialon user email.
+        :type email: :py:obj:`str`
+        :param url: A password reset URL for the user.
+        :type url: :py:obj:`str`
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
+        self.session.wialon_api.core_reset_password_request(
+            **{"user": username, "url": url, "email": email}
+        )
+
     def update_password(self, old_password: str, new_password: str) -> None:
         """
         Updates the password of the user.

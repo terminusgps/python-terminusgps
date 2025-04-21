@@ -4,6 +4,12 @@ from typing import override
 from . import flags
 
 
+class WialonMeasurementUnit(enum.IntEnum):
+    METRIC = 0
+    US = 1
+    IMPERIAL = 2
+
+
 class WialonItemsType(enum.StrEnum):
     """
     Wialon item types for Wialon API calls.
