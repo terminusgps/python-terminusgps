@@ -26,7 +26,7 @@ dependencies = [
 ]
 
 [project.urls]
-Documentation = "https://app.terminusgps.com/docs/apps/python-terminusgps/index.html"
+Documentation = "https://docs.terminusgps.com"
 Repository = "https://github.com/terminusgps/python-terminusgps"
 
 [build-system]
