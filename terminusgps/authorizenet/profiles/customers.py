@@ -8,6 +8,11 @@ from .base import AuthorizenetProfileBase
 class CustomerProfile(AuthorizenetProfileBase):
     """An Authorizenet customer profile."""
 
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self._email = None
+        self._desc = None
+
     def create(self, email: str, desc: str = "") -> int:
         """
         Creates a customer profile and returns its id.
@@ -25,6 +30,8 @@ class CustomerProfile(AuthorizenetProfileBase):
         response = self._authorizenet_create_customer_profile(email=email, desc=desc)
         if response is None:
             raise ValueError("Failed to retrieve Authorizenet API response.")
+        self._email = email
+        self._desc = desc
         return int(response.customerProfileId)
 
     def update(self, email: str, desc: str = "") -> None:
@@ -41,6 +48,10 @@ class CustomerProfile(AuthorizenetProfileBase):
 
         """
         self._authorizenet_update_customer_profile(email, desc)
+        if email:
+            self._email = email
+        if desc:
+            self._desc = desc
 
     def delete(self) -> None:
         """
@@ -76,6 +87,13 @@ class CustomerProfile(AuthorizenetProfileBase):
             ]
         except (ControllerExecutionError, AttributeError):
             return []
+
+    @property
+    def email(self) -> str | None:
+        if not self._email:
+            response = self._authorizenet_get_customer_profile(issuer_info=False)
+            self._email = response.profile.email if response else None
+        return self._email
 
     def _authorizenet_get_customer_profile_ids(self) -> dict | None:
         """

@@ -25,12 +25,12 @@ class WialonSessionTestCase(unittest.TestCase):
     def test_session_logout(self) -> None:
         self.session.login(self.token)
         self.session.logout()
-        self.assertEqual(self.session.id, None)
+        self.assertIsNone(self.session.id, None)
 
     def test_session_bad_call(self) -> None:
         self.session.login(self.token)
         response = self.session.wialon_api.core_bad_call({})
-        self.assertEqual(response, None)
+        self.assertIsNone(response)
         self.session.logout()
 
     def test_session_valid_call_count(self) -> None:

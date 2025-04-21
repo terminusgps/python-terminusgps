@@ -4,6 +4,7 @@ import pathlib
 BASE_DIR = pathlib.Path(__file__).resolve().parent
 DEBUG = True
 SECRET_KEY = "xem*6no%8d9%^qzt2f3x3ar-uq4_+7h9myc$t0!+4%bj5us6f)"
+USE_TZ = False
 
 # Secrets
 CONNECT_SECRET = os.getenv("CONNECT_SECRET")

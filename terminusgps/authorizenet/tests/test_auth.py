@@ -2,16 +2,12 @@ from unittest import TestCase
 
 from authorizenet.apicontractsv1 import merchantAuthenticationType
 from authorizenet.constants import constants
-from django.conf import settings
 from django.test import override_settings
 
 from terminusgps.authorizenet import auth
 
 TEST_MERCHANT_AUTH_LOGIN_ID = "test_id"
 TEST_MERCHANT_AUTH_TRANSACTION_KEY = "test_key"
-
-if not settings.configured:
-    settings.configure(DEBUG=True)
 
 
 class MerchantAuthenticationTestCase(TestCase):
@@ -22,7 +18,7 @@ class MerchantAuthenticationTestCase(TestCase):
     )
     def test_merchant_authentication(self) -> None:
         auth_obj: merchantAuthenticationType = auth.get_merchant_auth()
-        self.assertTrue(isinstance(auth_obj, merchantAuthenticationType))
+        self.assertIsInstance(auth_obj, merchantAuthenticationType)
         self.assertTrue(auth_obj.name, TEST_MERCHANT_AUTH_LOGIN_ID)
         self.assertTrue(auth_obj.transactionKey, TEST_MERCHANT_AUTH_TRANSACTION_KEY)
 
