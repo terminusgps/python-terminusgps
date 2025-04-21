@@ -65,13 +65,10 @@ Call phone number and read message aloud
         msg: str = "Hello from Terminus GPS!"
         method: str = "call" # "phone" is an alias for "call", so "phone" would work, too
         with TwilioCaller() as caller:
-            tasks = [
-                caller.create_notification(
-                    to_number=num, message="Hello from Terminus GPS!", method=method
-                )
-                for num in phones
-            ]
-            asyncio.gather(*tasks)
+            task = caller.create_notification(
+                to_number=num, message="Hello from Terminus GPS!", method=method
+            )
+            await task
 
     if __name__ == "__main__":
         main()
