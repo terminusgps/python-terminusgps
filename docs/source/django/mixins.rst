@@ -12,7 +12,7 @@ Usage
 .. code:: python
 
     # views.py
-    from django.core.views.generic import TemplateView
+    from django.views.generic import TemplateView
     from terminusgps.django.mixins import HtmxTemplateResponseMixin
 
     # The mixin **MUST** be inherited before a Django view, otherwise the view's MRO will break.
