@@ -4,6 +4,12 @@ from typing import override
 from . import flags
 
 
+class WialonGeofenceType(enum.IntEnum):
+    LINE = 1
+    POLYGON = 2
+    CIRCLE = 3
+
+
 class WialonMeasurementUnit(enum.IntEnum):
     METRIC = 0
     US = 1

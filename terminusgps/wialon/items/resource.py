@@ -1,6 +1,6 @@
 from urllib.parse import quote_plus
 
-from terminusgps.wialon import flags
+from terminusgps.wialon import constants, flags
 from terminusgps.wialon.items.base import WialonBase
 
 
@@ -84,6 +84,73 @@ class WialonResource(WialonBase):
             **{"id": self.id, "flags": flags.DataFlag.RESOURCE_BILLING_PROPERTIES.value}
         )
         return int(response.get("item", {}).get("bact")) == self.id
+
+    def create_geofence(
+        self,
+        name: str,
+        x: float,
+        y: float,
+        _type: constants.WialonGeofenceType = constants.WialonGeofenceType.CIRCLE,
+        desc: str = "",
+        flags: int = 0x10,
+        color: int = int("6d0204", 16),
+        text_color: int = int("21130d", 16),
+        text_size: int = 12,
+        width: int = 100,
+        min_zoom: int = 4,
+        max_zoom: int = 19,
+    ) -> None:
+        """
+        Creates a geofence in Wialon for the resource.
+
+        :param name: Name of the geofence.
+        :type name: :py:obj:`str`
+        :param x: X-coordinate for the geofence.
+        :type x: :py:obj:`float`
+        :param y: Y-coordinate for the geofence.
+        :type y: :py:obj:`float`
+        :param _type: *Optional.* Type of Wialon geofence.
+        :type _type: :py:obj:`int`
+        :param desc: *Optional.* Description of the geofence.
+        :type desc: :py:obj:`str`
+        :param flags: *Optional.* Flags to use on the creation API call.
+        :type flags: :py:obj:`int`
+        :param color: *Optional.* Color of the geofence.
+        :type color: :py:obj:`int`
+        :param text_color: *Optional.* Text color of the geofence.
+        :type text_color: :py:obj:`int`
+        :param text_size: *Optional.* Text size of the geofence.
+        :type text_size: :py:obj:`int`
+        :param width: *Optional.* Width of the geofence.
+        :type width: :py:obj:`int`
+        :param min_zoom: *Optional.* Minimum zoom level the geofence will be visible at.
+        :type min_zoom: :py:obj:`int`
+        :param max_zoom: *Optional* Maximum zoom level the geofence will be visible at.
+        :type max_zoom: :py:obj:`int`
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
+        self.session.wialon_api.resource_update_zone(
+            **{
+                "itemId": self.id,
+                "id": 0,
+                "callMode": "create",
+                "n": name,
+                "d": desc,
+                "t": _type,
+                "w": width,
+                "f": flags,
+                "c": color,
+                "tc": text_color,
+                "ts": text_size,
+                "min": min_zoom,
+                "max": max_zoom,
+                "path": "",
+                "libId": 0,
+                "p": [{"x": x, "y": y, "r": width}],
+            }
+        )
 
     def is_migrated(self, unit: WialonBase) -> bool:
         """

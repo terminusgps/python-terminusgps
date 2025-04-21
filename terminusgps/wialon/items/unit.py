@@ -38,10 +38,10 @@ class WialonUnit(WialonBase):
 
         response = self.session.wialon_api.core_create_unit(
             **{
-                "creatorId": creator_id,
-                "name": name,
-                "hwTypeId": hw_type_id,
-                "dataFlags": flags.DataFlag.UNIT_BASE,
+                "creatorId": str(creator_id),
+                "name": str(name),
+                "hwTypeId": str(hw_type_id),
+                "dataFlags": str(flags.DataFlag.UNIT_BASE),
             }
         )
         return (
