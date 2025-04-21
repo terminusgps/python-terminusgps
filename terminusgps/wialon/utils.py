@@ -7,6 +7,36 @@ from .items import WialonResource, WialonUnit
 from .session import WialonSession
 
 
+def get_user_by_name(name: str, session: WialonSession) -> WialonUnit | None:
+    """
+    Returns a Wialon user by name, if it exists.
+
+    :param name: A Wialon user name.
+    :type name: :py:obj:`str`
+    :param session: A valid Wialon API session.
+    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :returns: A Wialon unit, if any.
+    :rtype: :py:obj:`~terminusgps.wialon.items.unit.WialonUnit` | :py:obj:`None`
+
+    """
+    results: dict = session.wialon_api.core_search_items(
+        **{
+            "spec": {
+                "itemsType": constants.WialonItemsType.USER,
+                "propName": constants.WialonItemProperty.NAME,
+                "propValueMask": name,
+                "sortType": constants.WialonItemProperty.NAME,
+            },
+            "force": 0,
+            "flags": flags.DataFlag.USER_BASE,
+            "from": 0,
+            "to": 0,
+        }
+    )
+    if results and results.get("items", [{}]):
+        return WialonUnit(id=results.get("items", [{}])[0].get("id"), session=session)
+
+
 def get_carrier_names(session: WialonSession) -> list[str]:
     """
     Returns a list of all telecommunication carrier company names present in Wialon.
