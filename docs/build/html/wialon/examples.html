@@ -329,6 +329,44 @@
 </div>
 </section>
 </section>
+<section id="update-a-unit-s-to-number-custom-field">
+<h2>Update a unit’s <code class="docutils literal notranslate"><span class="pre">to_number</span></code> custom field<a class="headerlink" href="#update-a-unit-s-to-number-custom-field" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#update-a-unit-s-to-number-custom-field'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<section id="import-wialonsession-and-wialonunit">
+<h3>1. Import <a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a> and <a class="reference internal" href="items.html#terminusgps.wialon.items.unit.WialonUnit" title="terminusgps.wialon.items.unit.WialonUnit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonUnit</span></code></a>.<a class="headerlink" href="#import-wialonsession-and-wialonunit" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#import-wialonsession-and-wialonunit'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.session</span><span class="w"> </span><span class="kn">import</span> <span class="n">WialonSession</span>
+</span><span id="line-2"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.items</span><span class="w"> </span><span class="kn">import</span> <span class="n">WialonUnit</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="retrieve-the-unit">
+<h3>2. Retrieve the unit.<a class="headerlink" href="#retrieve-the-unit" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#retrieve-the-unit'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">with</span> <span class="n">WialonSession</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="s2">"my_secure_wialon_token"</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+</span><span id="line-2">    <span class="n">unit</span> <span class="o">=</span> <span class="n">WialonUnit</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">"12345678"</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="call-assign-to-number">
+<h3>3. Call <a class="reference internal" href="items.html#terminusgps.wialon.items.unit.WialonUnit.assign_to_number" title="terminusgps.wialon.items.unit.WialonUnit.assign_to_number"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assign_to_number()</span></code></a>.<a class="headerlink" href="#call-assign-to-number" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#call-assign-to-number'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">with</span> <span class="n">WialonSession</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="s2">"my_secure_wialon_token"</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+</span><span id="line-2">    <span class="o">...</span>
+</span><span id="line-3">    <span class="n">unit</span><span class="o">.</span><span class="n">assign_to_number</span><span class="p">(</span><span class="s2">"+15555555555"</span><span class="p">)</span>
+</span><span id="line-4">    <span class="n">unit</span><span class="o">.</span><span class="n">cfields</span><span class="p">[</span><span class="s2">"to_number"</span><span class="p">]</span> <span class="c1"># "+15555555555"</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="id3">
+<h3>Full code example<a class="headerlink" href="#id3" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#id3'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.session</span><span class="w"> </span><span class="kn">import</span> <span class="n">WialonSession</span>
+</span><span id="line-2"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.items</span><span class="w"> </span><span class="kn">import</span> <span class="n">WialonUnit</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="k">with</span> <span class="n">WialonSession</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="s2">"my_secure_wialon_token"</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+</span><span id="line-5">    <span class="n">unit</span> <span class="o">=</span> <span class="n">WialonUnit</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">"12345678"</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span>
+</span><span id="line-6">    <span class="n">unit</span><span class="o">.</span><span class="n">assign_to_number</span><span class="p">(</span><span class="s2">"+15555555555"</span><span class="p">)</span>
+</span><span id="line-7">    <span class="n">unit</span><span class="o">.</span><span class="n">cfields</span><span class="p">[</span><span class="s2">"to_number"</span><span class="p">]</span> <span class="c1"># "+15555555555"</span>
+</span></code></pre></div>
+</div>
+</section>
+</section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
@@ -356,6 +394,13 @@
 <li><a :data-current="activeSection === '#instantiate-a-wialonresource-object'" class="reference internal" href="#instantiate-a-wialonresource-object">2. Instantiate a <code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonResource</span></code> object.</a></li>
 <li><a :data-current="activeSection === '#call-create-driver'" class="reference internal" href="#call-create-driver">3. Call <code class="xref py py-meth docutils literal notranslate"><span class="pre">create_driver()</span></code>.</a></li>
 <li><a :data-current="activeSection === '#id2'" class="reference internal" href="#id2">Full code example</a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#update-a-unit-s-to-number-custom-field'" class="reference internal" href="#update-a-unit-s-to-number-custom-field">Update a unit’s <code class="docutils literal notranslate"><span class="pre">to_number</span></code> custom field</a><ul>
+<li><a :data-current="activeSection === '#import-wialonsession-and-wialonunit'" class="reference internal" href="#import-wialonsession-and-wialonunit">1. Import <code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonUnit</span></code>.</a></li>
+<li><a :data-current="activeSection === '#retrieve-the-unit'" class="reference internal" href="#retrieve-the-unit">2. Retrieve the unit.</a></li>
+<li><a :data-current="activeSection === '#call-assign-to-number'" class="reference internal" href="#call-assign-to-number">3. Call <code class="xref py py-meth docutils literal notranslate"><span class="pre">assign_to_number()</span></code>.</a></li>
+<li><a :data-current="activeSection === '#id3'" class="reference internal" href="#id3">Full code example</a></li>
 </ul>
 </li>
 </ul>

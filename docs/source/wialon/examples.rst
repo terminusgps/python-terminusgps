@@ -242,3 +242,50 @@ Full code example
             mobile_auth_code="1234",
             custom_fields={"my_field_key": "my_field_value"}
         )
+
+==========================================
+Update a unit's ``to_number`` custom field
+==========================================
+
+----------------------------------------------------------------------------------------------------------------------
+1. Import :py:obj:`~terminusgps.wialon.session.WialonSession` and :py:obj:`~terminusgps.wialon.items.unit.WialonUnit`.
+----------------------------------------------------------------------------------------------------------------------
+
+.. code:: python
+
+    from terminusgps.wialon.session import WialonSession
+    from terminusgps.wialon.items import WialonUnit
+
+---------------------
+2. Retrieve the unit.
+---------------------
+
+.. code:: python
+
+    with WialonSession(token="my_secure_wialon_token") as session:
+        unit = WialonUnit(id="12345678", session=session)
+
+------------------------------------------------------------------------------
+3. Call :py:meth:`~terminusgps.wialon.items.unit.WialonUnit.assign_to_number`.
+------------------------------------------------------------------------------
+
+.. code:: python
+
+    with WialonSession(token="my_secure_wialon_token") as session:
+        ...
+        unit.assign_to_number("+15555555555")
+        unit.cfields["to_number"] # "+15555555555"
+
+-----------------
+Full code example
+-----------------
+
+.. code:: python
+
+    from terminusgps.wialon.session import WialonSession
+    from terminusgps.wialon.items import WialonUnit
+
+    with WialonSession(token="my_secure_wialon_token") as session:
+        unit = WialonUnit(id="12345678", session=session)
+        unit.assign_to_number("+15555555555")
+        unit.cfields["to_number"] # "+15555555555"

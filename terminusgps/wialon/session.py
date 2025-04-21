@@ -105,13 +105,26 @@ class WialonSession:
         return f"{self.__class__}(sid={self.id})"
 
     def __enter__(self) -> "WialonSession":
-        """Logs into the Wialon API using a token set in :py:meth:`__init__`."""
+        """
+        Logs into the Wialon API using :py:meth:`login`.
+
+        :raises AssertionError: If the Wialon API token was not set.
+        :returns: A valid Wialon API session.
+        :rtype: :py:obj:`~terminusgps.wialon.session.WialonSession`
+
+        """
         assert self.token, "Wialon API token was not set"
         self.login(self.token)
         return self
 
     def __exit__(self, exc_type, exc_value, exc_traceback) -> None:
-        """Logs out of the session by calling :py:meth:`logout`."""
+        """
+        Logs out of the session by calling :py:meth:`logout`.
+
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
         self.logout()
 
     @property
