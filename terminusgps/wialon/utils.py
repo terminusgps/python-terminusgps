@@ -2,10 +2,9 @@ import secrets
 import string
 import typing
 
-from terminusgps.wialon import constants, flags
-from terminusgps.wialon.items import WialonUnit
-from terminusgps.wialon.items.resource import WialonResource
-from terminusgps.wialon.session import WialonSession
+from . import constants, flags
+from .items import WialonResource, WialonUnit
+from .session import WialonSession
 
 
 def get_carrier_names(session: WialonSession) -> list[str]:

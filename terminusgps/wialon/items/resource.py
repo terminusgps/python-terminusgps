@@ -30,7 +30,7 @@ class WialonResource(WialonBase):
             **{
                 "creatorId": creator_id,
                 "name": name,
-                "dataFlags": flags.DataFlag.UNIT_BASE.value,
+                "dataFlags": flags.DataFlag.UNIT_BASE,
                 "skipCreatorCheck": int(skip_creator_check),
             }
         )

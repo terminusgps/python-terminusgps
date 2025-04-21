@@ -9,6 +9,20 @@ class WialonBase:
     def __init__(
         self, id: str | int | None, session: WialonSession, *args, **kwargs
     ) -> None:
+        """
+        Sets the Wialon session and id for the Wialon object.
+
+        If no id was provided, :py:meth:`create` is executed to get one.
+
+        :param id: An optional Wialon object id.
+        :type id: :py:obj:`str` | :py:obj:`int` | :py:obj:`None`
+        :param session: A valid Wialon API session.
+        :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+        :raises ValueError: If ``id`` was a string that contained non-digit values.
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
         if isinstance(id, str) and not id.isdigit():
             raise ValueError(f"'id' must be a digit. Got '{id}'.")
 
@@ -19,13 +33,23 @@ class WialonBase:
         self._access_lvl = None
 
     def __str__(self) -> str:
+        """Returns the Wialon object id as a string."""
         return str(self.id)
 
     def __repr__(self) -> str:
+        """Returns the Wialon object type and parameters used to initialize it."""
         return f"{type(self).__name__}(id={self.id}, session={self.session.id})"
 
     def populate(self) -> None:
-        """Retrieves and saves the latest data for the item from Wialon."""
+        """
+        Retrieves and saves the latest data for the item from Wialon.
+
+        :raises AssertionError: If :py:attr:`id` wasn't set.
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
+        assert self.id, "No Wialon object id set."
         response = self.session.wialon_api.core_search_item(
             **{"id": str(self.id), "flags": flags.DataFlag.UNIT_BASE}
         )
@@ -110,6 +134,50 @@ class WialonBase:
             **{"itemId": self.id, "name": new_name}
         )
         self._name = new_name
+
+    def get_cfield_id(self, key: str) -> int | None:
+        """
+        Returns a custom field id by its key, if it exists.
+
+        :param key: A custom field key.
+        :type key: :py:obj:`str`
+        :returns: A custom field id, if any.
+        :rtype: :py:obj:`int` | :py:obj:`None`
+
+        """
+        cfields = (
+            self.session.wialon_api.core_search_item(
+                **{"id": str(self.id), "flags": flags.DataFlag.UNIT_CUSTOM_FIELDS}
+            )
+            .get("item", {})
+            .get("flds", {})
+            .values()
+        )
+        for field in cfields:
+            if field["n"] == key:
+                return int(field["id"])
+
+    def get_afield_id(self, key: str) -> int | None:
+        """
+        Returns an admin field id by its key, if it exists.
+
+        :param key: An admin field key.
+        :type key: :py:obj:`str`
+        :returns: An admin field id, if any.
+        :rtype: :py:obj:`int` | :py:obj:`None`
+
+        """
+        afields = (
+            self.session.wialon_api.core_search_item(
+                **{"id": str(self.id), "flags": flags.DataFlag.UNIT_ADMIN_FIELDS}
+            )
+            .get("item", {})
+            .get("aflds", {})
+            .values()
+        )
+        for field in afields:
+            if field["n"] == key:
+                return int(field["id"])
 
     def add_afield(self, key: str, value: str) -> None:
         """

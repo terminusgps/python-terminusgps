@@ -27,5 +27,5 @@ def validate_phone_number(value: str) -> None:
         raise ValidationError(
             _("Phone number cannot be greater than %(max)s characters, got %(len)s."),
             code="invalid",
-            params={"max": min_length, "len": len(value)},
+            params={"max": max_length, "len": len(value)},
         )
