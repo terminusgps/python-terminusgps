@@ -7,9 +7,9 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Items | python-terminusgps 31.4.0 documentation</title>
-<meta content="Items | python-terminusgps 31.4.0 documentation" property="og:title"/>
-<meta content="Items | python-terminusgps 31.4.0 documentation" name="twitter:title"/>
+<title>Items | python-terminusgps 31.5.0 documentation</title>
+<meta content="Items | python-terminusgps 31.5.0 documentation" property="og:title"/>
+<meta content="Items | python-terminusgps 31.5.0 documentation" name="twitter:title"/>
 <link href="../_static/pygments.css?v=d691ff6c" rel="stylesheet" type="text/css"/>
 <link href="../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../_static/autoclasstoc.css?v=08871587" rel="stylesheet" type="text/css"/>
@@ -35,7 +35,7 @@
       Skip to content
     </a><header class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
 <div class="hidden mr-4 md:flex">
-<a class="flex items-center mr-6" href="../index.html"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 31.4.0 documentation</span>
+<a class="flex items-center mr-6" href="../index.html"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 31.5.0 documentation</span>
 </a></div><button @click="showSidebar = true" class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden" type="button">
 <svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
 <path d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z"></path>
@@ -65,7 +65,7 @@
 </div>
 </header>
 <div class="flex-1"><div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }" class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky" id="left-sidebar">
-<a class="!justify-start text-sm md:!hidden bg-background" href="../index.html"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 31.4.0 documentation</span>
+<a class="!justify-start text-sm md:!hidden bg-background" href="../index.html"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 31.5.0 documentation</span>
 </a>
 <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
 <div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
@@ -116,7 +116,7 @@
 <div class="w-full min-w-0 mx-auto">
 <nav aria-label="breadcrumbs" class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
 <a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground" href="../index.html">
-<span class="hidden md:inline">python-terminusgps 31.4.0 documentation</span>
+<span class="hidden md:inline">python-terminusgps 31.5.0 documentation</span>
 <svg aria-label="Home" class="md:hidden" fill="currentColor" height="18" stroke="none" viewbox="0 96 960 960" width="18" xmlns="http://www.w3.org/2000/svg">
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
@@ -565,52 +565,55 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.delete" title="terminusgps.wialon.items.resource.WialonResource.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>()</p></td>
 <td><p>Deletes all micro-objects assigned to the resource.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.is_migrated" title="terminusgps.wialon.items.resource.WialonResource.is_migrated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_migrated</span></code></a>(unit)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.create_geofence" title="terminusgps.wialon.items.resource.WialonResource.create_geofence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_geofence</span></code></a>(name, x, y[, _type, desc, ...])</p></td>
+<td><p>Creates a geofence in Wialon for the resource.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.is_migrated" title="terminusgps.wialon.items.resource.WialonResource.is_migrated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_migrated</span></code></a>(unit)</p></td>
 <td><p>Checks if a unit is migrated into the account.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.set_dealer_rights" title="terminusgps.wialon.items.resource.WialonResource.set_dealer_rights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_dealer_rights</span></code></a>([enabled])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.set_dealer_rights" title="terminusgps.wialon.items.resource.WialonResource.set_dealer_rights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_dealer_rights</span></code></a>([enabled])</p></td>
 <td><p>Sets dealer rights on the account.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.migrate_unit" title="terminusgps.wialon.items.resource.WialonResource.migrate_unit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">migrate_unit</span></code></a>(unit)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.migrate_unit" title="terminusgps.wialon.items.resource.WialonResource.migrate_unit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">migrate_unit</span></code></a>(unit)</p></td>
 <td><p>Migrates a <code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonUnit</span></code> into the account.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.update_plan" title="terminusgps.wialon.items.resource.WialonResource.update_plan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_plan</span></code></a>(new_plan)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.update_plan" title="terminusgps.wialon.items.resource.WialonResource.update_plan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_plan</span></code></a>(new_plan)</p></td>
 <td><p>Updates the account billing plan.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.create_account" title="terminusgps.wialon.items.resource.WialonResource.create_account"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_account</span></code></a>(billing_plan)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.create_account" title="terminusgps.wialon.items.resource.WialonResource.create_account"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_account</span></code></a>(billing_plan)</p></td>
 <td><p>Transforms the resource into an account.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.delete_account" title="terminusgps.wialon.items.resource.WialonResource.delete_account"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_account</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.delete_account" title="terminusgps.wialon.items.resource.WialonResource.delete_account"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_account</span></code></a>()</p></td>
 <td><p>Deletes the account if it exists, as well as any micro-objects and macro-objects it contains.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.enable_account" title="terminusgps.wialon.items.resource.WialonResource.enable_account"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_account</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.enable_account" title="terminusgps.wialon.items.resource.WialonResource.enable_account"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_account</span></code></a>()</p></td>
 <td><p>Enables the Wialon account.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.disable_account" title="terminusgps.wialon.items.resource.WialonResource.disable_account"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_account</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.disable_account" title="terminusgps.wialon.items.resource.WialonResource.disable_account"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_account</span></code></a>()</p></td>
 <td><p>Disables the Wialon account.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.set_minimum_days" title="terminusgps.wialon.items.resource.WialonResource.set_minimum_days"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_minimum_days</span></code></a>([days])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.set_minimum_days" title="terminusgps.wialon.items.resource.WialonResource.set_minimum_days"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_minimum_days</span></code></a>([days])</p></td>
 <td><p>Sets the minimum days counter value to <code class="docutils literal notranslate"><span class="pre">days</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.add_days" title="terminusgps.wialon.items.resource.WialonResource.add_days"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_days</span></code></a>([days])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.add_days" title="terminusgps.wialon.items.resource.WialonResource.add_days"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_days</span></code></a>([days])</p></td>
 <td><p>Adds days to the account.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.set_settings_flags" title="terminusgps.wialon.items.resource.WialonResource.set_settings_flags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_settings_flags</span></code></a>([flags, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.set_settings_flags" title="terminusgps.wialon.items.resource.WialonResource.set_settings_flags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_settings_flags</span></code></a>([flags, ...])</p></td>
 <td><p>Sets account settings flags.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.create_driver" title="terminusgps.wialon.items.resource.WialonResource.create_driver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_driver</span></code></a>(name[, code, desc, phone, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.create_driver" title="terminusgps.wialon.items.resource.WialonResource.create_driver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_driver</span></code></a>(name[, code, desc, phone, ...])</p></td>
 <td><p>Creates a driver for the resource.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.create_passenger" title="terminusgps.wialon.items.resource.WialonResource.create_passenger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_passenger</span></code></a>(name, code[, phone, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.create_passenger" title="terminusgps.wialon.items.resource.WialonResource.create_passenger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_passenger</span></code></a>(name, code[, phone, ...])</p></td>
 <td><p>Creates a passenger/tag for the resource.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.update_attachable_drivers" title="terminusgps.wialon.items.resource.WialonResource.update_attachable_drivers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_attachable_drivers</span></code></a>(units)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.update_attachable_drivers" title="terminusgps.wialon.items.resource.WialonResource.update_attachable_drivers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_attachable_drivers</span></code></a>(units)</p></td>
 <td><p>Updates the pool of units for the resource to attach drivers to the new unit list.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.update_attachable_passengers" title="terminusgps.wialon.items.resource.WialonResource.update_attachable_passengers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_attachable_passengers</span></code></a>(units)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.update_attachable_passengers" title="terminusgps.wialon.items.resource.WialonResource.update_attachable_passengers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_attachable_passengers</span></code></a>(units)</p></td>
 <td><p>Updates the pool of units for the resource to attach passengers to the new unit list.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.create_trailer" title="terminusgps.wialon.items.resource.WialonResource.create_trailer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_trailer</span></code></a>(name, code[, desc, phone, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.create_trailer" title="terminusgps.wialon.items.resource.WialonResource.create_trailer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_trailer</span></code></a>(name, code[, desc, phone, ...])</p></td>
 <td><p>Creates a trailer for the resource.</p></td>
 </tr>
 </tbody>
@@ -765,6 +768,35 @@
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="terminusgps.wialon.items.resource.WialonResource.create_geofence">
+<span class="sig-name descname"><span class="pre">create_geofence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">WialonGeofenceType</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">WialonGeofenceType.CIRCLE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">7143940</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2167565</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_zoom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_zoom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">19</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/wialon/items/resource.html#WialonResource.create_geofence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.wialon.items.resource.WialonResource.create_geofence" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.wialon.items.resource.WialonResource.create_geofence'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>Creates a geofence in Wialon for the resource.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Name of the geofence.</p></li>
+<li><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – X-coordinate for the geofence.</p></li>
+<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Y-coordinate for the geofence.</p></li>
+<li><p><strong>_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – <em>Optional.</em> Type of Wialon geofence.</p></li>
+<li><p><strong>desc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – <em>Optional.</em> Description of the geofence.</p></li>
+<li><p><strong>flags</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – <em>Optional.</em> Flags to use on the creation API call.</p></li>
+<li><p><strong>color</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – <em>Optional.</em> Color of the geofence.</p></li>
+<li><p><strong>text_color</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – <em>Optional.</em> Text color of the geofence.</p></li>
+<li><p><strong>text_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – <em>Optional.</em> Text size of the geofence.</p></li>
+<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – <em>Optional.</em> Width of the geofence.</p></li>
+<li><p><strong>min_zoom</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – <em>Optional.</em> Minimum zoom level the geofence will be visible at.</p></li>
+<li><p><strong>max_zoom</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – <em>Optional</em> Maximum zoom level the geofence will be visible at.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Nothing.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2489,6 +2521,7 @@
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.resource.WialonResource.create'" class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.create"><code class="docutils literal notranslate"><span class="pre">WialonResource.create()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.resource.WialonResource.create_account'" class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.create_account"><code class="docutils literal notranslate"><span class="pre">WialonResource.create_account()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.resource.WialonResource.create_driver'" class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.create_driver"><code class="docutils literal notranslate"><span class="pre">WialonResource.create_driver()</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.wialon.items.resource.WialonResource.create_geofence'" class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.create_geofence"><code class="docutils literal notranslate"><span class="pre">WialonResource.create_geofence()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.resource.WialonResource.create_passenger'" class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.create_passenger"><code class="docutils literal notranslate"><span class="pre">WialonResource.create_passenger()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.resource.WialonResource.create_trailer'" class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.create_trailer"><code class="docutils literal notranslate"><span class="pre">WialonResource.create_trailer()</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.wialon.items.resource.WialonResource.delete'" class="reference internal" href="#terminusgps.wialon.items.resource.WialonResource.delete"><code class="docutils literal notranslate"><span class="pre">WialonResource.delete()</span></code></a></li>
@@ -2580,7 +2613,7 @@
 </div>
 </footer>
 </div>
-<script src="../_static/documentation_options.js?v=37f9b7f2"></script>
+<script src="../_static/documentation_options.js?v=462cfdab"></script>
 <script src="../_static/doctools.js?v=9bcbadda"></script>
 <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../_static/theme.js?v=073f68d9"></script>
