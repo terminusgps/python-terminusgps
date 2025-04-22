@@ -18,7 +18,7 @@ django.setup()
 project = "python-terminusgps"
 copyright = "2025, Terminus GPS, LLC"
 author = "Terminus GPS, LLC"
-release = "31.7.1"
+release = "31.7.2"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
