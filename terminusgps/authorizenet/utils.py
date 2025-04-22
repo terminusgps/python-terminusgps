@@ -76,11 +76,15 @@ def get_customer_profile_id(email: str) -> int | None:
     response = controller.getresponse()
 
     if response is not None and response.messages.resultCode != "Ok":
+        if response.messages.message[0]["code"].text == "E00040":
+            return  # Record not found
+
         raise ControllerExecutionError(
             message=response.messages.message[0]["text"].text,
             code=response.messages.message[0]["code"].text,
         )
-    return int(response.profile.customerProfileId)
+    elif response is not None:
+        return int(response.profile.customerProfileId)
 
 
 def generate_customer_address(form: forms.Form) -> apicontractsv1.customerAddressType:
