@@ -5,9 +5,9 @@ Usage Examples
 Retrieve an Authorizenet customer profile
 =========================================
 
-----------------------------------------------------------------------
-1. Import :py:obj:`~terminusgps.authorizenet.profiles.CustomerProfile`
-----------------------------------------------------------------------
+--------------------------------------------------------------------------------
+1. Import :py:obj:`~terminusgps.authorizenet.profiles.customers.CustomerProfile`
+--------------------------------------------------------------------------------
 
 .. code:: python
 
