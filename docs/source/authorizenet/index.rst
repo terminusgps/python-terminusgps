@@ -8,5 +8,6 @@ Authorizenet API
     :caption: Contents:
 
     auth.rst
+    examples.rst
     profiles.rst
     utils.rst
