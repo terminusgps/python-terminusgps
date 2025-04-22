@@ -3,17 +3,8 @@ from typing import Any
 
 import twilio.rest
 from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
+from loguru import logger
 from twilio.http.async_http_client import AsyncTwilioHttpClient
-
-if not hasattr(settings, "TWILIO_SID"):
-    raise ImproperlyConfigured("'TWILIO_SID' setting is required.")
-if not hasattr(settings, "TWILIO_TOKEN"):
-    raise ImproperlyConfigured("'TWILIO_TOKEN' setting is required.")
-if not hasattr(settings, "TWILIO_FROM_NUMBER"):
-    raise ImproperlyConfigured("'TWILIO_FROM_NUMBER' setting is required.")
-if not hasattr(settings, "TWILIO_MESSAGING_SID"):
-    raise ImproperlyConfigured("'TWILIO_MESSAGING_SID' setting is required.")
 
 
 class TwilioCaller:
@@ -23,6 +14,8 @@ class TwilioCaller:
         client_token: str | None = None,
         from_number: str | None = None,
         messaging_sid: str | None = None,
+        log_level: int = 10,
+        log_days: int = 10,
     ) -> None:
         """
         Sets Twilio client session variables.
@@ -41,6 +34,12 @@ class TwilioCaller:
         :rtype: :py:obj:`None`
 
         """
+        logger.add(
+            f"logs/{self.__class__.__name__}.log",
+            level=log_level,
+            retention=f"{log_days} days",
+            diagnose=settings.DEBUG,
+        )
         self._client_sid = client_sid or settings.TWILIO_SID
         self._client_token = client_token or settings.TWILIO_TOKEN
         self._from_number = from_number or settings.TWILIO_FROM_NUMBER
@@ -100,6 +99,8 @@ class TwilioCaller:
         :rtype: :py:obj:`None`
 
         """
+        logger.info("Creating a call notification...")
+        logger.debug(f"Reading '{message}' to '{to_number}'...")
         await self.client.calls.create_async(
             to=to_number,
             from_=self.from_number,
@@ -118,6 +119,8 @@ class TwilioCaller:
         :rtype: :py:obj:`None`
 
         """
+        logger.info("Creating an sms notification...")
+        logger.debug(f"Texting '{message}' to '{to_number}'...")
         await self.client.messages.create_async(
             to=to_number,
             from_=self.from_number,
