@@ -8,10 +8,24 @@ from .base import AuthorizenetProfileBase
 class CustomerProfile(AuthorizenetProfileBase):
     """An Authorizenet customer profile."""
 
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
+    def __init__(
+        self, merchant_id: int | str, id: int | str | None = None, *args, **kwargs
+    ) -> None:
         self._email = None
         self._desc = None
+        try:
+            response = self._authorizenet_get_customer_profile(
+                merchant_id=int(merchant_id), issuer_info=False
+            )
+            id = (
+                int(response.profile.customerProfileId)
+                if response is not None
+                else None
+            )
+        except ControllerExecutionError:
+            id = None
+        finally:
+            super().__init__(merchant_id, id, *args, **kwargs)
 
     def create(self, email: str, desc: str = "") -> int:
         """
@@ -73,7 +87,7 @@ class CustomerProfile(AuthorizenetProfileBase):
                 int(profile.customerPaymentProfileId)
                 for profile in response.profile.paymentProfiles
             ]
-        except (ControllerExecutionError, AttributeError):
+        except ControllerExecutionError:
             return []
 
     @property
@@ -85,7 +99,7 @@ class CustomerProfile(AuthorizenetProfileBase):
                 int(profile.customerAddressId)
                 for profile in response.profile.shipToList
             ]
-        except (ControllerExecutionError, AttributeError):
+        except ControllerExecutionError:
             return []
 
     @property
@@ -94,6 +108,12 @@ class CustomerProfile(AuthorizenetProfileBase):
             response = self._authorizenet_get_customer_profile(issuer_info=False)
             self._email = response.profile.email if response else None
         return self._email
+
+    @property
+    def exists(self) -> bool:
+        return bool(
+            self._authorizenet_get_customer_profile(merchant_id=self.merchantCustomerId)
+        )
 
     def _authorizenet_get_customer_profile_ids(self) -> dict | None:
         """
@@ -141,28 +161,34 @@ class CustomerProfile(AuthorizenetProfileBase):
         return self.execute_controller(controller)
 
     def _authorizenet_get_customer_profile(
-        self, issuer_info: bool = True
+        self, merchant_id: int | None = None, issuer_info: bool = True
     ) -> dict | None:
         """
         Executes a :py:obj:`~authorizenet.apicontractsv1.getCustomerProfileRequest` using the Authorizenet API.
 
         `getCustomerProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-profile>`_
 
+        :param merchant_id: An optional customer merchant id.
+        :type merchant_id: :py:obj:`int` | :py:obj:`None`
         :param issuer_info: Whether or not to include issuer info in the response.
         :type issuer_info: :py:obj:`bool`
-        :raises AssertionError: If :py:attr:`id` was not set.
         :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
         :returns: An Authorizenet API response, if any.
         :rtype: :py:obj:`dict` | :py:obj:`None`
 
         """
-        assert self.id, "'id' was not set."
-
-        request = apicontractsv1.getCustomerProfileRequest(
-            merchantAuthentication=self.merchantAuthentication,
-            customerProfileId=self.id,
-            includeIssuerInfo=str(issuer_info).lower(),
-        )
+        if merchant_id is not None:
+            request = apicontractsv1.getCustomerProfileRequest(
+                merchantAuthentication=self.merchantAuthentication,
+                merchantCustomerId=str(merchant_id),
+                includeIssuerInfo=str(issuer_info).lower(),
+            )
+        else:
+            request = apicontractsv1.getCustomerProfileRequest(
+                merchantAuthentication=self.merchantAuthentication,
+                customerProfileId=self.id,
+                includeIssuerInfo=str(issuer_info).lower(),
+            )
         controller = apicontrollers.getCustomerProfileController(request)
         return self.execute_controller(controller)
 
