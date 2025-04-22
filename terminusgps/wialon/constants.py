@@ -5,15 +5,35 @@ from . import flags
 
 
 class WialonGeofenceType(enum.IntEnum):
+    """
+    A type of Wialon geofence.
+
+    `Wialon geofence type reference <https://sdk.wialon.com/wiki/en/kit/remoteapi/apiref/resource/update_zone>`_
+
+    """
+
     LINE = 1
+    """Line geofence."""
     POLYGON = 2
+    """Polygon geofence."""
     CIRCLE = 3
+    """Circular geofence."""
 
 
 class WialonMeasurementUnit(enum.IntEnum):
+    """
+    A Wialon measurement unit.
+
+    `Wialon measurement unit reference <https://sdk.wialon.com/wiki/en/local/remoteapi1904/apiref/item/update_measure_units>`_
+
+    """
+
     METRIC = 0
+    """Metric system."""
     US = 1
+    """US measurement system."""
     IMPERIAL = 2
+    """Imperial measurement system."""
 
 
 class WialonItemsType(enum.StrEnum):
@@ -25,19 +45,19 @@ class WialonItemsType(enum.StrEnum):
     """
 
     HARDWARE = "avl_hw"
-    """Hardware type."""
+    """A hardware type."""
     RESOURCE = "avl_resource"
-    """Resource."""
+    """A resource."""
     RETRANSLATOR = "avl_retranslator"
-    """Retranslator."""
+    """A retranslator."""
     ROUTE = "avl_route"
-    """Route."""
+    """A route."""
     UNIT = "avl_unit"
-    """Unit."""
+    """A unit."""
     UNIT_GROUP = "avl_unit_group"
-    """Unit group."""
+    """A unit group."""
     USER = "user"
-    """User."""
+    """A user."""
 
 
 class WialonItemProperty(enum.StrEnum):

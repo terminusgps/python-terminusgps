@@ -6,8 +6,7 @@ import typing
 import wialon.api
 from django.conf import settings
 from django.utils import timezone
-
-from terminusgps.wialon.logger import WialonLogger
+from loguru import logger
 
 
 @dataclasses.dataclass
@@ -24,9 +23,7 @@ class Wialon(wialon.api.Wialon):
     def __init__(self, log_level: int = logging.INFO, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.call_history: list[WialonAPICall] = []
-        self.logger = WialonLogger(
-            logging.getLogger(self.__class__.__name__), level=log_level
-        ).get_logger()
+        logger.add(self.__class__.__name__, level=log_level)
 
     @property
     def total_calls(self) -> int:
@@ -37,7 +34,7 @@ class Wialon(wialon.api.Wialon):
         return self.call("token_login", *args, **kwargs)
 
     def call(self, action_name: str, *argc, **kwargs) -> typing.Any:
-        self.logger.debug(f"Executing '{action_name}'...")
+        logger.debug(f"Executing '{action_name}'...")
         call_record = WialonAPICall(
             action=action_name, timestamp=timezone.now(), args=argc, kwargs=kwargs
         )
@@ -45,11 +42,11 @@ class Wialon(wialon.api.Wialon):
         try:
             result = super().call(action_name, *argc, **kwargs)
             call_record.result = result
-            self.logger.debug(f"Executed '{action_name}' successfully.")
+            logger.debug(f"Executed '{action_name}' successfully.")
             return result
         except wialon.api.WialonError as e:
             call_record.error = e
-            self.logger.warning(f"Failed to execute '{action_name}': '{e}'")
+            logger.warning(f"Failed to execute '{action_name}': '{e}'")
             return
         finally:
             self.call_history.append(call_record)
@@ -78,25 +75,21 @@ class WialonSession:
         :type host: :py:obj:`str`
         :param port: Wialon API host port. Default is ``443``.
         :type port: :py:obj:`int`
-        :param log_level: Logging severity level. Default is ``20`` (logging.INFO).
+        :param log_level: Level of emitted logs. Default is :py:obj:`~logging.INFO`.
         :type log_level: :py:obj:`int`
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
 
+        logger.add(self.__class__.__name__, level=log_level)
         self._token = token or settings.WIALON_TOKEN
         self._username = None
         self._gis_sid = None
         self._hw_gp_ip = None
         self._wsdk_version = None
         self._uid = None
-        self.wialon_api = Wialon(
-            scheme=scheme, host=host, port=port, sid=sid, log_level=log_level
-        )
-        self.logger = WialonLogger(
-            logging.getLogger(self.__class__.__name__), level=log_level
-        ).get_logger()
+        self.wialon_api = Wialon(scheme=scheme, host=host, port=port, sid=sid)
 
     def __str__(self) -> str:
         return str(self.id)
@@ -126,6 +119,17 @@ class WialonSession:
 
         """
         self.logout()
+
+    @property
+    def active(self) -> bool:
+        """
+        Whether or not the session is logged in.
+
+        :type: :py:obj:`bool`
+        :value: :py:obj:`False`
+
+        """
+        return bool(self.id)
 
     @property
     def gis_geocode(self) -> str | None:
@@ -288,13 +292,13 @@ class WialonSession:
 
         """
         try:
-            self.logger.debug("Logging into Wialon API session...")
+            logger.debug("Logging into Wialon API session...")
             response = self.wialon_api.token_login(**{"token": token, "fl": flags})
             self._set_login_response(response)
-            self.logger.debug(f"Logged into Wialon API session '{response.get('eid')}'")
+            logger.debug(f"Logged into Wialon API session '{response.get('eid')}'")
             return response.get("eid")
         except (wialon.api.WialonError, AssertionError) as e:
-            self.logger.critical(f"Failed to login to Wialon API: '{e}'")
+            logger.critical(f"Failed to login to Wialon API: '{e}'")
             raise
 
     def logout(self) -> None:
@@ -305,16 +309,14 @@ class WialonSession:
         :rtype: :py:obj:`None`
 
         """
-        self.logger.debug("Logging out of Wialon API session...")
+        logger.debug("Logging out of Wialon API session...")
         response: dict = self.wialon_api.core_logout({})
         self.wialon_api.sid = None
 
         if response.get("error") != 0:
-            self.logger.warning(
-                f"Failed to logout of session: '{response.get('message')}'"
-            )
+            logger.warning(f"Failed to logout of session: '{response.get('message')}'")
         else:
-            self.logger.debug(
+            logger.debug(
                 f"Logged out after {self.wialon_api.total_calls} Wialon API calls."
             )
 
