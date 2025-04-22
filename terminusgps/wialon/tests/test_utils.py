@@ -1,7 +1,7 @@
 import string
 import unittest
 
-from .. import utils
+from terminusgps.wialon import utils
 
 
 class WialonUtilsTestCase(unittest.TestCase):
@@ -34,6 +34,7 @@ class WialonUtilsTestCase(unittest.TestCase):
             self.fail("Generated password did not contain an uppercase letter.")
         if not any([c for c in password if c in s1]):
             self.fail("Generated password did not contain a lowercase letter.")
+        # TODO: Make this check for 3 digits
         if not any([c for c in password if c in s2]):
             self.fail("Generated password did not contain a digit.")
         if not any([c for c in password if c in s3]):

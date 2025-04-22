@@ -1,6 +1,5 @@
 import dataclasses
 import datetime
-import logging
 import typing
 
 import wialon.api
@@ -20,10 +19,17 @@ class WialonAPICall:
 
 
 class Wialon(wialon.api.Wialon):
-    def __init__(self, log_level: int = logging.INFO, *args, **kwargs) -> None:
+    def __init__(
+        self, log_level: int = 10, log_days: int = 10, *args, **kwargs
+    ) -> None:
         super().__init__(*args, **kwargs)
         self.call_history: list[WialonAPICall] = []
-        logger.add(self.__class__.__name__, level=log_level)
+        logger.add(
+            f"logs/{self.__class__.__name__}.log",
+            level=log_level,
+            retention=f"{log_days} days",
+            diagnose=settings.DEBUG,
+        )
 
     @property
     def total_calls(self) -> int:
@@ -60,7 +66,8 @@ class WialonSession:
         scheme: str = "https",
         host: str = "hst-api.wialon.com",
         port: int = 443,
-        log_level: int = logging.INFO,
+        log_level: int = 10,
+        log_days: int = 10,
     ) -> None:
         """
         Starts or continues a Wialon API session.
@@ -75,21 +82,33 @@ class WialonSession:
         :type host: :py:obj:`str`
         :param port: Wialon API host port. Default is ``443``.
         :type port: :py:obj:`int`
-        :param log_level: Level of emitted logs. Default is :py:obj:`~logging.INFO`.
+        :param log_level: Level of emitted logs. Default is ``10``.
         :type log_level: :py:obj:`int`
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
 
-        logger.add(self.__class__.__name__, level=log_level)
+        logger.add(
+            f"logs/{self.__class__.__name__}.log",
+            level=log_level,
+            retention=f"{log_days} days",
+            diagnose=settings.DEBUG,
+        )
         self._token = token or settings.WIALON_TOKEN
         self._username = None
         self._gis_sid = None
         self._hw_gp_ip = None
         self._wsdk_version = None
         self._uid = None
-        self.wialon_api = Wialon(scheme=scheme, host=host, port=port, sid=sid)
+        self.wialon_api = Wialon(
+            scheme=scheme,
+            host=host,
+            port=port,
+            sid=sid,
+            log_level=log_level,
+            log_days=log_days,
+        )
 
     def __str__(self) -> str:
         return str(self.id)
