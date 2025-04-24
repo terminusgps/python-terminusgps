@@ -140,7 +140,7 @@
 <dd class="field-odd"><p><strong>controller</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">APIOperationBase</span></code>) – An Authorizenet API controller.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#terminusgps.authorizenet.errors.ControllerExecutionError" title="terminusgps.authorizenet.errors.ControllerExecutionError"><strong>ControllerExecutionError</strong></a> – If the API call fails.</p>
+<dd class="field-even"><p><strong>ControllerExecutionError</strong> – If the API call fails.</p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>An Authorizenet API response, if any.</p>
@@ -151,24 +151,61 @@
 </dl>
 </dd></dl>
 </dd></dl>
-<dl class="py exception">
-<dt class="sig sig-object py" id="terminusgps.authorizenet.errors.ControllerExecutionError">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">terminusgps.authorizenet.errors.</span></span><span class="sig-name descname"><span class="pre">ControllerExecutionError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/terminusgps/authorizenet/errors.html#ControllerExecutionError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.authorizenet.errors.ControllerExecutionError" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.errors.ControllerExecutionError'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd><p>Raised when an Authorizenet API controller fails to execute.</p>
-</dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="terminusgps.authorizenet.utils.get_customer_profile_ids">
 <span class="sig-prename descclassname"><span class="pre">terminusgps.authorizenet.utils.</span></span><span class="sig-name descname"><span class="pre">get_customer_profile_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/terminusgps/authorizenet/utils.html#get_customer_profile_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.authorizenet.utils.get_customer_profile_ids" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.utils.get_customer_profile_ids'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd><p>Returns a list of all customer profile ids in Authorizenet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#terminusgps.authorizenet.errors.ControllerExecutionError" title="terminusgps.authorizenet.errors.ControllerExecutionError"><strong>ControllerExecutionError</strong></a> – If the API call fails.</p>
+<dd class="field-odd"><p><strong>ControllerExecutionError</strong> – If the API call fails.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of all customer profile ids in Authorizenet.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.utils.generate_customer_address">
+<span class="sig-prename descclassname"><span class="pre">terminusgps.authorizenet.utils.</span></span><span class="sig-name descname"><span class="pre">generate_customer_address</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Form</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">customerAddressType</span></span></span><a class="reference internal" href="../_modules/terminusgps/authorizenet/utils.html#generate_customer_address"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.authorizenet.utils.generate_customer_address" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.utils.generate_customer_address'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>Takes a form and returns a <code class="xref py py-obj docutils literal notranslate"><span class="pre">customerAddressType</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>form</strong> (<a class="reference external" href="http://docs.djangoproject.com/en/stable/ref/forms/api/#django.forms.Form" title="(in Django v5.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Form</span></code></a>) – A Django form.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If <code class="docutils literal notranslate"><span class="pre">address</span></code> wasn’t in the form.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If <code class="docutils literal notranslate"><span class="pre">first_name</span></code> wasn’t in the form.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If <code class="docutils literal notranslate"><span class="pre">last_name</span></code> wasn’t in the form.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A customer address object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">customerAddressType</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.utils.generate_customer_payment">
+<span class="sig-prename descclassname"><span class="pre">terminusgps.authorizenet.utils.</span></span><span class="sig-name descname"><span class="pre">generate_customer_payment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Form</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">paymentType</span></span></span><a class="reference internal" href="../_modules/terminusgps/authorizenet/utils.html#generate_customer_payment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.authorizenet.utils.generate_customer_payment" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.utils.generate_customer_payment'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>Takes a form and returns a <code class="xref py py-obj docutils literal notranslate"><span class="pre">paymentType</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>form</strong> (<a class="reference external" href="http://docs.djangoproject.com/en/stable/ref/forms/api/#django.forms.Form" title="(in Django v5.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Form</span></code></a>) – A Django form.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If <code class="docutils literal notranslate"><span class="pre">credit_card</span></code> wasn’t in the form.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A payment object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">paymentType</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -180,8 +217,9 @@
 <li><a :data-current="activeSection === '#terminusgps.authorizenet.utils.ControllerExecutionMixin.execute_controller'" class="reference internal" href="#terminusgps.authorizenet.utils.ControllerExecutionMixin.execute_controller"><code class="docutils literal notranslate"><span class="pre">ControllerExecutionMixin.execute_controller()</span></code></a></li>
 </ul>
 </li>
-<li><a :data-current="activeSection === '#terminusgps.authorizenet.errors.ControllerExecutionError'" class="reference internal" href="#terminusgps.authorizenet.errors.ControllerExecutionError"><code class="docutils literal notranslate"><span class="pre">ControllerExecutionError</span></code></a></li>
 <li><a :data-current="activeSection === '#terminusgps.authorizenet.utils.get_customer_profile_ids'" class="reference internal" href="#terminusgps.authorizenet.utils.get_customer_profile_ids"><code class="docutils literal notranslate"><span class="pre">get_customer_profile_ids()</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.utils.generate_customer_address'" class="reference internal" href="#terminusgps.authorizenet.utils.generate_customer_address"><code class="docutils literal notranslate"><span class="pre">generate_customer_address()</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.utils.generate_customer_payment'" class="reference internal" href="#terminusgps.authorizenet.utils.generate_customer_payment"><code class="docutils literal notranslate"><span class="pre">generate_customer_payment()</span></code></a></li>
 </ul>
 </div>
 </aside>
