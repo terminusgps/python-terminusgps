@@ -1,10 +1,24 @@
 Forms
 =====
 
-.. autoclass:: terminusgps.django.forms.AddressField
+------
+Fields
+------
+
+.. autoclass:: terminusgps.django.forms.fields.AddressField
     :members:
 
-.. autoclass:: terminusgps.django.forms.CreditCardField
+.. autoclass:: terminusgps.django.forms.fields.CreditCardField
+    :members:
+
+-------
+Widgets
+-------
+
+.. autoclass:: terminusgps.django.forms.widgets.AddressWidget
+    :members:
+
+.. autoclass:: terminusgps.django.forms.widgets.CreditCardWidget
     :members:
 
 -----

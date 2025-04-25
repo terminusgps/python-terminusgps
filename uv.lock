@@ -925,7 +925,7 @@ wheels = [
 
 [[package]]
 name = "python-terminusgps"
-version = "33.1.0"
+version = "33.2.0"
 source = { editable = "." }
 dependencies = [
     { name = "argparse" },
