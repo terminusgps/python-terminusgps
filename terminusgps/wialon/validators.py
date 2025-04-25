@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from .session import WialonSession
 
-if not hasattr(settings, "WIALON_TOKEN"):
+if settings.configured and not hasattr(settings, "WIALON_TOKEN"):
     raise ImproperlyConfigured("'WIALON_TOKEN' setting is required.")
 
 

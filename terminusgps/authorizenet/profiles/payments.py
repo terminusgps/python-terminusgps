@@ -1,10 +1,17 @@
 from authorizenet import apicontractsv1, apicontrollers
 
-from .base import AuthorizenetSubProfileBase
+from terminusgps.authorizenet.profiles.base import AuthorizenetSubProfileBase
 
 
 class PaymentProfile(AuthorizenetSubProfileBase):
     """An Authorizenet customer payment profile."""
+
+    @property
+    def last_4(self) -> str | None:
+        """Last 4 digits of the payment profile credit card."""
+        if self.id:
+            response = self._authorizenet_get_payment_profile()
+            return str(response.paymentProfile.payment.creditCard.cardNumber)[-4:]
 
     def create(
         self,
@@ -12,60 +19,52 @@ class PaymentProfile(AuthorizenetSubProfileBase):
         payment: apicontractsv1.paymentType,
     ) -> int:
         """
-        Creates an Authorizenet payment profile and returns its id.
+        Creates the customer payment profile in Authorizenet.
 
-        :param address: A billing address.
+        :param address: A customer address.
         :type address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
-        :param payment: A payment object.
+        :param payment: A payment.
         :type payment: :py:obj:`~authorizenet.apicontractsv1.paymentType`
-        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
-        :raises ValueError: If the Authorizenet API response was not retrieved.
-        :returns: The new payment profile's id.
+        :returns: A customer payment profile id.
         :rtype: :py:obj:`int`
 
         """
-        response = self._authorizenet_create_payment_profile(address, payment)
-        if response is None:
-            raise ValueError("Failed to retrieve Authorizenet API response.")
-        return int(response.customerPaymentProfileId)
+        return int(
+            self._authorizenet_create_payment_profile(
+                address, payment
+            ).customerPaymentProfileId
+        )
 
     def update(
         self,
         address: apicontractsv1.customerAddressType,
         payment: apicontractsv1.paymentType,
-    ) -> dict | None:
+    ) -> None:
         """
-        Updates the Authorizenet payment profile.
+        Updates the customer payment profile in Authorizenet if :py:attr:`id` is set.
 
-        :param address: A billing address.
+        :param address: A customer address.
         :type address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
-        :param payment: A payment method.
+        :param payment: A payment.
         :type payment: :py:obj:`~authorizenet.apicontractsv1.paymentType`
-        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
-        :returns: An Authorizenet API reponse, if any.
-        :rtype: :py:obj:`dict` | :py:obj:`None`
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
 
         """
-        return self._authorizenet_update_payment_profile(address, payment)
+        if self.id:
+            self._authorizenet_update_payment_profile(address, payment)
 
-    def delete(self) -> dict | None:
+    def delete(self) -> None:
         """
-        Deletes the Authorizenet payment profile.
+        Deletes the customer payment profile in Authorizenet and sets :py:attr:`id` to :py:obj:`None` if :py:attr:`id` is set.
 
-        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
-        :returns: An Authorizenet API response, if any.
-        :rtype: :py:obj:`dict` | :py:obj:`None`
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
 
         """
-        return self._authorizenet_delete_payment_profile()
-
-    def get_details(self, issuer_info: bool = False) -> dict | None:
-        return self._authorizenet_get_payment_profile(issuer_info)
-
-    @property
-    def last_4(self) -> int:
-        profile = self.get_details().paymentProfile
-        return int(str(profile.payment.creditCard.cardNumber)[-4:])
+        if self.id:
+            self._authorizenet_delete_payment_profile()
+            self.id = None
 
     def _authorizenet_get_transaction_list_for_customer(
         self,
@@ -107,6 +106,7 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             sorting={"orderBy": ordering, "orderDescending": str(descending).lower()},
             paging={"limit": str(limit), "offset": str(offset)},
         )
+
         controller = apicontrollers.getTransactionListForCustomerController(request)
         return self.execute_controller(controller)
 
@@ -137,18 +137,19 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             ),
             validationMode=self.validationMode,
         )
+
         controller = apicontrollers.createCustomerPaymentProfileController(request)
         return self.execute_controller(controller)
 
     def _authorizenet_get_payment_profile(
-        self, issuer_info: bool = False
+        self, issuer_info: bool = True
     ) -> dict | None:
         """
         Executes a :py:obj:`~authorizenet.apicontractsv1.getCustomerPaymentProfileRequest` using the Authorizenet API.
 
         `getCustomerPaymentProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-payment-profile>`_
 
-        :param issuer_info: Whether or not to include issuer information in the response.
+        :param issuer_info: Whether or not to include issuer information in the response. Default is :py:obj:`True`.
         :type issuer_info: :py:obj:`bool`
         :raises AssertionError: If :py:attr:`id` wasn't set.
         :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
@@ -157,12 +158,14 @@ class PaymentProfile(AuthorizenetSubProfileBase):
 
         """
         assert self.id, "'id' was not set."
+
         request = apicontractsv1.getCustomerPaymentProfileRequest(
             merchantAuthentication=self.merchantAuthentication,
             customerProfileId=self.customerProfileId,
             customerPaymentProfileId=self.id,
             includeIssuerInfo=str(issuer_info).lower(),
         )
+
         controller = apicontrollers.getCustomerPaymentProfileController(request)
         return self.execute_controller(controller)
 
@@ -199,6 +202,7 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             ),
             validationMode=self.validationMode,
         )
+
         controller = apicontrollers.updateCustomerPaymentProfileController(request)
         return self.execute_controller(controller)
 
@@ -216,12 +220,14 @@ class PaymentProfile(AuthorizenetSubProfileBase):
 
         """
         assert self.id, "'id' was not set."
+
         request = apicontractsv1.validateCustomerPaymentProfileRequest(
             merchantAuthentication=self.merchantAuthentication,
             customerProfileId=self.customerProfileId,
             customerPaymentProfileId=self.id,
             validationMode=self.validationMode,
         )
+
         controller = apicontrollers.validateCustomerPaymentProfileController(request)
         return self.execute_controller(controller)
 
@@ -244,5 +250,6 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             customerProfileId=self.customerProfileId,
             customerPaymentProfileId=self.id,
         )
+
         controller = apicontrollers.deleteCustomerPaymentProfileController(request)
         return self.execute_controller(controller)

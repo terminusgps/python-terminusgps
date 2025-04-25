@@ -1,6 +1,6 @@
 from authorizenet import apicontractsv1, apicontrollers
 
-from .base import AuthorizenetSubProfileBase
+from terminusgps.authorizenet.profiles.base import AuthorizenetSubProfileBase
 
 
 class AddressProfile(AuthorizenetSubProfileBase):
@@ -8,54 +8,42 @@ class AddressProfile(AuthorizenetSubProfileBase):
 
     def create(self, address: apicontractsv1.customerAddressType) -> int:
         """
-        Creates an Authorizenet address profile.
+        Creates the customer shipping address profile in Authorizenet.
 
         :param address: A customer address.
         :type address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
-        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
-        :raises ValueError: If the Authorizenet API response was not retrieved.
-        :returns: A new address profile id.
-        :rtype: :py:obj:`int`
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
 
         """
-        response = self._authorizenet_create_shipping_address(address)
-        if response is None:
-            raise ValueError("Failed to retrieve Authorizenet API response.")
-        return int(response.customerAddressId)
+        return int(
+            self._authorizenet_create_shipping_address(address).customerAddressId
+        )
 
-    def update(self, address: apicontractsv1.customerAddressType) -> dict | None:
+    def update(self, address: apicontractsv1.customerAddressType) -> None:
         """
-        Updates the Authorizenet address profile.
+        Updates the customer shipping address to the new address in Authorizenet.
 
-        :param address: A customer shipping address.
+        :param address: A customer address.
         :type address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
-        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
-        :returns: An Authorizenet API response, if any.
-        :rtype: :py:obj:`dict` | :py:obj:`None`
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
 
         """
-        return self._authorizenet_update_shipping_address(address)
+        if self.id:
+            self._authorizenet_update_shipping_address(address)
 
-    def delete(self) -> dict | None:
+    def delete(self) -> None:
         """
-        Deletes the Authorizenet address profile.
+        Deletes the customer address profile in Authorizenet and sets :py:attr:`id` to :py:obj:`None` if :py:attr:`id` is set.
 
-        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
-        :returns: An Authorizenet API response, if any.
-        :rtype: :py:obj:`dict` | :py:obj:`None`
-
-        """
-        return self._authorizenet_delete_shipping_address()
-
-    def get_details(self) -> dict | None:
-        """
-        Gets details for the Authorizenet address profile.
-
-        :returns: An Authorizenet API response, if any.
-        :rtype: :py:obj:`dict` | :py:obj:`None`
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
 
         """
-        return self._authorizenet_get_shipping_address()
+        if self.id:
+            self._authorizenet_delete_shipping_address()
+            self.id = None
 
     def _authorizenet_get_shipping_address(self) -> dict | None:
         """
@@ -64,12 +52,14 @@ class AddressProfile(AuthorizenetSubProfileBase):
         `getCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-shipping-address>`_
 
         :raises AssertionError: If :py:attr:`id` wasn't set.
+        :raises AssertionError: If :py:attr:`customerProfileId` wasn't set.
         :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
         :returns: An Authorizenet API response, if any.
         :rtype: :py:obj:`dict` | :py:obj:`None`
 
         """
-        assert self.id, "'id' was not set."
+        assert self.id, "'id' wasn't set."
+        assert self.customerProfileId, "'customerProfileId' wasn't set."
 
         request = apicontractsv1.getCustomerShippingAddressRequest(
             merchantAuthentication=self.merchantAuthentication,
@@ -87,7 +77,6 @@ class AddressProfile(AuthorizenetSubProfileBase):
 
         `createCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-create-customer-shipping-address>`_
 
-        :raises AssertionError: If :py:attr:`id` wasn't set.
         :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
         :returns: An Authorizenet API response, if any.
         :rtype: :py:obj:`dict` | :py:obj:`None`
@@ -99,6 +88,7 @@ class AddressProfile(AuthorizenetSubProfileBase):
             address=address,
             defaultShippingAddress=self.default,
         )
+
         controller = apicontrollers.createCustomerShippingAddressController(request)
         return self.execute_controller(controller)
 
@@ -111,12 +101,14 @@ class AddressProfile(AuthorizenetSubProfileBase):
         `updateCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-update-customer-shipping-address>`_
 
         :raises AssertionError: If :py:attr:`id` wasn't set.
+        :raises AssertionError: If :py:attr:`customerProfileId` wasn't set.
         :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
         :returns: An Authorizenet API response, if any.
         :rtype: :py:obj:`dict` | :py:obj:`None`
 
         """
-        assert self.id, "'id' was not set."
+        assert self.id, "'id' wasn't set."
+        assert self.customerProfileId, "'customerProfileId' wasn't set."
 
         address.customerAddressId = self.id
         request = apicontractsv1.updateCustomerShippingAddressRequest(
@@ -135,17 +127,20 @@ class AddressProfile(AuthorizenetSubProfileBase):
         `deleteCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-delete-customer-shipping-address>`_
 
         :raises AssertionError: If :py:attr:`id` wasn't set.
+        :raises AssertionError: If :py:attr:`customerProfileId` wasn't set.
         :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
         :returns: An Authorizenet API response, if any.
         :rtype: :py:obj:`dict` | :py:obj:`None`
 
         """
-        assert self.id, "'id' was not set."
+        assert self.id, "'id' wasn't set."
+        assert self.customerProfileId, "'customerProfileId' wasn't set."
 
         request = apicontractsv1.deleteCustomerShippingAddressRequest(
             merchantAuthentication=self.merchantAuthentication,
             customerProfileId=self.customerProfileId,
             customerAddressId=self.id,
         )
+
         controller = apicontrollers.deleteCustomerShippingAddressController(request)
         return self.execute_controller(controller)

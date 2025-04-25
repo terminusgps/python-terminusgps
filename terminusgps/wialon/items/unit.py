@@ -153,60 +153,9 @@ class WialonUnit(WialonBase):
     @property
     def image_url(self) -> str | None:
         """Returns an absolute url to the unit's icon in Wialon."""
-        if hasattr(settings, "WIALON_HOST"):
+        if settings.configured and hasattr(settings, "WIALON_HOST"):
             return urljoin(settings.WIALON_HOST, self._image_uri)
         return urljoin("https://hst-api.wialon.com", self._image_uri)
-
-    def assign_to_number(self, value: str) -> None:
-        """
-        Sets ``value`` to the unit's ``to_number`` custom field.
-
-        :param value: A new value for the unit's ``to_number`` custom field.
-        :type value: :py:obj:`str`
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        cfield_key: str = "to_number"
-        cfield_val: str = value
-        cfield_id: int | None = self.get_cfield_id(cfield_key)
-
-        if cfield_id:
-            self.update_cfield(cfield_id, cfield_key, cfield_val)
-
-    def assign_iccid(self, value: str) -> None:
-        """
-        Sets ``value`` to the unit's ``iccid`` admin field.
-
-        :param value: A new value for the unit's ``iccid`` custom field.
-        :type value: :py:obj:`str`
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        afield_key: str = "iccid"
-        afield_val: str = value
-        afield_id: int | None = self.get_afield_id(afield_key)
-
-        if afield_id:
-            self.update_afield(afield_id, afield_key, afield_val)
-
-    def assign_carrier(self, value: str) -> None:
-        """
-        Sets ``value`` to the unit's ``carrier`` admin field.
-
-        :param value: A new value for the unit's ``carrier`` custom field.
-        :type value: :py:obj:`str`
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        afield_key: str = "carrier"
-        afield_val: str = value
-        afield_id: int | None = self.get_afield_id(afield_key)
-
-        if afield_id:
-            self.update_afield(afield_id, afield_key, afield_val)
 
     def execute_command(
         self,

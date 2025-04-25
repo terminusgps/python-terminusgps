@@ -1,34 +1,8 @@
 from authorizenet import apicontractsv1, apicontrollers
-from authorizenet.apicontrollersbase import APIOperationBase
 from django import forms
 
-from .auth import get_environment, get_merchant_auth
-from .errors import ControllerExecutionError
-
-
-class ControllerExecutionMixin:
-    @staticmethod
-    def execute_controller(controller: APIOperationBase) -> dict | None:
-        """
-        Executes an Authorizenet controller and returns its response.
-
-        :param controller: An Authorizenet API controller.
-        :type controller: :py:obj:`~authorizenet.apicontrollersbase.APIOperationBase`
-        :raises ControllerExecutionError: If the API call fails.
-        :returns: An Authorizenet API response, if any.
-        :rtype: :py:obj:`dict` | :py:obj:`None`
-
-        """
-        controller.setenvironment(get_environment())
-        controller.execute()
-        response = controller.getresponse()
-
-        if response is not None and response.messages.resultCode != "Ok":
-            raise ControllerExecutionError(
-                message=response.messages.message[0]["text"].text,
-                code=response.messages.message[0]["code"].text,
-            )
-        return response
+from .auth import get_merchant_auth
+from .controllers import AuthorizenetControllerExecutor
 
 
 def get_customer_profile_ids() -> list[int]:
@@ -44,7 +18,7 @@ def get_customer_profile_ids() -> list[int]:
         merchantAuthentication=get_merchant_auth()
     )
     controller = apicontrollers.getCustomerProfileIdsController(request)
-    response = ControllerExecutionMixin.execute_controller(controller)
+    response = AuthorizenetControllerExecutor.execute_controller(controller)
     if response is None or "ids" not in response.getchildren():
         return []
     return [int(id) for id in response.ids.getchildren()]
