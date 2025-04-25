@@ -7,5 +7,6 @@ Django
     :maxdepth: 2
     :caption: Contents:
 
+    forms.rst
     mixins.rst
     settings.rst
