@@ -63,10 +63,10 @@ Call phone number and read message aloud
     def main() -> None:
         phone: str = "+15555555555"
         msg: str = "Hello from Terminus GPS!"
-        method: str = "call" # "phone" is an alias for "call", so "phone" would work, too
+        method: str = "call" # "phone" is an alias for "call", so "phone" would work too
         with TwilioCaller() as caller:
             task = caller.create_notification(
-                to_number=num, message="Hello from Terminus GPS!", method=method
+                to_number=phone, message="Hello from Terminus GPS!", method=method
             )
             await task
 
