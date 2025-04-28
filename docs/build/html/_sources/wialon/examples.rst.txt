@@ -21,8 +21,6 @@ Let's also import :py:obj:`~terminusgps.wialon.utils.generate_wialon_password` s
 2. Open the session in a context manager and instantiate a user.
 ----------------------------------------------------------------
 
-When creating a new Wialon object, you *must* pass :py:obj:`None` as the ``id`` parameter.
-
 It is recommended to only use keyword arguments when instantiating a :py:obj:`~terminusgps.wialon.items.base.WialonBase` object.
 
 .. code:: python
@@ -68,7 +66,9 @@ Full code example
             name="test_user",
             password=generate_wialon_password(32)
         )
+        print(f"{unit.name = }") # user.name = "test_user"
         unit.rename("super_test_user")
+        print(f"{unit.name = }") # user.name = "super_test_user"
 
 
 ============================================
@@ -265,15 +265,20 @@ Update a unit's ``to_number`` custom field
     with WialonSession(token="my_secure_wialon_token") as session:
         unit = WialonUnit(id="12345678", session=session)
 
-------------------------------------------------------------------------------
-3. Call :py:meth:`~terminusgps.wialon.items.unit.WialonUnit.assign_to_number`.
-------------------------------------------------------------------------------
+---------------------------------------------------------------------------
+3. Call :py:meth:`~terminusgps.wialon.items.base.WialonBase.update_cfield`.
+---------------------------------------------------------------------------
+
+Assuming you know the ``to_number``'s custom field id, call :py:meth:`~terminusgps.wialon.items.base.WialonBase.update_cfield` using it.
+
+If you don't, call :py:meth:`~terminusgps.wialon.items.base.WialonBase.get_cfield_id` first, then pass the id into :py:meth:`~terminusgps.wialon.items.base.WialonBase.update_cfield`.
 
 .. code:: python
 
     with WialonSession(token="my_secure_wialon_token") as session:
         ...
-        unit.assign_to_number("+15555555555")
+        to_number_id: int | None = unit.get_cfield_id("to_number") # May return None if key is invalid.
+        unit.update_cfield(id=to_number_id, key="to_number", value="+15555555555")
         unit.cfields["to_number"] # "+15555555555"
 
 -----------------
@@ -287,5 +292,6 @@ Full code example
 
     with WialonSession(token="my_secure_wialon_token") as session:
         unit = WialonUnit(id="12345678", session=session)
-        unit.assign_to_number("+15555555555")
-        unit.cfields["to_number"] # "+15555555555"
+        to_number_id: int | None = unit.get_cfield_id("to_number") # Will return None if the field isn't found.
+        unit.update_cfield(id=to_number_id, key="to_number", value="+15555555555")
+        print(unit.cfields["to_number"]) # "+15555555555"
