@@ -62,6 +62,17 @@ class AuthorizenetProfileBase(AuthorizenetControllerExecutor):
         """
         return get_merchant_auth()
 
+    @property
+    def validationMode(self) -> str:
+        """
+        The current Authorizenet API validation mode.
+
+        :returns: An Authorizenet API validation mode string.
+        :rtype: :py:obj:`str`
+
+        """
+        return get_validation_mode()
+
 
 class AuthorizenetSubProfileBase(AuthorizenetProfileBase):
     """Base class for Authorizenet 'sub-profiles', profiles that have an associated customer profile."""
@@ -82,10 +93,6 @@ class AuthorizenetSubProfileBase(AuthorizenetProfileBase):
         super().__init__(id=id)
         self.customerProfileId = customer_profile_id
         self.default = default
-
-    @property
-    def validationMode(self) -> str:
-        return get_validation_mode()
 
     @property
     def customerProfileId(self) -> str:

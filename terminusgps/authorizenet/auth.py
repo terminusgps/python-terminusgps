@@ -10,7 +10,7 @@ if not settings.configured:
 
 def get_merchant_auth() -> merchantAuthenticationType:
     """
-    Returns the merchant authentication information for Authorizenet API requests.
+    Returns the current merchant authentication information for Authorizenet API requests.
 
     :returns: A merchant authentication object.
     :rtype: :py:obj:`~authorizenet.apicontractsv1.merchantAuthenticationType`
@@ -24,7 +24,7 @@ def get_merchant_auth() -> merchantAuthenticationType:
 
 def get_environment() -> str:
     """
-    Returns the environment for Authorizenet API requests.
+    Returns the current environment for Authorizenet API requests.
 
     :returns: An Authorizenet API environment string.
     :rtype: :py:obj:`str`
@@ -35,7 +35,7 @@ def get_environment() -> str:
 
 def get_validation_mode() -> str:
     """
-    Returns the validation mode for Authorizenet API requests.
+    Returns the current validation mode for Authorizenet API requests.
 
     :returns: An Authorizenet API validation string.
     :rtype: :py:obj:`str`

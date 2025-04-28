@@ -8,7 +8,12 @@ class PaymentProfile(AuthorizenetSubProfileBase):
 
     @property
     def last_4(self) -> str | None:
-        """Last 4 digits of the payment profile credit card."""
+        """
+        Last 4 digits of the payment profile credit card.
+
+        :type: :py:obj:`str` | :py:obj:`None`
+
+        """
         if self.id:
             response = self._authorizenet_get_payment_profile()
             return str(response.paymentProfile.payment.creditCard.cardNumber)[-4:]
@@ -31,7 +36,7 @@ class PaymentProfile(AuthorizenetSubProfileBase):
         """
         return int(
             self._authorizenet_create_payment_profile(
-                address, payment
+                address=address, payment=payment
             ).customerPaymentProfileId
         )
 

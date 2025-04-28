@@ -139,10 +139,13 @@
 </span></code></pre></div>
 </div>
 </section>
-<section id="initialize-a-profile-with-a-merchant-id-must-be-present-in-authorizenet">
-<h3>2. Initialize a profile with a merchant id (must be present in Authorizenet)<a class="headerlink" href="#initialize-a-profile-with-a-merchant-id-must-be-present-in-authorizenet" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#initialize-a-profile-with-a-merchant-id-must-be-present-in-authorizenet'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<section id="initialize-a-profile-with-an-id-a-merchant-id-or-an-email-address">
+<h3>2. Initialize a profile with an id, a merchant id or an email address.<a class="headerlink" href="#initialize-a-profile-with-an-id-a-merchant-id-or-an-email-address" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#initialize-a-profile-with-an-id-a-merchant-id-or-an-email-address'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">...</span>
-</span><span id="line-2"><span class="n">cprofile</span> <span class="o">=</span> <span class="n">CustomerProfile</span><span class="p">(</span><span class="n">merchant_id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Must pass merchant id</span>
+</span><span id="line-2"><span class="c1"># All of these would retrieve the same customer profile</span>
+</span><span id="line-3"><span class="n">cprofile</span> <span class="o">=</span> <span class="n">CustomerProfile</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="line-4"><span class="n">cprofile</span> <span class="o">=</span> <span class="n">CustomerProfile</span><span class="p">(</span><span class="n">merchant_id</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="line-5"><span class="n">cprofile</span> <span class="o">=</span> <span class="n">CustomerProfile</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">"email@domain.com"</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 </section>
@@ -150,6 +153,7 @@
 <h3>3. Perform operations using the customer profile<a class="headerlink" href="#perform-operations-using-the-customer-profile" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#perform-operations-using-the-customer-profile'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">...</span>
 </span><span id="line-2"><span class="n">cprofile</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">"support@terminusgps.com"</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">"Support User"</span><span class="p">)</span>
+</span><span id="line-3"><span class="nb">print</span><span class="p">(</span><span class="n">cprofile</span><span class="o">.</span><span class="n">email</span><span class="p">)</span> <span class="c1"># "support@terminusgps.com"</span>
 </span></code></pre></div>
 </div>
 </section>
@@ -157,8 +161,110 @@
 <h3>Full code example<a class="headerlink" href="#full-code-example" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#full-code-example'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.authorizenet.profiles</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomerProfile</span>
 </span><span id="line-2">
-</span><span id="line-3"><span class="n">cprofile</span> <span class="o">=</span> <span class="n">CustomerProfile</span><span class="p">(</span><span class="n">merchant_id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="line-3"><span class="n">cprofile</span> <span class="o">=</span> <span class="n">CustomerProfile</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span><span id="line-4"><span class="n">cprofile</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">"support@terminusgps.com"</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">"Support User"</span><span class="p">)</span>
+</span><span id="line-5"><span class="nb">print</span><span class="p">(</span><span class="n">cprofile</span><span class="o">.</span><span class="n">email</span><span class="p">)</span> <span class="c1"># "support@terminusgps.com"</span>
+</span></code></pre></div>
+</div>
+</section>
+</section>
+<section id="create-an-authorizenet-customer-profile">
+<h2>Create an Authorizenet customer profile<a class="headerlink" href="#create-an-authorizenet-customer-profile" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#create-an-authorizenet-customer-profile'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<section id="id1">
+<h3>1. Import <a class="reference internal" href="profiles.html#terminusgps.authorizenet.profiles.customers.CustomerProfile" title="terminusgps.authorizenet.profiles.customers.CustomerProfile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CustomerProfile</span></code></a><a class="headerlink" href="#id1" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#id1'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.authorizenet.profiles</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomerProfile</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="initialize-a-customer-profile-with-a-merchant-id-or-an-email-address">
+<h3>2. Initialize a customer profile with a merchant id or an email address.<a class="headerlink" href="#initialize-a-customer-profile-with-a-merchant-id-or-an-email-address" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#initialize-a-customer-profile-with-a-merchant-id-or-an-email-address'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">...</span>
+</span><span id="line-2"><span class="n">cprofile</span> <span class="o">=</span> <span class="n">CustomerProfile</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">"sales@terminusgps.com"</span><span class="p">)</span>
+</span><span id="line-3"><span class="nb">print</span><span class="p">(</span><span class="n">cprofile</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="c1"># "123"</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>Full code example<a class="headerlink" href="#id2" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#id2'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.authorizenet.profiles</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomerProfile</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="n">cprofile</span> <span class="o">=</span> <span class="n">CustomerProfile</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">"sales@terminusgps.com"</span><span class="p">)</span>
+</span><span id="line-4"><span class="nb">print</span><span class="p">(</span><span class="n">cprofile</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="c1"># "123"</span>
+</span></code></pre></div>
+</div>
+</section>
+</section>
+<section id="create-an-authorizenet-payment-profile-with-credit-card">
+<h2>Create an Authorizenet payment profile with credit card<a class="headerlink" href="#create-an-authorizenet-payment-profile-with-credit-card" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#create-an-authorizenet-payment-profile-with-credit-card'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<section id="import-relevant-profiles">
+<h3>1. Import relevant profiles.<a class="headerlink" href="#import-relevant-profiles" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#import-relevant-profiles'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">authorizenet</span><span class="w"> </span><span class="kn">import</span> <span class="n">apicontractsv1</span>
+</span><span id="line-2"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.authorizenet.profiles</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomerProfile</span><span class="p">,</span> <span class="n">PaymentProfile</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="initialize-profile-objects">
+<h3>2. Initialize profile objects.<a class="headerlink" href="#initialize-profile-objects" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#initialize-profile-objects'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">...</span>
+</span><span id="line-2"><span class="n">cprofile</span> <span class="o">=</span> <span class="n">CustomerProfile</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="line-3"><span class="n">pprofile</span> <span class="o">=</span> <span class="n">PaymentProfile</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="o">=</span><span class="n">cprofile</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="execute-create-with-an-address-and-payment-object-and-save-its-response">
+<h3>3. Execute <a class="reference internal" href="profiles.html#terminusgps.authorizenet.profiles.payments.PaymentProfile.create" title="terminusgps.authorizenet.profiles.payments.PaymentProfile.create"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create()</span></code></a> with an address and payment object and save its response.<a class="headerlink" href="#execute-create-with-an-address-and-payment-object-and-save-its-response" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#execute-create-with-an-address-and-payment-object-and-save-its-response'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">...</span>
+</span><span id="line-2"><span class="n">address_obj</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerAddressType</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">firstName</span><span class="o">=</span><span class="s2">"TestFirst"</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">lastName</span><span class="o">=</span><span class="s2">"TestLast"</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">company</span><span class="o">=</span><span class="s2">"TestCompany"</span><span class="p">,</span>
+</span><span id="line-6">    <span class="n">address</span><span class="o">=</span><span class="s2">"123 Main St"</span><span class="p">,</span>
+</span><span id="line-7">    <span class="n">city</span><span class="o">=</span><span class="s2">"Houston"</span><span class="p">,</span>
+</span><span id="line-8">    <span class="n">state</span><span class="o">=</span><span class="s2">"TX"</span><span class="p">,</span>
+</span><span id="line-9">    <span class="nb">zip</span><span class="o">=</span><span class="s2">"77065"</span><span class="p">,</span>
+</span><span id="line-10">    <span class="n">country</span><span class="o">=</span><span class="s2">"US"</span><span class="p">,</span>
+</span><span id="line-11"><span class="p">)</span>
+</span><span id="line-12"><span class="n">payment_obj</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">paymentType</span><span class="p">(</span>
+</span><span id="line-13">    <span class="n">creditCard</span><span class="o">=</span><span class="n">apicontractsv1</span><span class="o">.</span><span class="n">creditCardType</span><span class="p">(</span>
+</span><span id="line-14">        <span class="n">cardNumber</span><span class="o">=</span><span class="s2">"4111111111111111"</span><span class="p">,</span>
+</span><span id="line-15">        <span class="n">expirationDate</span><span class="o">=</span><span class="s2">"04-39"</span><span class="p">,</span>
+</span><span id="line-16">        <span class="n">cardCode</span><span class="o">=</span><span class="s2">"444"</span><span class="p">,</span>
+</span><span id="line-17">    <span class="p">)</span>
+</span><span id="line-18"><span class="p">)</span>
+</span><span id="line-19">
+</span><span id="line-20"><span class="n">pprofile</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">pprofile</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">address_obj</span><span class="p">,</span> <span class="n">payment_obj</span><span class="p">)</span>
+</span><span id="line-21"><span class="nb">print</span><span class="p">(</span><span class="n">pprofile</span><span class="o">.</span><span class="n">last_4</span><span class="p">)</span> <span class="c1"># "1111"</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="id3">
+<h3>Full code example<a class="headerlink" href="#id3" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#id3'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">authorizenet</span><span class="w"> </span><span class="kn">import</span> <span class="n">apicontractsv1</span>
+</span><span id="line-2"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.authorizenet.profiles</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomerProfile</span><span class="p">,</span> <span class="n">PaymentProfile</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="n">cprofile</span> <span class="o">=</span> <span class="n">CustomerProfile</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="line-5"><span class="n">pprofile</span> <span class="o">=</span> <span class="n">PaymentProfile</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="o">=</span><span class="n">cprofile</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="n">address_obj</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerAddressType</span><span class="p">(</span>
+</span><span id="line-8">    <span class="n">firstName</span><span class="o">=</span><span class="s2">"TestFirst"</span><span class="p">,</span>
+</span><span id="line-9">    <span class="n">lastName</span><span class="o">=</span><span class="s2">"TestLast"</span><span class="p">,</span>
+</span><span id="line-10">    <span class="n">company</span><span class="o">=</span><span class="s2">"TestCompany"</span><span class="p">,</span>
+</span><span id="line-11">    <span class="n">address</span><span class="o">=</span><span class="s2">"123 Main St"</span><span class="p">,</span>
+</span><span id="line-12">    <span class="n">city</span><span class="o">=</span><span class="s2">"Houston"</span><span class="p">,</span>
+</span><span id="line-13">    <span class="n">state</span><span class="o">=</span><span class="s2">"TX"</span><span class="p">,</span>
+</span><span id="line-14">    <span class="nb">zip</span><span class="o">=</span><span class="s2">"77065"</span><span class="p">,</span>
+</span><span id="line-15">    <span class="n">country</span><span class="o">=</span><span class="s2">"US"</span><span class="p">,</span>
+</span><span id="line-16"><span class="p">)</span>
+</span><span id="line-17"><span class="n">payment_obj</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">paymentType</span><span class="p">(</span>
+</span><span id="line-18">    <span class="n">creditCard</span><span class="o">=</span><span class="n">apicontractsv1</span><span class="o">.</span><span class="n">creditCardType</span><span class="p">(</span>
+</span><span id="line-19">        <span class="n">cardNumber</span><span class="o">=</span><span class="s2">"4111111111111111"</span><span class="p">,</span>
+</span><span id="line-20">        <span class="n">expirationDate</span><span class="o">=</span><span class="s2">"04-39"</span><span class="p">,</span>
+</span><span id="line-21">        <span class="n">cardCode</span><span class="o">=</span><span class="s2">"444"</span><span class="p">,</span>
+</span><span id="line-22">    <span class="p">)</span>
+</span><span id="line-23"><span class="p">)</span>
+</span><span id="line-24">
+</span><span id="line-25"><span class="n">pprofile</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">pprofile</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">address_obj</span><span class="p">,</span> <span class="n">payment_obj</span><span class="p">)</span>
+</span><span id="line-26"><span class="nb">print</span><span class="p">(</span><span class="n">pprofile</span><span class="o">.</span><span class="n">last_4</span><span class="p">)</span> <span class="c1"># "1111"</span>
 </span></code></pre></div>
 </div>
 </section>
@@ -169,9 +275,22 @@
 <ul>
 <li><a :data-current="activeSection === '#retrieve-an-authorizenet-customer-profile'" class="reference internal" href="#retrieve-an-authorizenet-customer-profile">Retrieve an Authorizenet customer profile</a><ul>
 <li><a :data-current="activeSection === '#import-customerprofile'" class="reference internal" href="#import-customerprofile">1. Import <code class="xref py py-obj docutils literal notranslate"><span class="pre">CustomerProfile</span></code></a></li>
-<li><a :data-current="activeSection === '#initialize-a-profile-with-a-merchant-id-must-be-present-in-authorizenet'" class="reference internal" href="#initialize-a-profile-with-a-merchant-id-must-be-present-in-authorizenet">2. Initialize a profile with a merchant id (must be present in Authorizenet)</a></li>
+<li><a :data-current="activeSection === '#initialize-a-profile-with-an-id-a-merchant-id-or-an-email-address'" class="reference internal" href="#initialize-a-profile-with-an-id-a-merchant-id-or-an-email-address">2. Initialize a profile with an id, a merchant id or an email address.</a></li>
 <li><a :data-current="activeSection === '#perform-operations-using-the-customer-profile'" class="reference internal" href="#perform-operations-using-the-customer-profile">3. Perform operations using the customer profile</a></li>
 <li><a :data-current="activeSection === '#full-code-example'" class="reference internal" href="#full-code-example">Full code example</a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#create-an-authorizenet-customer-profile'" class="reference internal" href="#create-an-authorizenet-customer-profile">Create an Authorizenet customer profile</a><ul>
+<li><a :data-current="activeSection === '#id1'" class="reference internal" href="#id1">1. Import <code class="xref py py-obj docutils literal notranslate"><span class="pre">CustomerProfile</span></code></a></li>
+<li><a :data-current="activeSection === '#initialize-a-customer-profile-with-a-merchant-id-or-an-email-address'" class="reference internal" href="#initialize-a-customer-profile-with-a-merchant-id-or-an-email-address">2. Initialize a customer profile with a merchant id or an email address.</a></li>
+<li><a :data-current="activeSection === '#id2'" class="reference internal" href="#id2">Full code example</a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#create-an-authorizenet-payment-profile-with-credit-card'" class="reference internal" href="#create-an-authorizenet-payment-profile-with-credit-card">Create an Authorizenet payment profile with credit card</a><ul>
+<li><a :data-current="activeSection === '#import-relevant-profiles'" class="reference internal" href="#import-relevant-profiles">1. Import relevant profiles.</a></li>
+<li><a :data-current="activeSection === '#initialize-profile-objects'" class="reference internal" href="#initialize-profile-objects">2. Initialize profile objects.</a></li>
+<li><a :data-current="activeSection === '#execute-create-with-an-address-and-payment-object-and-save-its-response'" class="reference internal" href="#execute-create-with-an-address-and-payment-object-and-save-its-response">3. Execute <code class="xref py py-meth docutils literal notranslate"><span class="pre">create()</span></code> with an address and payment object and save its response.</a></li>
+<li><a :data-current="activeSection === '#id3'" class="reference internal" href="#id3">Full code example</a></li>
 </ul>
 </li>
 </ul>
