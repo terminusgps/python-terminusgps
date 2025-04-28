@@ -149,7 +149,9 @@ class PaymentProfileTestCase(TestCase):
     def test_payment_profile_create(self) -> None:
         """Fails if a payment profile is not properly created in Authorizenet."""
         test_payment_profile = PaymentProfile(
-            id=None, customer_profile_id=self.test_customer_profile.id, default=True
+            id=None,
+            customer_profile_id=str(self.test_customer_profile.id),
+            default=True,
         )
         test_payment_profile.id = test_payment_profile.create(
             address=self.test_address_obj, payment=self.test_payment_obj
@@ -159,7 +161,9 @@ class PaymentProfileTestCase(TestCase):
     def test_payment_profile_delete(self) -> None:
         """Fails if a payment profile is not properly deleted in Authorizenet."""
         test_payment_profile = PaymentProfile(
-            id=None, customer_profile_id=self.test_customer_profile.id, default=True
+            id=None,
+            customer_profile_id=str(self.test_customer_profile.id),
+            default=True,
         )
         test_payment_profile.id = test_payment_profile.create(
             address=self.test_address_obj, payment=self.test_payment_obj
@@ -170,7 +174,9 @@ class PaymentProfileTestCase(TestCase):
     def test_payment_profile_last_4(self) -> None:
         """Fails if a payment profile's last 4 credit card digits are not properly retrieved."""
         test_payment_profile = PaymentProfile(
-            id=None, customer_profile_id=self.test_customer_profile.id, default=True
+            id=None,
+            customer_profile_id=str(self.test_customer_profile.id),
+            default=True,
         )
         test_payment_profile.id = test_payment_profile.create(
             address=self.test_address_obj, payment=self.test_payment_obj
