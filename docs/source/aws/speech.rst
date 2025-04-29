@@ -1,7 +1,7 @@
 Speech
 ======
 
-.. autoclass:: terminusgps.aws.notifications.AsyncSpeechSynthesisManager
+.. autoclass:: terminusgps.aws.speech.AsyncSpeechSynthesisManager
     :members:
     :exclude-members: __weakref__
     :autoclasstoc:
