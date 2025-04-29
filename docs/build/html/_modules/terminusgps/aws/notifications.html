@@ -112,6 +112,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../aws/index.html">AWS API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../aws/notifications.html">Notifications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../aws/secrets.html">Secrets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../aws/utils.html">Utilities</a></li>
 </ul>
@@ -192,8 +193,6 @@
 <div class="viewcode-block" id="AsyncNotificationManager">
 <a class="viewcode-back" href="../../../aws/notifications.html#terminusgps.aws.notifications.AsyncNotificationManager">[docs]</a>
 </span><span id="line-11"><span class="k">class</span><span class="w"> </span><span class="nc">AsyncNotificationManager</span><span class="p">:</span>
-<div class="viewcode-block" id="AsyncNotificationManager.__init__">
-<a class="viewcode-back" href="../../../aws/notifications.html#terminusgps.aws.notifications.AsyncNotificationManager.__init__">[docs]</a>
 </span><span id="line-12">    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 </span><span id="line-13">        <span class="bp">self</span><span class="p">,</span> <span class="n">group_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">region_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;us-east-1&quot;</span>
 </span><span id="line-14">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -207,11 +206,8 @@
 </span><span id="line-22">        <span class="bp">self</span><span class="o">.</span><span class="n">_exit_stack</span> <span class="o">=</span> <span class="n">AsyncExitStack</span><span class="p">()</span>
 </span><span id="line-23">        <span class="bp">self</span><span class="o">.</span><span class="n">_sns_client</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="line-24">        <span class="bp">self</span><span class="o">.</span><span class="n">_region_name</span> <span class="o">=</span> <span class="n">region_name</span>
-</span><span id="line-25">        <span class="bp">self</span><span class="o">.</span><span class="n">group_id</span> <span class="o">=</span> <span class="n">group_id</span></div>
-
+</span><span id="line-25">        <span class="bp">self</span><span class="o">.</span><span class="n">group_id</span> <span class="o">=</span> <span class="n">group_id</span>
 </span><span id="line-26">
-<div class="viewcode-block" id="AsyncNotificationManager.__aenter__">
-<a class="viewcode-back" href="../../../aws/notifications.html#terminusgps.aws.notifications.AsyncNotificationManager.__aenter__">[docs]</a>
 </span><span id="line-27">    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="fm">__aenter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;AsyncNotificationManager&quot;</span><span class="p">:</span>
 </span><span id="line-28"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="line-29"><span class="sd">        Creates an asyncronous session and client.</span>
@@ -224,11 +220,8 @@
 </span><span id="line-36">        <span class="bp">self</span><span class="o">.</span><span class="n">_sns_client</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exit_stack</span><span class="o">.</span><span class="n">enter_async_context</span><span class="p">(</span>
 </span><span id="line-37">            <span class="n">session</span><span class="o">.</span><span class="n">create_client</span><span class="p">(</span><span class="s2">&quot;sns&quot;</span><span class="p">,</span> <span class="n">region_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">region_name</span><span class="p">)</span>
 </span><span id="line-38">        <span class="p">)</span>
-</span><span id="line-39">        <span class="k">return</span> <span class="bp">self</span></div>
-
+</span><span id="line-39">        <span class="k">return</span> <span class="bp">self</span>
 </span><span id="line-40">
-<div class="viewcode-block" id="AsyncNotificationManager.__aexit__">
-<a class="viewcode-back" href="../../../aws/notifications.html#terminusgps.aws.notifications.AsyncNotificationManager.__aexit__">[docs]</a>
 </span><span id="line-41">    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="fm">__aexit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="line-42"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="line-43"><span class="sd">        Destroys the asyncronous session.</span>
@@ -240,8 +233,7 @@
 </span><span id="line-49"><span class="sd">        :rtype: :py:obj:`None`</span>
 </span><span id="line-50">
 </span><span id="line-51"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-52">        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exit_stack</span><span class="o">.</span><span class="fm">__aexit__</span><span class="p">(</span><span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">)</span></div>
-
+</span><span id="line-52">        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exit_stack</span><span class="o">.</span><span class="fm">__aexit__</span><span class="p">(</span><span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">)</span>
 </span><span id="line-53">
 </span><span id="line-54">    <span class="nd">@property</span>
 </span><span id="line-55">    <span class="k">def</span><span class="w"> </span><span class="nf">region_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -293,88 +285,88 @@
 </span><span id="line-99">
 </span><span id="line-100"><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="line-101">        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
-</span><span id="line-102">            <span class="o">*</span><span class="p">[</span>
-</span><span id="line-103">                <span class="bp">self</span><span class="o">.</span><span class="n">send_push</span><span class="p">(</span>
-</span><span id="line-104">                    <span class="n">target_arn</span><span class="o">=</span><span class="n">arn</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span> <span class="n">message_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
-</span><span id="line-105">                <span class="p">)</span>
-</span><span id="line-106">                <span class="k">for</span> <span class="n">arn</span> <span class="ow">in</span> <span class="n">target_arns</span>
-</span><span id="line-107">            <span class="p">]</span>
-</span><span id="line-108">        <span class="p">)</span></div>
+</span><span id="line-102">            <span class="o">*</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">send_push</span><span class="p">(</span><span class="n">target_arn</span><span class="o">=</span><span class="n">arn</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">)</span> <span class="k">for</span> <span class="n">arn</span> <span class="ow">in</span> <span class="n">target_arns</span><span class="p">]</span>
+</span><span id="line-103">        <span class="p">)</span></div>
 
-</span><span id="line-109">
+</span><span id="line-104">
 <div class="viewcode-block" id="AsyncNotificationManager.send_sms_batch">
 <a class="viewcode-back" href="../../../aws/notifications.html#terminusgps.aws.notifications.AsyncNotificationManager.send_sms_batch">[docs]</a>
-</span><span id="line-110">    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_sms_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_numbers</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-111"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-112"><span class="sd">        Sends an sms message to each phone number in ``to_numbers``.</span>
-</span><span id="line-113">
-</span><span id="line-114"><span class="sd">        :param to_numbers: A sequence of phone numbers.</span>
-</span><span id="line-115"><span class="sd">        :type to_numbers: :py:obj:`~collections.abc.Sequence`</span>
-</span><span id="line-116"><span class="sd">        :param message: A message body.</span>
-</span><span id="line-117"><span class="sd">        :type message: :py:obj:`str`</span>
-</span><span id="line-118"><span class="sd">        :raises ValidationError: If a ``to_number`` wasn&#39;t a valid E.164 formatted phone number.</span>
-</span><span id="line-119"><span class="sd">        :returns: Nothing.</span>
-</span><span id="line-120"><span class="sd">        :rtype: :py:obj:`None`</span>
-</span><span id="line-121">
-</span><span id="line-122"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-123">        <span class="k">for</span> <span class="n">to_number</span> <span class="ow">in</span> <span class="n">to_numbers</span><span class="p">:</span>
-</span><span id="line-124">            <span class="n">validate_e164_phone_number</span><span class="p">(</span><span class="n">to_number</span><span class="p">)</span>
-</span><span id="line-125">
-</span><span id="line-126">        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
-</span><span id="line-127">            <span class="o">*</span><span class="p">[</span>
-</span><span id="line-128">                <span class="bp">self</span><span class="o">.</span><span class="n">send_sms</span><span class="p">(</span>
-</span><span id="line-129">                    <span class="n">to_number</span><span class="o">=</span><span class="n">num</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span> <span class="n">message_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
-</span><span id="line-130">                <span class="p">)</span>
-</span><span id="line-131">                <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">to_numbers</span>
-</span><span id="line-132">            <span class="p">]</span>
-</span><span id="line-133">        <span class="p">)</span></div>
+</span><span id="line-105">    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_sms_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_numbers</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-106"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-107"><span class="sd">        Sends an sms message to each phone number in ``to_numbers``.</span>
+</span><span id="line-108">
+</span><span id="line-109"><span class="sd">        :param to_numbers: A sequence of phone numbers.</span>
+</span><span id="line-110"><span class="sd">        :type to_numbers: :py:obj:`~collections.abc.Sequence`</span>
+</span><span id="line-111"><span class="sd">        :param message: A message body.</span>
+</span><span id="line-112"><span class="sd">        :type message: :py:obj:`str`</span>
+</span><span id="line-113"><span class="sd">        :raises ValidationError: If a ``to_number`` wasn&#39;t a valid E.164 formatted phone number.</span>
+</span><span id="line-114"><span class="sd">        :returns: Nothing.</span>
+</span><span id="line-115"><span class="sd">        :rtype: :py:obj:`None`</span>
+</span><span id="line-116">
+</span><span id="line-117"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-118">        <span class="k">for</span> <span class="n">to_number</span> <span class="ow">in</span> <span class="n">to_numbers</span><span class="p">:</span>
+</span><span id="line-119">            <span class="n">validate_e164_phone_number</span><span class="p">(</span><span class="n">to_number</span><span class="p">)</span>
+</span><span id="line-120">
+</span><span id="line-121">        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
+</span><span id="line-122">            <span class="o">*</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">send_sms</span><span class="p">(</span><span class="n">to_number</span><span class="o">=</span><span class="n">num</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">)</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">to_numbers</span><span class="p">]</span>
+</span><span id="line-123">        <span class="p">)</span></div>
 
-</span><span id="line-134">
+</span><span id="line-124">
 <div class="viewcode-block" id="AsyncNotificationManager.send_sms">
 <a class="viewcode-back" href="../../../aws/notifications.html#terminusgps.aws.notifications.AsyncNotificationManager.send_sms">[docs]</a>
-</span><span id="line-135">    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_sms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-136"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-137"><span class="sd">        Sends an sms to ``to_number``.</span>
-</span><span id="line-138">
-</span><span id="line-139"><span class="sd">        :param to_number: A destination phone number.</span>
-</span><span id="line-140"><span class="sd">        :type to_number: :py:obj:`str`</span>
-</span><span id="line-141"><span class="sd">        :param message: A message body.</span>
-</span><span id="line-142"><span class="sd">        :type message: :py:obj:`str`</span>
-</span><span id="line-143"><span class="sd">        :param message_id: A message deduplication id.</span>
-</span><span id="line-144"><span class="sd">        :type message_id: :py:obj:`str`</span>
-</span><span id="line-145"><span class="sd">        :raises ValidationError: If ``to_number`` wasn&#39;t a valid E.164 formatted phone number.</span>
-</span><span id="line-146"><span class="sd">        :returns: Nothing.</span>
-</span><span id="line-147"><span class="sd">        :rtype: :py:obj:`None`</span>
-</span><span id="line-148">
-</span><span id="line-149"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-150">        <span class="n">validate_e164_phone_number</span><span class="p">(</span><span class="n">to_number</span><span class="p">)</span>
-</span><span id="line-151">
-</span><span id="line-152">        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sns_client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span>
-</span><span id="line-153">            <span class="o">**</span><span class="p">{</span>
-</span><span id="line-154">                <span class="s2">&quot;PhoneNumber&quot;</span><span class="p">:</span> <span class="n">to_number</span><span class="p">,</span>
-</span><span id="line-155">                <span class="s2">&quot;Message&quot;</span><span class="p">:</span> <span class="n">message</span><span class="p">,</span>
-</span><span id="line-156">                <span class="s2">&quot;MessageDeduplicationId&quot;</span><span class="p">:</span> <span class="n">message_id</span><span class="p">,</span>
-</span><span id="line-157">                <span class="s2">&quot;MessageGroupId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_id</span><span class="p">,</span>
-</span><span id="line-158">            <span class="p">}</span>
-</span><span id="line-159">        <span class="p">)</span></div>
+</span><span id="line-125">    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_sms</span><span class="p">(</span>
+</span><span id="line-126">        <span class="bp">self</span><span class="p">,</span> <span class="n">to_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="line-127">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-128"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-129"><span class="sd">        Sends an sms to ``to_number``.</span>
+</span><span id="line-130">
+</span><span id="line-131"><span class="sd">        :param to_number: A destination phone number.</span>
+</span><span id="line-132"><span class="sd">        :type to_number: :py:obj:`str`</span>
+</span><span id="line-133"><span class="sd">        :param message: A message body.</span>
+</span><span id="line-134"><span class="sd">        :type message: :py:obj:`str`</span>
+</span><span id="line-135"><span class="sd">        :param message_id: A message deduplication id. :py:func:`~uuid.uuid4` is used if ``message_id`` was not provided.</span>
+</span><span id="line-136"><span class="sd">        :type message_id: :py:obj:`str` | :py:obj:`None`</span>
+</span><span id="line-137"><span class="sd">        :raises ValidationError: If ``to_number`` wasn&#39;t a valid E.164 formatted phone number.</span>
+</span><span id="line-138"><span class="sd">        :returns: Nothing.</span>
+</span><span id="line-139"><span class="sd">        :rtype: :py:obj:`None`</span>
+</span><span id="line-140">
+</span><span id="line-141"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-142">        <span class="n">validate_e164_phone_number</span><span class="p">(</span><span class="n">to_number</span><span class="p">)</span>
+</span><span id="line-143">
+</span><span id="line-144">        <span class="k">if</span> <span class="ow">not</span> <span class="n">message_id</span><span class="p">:</span>
+</span><span id="line-145">            <span class="n">message_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+</span><span id="line-146">
+</span><span id="line-147">        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sns_client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span>
+</span><span id="line-148">            <span class="o">**</span><span class="p">{</span>
+</span><span id="line-149">                <span class="s2">&quot;PhoneNumber&quot;</span><span class="p">:</span> <span class="n">to_number</span><span class="p">,</span>
+</span><span id="line-150">                <span class="s2">&quot;Message&quot;</span><span class="p">:</span> <span class="n">message</span><span class="p">,</span>
+</span><span id="line-151">                <span class="s2">&quot;MessageDeduplicationId&quot;</span><span class="p">:</span> <span class="n">message_id</span><span class="p">,</span>
+</span><span id="line-152">                <span class="s2">&quot;MessageGroupId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_id</span><span class="p">,</span>
+</span><span id="line-153">            <span class="p">}</span>
+</span><span id="line-154">        <span class="p">)</span></div>
 
-</span><span id="line-160">
+</span><span id="line-155">
 <div class="viewcode-block" id="AsyncNotificationManager.send_push">
 <a class="viewcode-back" href="../../../aws/notifications.html#terminusgps.aws.notifications.AsyncNotificationManager.send_push">[docs]</a>
-</span><span id="line-161">    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_arn</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-162"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-163"><span class="sd">        Sends a push notification to ``target_arn``.</span>
-</span><span id="line-164">
-</span><span id="line-165"><span class="sd">        :param target_arn: An AWS resource ARN.</span>
-</span><span id="line-166"><span class="sd">        :type target_arn: :py:obj:`str`</span>
-</span><span id="line-167"><span class="sd">        :param message: A message body.</span>
-</span><span id="line-168"><span class="sd">        :type message: :py:obj:`str`</span>
-</span><span id="line-169"><span class="sd">        :param message_id: A message deduplication id.</span>
-</span><span id="line-170"><span class="sd">        :type message_id: :py:obj:`str`</span>
-</span><span id="line-171"><span class="sd">        :returns: Nothing.</span>
-</span><span id="line-172"><span class="sd">        :rtype: :py:obj:`None`</span>
-</span><span id="line-173">
-</span><span id="line-174"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-156">    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_push</span><span class="p">(</span>
+</span><span id="line-157">        <span class="bp">self</span><span class="p">,</span> <span class="n">target_arn</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="line-158">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-159"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-160"><span class="sd">        Sends a push notification to ``target_arn``.</span>
+</span><span id="line-161">
+</span><span id="line-162"><span class="sd">        :param target_arn: An AWS resource ARN.</span>
+</span><span id="line-163"><span class="sd">        :type target_arn: :py:obj:`str`</span>
+</span><span id="line-164"><span class="sd">        :param message: A message body.</span>
+</span><span id="line-165"><span class="sd">        :type message: :py:obj:`str`</span>
+</span><span id="line-166"><span class="sd">        :param message_id: A message deduplication id. :py:func:`~uuid.uuid4` is used if ``message_id`` was not provided.</span>
+</span><span id="line-167"><span class="sd">        :type message_id: :py:obj:`str` | :py:obj:`None`</span>
+</span><span id="line-168"><span class="sd">        :returns: Nothing.</span>
+</span><span id="line-169"><span class="sd">        :rtype: :py:obj:`None`</span>
+</span><span id="line-170">
+</span><span id="line-171"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-172">        <span class="k">if</span> <span class="ow">not</span> <span class="n">message_id</span><span class="p">:</span>
+</span><span id="line-173">            <span class="n">message_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+</span><span id="line-174">
 </span><span id="line-175">        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sns_client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span>
 </span><span id="line-176">            <span class="o">**</span><span class="p">{</span>
 </span><span id="line-177">                <span class="s2">&quot;TargetArn&quot;</span><span class="p">:</span> <span class="n">target_arn</span><span class="p">,</span>

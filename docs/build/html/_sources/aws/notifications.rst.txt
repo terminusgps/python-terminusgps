@@ -3,12 +3,18 @@ Notifications
 
 .. autoclass:: terminusgps.aws.notifications.AsyncNotificationManager
     :members:
-    :special-members:
+    :exclude-members: __weakref__
     :autoclasstoc:
 
 =====
 Usage
 =====
+
+Phone numbers must be in `E.164`_ format to be passed to a :py:obj:`~terminusgps.aws.notifications.AsyncNotificationManager` method, i.e. ``"+17135555555"``.
+
+You can use :py:func:`~terminusgps.django.validators.validate_e164_phone_number` to confirm a ``to_number`` is correctly formatted.
+
+.. _E.164: https://en.wikipedia.org/wiki/E.164
 
 .. code:: python
 
@@ -22,8 +28,6 @@ Usage
         group_id: str = str(uuid.uuid4())
         message: str = "We know where ours are... do you?"
         async with AsyncNotificationManager(group_id) as manager:
-            # Some methods require a message id
-            message_id: str = str(uuid.uuid4())
 
             # Send an sms to one phone number
             # Phone numbers must be in E.164 format
@@ -32,7 +36,7 @@ Usage
                 to_number=to_number, message=message, message_id=message_id
             )
 
-            # Send an sms to multiple phone numbers (message ids are automatically generated)
+            # Send an sms to multiple phone numbers
             to_numbers: list[str] = ["+17135555555", "+12815555555", "+18325555555"]
             await manager.send_sms_batch(to_numbers=to_numbers, message=message)
 

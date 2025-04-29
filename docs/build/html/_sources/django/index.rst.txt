@@ -10,3 +10,4 @@ Django
     forms.rst
     mixins.rst
     settings.rst
+    validators.rst

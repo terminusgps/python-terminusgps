@@ -99,12 +99,7 @@ class AsyncNotificationManager:
 
         """
         await asyncio.gather(
-            *[
-                self.send_push(
-                    target_arn=arn, message=message, message_id=str(uuid.uuid4())
-                )
-                for arn in target_arns
-            ]
+            *[self.send_push(target_arn=arn, message=message) for arn in target_arns]
         )
 
     async def send_sms_batch(self, to_numbers: Sequence[str], message: str) -> None:
@@ -124,15 +119,12 @@ class AsyncNotificationManager:
             validate_e164_phone_number(to_number)
 
         await asyncio.gather(
-            *[
-                self.send_sms(
-                    to_number=num, message=message, message_id=str(uuid.uuid4())
-                )
-                for num in to_numbers
-            ]
+            *[self.send_sms(to_number=num, message=message) for num in to_numbers]
         )
 
-    async def send_sms(self, to_number: str, message: str, message_id: str) -> None:
+    async def send_sms(
+        self, to_number: str, message: str, message_id: str | None = None
+    ) -> None:
         """
         Sends an sms to ``to_number``.
 
@@ -140,14 +132,17 @@ class AsyncNotificationManager:
         :type to_number: :py:obj:`str`
         :param message: A message body.
         :type message: :py:obj:`str`
-        :param message_id: A message deduplication id.
-        :type message_id: :py:obj:`str`
+        :param message_id: A message deduplication id. :py:func:`~uuid.uuid4` is used if ``message_id`` was not provided.
+        :type message_id: :py:obj:`str` | :py:obj:`None`
         :raises ValidationError: If ``to_number`` wasn't a valid E.164 formatted phone number.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
         validate_e164_phone_number(to_number)
+
+        if not message_id:
+            message_id = str(uuid.uuid4())
 
         await self._sns_client.publish(
             **{
@@ -158,7 +153,9 @@ class AsyncNotificationManager:
             }
         )
 
-    async def send_push(self, target_arn: str, message: str, message_id: str) -> None:
+    async def send_push(
+        self, target_arn: str, message: str, message_id: str | None = None
+    ) -> None:
         """
         Sends a push notification to ``target_arn``.
 
@@ -166,12 +163,15 @@ class AsyncNotificationManager:
         :type target_arn: :py:obj:`str`
         :param message: A message body.
         :type message: :py:obj:`str`
-        :param message_id: A message deduplication id.
-        :type message_id: :py:obj:`str`
+        :param message_id: A message deduplication id. :py:func:`~uuid.uuid4` is used if ``message_id`` was not provided.
+        :type message_id: :py:obj:`str` | :py:obj:`None`
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
+        if not message_id:
+            message_id = str(uuid.uuid4())
+
         await self._sns_client.publish(
             **{
                 "TargetArn": target_arn,
