@@ -222,6 +222,18 @@ wheels = [
 ]
 
 [[package]]
+name = "botocore-stubs"
+version = "1.38.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "types-awscrt" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/71/34/8ef01652c18967ca69f6476a19942dc8f89223e59437638dc873286372c4/botocore_stubs-1.38.4.tar.gz", hash = "sha256:d576d9b5166c89e007a1f946eb77d3350e438fe64a0f9789fa0f5bbe8b416dae", size = 42278 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5b/21/58250660b30e92ceefa0b6bb88871f8d6d5871850fe1eea786f7fd742c6f/botocore_stubs-1.38.4-py3-none-any.whl", hash = "sha256:09d01d5d99a72bbda6dac8cabea5931487040cfc389bf192330d37f2e6f741b6", size = 65588 },
+]
+
+[[package]]
 name = "certifi"
 version = "2025.4.26"
 source = { registry = "https://pypi.org/simple" }
@@ -952,7 +964,7 @@ wheels = [
 
 [[package]]
 name = "python-terminusgps"
-version = "33.5.0"
+version = "34.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "aiobotocore" },
@@ -974,6 +986,7 @@ dev = [
     { name = "django-stubs" },
     { name = "sphinx" },
     { name = "sphinxawesome-theme" },
+    { name = "types-aiobotocore" },
 ]
 
 [package.metadata]
@@ -997,6 +1010,7 @@ dev = [
     { name = "django-stubs", specifier = ">=5.1.3" },
     { name = "sphinx", specifier = ">=8.1.3" },
     { name = "sphinxawesome-theme", specifier = ">=5.3.2" },
+    { name = "types-aiobotocore", specifier = ">=2.21.1" },
 ]
 
 [[package]]
@@ -1255,6 +1269,27 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/a1/c9/c9d38f464856d32f5359c1c130392e1ad8717fe4d438a221a5e7fd9b37be/twilio-9.5.2.tar.gz", hash = "sha256:55d57d9c58e4ce5fa8e11943e42d76705ac2aaa7eaeab49946521df6f245e936", size = 981755 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/7b/76/33a9198dfea214779af895b80deff0cbd07e7e51f899d308530674f189a0/twilio-9.5.2-py2.py3-none-any.whl", hash = "sha256:072fc85145ab26a922be0a0ef544cbdae2771e11143bc78e919a1dfbfd84a63a", size = 1852752 },
+]
+
+[[package]]
+name = "types-aiobotocore"
+version = "2.21.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "botocore-stubs" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a9/9c/8f6d94e65849537a09e6e63e323598a8bcf66983c0bb8377931d38f67dd5/types_aiobotocore-2.21.1.tar.gz", hash = "sha256:ad099710635a16a06df99d9aeb957e0c488358201dfff5f76f73f5ec2987fc3b", size = 84148 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7b/d1/2bb50be5bbcb383d7023f28aa62c02f8ad013981c28b4a62bdb91062cddc/types_aiobotocore-2.21.1-py3-none-any.whl", hash = "sha256:41034ca807698e666b53ecb45eaf42850161e6093c291a8f1f31536c970c1d0e", size = 51719 },
+]
+
+[[package]]
+name = "types-awscrt"
+version = "0.26.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/db/29/d0597055f1b700193463361b4b2284cf4548acbb10287d6253ce429728d5/types_awscrt-0.26.1.tar.gz", hash = "sha256:aca96f889b3745c0e74f42f08f277fed3bf6e9baa2cf9b06a36f78d77720e504", size = 15537 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/da/c0/4708ee11a50d4e80c4dfb88dc2d6d69b1c296cd7397f1fe6352f119fd310/types_awscrt-0.26.1-py3-none-any.whl", hash = "sha256:176d320a26990efc057d4bf71396e05be027c142252ac48cc0d87aaea0704280", size = 19575 },
 ]
 
 [[package]]
