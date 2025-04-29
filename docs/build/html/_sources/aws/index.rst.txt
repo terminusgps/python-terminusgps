@@ -7,5 +7,6 @@ AWS API
     :maxdepth: 2
     :caption: Contents:
 
+    notifications.rst
     secrets.rst
     utils.rst
