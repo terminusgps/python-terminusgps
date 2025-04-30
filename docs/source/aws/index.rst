@@ -9,5 +9,4 @@ AWS API
 
     notifications.rst
     secrets.rst
-    speech.rst
     utils.rst

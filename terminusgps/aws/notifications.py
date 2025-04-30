@@ -1,173 +1,75 @@
-import asyncio
 import os
-import uuid
-from collections.abc import Sequence
 from contextlib import AsyncExitStack
 
 from aiobotocore.session import AioSession
 
-from terminusgps.django.validators import validate_e164_phone_number
-
-
-class AsyncPollyManager:
-    def __init__(
-        self, bucket_name: str | None = None, region_name: str = "us-east-1"
-    ) -> None:
-        self._exit_stack = AsyncExitStack()
-        self._polly_client = None
-        self._region_name = region_name
-        self._bucket_name = bucket_name or os.getenv("AWS_POLLY_BUCKET_NAME", "")
-
-    @property
-    def region_name(self) -> str:
-        """
-        An AWS region name.
-
-        :type: :py:obj:`str`
-
-        """
-        return self._region_name
-
-    @property
-    def bucket_name(self) -> str:
-        """
-        The AWS bucket that will host audio files.
-
-        :type: :py:obj:`str`
-
-        """
-        return self._bucket_name
-
-    async def __aenter__(self) -> "AsyncPollyManager":
-        """
-        Creates an asyncronous session and client.
-
-        :returns: The polly manager.
-        :rtype: :py:obj:`~terminusgps.aws.notifications.AsyncPollyManager`
-
-        """
-        session = AioSession()
-        self._polly_client = await self._exit_stack.enter_async_context(
-            session.create_client("polly", region_name=self.region_name)
-        )
-        return self
-
-    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
-        """
-        Destroys the asyncronous session.
-
-        :param exc_type: Exception type.
-        :param exc_val: Exception value.
-        :param exc_tb: Exception traceback.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        await self._exit_stack.__aexit__(exc_type, exc_val, exc_tb)
-
-    async def synthesize_speech(
-        self,
-        message: str,
-        format: str = "ogg_vorbis",
-        sample_rate: int = 22050,
-        language_code: str = "en-US",
-    ) -> None:
-        """
-        Synthesizes the message into an audio file and saves it to the S3 bucket.
-
-        :param message: A message to be read aloud.
-        :type message: :py:obj:`str`
-        :param format: A file format. Default is ``"ogg_vorbis"``.
-        :type format: :py:obj:`str`
-        :param sample_rate: The audio frequency in Hz. Default is ``22050``.
-        :type sample_rate: :py:obj:`int`
-        :param language_code: The language to use in the synthesis. Default is ``"en-US"``.
-        :type language_code: :py:obj:`str`
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        await self._polly_client.start_speech_synthesis_task(
-            **{
-                "Engine": "standard",
-                "LanguageCode": language_code,
-                "OutputFormat": format,
-                "OutputS3BucketName": self.bucket_name,
-                "SampleRate": str(sample_rate),
-                "Text": f"<speak>{message}</speak>",
-                "TextType": "ssml",
-                "VoiceId": "Joanna",
-            }
-        )
-
-    async def synthesize_speech_batch(
-        self,
-        messages: Sequence[str],
-        format: str = "ogg_vorbis",
-        sample_rate: int = 22050,
-        language_code: str = "en-US",
-    ) -> None:
-        """
-        Synthesizes a sequence of messages into audio files and saves them to the S3 bucket.
-
-        :param messages: A sequence of messages to be read aloud.
-        :type messages: :py:obj:`Sequence`
-        :param format: A file format. Default is ``"ogg_vorbis"``.
-        :type format: :py:obj:`str`
-        :param sample_rate: The audio frequency in Hz. Default is ``22050``.
-        :type sample_rate: :py:obj:`int`
-        :param language_code: The language to use in the synthesis. Default is ``"en-US"``.
-        :type language_code: :py:obj:`str`
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        await asyncio.gather(
-            *[
-                self.synthesize_speech(
-                    message=message,
-                    format=format,
-                    sample_rate=sample_rate,
-                    language_code=language_code,
-                )
-                for message in messages
-            ]
-        )
-
 
 class AsyncNotificationManager:
+    """Asyncronously delivers notifications using `AWS End User Messaging <https://docs.aws.amazon.com/end-user-messaging/>`_."""
+
     def __init__(
-        self, group_id: str | None = None, region_name: str = "us-east-1"
+        self,
+        origin_pool_arn: str | None = os.getenv("AWS_MESSAGING_ORIGIN_POOL"),
+        configuration_set: str | None = os.getenv("AWS_MESSAGING_CONFIGURATION"),
+        max_sms_price: str = "0.20",
+        max_voice_price: str = "0.20",
+        region_name: str = "us-east-1",
+        debug_enabled: bool = False,
     ) -> None:
         """
-        Sets :py:attr:`group_id` and :py:attr:`region_name`.
+        Sets attributes on the notification manager.
 
+        :param origin_pool_arn: A phone pool ARN for notification dispatch. Default is :envvar:`AWS_MESSAGING_ORIGIN_POOL`.
+        :type origin_pool_arn: :py:obj:`str` | :py:obj:`None`
+        :param configuration_set: An end-user messaging configuration set ARN. Default is :envvar:`AWS_MESSAGING_CONFIGURATION`.
+        :type configuration_set: :py:obj:`str` | :py:obj:`None`
+        :param max_sms_price: Max price to spend on a single SMS message.
+        :type max_sms_price: :py:obj:`str`
+        :param max_voice_price: Max price to spend per minute on a single voice message.
+        :type max_voice_price: :py:obj:`str`
+        :param region_name: An AWS region name used to open an AWS client.
+        :type region_name: :py:obj:`str`
+        :param debug_enabled: Whether or not to enable debug mode.
+        :type debug_enabled: :py:obj:`None`
+        :raises ValueError: If ``origin_pool_arn`` wasn't provided and :envvar:`AWS_MESSAGING_ORIGIN_POOL` wasn't set.
+        :raises ValueError: If ``configuration_set`` wasn't provided and :envvar:`AWS_MESSAGING_CONFIGURATION` wasn't set.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
+        if origin_pool_arn is None:
+            raise ValueError(f"'origin_pool_arn' is required, got '{origin_pool_arn}'.")
+        if configuration_set is None:
+            raise ValueError(
+                f"'configuration_set' is required, got '{configuration_set}'."
+            )
+
         self._exit_stack = AsyncExitStack()
-        self._sns_client = None
+        self._pinpoint_client = None
         self._region_name = region_name
-        self.group_id = group_id
+        self._origin_pool_arn = origin_pool_arn
+        self._configuration_set = configuration_set
+        self._max_sms_price = max_sms_price
+        self._max_voice_price = max_voice_price
+        self._debug = debug_enabled
 
     async def __aenter__(self) -> "AsyncNotificationManager":
         """
-        Creates an asyncronous session and client.
+        Creates asyncronous clients.
 
         :returns: The notification manager.
         :rtype: :py:obj:`~terminusgps.aws.notifications.AsyncNotificationManager`
 
         """
         session = AioSession()
-        self._sns_client = await self._exit_stack.enter_async_context(
-            session.create_client("sns", region_name=self.region_name)
+        self._pinpoint_client = await self._exit_stack.enter_async_context(
+            session.create_client("pinpoint-sms-voice-v2", region_name=self.region_name)
         )
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """
-        Destroys the asyncronous session.
+        Destroys asyncronous clients.
 
         :param exc_type: Exception type.
         :param exc_val: Exception value.
@@ -189,123 +91,107 @@ class AsyncNotificationManager:
         return self._region_name
 
     @property
-    def group_id(self) -> str:
-        """
-        A message group id.
+    def configuration_set(self) -> str:
+        return self._configuration_set
 
-        :type: :py:obj:`str`
+    @property
+    def origin_pool(self) -> str:
+        return self._origin_pool_arn
 
-        """
-        return str(self._group_id)
+    @property
+    def max_sms_price(self) -> str:
+        return self._max_sms_price
 
-    @group_id.setter
-    def group_id(self, other: str | None) -> None:
-        """
-        Sets :py:attr:`group_id` to ``other``.
+    @property
+    def max_voice_price(self) -> str:
+        return self._max_voice_price
 
-        If ``other`` isn't provided, instead set :py:attr:`group_id` to :py:func:`~uuid.uuid4`.
-
-        :param other: A message group id.
-        :type other: :py:obj:`str` | :py:obj:`None`
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        if not other:
-            other = str(uuid.uuid4())
-        self._group_id = other
+    @property
+    def debug(self) -> bool:
+        return self._debug
 
     async def send_sms(
-        self, to_number: str, message: str, message_id: str | None = None
-    ) -> None:
+        self,
+        phone: str,
+        message: str,
+        ttl: int = 300,
+        dry_run: bool = False,
+        feedback: bool = False,
+    ) -> dict:
         """
-        Sends an sms to ``to_number``.
+        Texts ``message`` to ``phone`` via sms.
 
-        :param to_number: A destination phone number.
-        :type to_number: :py:obj:`str`
+        :param phone: A destination phone number.
+        :type phone: :py:obj:`str`
         :param message: A message body.
         :type message: :py:obj:`str`
-        :param message_id: A message deduplication id. :py:func:`~uuid.uuid4` is used if ``message_id`` was not provided.
-        :type message_id: :py:obj:`str` | :py:obj:`None`
-        :raises ValidationError: If ``to_number`` wasn't a valid E.164 formatted phone number.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
+        :param ttl: Time to live in ms. Default is ``300``.
+        :type ttl: :py:obj:`int`
+        :param dry_run: Whether or not to execute the voice message as a dry run. Default is :py:obj:`False`.
+        :type dry_run: :py:obj:`bool`
+        :param feedback: Whether or not to include message feedback in the response. Default is :py:obj:`False`.
+        :type feedback: :py:obj:`bool`
+        :raises AssertionError: If :py:attr:`_pinpoint_client` wasn't set.
+        :returns: A voice message response.
+        :rtype: :py:obj:`dict`
 
         """
-        validate_e164_phone_number(to_number)
-
-        if not message_id:
-            message_id = str(uuid.uuid4())
-
-        await self._sns_client.publish(
+        assert self._pinpoint_client, "Asyncronous client wasn't set."
+        return await self._pinpoint_client.send_text_message(
             **{
-                "PhoneNumber": to_number,
-                "Message": message,
-                "MessageDeduplicationId": message_id,
-                "MessageGroupId": self.group_id,
+                "DestinationPhoneNumber": phone,
+                "OriginationIdentity": self.origin_pool,
+                "MessageBody": message,
+                "MessageType": "TRANSACTIONAL",
+                "ConfigurationSetName": self.configuration_set,
+                "MaxPrice": self.max_sms_price,
+                "TimeToLive": ttl,
+                "DryRun": dry_run or self.debug,
+                "MessageFeedbackEnabled": feedback,
             }
         )
 
-    async def send_push(
-        self, target_arn: str, message: str, message_id: str | None = None
-    ) -> None:
+    async def send_voice(
+        self,
+        phone: str,
+        message: str,
+        ttl: int = 300,
+        voice_id: str = "Joanna",
+        dry_run: bool = False,
+        feedback: bool = False,
+    ) -> dict:
         """
-        Sends a push notification to ``target_arn``.
+        Calls ``phone`` and reads ``message`` aloud.
 
-        :param target_arn: An AWS resource ARN.
-        :type target_arn: :py:obj:`str`
+        :param phone: A destination phone number.
+        :type phone: :py:obj:`str`
         :param message: A message body.
         :type message: :py:obj:`str`
-        :param message_id: A message deduplication id. :py:func:`~uuid.uuid4` is used if ``message_id`` was not provided.
-        :type message_id: :py:obj:`str` | :py:obj:`None`
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
+        :param ttl: Time to live in ms. Default is ``300``.
+        :type ttl: :py:obj:`int`
+        :param voice_id: A voice id to use for speech synthesis.
+        :type voice_id: :py:obj:`str`
+        :param dry_run: Whether or not to execute the voice message as a dry run. Default is :py:obj:`False`.
+        :type dry_run: :py:obj:`bool`
+        :param feedback: Whether or not to include message feedback in the response. Default is :py:obj:`False`.
+        :type feedback: :py:obj:`bool`
+        :raises AssertionError: If :py:attr:`_pinpoint_client` wasn't set.
+        :returns: A voice message response.
+        :rtype: :py:obj:`dict`
 
         """
-        if not message_id:
-            message_id = str(uuid.uuid4())
-
-        await self._sns_client.publish(
+        assert self._pinpoint_client, "Asyncronous client wasn't set."
+        return await self._pinpoint_client.send_voice_message(
             **{
-                "TargetArn": target_arn,
-                "Message": message,
-                "MessageDeduplicationId": message_id,
-                "MessageGroupId": self.group_id,
+                "DestinationPhoneNumber": phone,
+                "OriginationIdentity": self.origin_pool,
+                "MessageBody": message,
+                "MessageBodyTextType": "TEXT",
+                "VoiceId": voice_id.upper(),
+                "ConfigurationSetName": self.configuration_set,
+                "MaxPricePerMinute": self.max_voice_price,
+                "TimeToLive": ttl,
+                "DryRun": dry_run or self.debug,
+                "MessageFeedbackEnabled": feedback,
             }
-        )
-
-    async def send_sms_batch(self, to_numbers: Sequence[str], message: str) -> None:
-        """
-        Sends an sms message to each phone number in ``to_numbers``.
-
-        :param to_numbers: A sequence of phone numbers.
-        :type to_numbers: :py:obj:`~collections.abc.Sequence`
-        :param message: A message body.
-        :type message: :py:obj:`str`
-        :raises ValidationError: If a ``to_number`` wasn't a valid E.164 formatted phone number.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        for to_number in to_numbers:
-            validate_e164_phone_number(to_number)
-
-        await asyncio.gather(
-            *[self.send_sms(to_number=num, message=message) for num in to_numbers]
-        )
-
-    async def send_push_batch(self, target_arns: Sequence[str], message: str) -> None:
-        """
-        Sends a push notification to each AWS resource by ARN in ``target_arns``.
-
-        :param target_arns: A sequence of AWS resource ARNs.
-        :type target_arns: :py:obj:`~collections.abc.Sequence`
-        :param message: A message body.
-        :type message: :py:obj:`str`
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        await asyncio.gather(
-            *[self.send_push(target_arn=arn, message=message) for arn in target_arns]
         )
