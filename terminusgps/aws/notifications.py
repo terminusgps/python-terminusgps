@@ -25,26 +25,23 @@ class AsyncNotificationManager:
         :type origin_pool_arn: :py:obj:`str` | :py:obj:`None`
         :param configuration_set: An end-user messaging configuration set ARN. Default is :envvar:`AWS_MESSAGING_CONFIGURATION`.
         :type configuration_set: :py:obj:`str` | :py:obj:`None`
-        :param max_sms_price: Max price to spend on a single SMS message.
+        :param max_sms_price: Max price to spend on a single SMS message. Default is :py:obj:`"0.20"`.
         :type max_sms_price: :py:obj:`str`
-        :param max_voice_price: Max price to spend per minute on a single voice message.
+        :param max_voice_price: Max price to spend per minute on a single voice message. Default is :py:obj:`"0.20"`.
         :type max_voice_price: :py:obj:`str`
-        :param region_name: An AWS region name used to open an AWS client.
+        :param region_name: An AWS region name used to open an AWS client. Default is :py:obj:`"us-east-1"`.
         :type region_name: :py:obj:`str`
-        :param debug_enabled: Whether or not to enable debug mode.
-        :type debug_enabled: :py:obj:`None`
+        :param debug_enabled: Whether or not to enable debug mode. Default is :py:obj:`False`
+        :type debug_enabled: :py:obj:`False`
         :raises ValueError: If ``origin_pool_arn`` wasn't provided and :envvar:`AWS_MESSAGING_ORIGIN_POOL` wasn't set.
         :raises ValueError: If ``configuration_set`` wasn't provided and :envvar:`AWS_MESSAGING_CONFIGURATION` wasn't set.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        if origin_pool_arn is None and os.getenv("AWS_MESSAGING_ORIGIN_POOL") is None:
+        if not origin_pool_arn and not os.getenv("AWS_MESSAGING_ORIGIN_POOL"):
             raise ValueError(f"'origin_pool_arn' is required, got '{origin_pool_arn}'.")
-        if (
-            configuration_set is None
-            and os.getenv("AWS_MESSAGING_CONFIGURATION") is None
-        ):
+        if not configuration_set and not os.getenv("AWS_MESSAGING_CONFIGURATION"):
             raise ValueError(
                 f"'configuration_set' is required, got '{configuration_set}'."
             )
@@ -102,22 +99,55 @@ class AsyncNotificationManager:
 
     @property
     def configuration_set(self) -> str:
+        """
+        The configuration set to use for messaging.
+
+        :type: :py:obj:`str`
+
+        """
         return self._configuration_set
 
     @property
     def origin_pool(self) -> str:
+        """
+        The origination pool to use for messaging.
+
+        :type: :py:obj:`str`
+
+        """
         return self._origin_pool_arn
 
     @property
     def max_sms_price(self) -> str:
+        """
+        The max allowed price per sms message.
+
+        :type: :py:obj:`str`
+        :value: :py:obj:`"0.20"`
+
+        """
         return self._max_sms_price
 
     @property
     def max_voice_price(self) -> str:
+        """
+        The max allowed price per voice message.
+
+        :type: :py:obj:`str`
+        :value: :py:obj:`"0.20"`
+
+        """
         return self._max_voice_price
 
     @property
     def debug(self) -> bool:
+        """
+        Whether or not debug mode is enabled.
+
+        :type: :py:obj:`bool`
+        :value: :py:obj:`False`
+
+        """
         return self._debug
 
     async def send_sms(
@@ -135,7 +165,7 @@ class AsyncNotificationManager:
         :type phone: :py:obj:`str`
         :param message: A message body.
         :type message: :py:obj:`str`
-        :param ttl: Time to live in ms. Default is ``300``.
+        :param ttl: Time to live in ms. Default is :py:obj:`300`.
         :type ttl: :py:obj:`int`
         :param dry_run: Whether or not to execute the message as a dry run. Default is :py:obj:`False`.
         :type dry_run: :py:obj:`bool`
@@ -177,9 +207,9 @@ class AsyncNotificationManager:
         :type phone: :py:obj:`str`
         :param message: A message body.
         :type message: :py:obj:`str`
-        :param ttl: Time to live in ms. Default is ``300``.
+        :param ttl: Time to live in ms. Default is :py:obj:`300`.
         :type ttl: :py:obj:`int`
-        :param voice_id: A voice id to use for speech synthesis.
+        :param voice_id: A voice id to use for speech synthesis. Default is :py:obj:`"Joanna"`.
         :type voice_id: :py:obj:`str`
         :param dry_run: Whether or not to execute the message as a dry run. Default is :py:obj:`False`.
         :type dry_run: :py:obj:`bool`
@@ -221,7 +251,7 @@ class AsyncNotificationManager:
         :type phones: :py:obj:`~collections.abc.Sequence`
         :param message: A message body.
         :type message: :py:obj:`str`
-        :param ttl: Time to live in ms. Default is ``300``.
+        :param ttl: Time to live in ms. Default is :py:obj:`300`.
         :type ttl: :py:obj:`int`
         :param dry_run: Whether or not to execute the messages as a dry run. Default is :py:obj:`False`.
         :type dry_run: :py:obj:`bool`
@@ -262,9 +292,9 @@ class AsyncNotificationManager:
         :type phone: :py:obj:`~collections.abc.Sequence`
         :param message: A message body.
         :type message: :py:obj:`str`
-        :param ttl: Time to live in ms. Default is ``300``.
+        :param ttl: Time to live in ms. Default is :py:obj:`300`.
         :type ttl: :py:obj:`int`
-        :param voice_id: A voice id to use for speech synthesis.
+        :param voice_id: A voice id to use for speech synthesis. Default is :py:obj:`"Joanna"`.
         :type voice_id: :py:obj:`str`
         :param dry_run: Whether or not to execute the message as a dry run. Default is :py:obj:`False`.
         :type dry_run: :py:obj:`bool`
