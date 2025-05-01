@@ -251,7 +251,7 @@ class AsyncNotificationManager:
         Calls each number in ``phones`` and reads ``message`` aloud.
 
         :param phone: A sequence of phone numbers.
-        :type phone: :py:obj:`str`
+        :type phone: :py:obj:`~collections.abc.Sequence`
         :param message: A message body.
         :type message: :py:obj:`str`
         :param ttl: Time to live in ms. Default is ``300``.
