@@ -237,12 +237,7 @@ class AsyncNotificationManager:
         )
 
     async def batch_send_sms(
-        self,
-        phones: Sequence[str],
-        message: str,
-        ttl: int = 300,
-        dry_run: bool = False,
-        feedback: bool = False,
+        self, phones: Sequence[str], message: str, **kwargs
     ) -> list[dict]:
         """
         Sends ``message`` to all phone numbers in ``phones`` via sms.
@@ -251,39 +246,22 @@ class AsyncNotificationManager:
         :type phones: :py:obj:`~collections.abc.Sequence`
         :param message: A message body.
         :type message: :py:obj:`str`
-        :param ttl: Time to live in ms. Default is :py:obj:`300`.
-        :type ttl: :py:obj:`int`
-        :param dry_run: Whether or not to execute the messages as a dry run. Default is :py:obj:`False`.
-        :type dry_run: :py:obj:`bool`
-        :param feedback: Whether or not to include message feedback in the response. Default is :py:obj:`False`.
-        :type feedback: :py:obj:`bool`
+        :param kwargs: Additional keyword arguments passed to :py:meth:`~terminusgps.aws.notifications.AsyncNotificationManager.send_sms`.
         :raises AssertionError: If :py:attr:`_pinpoint_client` wasn't set.
         :returns: A list of sms message responses.
         :rtype: :py:obj:`dict`
 
+        .. seealso::
+            :py:meth:`~terminusgps.aws.notifications.AsyncNotificationManager.send_sms` for details on available keyword arguments.
+
         """
         assert self._pinpoint_client, "Asyncronous client wasn't set."
         return await asyncio.gather(
-            *[
-                self.send_sms(
-                    phone=phone,
-                    message=message,
-                    ttl=ttl,
-                    dry_run=dry_run,
-                    feedback=feedback,
-                )
-                for phone in phones
-            ]
+            *[self.send_sms(phone=phone, message=message, **kwargs) for phone in phones]
         )
 
     async def batch_send_voice(
-        self,
-        phones: Sequence[str],
-        message: str,
-        ttl: int = 300,
-        voice_id: str = "Joanna",
-        dry_run: bool = False,
-        feedback: bool = False,
+        self, phones: Sequence[str], message: str, **kwargs
     ) -> list[dict]:
         """
         Calls each number in ``phones`` and reads ``message`` aloud.
@@ -292,30 +270,20 @@ class AsyncNotificationManager:
         :type phone: :py:obj:`~collections.abc.Sequence`
         :param message: A message body.
         :type message: :py:obj:`str`
-        :param ttl: Time to live in ms. Default is :py:obj:`300`.
-        :type ttl: :py:obj:`int`
-        :param voice_id: A voice id to use for speech synthesis. Default is :py:obj:`"Joanna"`.
-        :type voice_id: :py:obj:`str`
-        :param dry_run: Whether or not to execute the message as a dry run. Default is :py:obj:`False`.
-        :type dry_run: :py:obj:`bool`
-        :param feedback: Whether or not to include message feedback in the response. Default is :py:obj:`False`.
-        :type feedback: :py:obj:`bool`
+        :param kwargs: Additional keyword arguments passed to :py:meth:`~terminusgps.aws.notifications.AsyncNotificationManager.send_voice`.
         :raises AssertionError: If :py:attr:`_pinpoint_client` wasn't set.
         :returns: A voice message response.
         :rtype: :py:obj:`dict`
+
+
+        .. seealso::
+            :py:meth:`~terminusgps.aws.notifications.AsyncNotificationManager.send_voice` for details on available keyword arguments.
 
         """
         assert self._pinpoint_client, "Asyncronous client wasn't set."
         return await asyncio.gather(
             *[
-                self.send_voice(
-                    phone=phone,
-                    message=message,
-                    ttl=ttl,
-                    voice_id=voice_id,
-                    dry_run=dry_run,
-                    feedback=feedback,
-                )
+                self.send_voice(phone=phone, message=message, **kwargs)
                 for phone in phones
             ]
         )

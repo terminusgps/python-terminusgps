@@ -318,7 +318,12 @@ class WialonBase:
 
     @property
     def cfields(self) -> dict[str, str]:
-        """Custom fields for the Wialon object."""
+        """
+        Custom fields for the Wialon object.
+
+        :type: :py:obj:`dict`
+
+        """
         response = self.session.wialon_api.core_search_item(
             **{"id": self.id, "flags": flags.DataFlag.UNIT_CUSTOM_FIELDS}
         )
@@ -327,7 +332,12 @@ class WialonBase:
 
     @property
     def afields(self) -> dict[str, str]:
-        """Admin fields for the Wialon object."""
+        """
+        Admin fields for the Wialon object.
+
+        :type: :py:obj:`dict`
+
+        """
         response = self.session.wialon_api.core_search_item(
             **{"id": self.id, "flags": flags.DataFlag.UNIT_ADMIN_FIELDS}
         )
