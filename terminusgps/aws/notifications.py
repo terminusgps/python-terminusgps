@@ -1,4 +1,6 @@
+import asyncio
 import os
+from collections.abc import Sequence
 from contextlib import AsyncExitStack
 
 from aiobotocore.session import AioSession
@@ -127,12 +129,12 @@ class AsyncNotificationManager:
         :type message: :py:obj:`str`
         :param ttl: Time to live in ms. Default is ``300``.
         :type ttl: :py:obj:`int`
-        :param dry_run: Whether or not to execute the voice message as a dry run. Default is :py:obj:`False`.
+        :param dry_run: Whether or not to execute the message as a dry run. Default is :py:obj:`False`.
         :type dry_run: :py:obj:`bool`
         :param feedback: Whether or not to include message feedback in the response. Default is :py:obj:`False`.
         :type feedback: :py:obj:`bool`
         :raises AssertionError: If :py:attr:`_pinpoint_client` wasn't set.
-        :returns: A voice message response.
+        :returns: An sms message response.
         :rtype: :py:obj:`dict`
 
         """
@@ -171,7 +173,7 @@ class AsyncNotificationManager:
         :type ttl: :py:obj:`int`
         :param voice_id: A voice id to use for speech synthesis.
         :type voice_id: :py:obj:`str`
-        :param dry_run: Whether or not to execute the voice message as a dry run. Default is :py:obj:`False`.
+        :param dry_run: Whether or not to execute the message as a dry run. Default is :py:obj:`False`.
         :type dry_run: :py:obj:`bool`
         :param feedback: Whether or not to include message feedback in the response. Default is :py:obj:`False`.
         :type feedback: :py:obj:`bool`
@@ -195,3 +197,103 @@ class AsyncNotificationManager:
                 "MessageFeedbackEnabled": feedback,
             }
         )
+
+    async def batch_send_sms(
+        self,
+        phones: Sequence[str],
+        message: str,
+        ttl: int = 300,
+        dry_run: bool = False,
+        feedback: bool = False,
+    ) -> list[dict]:
+        """
+        Sends ``message`` to all phone numbers in ``phones`` via sms.
+
+        :param phones: A sequence of phone numbers.
+        :type phones: :py:obj:`~collections.abc.Sequence`
+        :param message: A message body.
+        :type message: :py:obj:`str`
+        :param ttl: Time to live in ms. Default is ``300``.
+        :type ttl: :py:obj:`int`
+        :param dry_run: Whether or not to execute the messages as a dry run. Default is :py:obj:`False`.
+        :type dry_run: :py:obj:`bool`
+        :param feedback: Whether or not to include message feedback in the response. Default is :py:obj:`False`.
+        :type feedback: :py:obj:`bool`
+        :raises AssertionError: If :py:attr:`_pinpoint_client` wasn't set.
+        :returns: A list of sms message responses.
+        :rtype: :py:obj:`dict`
+
+        """
+        assert self._pinpoint_client, "Asyncronous client wasn't set."
+        return await asyncio.gather(
+            *[
+                self.send_sms(
+                    phone=phone,
+                    message=message,
+                    ttl=ttl,
+                    dry_run=dry_run,
+                    feedback=feedback,
+                )
+                for phone in phones
+            ]
+        )
+
+    async def batch_send_voice(
+        self,
+        phones: Sequence[str],
+        message: str,
+        ttl: int = 300,
+        voice_id: str = "Joanna",
+        dry_run: bool = False,
+        feedback: bool = False,
+    ) -> list[dict]:
+        """
+        Calls each number in ``phones`` and reads ``message`` aloud.
+
+        :param phone: A sequence of phone numbers.
+        :type phone: :py:obj:`str`
+        :param message: A message body.
+        :type message: :py:obj:`str`
+        :param ttl: Time to live in ms. Default is ``300``.
+        :type ttl: :py:obj:`int`
+        :param voice_id: A voice id to use for speech synthesis.
+        :type voice_id: :py:obj:`str`
+        :param dry_run: Whether or not to execute the message as a dry run. Default is :py:obj:`False`.
+        :type dry_run: :py:obj:`bool`
+        :param feedback: Whether or not to include message feedback in the response. Default is :py:obj:`False`.
+        :type feedback: :py:obj:`bool`
+        :raises AssertionError: If :py:attr:`_pinpoint_client` wasn't set.
+        :returns: A voice message response.
+        :rtype: :py:obj:`dict`
+
+        """
+        assert self._pinpoint_client, "Asyncronous client wasn't set."
+        return await asyncio.gather(
+            *[
+                self.send_voice(
+                    phone=phone,
+                    message=message,
+                    ttl=ttl,
+                    voice_id=voice_id,
+                    dry_run=dry_run,
+                    feedback=feedback,
+                )
+                for phone in phones
+            ]
+        )
+
+
+async def main() -> None:
+    async with AsyncNotificationManager() as manager:
+        await manager.send_sms("+17133049421", "This is message #0.")
+        await manager.send_sms("+18324667085", "This is message #1.")
+        await manager.send_sms("+12812562469", "This is message #2.")
+        await manager.send_sms("+18322835634", "This is message #3.")
+        await manager.batch_send_sms(
+            ["+17133049421", "+18324667085", "+12812562469", "+18322835634"],
+            "This is message #4.",
+        )
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
