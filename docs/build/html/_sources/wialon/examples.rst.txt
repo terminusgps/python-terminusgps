@@ -5,27 +5,19 @@ Usage Examples
 Create a new user and rename it
 ===============================
 
-----------------------------------------------------------------------------------------------------------------------
-1. Import :py:obj:`~terminusgps.wialon.session.WialonSession` and :py:obj:`~terminusgps.wialon.items.user.WialonUser`.
-----------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+1. Open a :py:obj:`~terminusgps.wialon.session.WialonSession` as a context manager and instantiate a user.
+----------------------------------------------------------------------------------------------------------
 
 Let's also import :py:obj:`~terminusgps.wialon.utils.generate_wialon_password` so we don't have to come up with a valid Wialon password ourselves.
 
 .. code:: python
 
-    from terminusgps.wialon.session import WialonSession
     from terminusgps.wialon.items import WialonUser
+    from terminusgps.wialon.session import WialonSession
     from terminusgps.wialon.utils import generate_wialon_password
 
-----------------------------------------------------------------
-2. Open the session in a context manager and instantiate a user.
-----------------------------------------------------------------
-
-It is recommended to only use keyword arguments when instantiating a :py:obj:`~terminusgps.wialon.items.base.WialonBase` object.
-
-.. code:: python
-
-    with WialonSession(token="my_wialon_api_token") as session:
+    with WialonSession(token="my-secure-wialon-token") as session:
         user = WialonUser(
             id=None,
             session=session,
@@ -35,15 +27,22 @@ It is recommended to only use keyword arguments when instantiating a :py:obj:`~t
         )
         print(f"{user.name = }") # user.name = "test_user"
 
------------------------------------------------------------------------------------------------------------
-3. Within the context manager, :py:meth:`~terminusgps.wialon.items.base.WialonBase.rename` can be executed.
------------------------------------------------------------------------------------------------------------
+.. seealso:: :py:meth:`~terminusgps.wialon.items.user.WialonUser.create` for details on initializing a user.
+
+--------------------------------------------------------------------------------------------------------------
+2. Execute :py:meth:`~terminusgps.wialon.items.base.WialonBase.rename` on the unit within the session context.
+--------------------------------------------------------------------------------------------------------------
+
+Calling :py:meth:`~terminusgps.wialon.items.base.WialonBase.rename` renames the unit in Wialon and updates its :py:attr:`name` attribute.
 
 .. code:: python
 
-    with WialonSession(token="my_secure_wialon_token") as session:
-        ...
+    from terminusgps.wialon.items import WialonUser
+    from terminusgps.wialon.session import WialonSession
+    from terminusgps.wialon.utils import generate_wialon_password
 
+    with WialonSession(token="my-secure-wialon-token") as session:
+        ...
         unit.rename("super_test_user")
         print(f"{user.name = }") # user.name = "super_test_user"
         # Session is logged out after exiting scope
@@ -54,11 +53,11 @@ Full code example
 
 .. code:: python
 
-    from terminusgps.wialon.session import WialonSession
     from terminusgps.wialon.items import WialonUnit
+    from terminusgps.wialon.session import WialonSession
     from terminusgps.wialon.utils import generate_wialon_password
 
-    with WialonSession(token="my_secure_wialon_token") as session:
+    with WialonSession(token="my-secure-wialon-token") as session:
         unit = WialonUnit(
             id=None,
             session=session,
@@ -69,29 +68,31 @@ Full code example
         print(f"{unit.name = }") # user.name = "test_user"
         unit.rename("super_test_user")
         print(f"{unit.name = }") # user.name = "super_test_user"
+        # Session is logged out after exiting scope
 
 
 ============================================
 Create an account and migrate a unit into it
 ============================================
 
-------------------------------------------------------------------------------------------------------------------------------------------------
-1. Import :py:obj:`~terminusgps.wialon.session.WialonSession`, :py:mod:`~terminusgps.wialon.items`, and :py:mod:`~terminusgps.wialon.constants`.
-------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------
+1. Create a new user for the account.
+-------------------------------------
+
+If you choose to use an already existing user for this process, you may need to pass ``skip_creator_check=True`` when creating the resource in the next step.
+
+This is because Wialon `forbids users from creating accounts if they are already responsible for creating other Wialon objects <https://sdk.wialon.com/wiki/en/sidebar/remoteapi/apiref/core/create_resource>`_.
 
 .. code:: python
 
+    from terminusgps.wialon import constants
     from terminusgps.wialon.session import WialonSession
-    from terminusgps.wialon import items, constants
+    from terminusgps.wialon.items import (
+        WialonResource, WialonUnit, WialonUser
+    )
 
---------------------------
-2. Create an account user.
---------------------------
-
-.. code:: python
-
-    with WialonSession(token="my_secure_wialon_token") as session:
-        account_user = items.WialonUser(
+    with WialonSession(token="my-secure-wialon-token") as session:
+        account_user = WialonUser(
             id=None,
             session=session,
             creator_id="27884511", # Admin user id
@@ -99,62 +100,109 @@ Create an account and migrate a unit into it
             password="super_secure_password1!",
         )
 
---------------------------------------------
-3. Create a resource using the account user.
---------------------------------------------
+.. seealso:: :py:meth:`~terminusgps.wialon.items.user.WialonUser.create` for details on initializing a user.
+
+--------------------------------------------------------------
+2. Create a new resource with the account user as its creator.
+--------------------------------------------------------------
 
 .. code:: python
 
-    with WialonSession(token="my_secure_wialon_token") as session:
+    from terminusgps.wialon import constants
+    from terminusgps.wialon.session import WialonSession
+    from terminusgps.wialon.items import (
+        WialonResource, WialonUnit, WialonUser
+    )
+
+    with WialonSession(token="my-secure-wialon-token") as session:
         ...
-        account_resource = items.WialonResource(
+        account_resource = WialonResource(
             id=None,
             session=session,
             creator_id=account_user.id,
             name="account_resource",
         )
 
+.. seealso:: :py:meth:`~terminusgps.wialon.items.resource.WialonResource.create` for details on initializing a resource.
+
 ------------------------------------------------------------------
-4. Retrieve a :py:obj:`~terminusgps.wialon.items.unit.WialonUnit`.
+3. Retrieve a :py:obj:`~terminusgps.wialon.items.unit.WialonUnit`.
 ------------------------------------------------------------------
 
 .. code:: python
 
-    with WialonSession(token="my_secure_wialon_token") as session:
+    from terminusgps.wialon import constants
+    from terminusgps.wialon.session import WialonSession
+    from terminusgps.wialon.items import (
+        WialonResource, WialonUnit, WialonUser
+    )
+
+    with WialonSession(token="my-secure-wialon-token") as session:
         ...
-        unit = items.WialonUnit(id="12345678", session=session)
+        unit = WialonUnit(id="12345678", session=session)
+
+.. seealso:: :py:meth:`~terminusgps.wialon.items.unit.WialonUnit.create` for details on initializing a unit.
 
 ------------------------------------------------
-5. Grant the account user migration permissions.
+4. Grant the account user migration permissions.
 ------------------------------------------------
+
+:py:meth:`~terminusgps.wialon.items.user.WialonUser.grant_access` grants a user access to a unit using an access mask.
+
+:py:obj:`~terminusgps.wialon.constants.ACCESSMASK_UNIT_MIGRATION` is an access mask that contains all required permissions migrating a unit into an account.
+
+If you don't grant `these permissions <https://sdk.wialon.com/wiki/en/sidebar/remoteapi/apiref/account/change_account>`_ to the account user, the next steps may fail.
 
 .. code:: python
 
-    with WialonSession(token="my_secure_wialon_token") as session:
+    from terminusgps.wialon import constants
+    from terminusgps.wialon.session import WialonSession
+    from terminusgps.wialon.items import (
+        WialonResource, WialonUnit, WialonUser
+    )
+
+    with WialonSession(token="my-secure-wialon-token") as session:
         ...
         account_user.grant_access(unit, access_mask=constants.ACCESSMASK_UNIT_MIGRATION)
 
 --------------------------------------------------------
-6. Transform the resource into an account and enable it.
+5. Transform the resource into an account and enable it.
 --------------------------------------------------------
 
+A :py:obj:`~terminusgps.wialon.items.resource.WialonResource` can be turned into a Wialon account by calling :py:meth:`~terminusgps.wialon.items.resource.WialonResource.create_account`.
+
+:py:meth:`~terminusgps.wialon.items.resource.WialonResource.enable_account` **must** be called at some point because a disabled account cannot migrate units into itself.
+
 .. code:: python
 
-    with WialonSession(token="my_secure_wialon_token") as session:
+    from terminusgps.wialon import constants
+    from terminusgps.wialon.session import WialonSession
+    from terminusgps.wialon.items import (
+        WialonResource, WialonUnit, WialonUser
+    )
+
+    with WialonSession(token="my-secure-wialon-token") as session:
         ...
         account_resource.create_account("terminusgps_ext_hist")
-        account_resource.enable()
+        account_resource.enable_account()
 
 -------------------------------------
-7. Migrate the unit into the account.
+6. Migrate the unit into the account.
 -------------------------------------
+
+Finally, pass the unit into :py:meth:`~terminusgps.wialon.items.resource.WialonResource.migrate_unit` to finish unit migration.
 
 .. code:: python
 
-    with WialonSession(token="my_secure_wialon_token") as session:
+    from terminusgps.wialon import constants
+    from terminusgps.wialon.session import WialonSession
+    from terminusgps.wialon.items import (
+        WialonResource, WialonUnit, WialonUser
+    )
+
+    with WialonSession(token="my-secure-wialon-token") as session:
         ...
         account_resource.migrate_unit(unit)
-
 
 -----------------
 Full code example
@@ -162,57 +210,58 @@ Full code example
 
 .. code:: python
 
+    from terminusgps.wialon import constants
     from terminusgps.wialon.session import WialonSession
-    from terminusgps.wialon import items, constants
+    from terminusgps.wialon.items import (
+        WialonResource, WialonUnit, WialonUser
+    )
 
-    with WialonSession(token="my_secure_wialon_token") as session:
-        account_user = items.WialonUser(
+    with WialonSession(token="my-secure-wialon-token") as session:
+        account_user = WialonUser(
             id=None,
             session=session,
             creator_id="27884511", # Admin user id
             name="account_user",
             password="super_secure_password1!",
         )
-        account_resource = items.WialonResource(
+        account_resource = WialonResource(
             id=None,
             session=session,
             creator_id=account_user.id,
             name="account_resource",
         )
-        unit = items.WialonUnit(id="12345678", session=session)
+        unit = WialonUnit(id="12345678", session=session)
         account_user.grant_access(unit, access_mask=constants.ACCESSMASK_UNIT_MIGRATION)
         account_resource.create_account("terminusgps_ext_hist")
-        account_resource.enable()
+        account_resource.enable_account()
         account_resource.migrate_unit(unit)
 
 ==========================
 Add a driver to a resource
 ==========================
-------------------------------------------------------------------------------------------------------------------------------
-1. Import :py:obj:`~terminusgps.wialon.session.WialonSession` and :py:obj:`~terminusgps.wialon.items.resource.WialonResource`.
-------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------
+1. Retrieve a resource.
+-----------------------
 
 .. code:: python
 
     from terminusgps.wialon.session import WialonSession
     from terminusgps.wialon.items import WialonResource
 
-------------------------------------------------------------------------------------
-2. Instantiate a :py:obj:`~terminusgps.wialon.items.resource.WialonResource` object.
-------------------------------------------------------------------------------------
-
-.. code:: python
-
-    with WialonSession(token="my_secure_wialon_token") as session:
+    with WialonSession(token="my-secure-wialon-token") as session:
         resource = WialonResource(id="12345678", session=session)
 
 -----------------------------------------------------------------------------------
-3. Call :py:meth:`~terminusgps.wialon.items.resource.WialonResource.create_driver`.
+2. Call :py:meth:`~terminusgps.wialon.items.resource.WialonResource.create_driver`.
 -----------------------------------------------------------------------------------
 
 .. code:: python
 
-    with WialonSession(token="my_secure_wialon_token") as session:
+    from terminusgps.wialon.session import WialonSession
+    from terminusgps.wialon.items import WialonResource
+
+    with WialonSession(token="my-secure-wialon-token") as session:
         ...
         resource.create_driver(
             name="test_driver",
@@ -232,7 +281,7 @@ Full code example
     from terminusgps.wialon.session import WialonSession
     from terminusgps.wialon.items import WialonResource
 
-    with WialonSession(token="my_secure_wialon_token") as session:
+    with WialonSession(token="my-secure-wialon-token") as session:
         resource = WialonResource(id="12345678", session=session)
         resource.create_driver(
             name="test_driver",
@@ -243,43 +292,37 @@ Full code example
             custom_fields={"my_field_key": "my_field_value"}
         )
 
-==========================================
-Update a unit's ``to_number`` custom field
-==========================================
+========================================
+Update a unit's "to_number" custom field
+========================================
 
-----------------------------------------------------------------------------------------------------------------------
-1. Import :py:obj:`~terminusgps.wialon.session.WialonSession` and :py:obj:`~terminusgps.wialon.items.unit.WialonUnit`.
-----------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------
+1. Retrieve a :py:obj:`~terminusgps.wialon.items.unit.WialonUnit`.
+------------------------------------------------------------------
 
 .. code:: python
 
     from terminusgps.wialon.session import WialonSession
     from terminusgps.wialon.items import WialonUnit
 
----------------------
-2. Retrieve the unit.
----------------------
-
-.. code:: python
-
-    with WialonSession(token="my_secure_wialon_token") as session:
+    with WialonSession(token="my-secure-wialon-token") as session:
         unit = WialonUnit(id="12345678", session=session)
 
 ---------------------------------------------------------------------------
-3. Call :py:meth:`~terminusgps.wialon.items.base.WialonBase.update_cfield`.
+2. Call :py:meth:`~terminusgps.wialon.items.base.WialonBase.update_cfield`.
 ---------------------------------------------------------------------------
 
-Assuming you know the ``to_number``'s custom field id, call :py:meth:`~terminusgps.wialon.items.base.WialonBase.update_cfield` using it.
-
-If you don't, call :py:meth:`~terminusgps.wialon.items.base.WialonBase.get_cfield_id` first, then pass the id into :py:meth:`~terminusgps.wialon.items.base.WialonBase.update_cfield`.
+If the custom field doesn't exist in Wialon yet, it will be created by :py:meth:`~terminusgps.wialon.items.base.WialonBase.update_cfield`.
 
 .. code:: python
 
-    with WialonSession(token="my_secure_wialon_token") as session:
+    from terminusgps.wialon.session import WialonSession
+    from terminusgps.wialon.items import WialonUnit
+
+    with WialonSession(token="my-secure-wialon-token") as session:
         ...
-        to_number_id: int | None = unit.get_cfield_id("to_number") # May return None if key is invalid.
-        unit.update_cfield(id=to_number_id, key="to_number", value="+15555555555")
-        unit.cfields["to_number"] # "+15555555555"
+        unit.update_cfield(key="to_number", value="+15555555555")
+        print(f"{unit.cfields['to_number'] = }") # unit.cfields["to_number"] = "+15555555555"
 
 -----------------
 Full code example
@@ -290,8 +333,7 @@ Full code example
     from terminusgps.wialon.session import WialonSession
     from terminusgps.wialon.items import WialonUnit
 
-    with WialonSession(token="my_secure_wialon_token") as session:
+    with WialonSession(token="my-secure-wialon-token") as session:
         unit = WialonUnit(id="12345678", session=session)
-        to_number_id: int | None = unit.get_cfield_id("to_number") # Will return None if the field isn't found.
-        unit.update_cfield(id=to_number_id, key="to_number", value="+15555555555")
-        print(unit.cfields["to_number"]) # "+15555555555"
+        unit.update_cfield(key="to_number", value="+15555555555")
+        print(f"{unit.cfields['to_number'] = }") # unit.cfields["to_number"] = "+15555555555"

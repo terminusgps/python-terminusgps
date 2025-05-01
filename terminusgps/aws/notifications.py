@@ -47,10 +47,10 @@ class AsyncNotificationManager:
             )
 
         self._origin_pool_arn = origin_pool_arn or os.getenv(
-            "AWS_MESSAGING_ORIGIN_POOL"
+            "AWS_MESSAGING_ORIGIN_POOL", ""
         )
         self._configuration_set = configuration_set or os.getenv(
-            "AWS_MESSAGING_CONFIGURATION"
+            "AWS_MESSAGING_CONFIGURATION", ""
         )
 
         self._exit_stack = AsyncExitStack()

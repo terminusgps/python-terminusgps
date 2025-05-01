@@ -9,4 +9,3 @@ AWS API
 
     notifications.rst
     secrets.rst
-    utils.rst

@@ -114,7 +114,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../aws/index.html">AWS API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../aws/notifications.html">Notifications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../aws/secrets.html">Secrets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../aws/utils.html">Utilities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../django/index.html">Django</a><ul>
@@ -232,10 +231,10 @@
 </span><span id="line-47">            <span class="p">)</span>
 </span><span id="line-48">
 </span><span id="line-49">        <span class="bp">self</span><span class="o">.</span><span class="n">_origin_pool_arn</span> <span class="o">=</span> <span class="n">origin_pool_arn</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span>
-</span><span id="line-50">            <span class="s2">&quot;AWS_MESSAGING_ORIGIN_POOL&quot;</span>
+</span><span id="line-50">            <span class="s2">&quot;AWS_MESSAGING_ORIGIN_POOL&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
 </span><span id="line-51">        <span class="p">)</span>
 </span><span id="line-52">        <span class="bp">self</span><span class="o">.</span><span class="n">_configuration_set</span> <span class="o">=</span> <span class="n">configuration_set</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span>
-</span><span id="line-53">            <span class="s2">&quot;AWS_MESSAGING_CONFIGURATION&quot;</span>
+</span><span id="line-53">            <span class="s2">&quot;AWS_MESSAGING_CONFIGURATION&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
 </span><span id="line-54">        <span class="p">)</span>
 </span><span id="line-55">
 </span><span id="line-56">        <span class="bp">self</span><span class="o">.</span><span class="n">_exit_stack</span> <span class="o">=</span> <span class="n">AsyncExitStack</span><span class="p">()</span>

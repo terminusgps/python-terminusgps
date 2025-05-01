@@ -294,9 +294,9 @@ def generate_wialon_password(length: int = 32) -> str:
         - At least one special symbol.
         - At least three digits.
 
-    :param length: Length of the generated password. Default is ``32``.
+    :param length: Length of the generated password. Default is :py:obj:`32`.
     :type length: :py:obj:`int`
-    :raises ValueError: If :py:length is less than ``8`` or greater than ``64``.
+    :raises ValueError: If ``length`` is less than ``8`` or greater than ``64``.
     :returns: A Wialon compliant password.
     :rtype: :py:obj:`str`
 

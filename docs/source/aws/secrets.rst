@@ -1,17 +1,20 @@
 Secrets
 =======
 
-.. currentmodule:: terminusgps.aws.secrets
+.. automodule:: terminusgps.aws.secrets
+    :members:
 
-.. py:function:: get_secret(name, [region="us-east-1"]) -> dict[str, str]
-   
-    Logs into the default AWS CLI session and returns a secret value by name.
+=====
+Usage
+=====
 
-    :param name: An AWS `secretsmanager`_ secret name.
-    :type name: :py:obj:`str`
-    :param region: An AWS region name. Default is ``"us-east-1"``.
-    :type region: :py:obj:`str`
-    :returns: The secret as a dictionary.
-    :rtype: :py:obj:`dict`
+Use :py:func:`~terminusgps.aws.secrets.get_secret` to retrieve an AWS `secretsmanager <https://docs.aws.amazon.com/secretsmanager/>`_ secret.
 
-    .. _secretsmanager: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/secretsmanager.html
+:py:func:`~terminusgps.aws.secrets.get_secret` returns a dictionary containing the secret values.
+
+.. code:: python
+
+    from terminusgps.aws.secrets import get_secret
+
+    secret = get_secret("terminusgps-site-env-dev")
+    print(secret["WIALON_TOKEN"]) # "my-secure-wialon-token"

@@ -11,7 +11,7 @@ Notifications
 Usage
 =====
 
-With a :py:obj:`~terminusgps.aws.notifications.AsyncNotificationManager`, you can asyncronously dispatch sms messages or voice calls.
+With an :py:obj:`~terminusgps.aws.notifications.AsyncNotificationManager`, you can asyncronously dispatch sms messages or voice calls.
 
 Within an asyncronous event loop, i.e. :py:func:`main`, open an asyncronous context manager with ``async with``.
 

@@ -155,13 +155,24 @@ class WialonBase:
         )
         self._name = new_name
 
-    def get_cfield_id(self, key: str) -> int | None:
+    def delete(self) -> None:
         """
-        Returns a custom field id by its key, if it exists.
+        Deletes the Wialon object.
 
-        :param key: A custom field key.
+        :raises WialonError: If something goes wrong with Wialon.
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
+        self.session.wialon_api.item_delete_item(**{"itemId": self.id})
+
+    def _get_cfield_id(self, key: str) -> int | None:
+        """
+        Returns a custom field id by key.
+
+        :param key: A custom field key (name).
         :type key: :py:obj:`str`
-        :returns: A custom field id, if any.
+        :returns: The custom field's id as an integer, if found.
         :rtype: :py:obj:`int` | :py:obj:`None`
 
         """
@@ -173,17 +184,18 @@ class WialonBase:
             .get("flds", {})
             .values()
         )
+
         for field in cfields:
             if field["n"] == key:
                 return int(field["id"])
 
-    def get_afield_id(self, key: str) -> int | None:
+    def _get_afield_id(self, key: str) -> int | None:
         """
-        Returns an admin field id by its key, if it exists.
+        Returns an admin field id by key.
 
-        :param key: An admin field key.
+        :param key: An admin field key (name).
         :type key: :py:obj:`str`
-        :returns: An admin field id, if any.
+        :returns: The admin field's id as an integer, if found.
         :rtype: :py:obj:`int` | :py:obj:`None`
 
         """
@@ -195,126 +207,70 @@ class WialonBase:
             .get("aflds", {})
             .values()
         )
+
         for field in afields:
             if field["n"] == key:
                 return int(field["id"])
 
-    def add_afield(self, key: str, value: str) -> None:
+    def update_afield(self, key: str, value: str) -> None:
         """
-        Adds an admin field to the Wialon object.
+        Updates an admin field by key.
 
-        :param key: A key (name) for the admin field.
+        :param key: An admin field key (name).
         :type key: :py:obj:`str`
-        :param value: A value for the admin field.
+        :param value: A string.
         :type value: :py:obj:`str`
         :raises WialonError: If something goes wrong with Wialon.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        self.session.wialon_api.item_update_admin_field(
-            **{"itemId": self.id, "id": 0, "callMode": "create", "n": key, "v": value}
-        )
+        field_id: int | None = self._get_afield_id(key)
 
-    def update_afield(self, id: int, key: str, value: str) -> None:
-        """
-        Updates an admin field by id.
+        if field_id is not None:
+            self.session.wialon_api.item_update_admin_field(
+                **{
+                    "itemId": self.id,
+                    "id": field_id,
+                    "callMode": "update",
+                    "n": key,
+                    "v": value,
+                }
+            )
+        else:
+            self.session.wialon_api.item_update_admin_field(
+                **{"itemId": self.id, "callMode": "create", "n": key, "v": value}
+            )
 
-        :param id: The admin field id.
-        :type id: :py:obj:`int`
-        :param key: A key (name) for the admin field.
-        :type key: :py:obj:`str`
-        :param value: A value for the admin field.
-        :type value: :py:obj:`str`
-        :raises WialonError: If something goes wrong with Wialon.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        self.session.wialon_api.item_update_admin_field(
-            **{"itemId": self.id, "id": id, "callMode": "update", "n": key, "v": value}
-        )
-
-    def add_cfield(self, key: str, value: str) -> None:
-        """
-        Adds a custom field to the Wialon object.
-
-        :param key: A key (name) for the custom field.
-        :type key: :py:obj:`str`
-        :param value: A value for the custom field.
-        :type value: :py:obj:`str`
-        :raises WialonError: If something goes wrong with Wialon.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        self.session.wialon_api.item_update_custom_field(
-            **{"itemId": self.id, "id": 0, "callMode": "create", "n": key, "v": value}
-        )
-
-    def update_cfield(self, id: int, key: str, value: str) -> None:
+    def update_cfield(self, key: str, value: str) -> None:
         """
         Updates a custom field by id.
 
-        :param id: The admin field id.
-        :type id: :py:obj:`int`
-        :param field: A key (name) for the custom field.
-        :type field: :py:obj:`str`
-        :param field: A value for the custom field.
-        :type field: :py:obj:`str`
-        :raises WialonError: If something goes wrong with Wialon.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        self.session.wialon_api.item_update_custom_field(
-            **{"itemId": self.id, "id": id, "callMode": "update", "n": key, "v": value}
-        )
-
-    def add_cproperty(self, key: str, value: str) -> None:
-        """
-        Adds a custom property to the Wialon object.
-
-        :param key: A key (name) for the custom property.
+        :param key: A custom field key (name).
         :type key: :py:obj:`str`
-        :param value: A value for the custom property.
+        :param value: A string.
         :type value: :py:obj:`str`
         :raises WialonError: If something goes wrong with Wialon.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        self.session.wialon_api.item_update_custom_property(
-            **{"itemId": self.id, "name": key, "value": value}
-        )
+        field_id: int | None = self._get_cfield_id(key)
 
-    def add_profile_field(self, key: str, value: str) -> None:
-        """
-        Adds a profile field to the Wialon object.
-
-        :param key: A key (name) for the profile field.
-        :type key: :py:obj:`str`
-        :param value: A value for the profile field.
-        :type value: :py:obj:`str`
-        :raises WialonError: If something goes wrong with Wialon.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        self.session.wialon_api.item_update_profile_field(
-            **{"itemId": self.id, "n": key, "v": value}
-        )
-
-    def delete(self) -> None:
-        """
-        Deletes the Wialon object.
-
-        :raises WialonError: If something goes wrong with Wialon.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        self.session.wialon_api.item_delete_item(**{"itemId": self.id})
+        if field_id is not None:
+            self.session.wialon_api.item_update_custom_field(
+                **{
+                    "itemId": self.id,
+                    "id": field_id,
+                    "callMode": "update",
+                    "n": key,
+                    "v": value,
+                }
+            )
+        else:
+            self.session.wialon_api.item_update_custom_field(
+                **{"itemId": self.id, "callMode": "create", "n": key, "v": value}
+            )
 
     @property
     def cfields(self) -> dict[str, str]:
