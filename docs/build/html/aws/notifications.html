@@ -304,6 +304,34 @@
 </dl>
 </dd></dl>
 </dd></dl>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#usage'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>With a <a class="reference internal" href="#terminusgps.aws.notifications.AsyncNotificationManager" title="terminusgps.aws.notifications.AsyncNotificationManager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AsyncNotificationManager</span></code></a>, you can asyncronously dispatch sms messages or voice calls.</p>
+<p>Within an asyncronous event loop, i.e. <code class="xref py py-func docutils literal notranslate"><span class="pre">main()</span></code>, open an asyncronous context manager with <code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">with</span></code>.</p>
+<p>Within the context manager, <code class="xref py py-obj docutils literal notranslate"><span class="pre">await</span></code> the <a class="reference internal" href="#terminusgps.aws.notifications.AsyncNotificationManager.send_sms" title="terminusgps.aws.notifications.AsyncNotificationManager.send_sms"><code class="xref py py-meth docutils literal notranslate"><span class="pre">send_sms()</span></code></a> or <a class="reference internal" href="#terminusgps.aws.notifications.AsyncNotificationManager.send_voice" title="terminusgps.aws.notifications.AsyncNotificationManager.send_voice"><code class="xref py py-meth docutils literal notranslate"><span class="pre">send_voice()</span></code></a> methods to dispatch your message.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+</span><span id="line-2"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.aws.notifications</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncNotificationManager</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-5">    <span class="k">async</span> <span class="k">with</span> <span class="n">AsyncNotificationManager</span><span class="p">()</span> <span class="k">as</span> <span class="n">manager</span><span class="p">:</span>
+</span><span id="line-6">        <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"We know where ours are... do you?"</span>
+</span><span id="line-7">        <span class="c1"># Send an sms to a single phone number</span>
+</span><span id="line-8">        <span class="k">await</span> <span class="n">manager</span><span class="o">.</span><span class="n">send_sms</span><span class="p">(</span><span class="s2">"+15555555555"</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+</span><span id="line-9">        <span class="c1"># Send a voice message to a single phone number</span>
+</span><span id="line-10">        <span class="k">await</span> <span class="n">manager</span><span class="o">.</span><span class="n">send_voice</span><span class="p">(</span><span class="s2">"+15555555555"</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+</span><span id="line-11">        <span class="c1"># Send an sms to multiple phone numbers</span>
+</span><span id="line-12">        <span class="k">await</span> <span class="n">manager</span><span class="o">.</span><span class="n">batch_send_sms</span><span class="p">([</span><span class="s2">"+17135555555"</span><span class="p">,</span> <span class="s2">"+15555555555"</span><span class="p">],</span> <span class="n">message</span><span class="p">)</span>
+</span><span id="line-13">        <span class="c1"># Send an sms to a single phone number with feedback</span>
+</span><span id="line-14">        <span class="k">await</span> <span class="n">manager</span><span class="o">.</span><span class="n">send_sms</span><span class="p">(</span><span class="s2">"+15555555555"</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">feedback</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="line-15">        <span class="c1"># Send an sms to a single phone number as a dry run</span>
+</span><span id="line-16">        <span class="k">await</span> <span class="n">manager</span><span class="o">.</span><span class="n">send_sms</span><span class="p">(</span><span class="s2">"+15555555555"</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="line-17">    <span class="k">return</span>
+</span><span id="line-18">
+</span><span id="line-19"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+</span><span id="line-20">    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</span></code></pre></div>
+</div>
+</section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
@@ -316,6 +344,7 @@
 <li><a :data-current="activeSection === '#terminusgps.aws.notifications.AsyncNotificationManager.send_voice'" class="reference internal" href="#terminusgps.aws.notifications.AsyncNotificationManager.send_voice"><code class="docutils literal notranslate"><span class="pre">AsyncNotificationManager.send_voice()</span></code></a></li>
 </ul>
 </li>
+<li><a :data-current="activeSection === '#usage'" class="reference internal" href="#usage">Usage</a></li>
 </ul>
 </div>
 </aside>
