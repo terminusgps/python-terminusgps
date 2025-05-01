@@ -12,9 +12,9 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
   
-    <title>terminusgps.wialon.items.base | python-terminusgps 31.2.0 documentation</title>
-    <meta property="og:title" content="terminusgps.wialon.items.base | python-terminusgps 31.2.0 documentation" />
-    <meta name="twitter:title" content="terminusgps.wialon.items.base | python-terminusgps 31.2.0 documentation" />
+    <title>terminusgps.wialon.items.base | python-terminusgps 35.3.0 documentation</title>
+    <meta property="og:title" content="terminusgps.wialon.items.base | python-terminusgps 35.3.0 documentation" />
+    <meta name="twitter:title" content="terminusgps.wialon.items.base | python-terminusgps 35.3.0 documentation" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d691ff6c" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/theme.css?v=42baaae4" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/autoclasstoc.css?v=08871587" />
@@ -40,7 +40,7 @@
     </a><header
   class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
     <div class="hidden mr-4 md:flex">
-      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 31.2.0 documentation</span>
+      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 35.3.0 documentation</span>
       </a></div><button
       class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden"
       type="button" @click="showSidebar = true">
@@ -95,7 +95,7 @@
   class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky"
   :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }">
 
-    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 31.2.0 documentation</span>
+    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 35.3.0 documentation</span>
     </a>
 
     <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
@@ -104,17 +104,24 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../authorizenet/index.html">Authorizenet API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../authorizenet/auth.html">Authorizenet API Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../authorizenet/constants.html">Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../authorizenet/controllers.html">API Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../authorizenet/examples.html">Usage Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../authorizenet/profiles.html">Profiles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../authorizenet/utils.html">Utilities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../aws/index.html">AWS API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../aws/notifications.html">Notifications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../aws/secrets.html">Secrets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../aws/utils.html">Utilities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../django/index.html">Django</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../django/forms.html">Forms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../django/mixins.html">Mixins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../django/settings.html">Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../django/validators.html">Validators</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../twilio/index.html">Twilio API</a><ul>
@@ -152,7 +159,7 @@
      class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
   <a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground"
      href="../../../../index.html">
-    <span class="hidden md:inline">python-terminusgps 31.2.0 documentation</span>
+    <span class="hidden md:inline">python-terminusgps 35.3.0 documentation</span>
     <svg xmlns="http://www.w3.org/2000/svg"
          height="18"
          width="18"
@@ -538,21 +545,31 @@
 </span><span id="line-318">
 </span><span id="line-319">    <span class="nd">@property</span>
 </span><span id="line-320">    <span class="k">def</span><span class="w"> </span><span class="nf">cfields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-321"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Custom fields for the Wialon object.&quot;&quot;&quot;</span>
-</span><span id="line-322">        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_search_item</span><span class="p">(</span>
-</span><span id="line-323">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;flags&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">DataFlag</span><span class="o">.</span><span class="n">UNIT_CUSTOM_FIELDS</span><span class="p">}</span>
-</span><span id="line-324">        <span class="p">)</span>
-</span><span id="line-325">        <span class="n">fields</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;flds&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
-</span><span id="line-326">        <span class="k">return</span> <span class="p">{</span><span class="n">field</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">]:</span> <span class="n">field</span><span class="p">[</span><span class="s2">&quot;v&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span> <span class="k">if</span> <span class="n">fields</span> <span class="k">else</span> <span class="p">{}</span>
-</span><span id="line-327">
-</span><span id="line-328">    <span class="nd">@property</span>
-</span><span id="line-329">    <span class="k">def</span><span class="w"> </span><span class="nf">afields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-330"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Admin fields for the Wialon object.&quot;&quot;&quot;</span>
-</span><span id="line-331">        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_search_item</span><span class="p">(</span>
-</span><span id="line-332">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;flags&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">DataFlag</span><span class="o">.</span><span class="n">UNIT_ADMIN_FIELDS</span><span class="p">}</span>
-</span><span id="line-333">        <span class="p">)</span>
-</span><span id="line-334">        <span class="n">fields</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;aflds&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
-</span><span id="line-335">        <span class="k">return</span> <span class="p">{</span><span class="n">field</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">]:</span> <span class="n">field</span><span class="p">[</span><span class="s2">&quot;v&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span> <span class="k">if</span> <span class="n">fields</span> <span class="k">else</span> <span class="p">{}</span></div>
+</span><span id="line-321"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-322"><span class="sd">        Custom fields for the Wialon object.</span>
+</span><span id="line-323">
+</span><span id="line-324"><span class="sd">        :type: :py:obj:`dict`</span>
+</span><span id="line-325">
+</span><span id="line-326"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-327">        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_search_item</span><span class="p">(</span>
+</span><span id="line-328">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;flags&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">DataFlag</span><span class="o">.</span><span class="n">UNIT_CUSTOM_FIELDS</span><span class="p">}</span>
+</span><span id="line-329">        <span class="p">)</span>
+</span><span id="line-330">        <span class="n">fields</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;flds&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+</span><span id="line-331">        <span class="k">return</span> <span class="p">{</span><span class="n">field</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">]:</span> <span class="n">field</span><span class="p">[</span><span class="s2">&quot;v&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span> <span class="k">if</span> <span class="n">fields</span> <span class="k">else</span> <span class="p">{}</span>
+</span><span id="line-332">
+</span><span id="line-333">    <span class="nd">@property</span>
+</span><span id="line-334">    <span class="k">def</span><span class="w"> </span><span class="nf">afields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-335"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-336"><span class="sd">        Admin fields for the Wialon object.</span>
+</span><span id="line-337">
+</span><span id="line-338"><span class="sd">        :type: :py:obj:`dict`</span>
+</span><span id="line-339">
+</span><span id="line-340"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-341">        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_search_item</span><span class="p">(</span>
+</span><span id="line-342">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;flags&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">DataFlag</span><span class="o">.</span><span class="n">UNIT_ADMIN_FIELDS</span><span class="p">}</span>
+</span><span id="line-343">        <span class="p">)</span>
+</span><span id="line-344">        <span class="n">fields</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;aflds&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+</span><span id="line-345">        <span class="k">return</span> <span class="p">{</span><span class="n">field</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">]:</span> <span class="n">field</span><span class="p">[</span><span class="s2">&quot;v&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span> <span class="k">if</span> <span class="n">fields</span> <span class="k">else</span> <span class="p">{}</span></div>
 
 </span></code></pre></div>
     </div></div>
@@ -569,7 +586,7 @@
 </footer>
   </div>
   
-    <script src="../../../../_static/documentation_options.js?v=c8770c65"></script>
+    <script src="../../../../_static/documentation_options.js?v=fa80b7a6"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script defer="defer" src="../../../../_static/theme.js?v=073f68d9"></script>

@@ -12,9 +12,9 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
   
-    <title>terminusgps.wialon.items.unit | python-terminusgps 32.0.1 documentation</title>
-    <meta property="og:title" content="terminusgps.wialon.items.unit | python-terminusgps 32.0.1 documentation" />
-    <meta name="twitter:title" content="terminusgps.wialon.items.unit | python-terminusgps 32.0.1 documentation" />
+    <title>terminusgps.wialon.items.unit | python-terminusgps 35.3.0 documentation</title>
+    <meta property="og:title" content="terminusgps.wialon.items.unit | python-terminusgps 35.3.0 documentation" />
+    <meta name="twitter:title" content="terminusgps.wialon.items.unit | python-terminusgps 35.3.0 documentation" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d691ff6c" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/theme.css?v=42baaae4" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/autoclasstoc.css?v=08871587" />
@@ -40,7 +40,7 @@
     </a><header
   class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
     <div class="hidden mr-4 md:flex">
-      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 32.0.1 documentation</span>
+      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 35.3.0 documentation</span>
       </a></div><button
       class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden"
       type="button" @click="showSidebar = true">
@@ -95,7 +95,7 @@
   class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky"
   :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }">
 
-    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 32.0.1 documentation</span>
+    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 35.3.0 documentation</span>
     </a>
 
     <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
@@ -104,19 +104,24 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../authorizenet/index.html">Authorizenet API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../authorizenet/auth.html">Authorizenet API Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../authorizenet/constants.html">Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../authorizenet/controllers.html">API Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../authorizenet/examples.html">Usage Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../authorizenet/profiles.html">Profiles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../authorizenet/utils.html">Utilities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../aws/index.html">AWS API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../aws/notifications.html">Notifications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../aws/secrets.html">Secrets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../aws/utils.html">Utilities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../django/index.html">Django</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../django/forms.html">Forms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../django/mixins.html">Mixins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../django/settings.html">Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../django/validators.html">Validators</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../twilio/index.html">Twilio API</a><ul>
@@ -154,7 +159,7 @@
      class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
   <a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground"
      href="../../../../index.html">
-    <span class="hidden md:inline">python-terminusgps 32.0.1 documentation</span>
+    <span class="hidden md:inline">python-terminusgps 35.3.0 documentation</span>
     <svg xmlns="http://www.w3.org/2000/svg"
          height="18"
          width="18"
@@ -452,87 +457,86 @@
 </span><span id="line-251">
 <div class="viewcode-block" id="WialonUnit.get_phone_numbers">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.unit.WialonUnit.get_phone_numbers">[docs]</a>
-</span><span id="line-252">    <span class="k">def</span><span class="w"> </span><span class="nf">get_phone_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-253"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-254"><span class="sd">        Retrieves all phone numbers assigned to the unit.</span>
-</span><span id="line-255">
-</span><span id="line-256"><span class="sd">        This includes any attached drivers, custom/admin fields or otherwise assigned phone numbers.</span>
+</span><span id="line-252">    <span class="k">def</span><span class="w"> </span><span class="nf">get_phone_numbers</span><span class="p">(</span>
+</span><span id="line-253">        <span class="bp">self</span><span class="p">,</span> <span class="n">cfield_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;to_number&quot;</span><span class="p">,</span> <span class="n">afield_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;to_number&quot;</span>
+</span><span id="line-254">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-255"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-256"><span class="sd">        Retrieves all phone numbers assigned to the unit.</span>
 </span><span id="line-257">
-</span><span id="line-258"><span class="sd">        :raises WialonError: If something goes wrong with Wialon.</span>
-</span><span id="line-259"><span class="sd">        :returns: A list of phone numbers.</span>
-</span><span id="line-260"><span class="sd">        :rtype: :py:obj:`list`</span>
-</span><span id="line-261">
-</span><span id="line-262"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-263">        <span class="n">phone_numbers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="line-264">        <span class="n">phones_0</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_driver_phone_numbers</span><span class="p">()</span>
-</span><span id="line-265">        <span class="n">phones_1</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_cfield_phone_numbers</span><span class="p">()</span>
-</span><span id="line-266">        <span class="n">phones_2</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_afield_phone_numbers</span><span class="p">()</span>
+</span><span id="line-258"><span class="sd">        This includes any attached drivers, custom/admin fields or otherwise assigned phone numbers.</span>
+</span><span id="line-259">
+</span><span id="line-260"><span class="sd">        :param cfield_key: A custom field key used to retrieve phone numbers. Default is :py:obj:`&quot;to_number&quot;`.</span>
+</span><span id="line-261"><span class="sd">        :type cfield_key: :py:obj:`str`</span>
+</span><span id="line-262"><span class="sd">        :param afield_key: An admin field key used to retrieve phone numbers. Default is :py:obj:`&quot;to_number&quot;`.</span>
+</span><span id="line-263"><span class="sd">        :type afield_key: :py:obj:`str`</span>
+</span><span id="line-264"><span class="sd">        :raises WialonError: If something goes wrong with Wialon.</span>
+</span><span id="line-265"><span class="sd">        :returns: A list of phone numbers.</span>
+</span><span id="line-266"><span class="sd">        :rtype: :py:obj:`list`</span>
 </span><span id="line-267">
-</span><span id="line-268">        <span class="k">if</span> <span class="n">phones_0</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-269">            <span class="n">phone_numbers</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">phones_0</span><span class="p">)</span>
-</span><span id="line-270">        <span class="k">if</span> <span class="n">phones_1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-271">            <span class="n">phone_numbers</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">phones_1</span><span class="p">)</span>
-</span><span id="line-272">        <span class="k">if</span> <span class="n">phones_2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-273">            <span class="n">phone_numbers</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">phones_2</span><span class="p">)</span>
-</span><span id="line-274">        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">phone_numbers</span><span class="p">))</span>  <span class="c1"># Removes duplicate phone numbers</span></div>
+</span><span id="line-268"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-269">        <span class="n">phones_0</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_driver_phone_numbers</span><span class="p">()</span>
+</span><span id="line-270">        <span class="n">phones_1</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_cfield_phone_numbers</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">cfield_key</span><span class="p">)</span>
+</span><span id="line-271">        <span class="n">phones_2</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_afield_phone_numbers</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">afield_key</span><span class="p">)</span>
+</span><span id="line-272">        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">frozenset</span><span class="p">(</span><span class="n">phones_0</span> <span class="o">+</span> <span class="n">phones_1</span> <span class="o">+</span> <span class="n">phones_2</span><span class="p">))</span></div>
 
-</span><span id="line-275">
+</span><span id="line-273">
 <div class="viewcode-block" id="WialonUnit.clean_phone_numbers">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.unit.WialonUnit.clean_phone_numbers">[docs]</a>
-</span><span id="line-276">    <span class="k">def</span><span class="w"> </span><span class="nf">clean_phone_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phones</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-277"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Takes a list of phone numbers and returns a list of clean phone numbers.&quot;&quot;&quot;</span>
-</span><span id="line-278">        <span class="k">return</span> <span class="p">[</span>
-</span><span id="line-279">            <span class="n">clean_num</span>
-</span><span id="line-280">            <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">phones</span>
-</span><span id="line-281">            <span class="k">for</span> <span class="n">clean_num</span> <span class="ow">in</span> <span class="p">(</span><span class="n">num</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;,&quot;</span> <span class="ow">in</span> <span class="n">num</span> <span class="k">else</span> <span class="p">[</span><span class="n">num</span><span class="p">])</span>
-</span><span id="line-282">        <span class="p">]</span></div>
+</span><span id="line-274">    <span class="k">def</span><span class="w"> </span><span class="nf">clean_phone_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phones</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-275"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Takes a list of phone numbers and returns a list of clean phone numbers.&quot;&quot;&quot;</span>
+</span><span id="line-276">        <span class="k">return</span> <span class="p">[</span>
+</span><span id="line-277">            <span class="n">clean_num</span>
+</span><span id="line-278">            <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">phones</span>
+</span><span id="line-279">            <span class="k">for</span> <span class="n">clean_num</span> <span class="ow">in</span> <span class="p">(</span><span class="n">num</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;,&quot;</span> <span class="ow">in</span> <span class="n">num</span> <span class="k">else</span> <span class="p">[</span><span class="n">num</span><span class="p">])</span>
+</span><span id="line-280">        <span class="p">]</span></div>
 
-</span><span id="line-283">
-</span><span id="line-284">    <span class="k">def</span><span class="w"> </span><span class="nf">_get_afield_phone_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;to_number&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-285"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-286"><span class="sd">        Retrives any phone numbers saved in an admin field by key.</span>
-</span><span id="line-287">
-</span><span id="line-288"><span class="sd">        :param key: An admin field key. Default is ``&quot;to_number&quot;``.</span>
-</span><span id="line-289"><span class="sd">        :type key: :py:obj:`str`</span>
-</span><span id="line-290"><span class="sd">        :raises WialonError: If something goes wrong with Wialon.</span>
-</span><span id="line-291"><span class="sd">        :returns: A list of phone numbers, if the unit has admin phone number fields.</span>
-</span><span id="line-292"><span class="sd">        :rtype: :py:obj:`list` | :py:obj:`None`</span>
-</span><span id="line-293">
-</span><span id="line-294"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-295">        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">afields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-</span><span id="line-296">            <span class="k">if</span> <span class="n">field_name</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
-</span><span id="line-297">                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_phone_numbers</span><span class="p">([</span><span class="n">field_val</span><span class="p">])</span>
-</span><span id="line-298">
-</span><span id="line-299">    <span class="k">def</span><span class="w"> </span><span class="nf">_get_cfield_phone_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;to_number&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-300"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-301"><span class="sd">        Retrives any phone numbers saved in a custom field by key.</span>
-</span><span id="line-302">
-</span><span id="line-303"><span class="sd">        :param key: A custom field key. Default is ``&quot;to_number&quot;``.</span>
-</span><span id="line-304"><span class="sd">        :type key: :py:obj:`str`</span>
-</span><span id="line-305"><span class="sd">        :raises WialonError: If something goes wrong with Wialon.</span>
-</span><span id="line-306"><span class="sd">        :returns: A list of phone numbers, if the unit has custom phone number fields.</span>
-</span><span id="line-307"><span class="sd">        :rtype: :py:obj:`list` | :py:obj:`None`</span>
-</span><span id="line-308">
-</span><span id="line-309"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-310">        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-</span><span id="line-311">            <span class="k">if</span> <span class="n">field_name</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
-</span><span id="line-312">                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_phone_numbers</span><span class="p">([</span><span class="n">field_val</span><span class="p">])</span>
-</span><span id="line-313">
-</span><span id="line-314">    <span class="k">def</span><span class="w"> </span><span class="nf">_get_driver_phone_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-315"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-316"><span class="sd">        Retrieves any phone numbers assigned to drivers attached to the unit.</span>
-</span><span id="line-317">
-</span><span id="line-318"><span class="sd">        :raises WialonError: If something goes wrong with Wialon.</span>
-</span><span id="line-319"><span class="sd">        :returns: A list of phone numbers, if the unit has attached drivers with phone numbers.</span>
-</span><span id="line-320"><span class="sd">        :rtype: :py:obj:`list` | :py:obj:`None`</span>
-</span><span id="line-321">
-</span><span id="line-322"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-323">        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">resource_get_unit_drivers</span><span class="p">(</span>
-</span><span id="line-324">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;unitId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">}</span>
-</span><span id="line-325">        <span class="p">)</span>
-</span><span id="line-326">        <span class="k">if</span> <span class="n">response</span><span class="p">:</span>
-</span><span id="line-327">            <span class="n">dirty_phones</span> <span class="o">=</span> <span class="p">[</span><span class="n">driver</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ph&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">driver</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
-</span><span id="line-328">            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_phone_numbers</span><span class="p">(</span><span class="n">dirty_phones</span><span class="p">)</span></div>
+</span><span id="line-281">
+</span><span id="line-282">    <span class="k">def</span><span class="w"> </span><span class="nf">_get_afield_phone_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-283"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-284"><span class="sd">        Retrives phone numbers saved in an admin field by key.</span>
+</span><span id="line-285">
+</span><span id="line-286"><span class="sd">        :param key: An admin field key.</span>
+</span><span id="line-287"><span class="sd">        :type key: :py:obj:`str`</span>
+</span><span id="line-288"><span class="sd">        :raises WialonError: If something goes wrong with Wialon.</span>
+</span><span id="line-289"><span class="sd">        :returns: A list of phone numbers.</span>
+</span><span id="line-290"><span class="sd">        :rtype: :py:obj:`list`</span>
+</span><span id="line-291">
+</span><span id="line-292"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-293">        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">afields</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+</span><span id="line-294">            <span class="k">return</span> <span class="p">[]</span>
+</span><span id="line-295">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_phone_numbers</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">afields</span><span class="p">[</span><span class="n">key</span><span class="p">]])</span>
+</span><span id="line-296">
+</span><span id="line-297">    <span class="k">def</span><span class="w"> </span><span class="nf">_get_cfield_phone_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-298"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-299"><span class="sd">        Retrives phone numbers saved in a custom field by key.</span>
+</span><span id="line-300">
+</span><span id="line-301"><span class="sd">        :param key: A custom field key.</span>
+</span><span id="line-302"><span class="sd">        :type key: :py:obj:`str`</span>
+</span><span id="line-303"><span class="sd">        :raises WialonError: If something goes wrong with Wialon.</span>
+</span><span id="line-304"><span class="sd">        :returns: A list of phone numbers.</span>
+</span><span id="line-305"><span class="sd">        :rtype: :py:obj:`list`</span>
+</span><span id="line-306">
+</span><span id="line-307"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-308">        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfields</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+</span><span id="line-309">            <span class="k">return</span> <span class="p">[]</span>
+</span><span id="line-310">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_phone_numbers</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">cfields</span><span class="p">[</span><span class="n">key</span><span class="p">]])</span>
+</span><span id="line-311">
+</span><span id="line-312">    <span class="k">def</span><span class="w"> </span><span class="nf">_get_driver_phone_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-313"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-314"><span class="sd">        Returns a list of phone numbers assigned to drivers attached to the unit.</span>
+</span><span id="line-315">
+</span><span id="line-316"><span class="sd">        :raises WialonError: If something goes wrong with Wialon.</span>
+</span><span id="line-317"><span class="sd">        :returns: A list of phone numbers.</span>
+</span><span id="line-318"><span class="sd">        :rtype: :py:obj:`list`</span>
+</span><span id="line-319">
+</span><span id="line-320"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-321">        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">resource_get_unit_drivers</span><span class="p">(</span>
+</span><span id="line-322">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;unitId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">}</span>
+</span><span id="line-323">        <span class="p">)</span>
+</span><span id="line-324">        <span class="k">if</span> <span class="n">response</span><span class="p">:</span>
+</span><span id="line-325">            <span class="n">dirty_phones</span> <span class="o">=</span> <span class="p">[</span><span class="n">driver</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ph&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">driver</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+</span><span id="line-326">            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_phone_numbers</span><span class="p">(</span><span class="n">dirty_phones</span><span class="p">)</span>
+</span><span id="line-327">        <span class="k">return</span> <span class="p">[]</span></div>
 
 </span></code></pre></div>
     </div></div>
@@ -549,7 +553,7 @@
 </footer>
   </div>
   
-    <script src="../../../../_static/documentation_options.js?v=53445b45"></script>
+    <script src="../../../../_static/documentation_options.js?v=fa80b7a6"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script defer="defer" src="../../../../_static/theme.js?v=073f68d9"></script>
