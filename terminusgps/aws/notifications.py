@@ -11,8 +11,8 @@ class AsyncNotificationManager:
 
     def __init__(
         self,
-        origin_pool_arn: str | None = os.getenv("AWS_MESSAGING_ORIGIN_POOL"),
-        configuration_set: str | None = os.getenv("AWS_MESSAGING_CONFIGURATION"),
+        origin_pool_arn: str | None = None,
+        configuration_set: str | None = None,
         max_sms_price: str = "0.20",
         max_voice_price: str = "0.20",
         region_name: str = "us-east-1",
@@ -39,18 +39,26 @@ class AsyncNotificationManager:
         :rtype: :py:obj:`None`
 
         """
-        if origin_pool_arn is None:
+        if origin_pool_arn is None and os.getenv("AWS_MESSAGING_ORIGIN_POOL") is None:
             raise ValueError(f"'origin_pool_arn' is required, got '{origin_pool_arn}'.")
-        if configuration_set is None:
+        if (
+            configuration_set is None
+            and os.getenv("AWS_MESSAGING_CONFIGURATION") is None
+        ):
             raise ValueError(
                 f"'configuration_set' is required, got '{configuration_set}'."
             )
 
+        self._origin_pool_arn = origin_pool_arn or os.getenv(
+            "AWS_MESSAGING_ORIGIN_POOL"
+        )
+        self._configuration_set = configuration_set or os.getenv(
+            "AWS_MESSAGING_CONFIGURATION"
+        )
+
         self._exit_stack = AsyncExitStack()
         self._pinpoint_client = None
         self._region_name = region_name
-        self._origin_pool_arn = origin_pool_arn
-        self._configuration_set = configuration_set
         self._max_sms_price = max_sms_price
         self._max_voice_price = max_voice_price
         self._debug = debug_enabled
