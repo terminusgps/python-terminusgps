@@ -23,16 +23,22 @@ Within the context manager, :py:obj:`await` the :py:meth:`~terminusgps.aws.notif
 
     async def main() -> None:
         async with AsyncNotificationManager() as manager:
+            # This is the message we will dispatch in this example
             message: str = "We know where ours are... do you?"
-            # Send an sms to a single phone number
+
+            # Send the message via sms to a single phone number
             await manager.send_sms("+15555555555", message)
-            # Send a voice message to a single phone number
+
+            # Send the message via voice to a single phone number
             await manager.send_voice("+15555555555", message)
-            # Send an sms to multiple phone numbers
+
+            # Send the message via sms to multiple phone numbers
             await manager.batch_send_sms(["+17135555555", "+15555555555"], message)
-            # Send an sms to a single phone number with feedback
+
+            # Send the message via sms to a single phone number with feedback
             await manager.send_sms("+15555555555", message, feedback=True)
-            # Send an sms to a single phone number as a dry run
+
+            # Send the message via sms to a single phone number as a dry run
             await manager.send_sms("+15555555555", message, dry_run=True)
         return
 
