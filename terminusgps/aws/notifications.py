@@ -281,19 +281,3 @@ class AsyncNotificationManager:
                 for phone in phones
             ]
         )
-
-
-async def main() -> None:
-    async with AsyncNotificationManager() as manager:
-        await manager.send_sms("+17133049421", "This is message #0.")
-        await manager.send_sms("+18324667085", "This is message #1.")
-        await manager.send_sms("+12812562469", "This is message #2.")
-        await manager.send_sms("+18322835634", "This is message #3.")
-        await manager.batch_send_sms(
-            ["+17133049421", "+18324667085", "+12812562469", "+18322835634"],
-            "This is message #4.",
-        )
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
