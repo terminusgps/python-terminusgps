@@ -7,8 +7,6 @@ Notifications
     :member-order: groupwise
     :autoclasstoc:
 
-    .. seealso:: :py:obj:`~boto3.PinpointSMSVoiceV2.Client`
-
 =====
 Usage
 =====
