@@ -12,8 +12,8 @@ class AddressProfile(AuthorizenetSubProfileBase):
 
         :param address: A customer address.
         :type address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
+        :returns: An address profile id.
+        :rtype: :py:obj:`int`
 
         """
         return int(

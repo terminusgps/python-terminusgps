@@ -160,6 +160,33 @@ class CustomerProfile(AuthorizenetProfileBase):
             self._authorizenet_delete_customer_profile()
             self.id = None
 
+    def get_payment_profile_ids(self) -> list[int]:
+        """
+        Returns a list of payment profile ids assigned to the customer profile.
+
+        :returns: A list of payment profile ids.
+        :rtype: :py:obj:`list`
+
+        """
+        response = self._authorizenet_get_customer_profile()
+        if response is not None:
+            return [
+                int(p.customerPaymentProfileId)
+                for p in response.profile.paymentProfiles
+            ]
+
+    def get_address_profile_ids(self) -> list[int]:
+        """
+        Returns a list of address profile ids assigned to the customer profile.
+
+        :returns: A list of address profile ids.
+        :rtype: :py:obj:`list`
+
+        """
+        response = self._authorizenet_get_customer_profile()
+        if response is not None:
+            return [int(p.customerAddressId) for p in response.profile.shipToList]
+
     def _generate_customer_profile_ex_type(
         self,
     ) -> apicontractsv1.customerProfileExType:
