@@ -211,12 +211,12 @@ class CustomerProfile(AuthorizenetProfileBase):
         """
         cprofile_obj = apicontractsv1.customerProfileType()
 
-        if self.merchant_id:
-            cprofile_obj.merchantCustomerId = self.merchant_id
-        if self.email:
-            cprofile_obj.email = self.email
-        if self.desc:
-            cprofile_obj.description = self.desc
+        if self._merchant_id:
+            cprofile_obj.merchantCustomerId = self._merchant_id
+        if self._email:
+            cprofile_obj.email = self._email
+        if self._desc:
+            cprofile_obj.description = self._desc
 
         return cprofile_obj
 
@@ -242,10 +242,10 @@ class CustomerProfile(AuthorizenetProfileBase):
 
         if self.id:
             request.customerProfileId = self.id
-        if self.merchant_id:
-            request.merchantCustomerId = self.merchant_id
-        if self.email:
-            request.email = self.email
+        if self._merchant_id:
+            request.merchantCustomerId = self._merchant_id
+        if self._email:
+            request.email = self._email
 
         controller = apicontrollers.getCustomerProfileController(request)
         return self.execute_controller(controller)
