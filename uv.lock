@@ -964,7 +964,7 @@ wheels = [
 
 [[package]]
 name = "python-terminusgps"
-version = "36.2.0"
+version = "36.3.0"
 source = { editable = "." }
 dependencies = [
     { name = "aiobotocore" },
