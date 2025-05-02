@@ -102,13 +102,9 @@ class WialonSession:
             f"logs/{self.__class__.__name__}.log",
             level=log_level,
             retention=f"{log_days} days",
-            diagnose=debug or settings.DEBUG if settings.configured else False,
+            diagnose=debug or settings.DEBUG
         )
-        self._token = (
-            token or settings.WIALON_TOKEN
-            if settings.configured
-            else os.getenv("WIALON_TOKEN")
-        )
+        self._token = token or settings.WIALON_TOKEN
         self._username = None
         self._gis_sid = None
         self._hw_gp_ip = None
