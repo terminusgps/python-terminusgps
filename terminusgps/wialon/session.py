@@ -4,7 +4,6 @@ import typing
 
 import wialon.api
 from django.conf import settings
-from django.utils import timezone
 from loguru import logger
 
 
@@ -20,7 +19,12 @@ class WialonAPICall:
 
 class Wialon(wialon.api.Wialon):
     def __init__(
-        self, log_level: int = 10, log_days: int = 10, *args, **kwargs
+        self,
+        debug: bool = False,
+        log_level: int = 10,
+        log_days: int = 10,
+        *args,
+        **kwargs,
     ) -> None:
         super().__init__(*args, **kwargs)
         self.call_history: list[WialonAPICall] = []
@@ -28,7 +32,7 @@ class Wialon(wialon.api.Wialon):
             f"logs/{self.__class__.__name__}.log",
             level=log_level,
             retention=f"{log_days} days",
-            diagnose=settings.DEBUG,
+            diagnose=debug,
         )
 
     @property
@@ -42,7 +46,10 @@ class Wialon(wialon.api.Wialon):
     def call(self, action_name: str, *argc, **kwargs) -> typing.Any:
         logger.debug(f"Executing '{action_name}'...")
         call_record = WialonAPICall(
-            action=action_name, timestamp=timezone.now(), args=argc, kwargs=kwargs
+            action=action_name,
+            timestamp=datetime.datetime.now(),
+            args=argc,
+            kwargs=kwargs,
         )
 
         try:
@@ -68,6 +75,7 @@ class WialonSession:
         port: int = 443,
         log_level: int = 10,
         log_days: int = 10,
+        debug: bool = False,
     ) -> None:
         """
         Starts or continues a Wialon API session.
@@ -93,9 +101,9 @@ class WialonSession:
             f"logs/{self.__class__.__name__}.log",
             level=log_level,
             retention=f"{log_days} days",
-            diagnose=settings.DEBUG,
+            diagnose=debug or settings.DEBUG if settings.configured else False,
         )
-        self._token = token or settings.WIALON_TOKEN
+        self._token = token or settings.WIALON_TOKEN if settings.configured else None
         self._username = None
         self._gis_sid = None
         self._hw_gp_ip = None
@@ -108,6 +116,7 @@ class WialonSession:
             sid=sid,
             log_level=log_level,
             log_days=log_days,
+            debug=debug,
         )
 
     def __str__(self) -> str:
