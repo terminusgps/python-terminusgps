@@ -16,7 +16,6 @@ class TwilioCaller:
         messaging_sid: str | None = None,
         log_level: int = 10,
         log_days: int = 10,
-        debug: bool = False,
     ) -> None:
         """
         Sets Twilio client session variables.
@@ -39,7 +38,6 @@ class TwilioCaller:
             f"logs/{self.__class__.__name__}.log",
             level=log_level,
             retention=f"{log_days} days",
-            diagnose=debug or settings.DEBUG,
         )
         self._client_sid = client_sid or settings.TWILIO_SID
         self._client_token = client_token or settings.TWILIO_TOKEN
