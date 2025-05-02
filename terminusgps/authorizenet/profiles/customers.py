@@ -173,6 +173,7 @@ class CustomerProfile(AuthorizenetProfileBase):
             return [
                 int(p.customerPaymentProfileId)
                 for p in response.profile.paymentProfiles
+                if hasattr(response.profile, "paymentProfiles")
             ]
 
     def get_address_profile_ids(self) -> list[int]:
@@ -185,7 +186,11 @@ class CustomerProfile(AuthorizenetProfileBase):
         """
         response = self._authorizenet_get_customer_profile()
         if response is not None:
-            return [int(p.customerAddressId) for p in response.profile.shipToList]
+            return [
+                int(p.customerAddressId)
+                for p in response.profile.shipToList
+                if hasattr(response.profile, "shipToList")
+            ]
 
     def _generate_customer_profile_ex_type(
         self,
