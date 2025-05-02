@@ -16,7 +16,7 @@ class CustomerProfile(AuthorizenetProfileBase):
         desc: str | None = None,
     ) -> None:
         """
-        Sets :py:attr:`merchant_id`, :py:attr:`email` and :py:attr:`desc`.
+        Sets :py:attr:`merchantCustomerId`, :py:attr:`email` and :py:attr:`desc`.
 
         :returns: Nothing.
         :rtype: :py:obj:`None`
@@ -169,12 +169,12 @@ class CustomerProfile(AuthorizenetProfileBase):
 
         """
         response = self._authorizenet_get_customer_profile()
-        if response is not None:
+        if response is not None and hasattr(response.profile, "paymentProfiles"):
             return [
                 int(p.customerPaymentProfileId)
                 for p in response.profile.paymentProfiles
-                if hasattr(response.profile, "paymentProfiles")
             ]
+        return []
 
     def get_address_profile_ids(self) -> list[int]:
         """
@@ -185,12 +185,9 @@ class CustomerProfile(AuthorizenetProfileBase):
 
         """
         response = self._authorizenet_get_customer_profile()
-        if response is not None:
-            return [
-                int(p.customerAddressId)
-                for p in response.profile.shipToList
-                if hasattr(response.profile, "shipToList")
-            ]
+        if response is not None and hasattr(response.profile, "shipToList"):
+            return [int(p.customerAddressId) for p in response.profile.shipToList]
+        return []
 
     def _generate_customer_profile_ex_type(
         self,
@@ -256,12 +253,10 @@ class CustomerProfile(AuthorizenetProfileBase):
 
         if self.id:
             request.customerProfileId = self.id
-        elif self.merchantCustomerId:
+        if self.merchantCustomerId:
             request.merchantCustomerId = self.merchantCustomerId
-        elif self.email:
+        if self.email:
             request.email = self.email
-        else:
-            return
 
         controller = apicontrollers.getCustomerProfileController(request)
         return self.execute_controller(controller)
