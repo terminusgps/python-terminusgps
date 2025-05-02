@@ -4,6 +4,7 @@ from collections.abc import Sequence
 from contextlib import AsyncExitStack
 
 from aiobotocore.session import AioSession
+from loguru import logger
 
 
 class AsyncNotificationManager:
@@ -17,6 +18,8 @@ class AsyncNotificationManager:
         max_voice_price: str = "0.20",
         region_name: str = "us-east-1",
         debug_enabled: bool = False,
+        logger_level: int = 10,
+        logger_days: int = 10,
     ) -> None:
         """
         Sets attributes on the notification manager.
@@ -33,6 +36,10 @@ class AsyncNotificationManager:
         :type region_name: :py:obj:`str`
         :param debug_enabled: Whether or not to enable debug mode. Default is :py:obj:`False`
         :type debug_enabled: :py:obj:`False`
+        :param logger_level: A logger level. Default is :py:obj:`int`
+        :type logger_level: :py:obj:`int`
+        :param logger_days: How long in days logging data should be saved.
+        :type logger_days: :py:obj:`int`
         :raises ValueError: If ``origin_pool_arn`` wasn't provided and :envvar:`AWS_MESSAGING_ORIGIN_POOL` wasn't set.
         :raises ValueError: If ``configuration_set`` wasn't provided and :envvar:`AWS_MESSAGING_CONFIGURATION` wasn't set.
         :returns: Nothing.
@@ -59,6 +66,12 @@ class AsyncNotificationManager:
         self._max_sms_price = max_sms_price
         self._max_voice_price = max_voice_price
         self._debug = debug_enabled
+        logger.add(
+            f"logs/{self.__class__.__name__}.log",
+            level=logger_level,
+            retention=f"{logger_days} days",
+            diagnose=debug_enabled,
+        )
 
     async def __aenter__(self) -> "AsyncNotificationManager":
         """
@@ -157,7 +170,7 @@ class AsyncNotificationManager:
         ttl: int = 300,
         dry_run: bool = False,
         feedback: bool = False,
-    ) -> dict:
+    ) -> dict[str, str]:
         """
         Texts ``message`` to ``phone`` via sms.
 
@@ -177,6 +190,8 @@ class AsyncNotificationManager:
 
         """
         assert self._pinpoint_client, "Asyncronous client wasn't set."
+
+        logger.debug(f"Texting '{message}' to '{phone}'...")
         return await self._pinpoint_client.send_text_message(
             **{
                 "DestinationPhoneNumber": phone,
@@ -199,7 +214,7 @@ class AsyncNotificationManager:
         voice_id: str = "Joanna",
         dry_run: bool = False,
         feedback: bool = False,
-    ) -> dict:
+    ) -> dict[str, str]:
         """
         Calls ``phone`` and reads ``message`` aloud.
 
@@ -221,6 +236,8 @@ class AsyncNotificationManager:
 
         """
         assert self._pinpoint_client, "Asyncronous client wasn't set."
+
+        logger.debug(f"Reading '{message}' aloud to '{phone}'...")
         return await self._pinpoint_client.send_voice_message(
             **{
                 "DestinationPhoneNumber": phone,
@@ -238,7 +255,7 @@ class AsyncNotificationManager:
 
     async def batch_send_sms(
         self, phones: Sequence[str], message: str, **kwargs
-    ) -> list[dict]:
+    ) -> list[dict[str, str]]:
         """
         Sends ``message`` to all phone numbers in ``phones`` via sms.
 
@@ -262,7 +279,7 @@ class AsyncNotificationManager:
 
     async def batch_send_voice(
         self, phones: Sequence[str], message: str, **kwargs
-    ) -> list[dict]:
+    ) -> list[dict[str, str]]:
         """
         Calls each number in ``phones`` and reads ``message`` aloud.
 
@@ -274,7 +291,6 @@ class AsyncNotificationManager:
         :raises AssertionError: If :py:attr:`_pinpoint_client` wasn't set.
         :returns: A voice message response.
         :rtype: :py:obj:`dict`
-
 
         .. seealso::
             :py:meth:`~terminusgps.aws.notifications.AsyncNotificationManager.send_voice` for details on available keyword arguments.
