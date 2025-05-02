@@ -11,28 +11,95 @@ class CustomerProfile(AuthorizenetProfileBase):
     def __init__(
         self,
         id: int | str | None = None,
-        merchant_id: int | str | None = None,
+        merchant_id: str | None = None,
         email: str | None = None,
         desc: str | None = None,
     ) -> None:
         """
-        Sets :py:attr:`merchantCustomerId`, :py:attr:`email` and :py:attr:`desc`.
+        Sets :py:attr:`merchant_id`, :py:attr:`email` and :py:attr:`desc`.
 
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
         super().__init__(id=id)
-        self._merchantCustomerId = str(merchant_id) if merchant_id else None
+        self._merchant_id = merchant_id
         self._email = email
         self._desc = desc
 
-        if not self.id and self.merchantCustomerId or self.email:
+        if not self.id:
             try:
-                response = self._authorizenet_get_customer_profile(issuer_info=False)
-                self.id = response.profile.customerProfileId
+                response = self._authorizenet_get_customer_profile()
+                self.id = int(response.profile.customerProfileId)
             except AuthorizenetControllerExecutionError:
                 self.id = self.create()
+
+    @property
+    def merchant_id(self) -> str:
+        """
+        A merchant designated id.
+
+        :type: :py:obj:`str`
+
+        """
+        if self.id and not self._merchant_id:
+            response = self._authorizenet_get_customer_profile()
+            self._merchant_id = (
+                response.profile.merchantCustomerId
+                if response is not None
+                and hasattr(response.profile, "merchantCustomerId")
+                else None
+            )
+        return str(self._merchant_id)
+
+    @merchant_id.setter
+    def merchant_id(self, other: str | int) -> None:
+        self._merchant_id = other
+        self._authorizenet_update_customer_profile()
+
+    @property
+    def email(self) -> str:
+        """
+        A customer email address.
+
+        :type: :py:obj:`str`
+
+        """
+        if self.id and not self._email:
+            response = self._authorizenet_get_customer_profile()
+            self._email = (
+                response.profile.email
+                if response is not None and hasattr(response.profile, "email")
+                else None
+            )
+        return str(self._email)
+
+    @email.setter
+    def email(self, other: str) -> None:
+        self._email = other
+        self._authorizenet_update_customer_profile()
+
+    @property
+    def desc(self) -> str:
+        """
+        A customer profile description.
+
+        :type: :py:obj:`str`
+
+        """
+        if self.id and not self._desc:
+            response = self._authorizenet_get_customer_profile()
+            self._desc = (
+                response.profile.description
+                if response is not None and hasattr(response.profile, "description")
+                else None
+            )
+        return str(self._desc)
+
+    @desc.setter
+    def desc(self, other: str) -> None:
+        self._desc = other
+        self._authorizenet_update_customer_profile()
 
     @property
     def validationMode(self) -> str:
@@ -44,96 +111,18 @@ class CustomerProfile(AuthorizenetProfileBase):
         """
         return get_validation_mode()
 
-    @property
-    def merchantCustomerId(self) -> str | None:
-        """
-        A merchant designated customer id.
-
-        :type: :py:obj:`str` | :py:obj:`None`
-
-        """
-        if self.id and not self._merchantCustomerId:
-            response = self._authorizenet_get_customer_profile(issuer_info=False)
-            self._merchantCustomerId: str | None = (
-                str(response.profile.merchantCustomerId)
-                if response is not None
-                and hasattr(response.profile, "merchantCustomerId")
-                else None
-            )
-        return self._merchantCustomerId
-
-    @merchantCustomerId.setter
-    def merchantCustomerId(self, other: int | str | None) -> None:
-        """Sets :py:attr:`merchantCustomerId` to ``other``."""
-        updated: bool = other is not None and str(other) != str(
-            self._merchantCustomerId
-        )
-        self._merchantCustomerId = str(other) if other else None
-        if updated and self.id is not None:
-            self._authorizenet_update_customer_profile()
-
-    @property
-    def email(self) -> str | None:
-        """
-        A customer email address.
-
-        :type: :py:obj:`str` | :py:obj:`None`
-
-        """
-        if self.id and self._email is None:
-            response = self._authorizenet_get_customer_profile(issuer_info=False)
-            self._email: str | None = (
-                str(response.profile.email)
-                if response is not None and hasattr(response.profile, "email")
-                else None
-            )
-        return self._email
-
-    @email.setter
-    def email(self, other: str | None) -> None:
-        """Sets :py:attr:`email` to ``other``."""
-        updated: bool = other is not None and other != self.email
-        self._email = other
-        if updated and self.id is not None:
-            self._authorizenet_update_customer_profile()
-
-    @property
-    def desc(self) -> str | None:
-        """
-        A customer description.
-
-        :type: :py:obj:`str` | :py:obj:`None`
-
-        """
-        if self.id and self._desc is None:
-            response = self._authorizenet_get_customer_profile(issuer_info=False)
-            self._desc: str | None = (
-                str(response.profile.description)
-                if response is not None and hasattr(response.profile, "description")
-                else None
-            )
-        return self._desc
-
-    @desc.setter
-    def desc(self, other: str | None) -> None:
-        """Sets :py:attr:`desc` to ``other``."""
-        updated: bool = other is not None and other != self.desc
-        self._desc = other
-        if updated and self.id is not None:
-            self._authorizenet_update_customer_profile()
-
     def create(self) -> int:
         """
         Creates the customer profile in Authorizenet.
 
-        :raises AssertionError: If neither :py:attr:`merchantCustomerId` nor :py:attr:`email` were set.
+        :raises AssertionError: If neither :py:attr:`merchant_id` nor :py:attr:`email` were set.
         :raises AuthorizenetControllerExecutionError: If something goes wrong during an Authorizenet API call.
         :returns: An id for the new customer profile.
         :rtype: :py:obj:`int`
 
         """
-        assert self.merchantCustomerId or self.email, (
-            "Neither 'merchantCustomerId' nor 'email' were set."
+        assert self.merchant_id or self.email, (
+            "Neither 'merchant_id' nor 'email' were set."
         )
         return int(self._authorizenet_create_customer_profile().customerProfileId)
 
@@ -199,18 +188,18 @@ class CustomerProfile(AuthorizenetProfileBase):
         :rtype: :py:obj:`~authorizenet.apicontractsv1.customerProfileExType`
 
         """
-        cprofile = apicontractsv1.customerProfileExType()
+        cprofile_obj = apicontractsv1.customerProfileExType()
 
-        if self.id is not None:
-            cprofile.customerProfileId = self.id
-        if self.merchantCustomerId is not None:
-            cprofile.merchantCustomerId = self.merchantCustomerId
-        if self.email is not None:
-            cprofile.email = self.email
-        if self.desc is not None:
-            cprofile.description = self.desc
+        if self.id:
+            cprofile_obj.customerProfileId = self.id
+        if self.merchant_id:
+            cprofile_obj.merchantCustomerId = self.merchant_id
+        if self.email:
+            cprofile_obj.email = self.email
+        if self.desc:
+            cprofile_obj.description = self.desc
 
-        return cprofile
+        return cprofile_obj
 
     def _generate_customer_profile_type(self) -> apicontractsv1.customerProfileType:
         """
@@ -220,16 +209,16 @@ class CustomerProfile(AuthorizenetProfileBase):
         :rtype: :py:obj:`~authorizenet.apicontractsv1.customerProfileType`
 
         """
-        cprofile = apicontractsv1.customerProfileType()
+        cprofile_obj = apicontractsv1.customerProfileType()
 
-        if self.merchantCustomerId is not None:
-            cprofile.merchantCustomerId = self.merchantCustomerId
-        if self.email is not None:
-            cprofile.email = self.email
-        if self.desc is not None:
-            cprofile.description = self.desc
+        if self.merchant_id:
+            cprofile_obj.merchantCustomerId = self.merchant_id
+        if self.email:
+            cprofile_obj.email = self.email
+        if self.desc:
+            cprofile_obj.description = self.desc
 
-        return cprofile
+        return cprofile_obj
 
     def _authorizenet_get_customer_profile(
         self, issuer_info: bool = True
@@ -253,8 +242,8 @@ class CustomerProfile(AuthorizenetProfileBase):
 
         if self.id:
             request.customerProfileId = self.id
-        if self.merchantCustomerId:
-            request.merchantCustomerId = self.merchantCustomerId
+        if self.merchant_id:
+            request.merchantCustomerId = self.merchant_id
         if self.email:
             request.email = self.email
 
@@ -277,8 +266,8 @@ class CustomerProfile(AuthorizenetProfileBase):
         :rtype: :py:obj:`dict` | :py:obj:`None`
 
         """
-        assert self.merchantCustomerId or self.email, (
-            "Neither 'merchantCustomerId' nor 'email' were set."
+        assert self.merchant_id or self.email, (
+            "Neither 'merchant_id' nor 'email' were set."
         )
 
         request = apicontractsv1.createCustomerProfileRequest(
