@@ -204,6 +204,7 @@ def get_unit_by_imei(imei: str, session: WialonSession) -> WialonUnit | None:
     :param session: A valid Wialon API session.
     :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
     :raises ValueError: If ``imei`` contains non-digit characters.
+    :raises ValueError: If ``imei`` points to multiple Wialon units.
     :raises WialonError: If something goes wrong during a Wialon API call.
     :returns: A Wialon object id, if it was found.
     :rtype: :py:obj:`str` | :py:obj:`None`
@@ -217,19 +218,21 @@ def get_unit_by_imei(imei: str, session: WialonSession) -> WialonUnit | None:
             "spec": {
                 "itemsType": "avl_unit",
                 "propName": "sys_unique_id",
-                "propValueMask": f"*{imei}*",
+                "propValueMask": imei,
                 "sortType": "sys_unique_id",
                 "propType": "property",
                 "or_logic": 0,
             },
             "force": 0,
-            "flags": flags.DataFlag.UNIT_BASE.value,
+            "flags": flags.DataFlag.UNIT_BASE,
             "from": 0,
             "to": 0,
         }
     )
 
-    if results and results.get("totalItemsCount", 0) == 1:
+    if results is not None and results.get("totalItemsCount", 0) != 1:
+        raise ValueError(f"Multiple units found with IMEI #: '{imei}'.")
+    elif results is not None and results.get("totalItemsCount", 0) == 1:
         return WialonUnit(id=results["items"][0].get("id"), session=session)
 
 
