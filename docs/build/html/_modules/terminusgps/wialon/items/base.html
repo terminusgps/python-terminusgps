@@ -12,9 +12,9 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
   
-    <title>terminusgps.wialon.items.base | python-terminusgps 35.6.0 documentation</title>
-    <meta property="og:title" content="terminusgps.wialon.items.base | python-terminusgps 35.6.0 documentation" />
-    <meta name="twitter:title" content="terminusgps.wialon.items.base | python-terminusgps 35.6.0 documentation" />
+    <title>terminusgps.wialon.items.base | python-terminusgps 36.4.1 documentation</title>
+    <meta property="og:title" content="terminusgps.wialon.items.base | python-terminusgps 36.4.1 documentation" />
+    <meta name="twitter:title" content="terminusgps.wialon.items.base | python-terminusgps 36.4.1 documentation" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d691ff6c" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/theme.css?v=42baaae4" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/autoclasstoc.css?v=08871587" />
@@ -40,7 +40,7 @@
     </a><header
   class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
     <div class="hidden mr-4 md:flex">
-      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 35.6.0 documentation</span>
+      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 36.4.1 documentation</span>
       </a></div><button
       class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden"
       type="button" @click="showSidebar = true">
@@ -95,7 +95,7 @@
   class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky"
   :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }">
 
-    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 35.6.0 documentation</span>
+    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 36.4.1 documentation</span>
     </a>
 
     <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
@@ -158,7 +158,7 @@
      class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
   <a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground"
      href="../../../../index.html">
-    <span class="hidden md:inline">python-terminusgps 35.6.0 documentation</span>
+    <span class="hidden md:inline">python-terminusgps 36.4.1 documentation</span>
     <svg xmlns="http://www.w3.org/2000/svg"
          height="18"
          width="18"
@@ -416,12 +416,12 @@
 </span><span id="line-214">
 <div class="viewcode-block" id="WialonBase.update_pfield">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.base.WialonBase.update_pfield">[docs]</a>
-</span><span id="line-215">    <span class="k">def</span><span class="w"> </span><span class="nf">update_pfield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-215">    <span class="k">def</span><span class="w"> </span><span class="nf">update_pfield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">constants</span><span class="o">.</span><span class="n">WialonProfileField</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="line-216"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="line-217"><span class="sd">        Updates a profile field by key.</span>
 </span><span id="line-218">
 </span><span id="line-219"><span class="sd">        :param key: A profile field key (name).</span>
-</span><span id="line-220"><span class="sd">        :type key: :py:obj:`str`</span>
+</span><span id="line-220"><span class="sd">        :type key: :py:obj:`~terminusgps.wialon.constants.WialonProfileField`</span>
 </span><span id="line-221"><span class="sd">        :param value: A string.</span>
 </span><span id="line-222"><span class="sd">        :type value: :py:obj:`str`</span>
 </span><span id="line-223"><span class="sd">        :raises WialonError: If something goes wrong with Wialon.</span>
@@ -430,7 +430,7 @@
 </span><span id="line-226">
 </span><span id="line-227"><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="line-228">        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_update_profile_field</span><span class="p">(</span>
-</span><span id="line-229">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">}</span>
+</span><span id="line-229">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="n">key</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">}</span>
 </span><span id="line-230">        <span class="p">)</span></div>
 
 </span><span id="line-231">
@@ -557,7 +557,7 @@
 </footer>
   </div>
   
-    <script src="../../../../_static/documentation_options.js?v=9771d2da"></script>
+    <script src="../../../../_static/documentation_options.js?v=0c4285fa"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script defer="defer" src="../../../../_static/theme.js?v=073f68d9"></script>
