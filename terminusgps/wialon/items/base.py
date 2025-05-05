@@ -212,12 +212,12 @@ class WialonBase:
             if field["n"] == key:
                 return int(field["id"])
 
-    def update_pfield(self, key: str, value: str) -> None:
+    def update_pfield(self, key: constants.WialonProfileField, value: str) -> None:
         """
         Updates a profile field by key.
 
         :param key: A profile field key (name).
-        :type key: :py:obj:`str`
+        :type key: :py:obj:`~terminusgps.wialon.constants.WialonProfileField`
         :param value: A string.
         :type value: :py:obj:`str`
         :raises WialonError: If something goes wrong with Wialon.
@@ -226,7 +226,7 @@ class WialonBase:
 
         """
         self.session.wialon_api.item_update_profile_field(
-            **{"itemId": self.id, "n": key, "v": value}
+            **{"itemId": self.id, "n": key.value, "v": value}
         )
 
     def update_afield(self, key: str, value: str) -> None:

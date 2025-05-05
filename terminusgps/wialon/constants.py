@@ -4,6 +4,56 @@ from typing import override
 from . import flags
 
 
+class WialonProfileField(enum.StrEnum):
+    """
+    Valid profile ids for Wialon objects.
+
+    `Profile field reference <https://sdk.wialon.com/wiki/en/sidebar/remoteapi/apiref/item/update_profile_field>`_.
+
+    """
+
+    VEHICLE_CLASS = "vehicle_class"
+    """`Vehicle Type <https://sdk.wialon.com/wiki/en/sidebar/remoteapi/apiref/file/type_library>`_."""
+    VIN = "vin"
+    """Vin number."""
+    REGISTRATION_PLATE = "registration_plate"
+    """Registration plate."""
+    BRAND = "brand"
+    """Brand."""
+    MODEL = "model"
+    """Model."""
+    YEAR = "year"
+    """Year."""
+    COLOR = "color"
+    """Color."""
+    ENGINE_MODEL = "engine_model"
+    """Engine model."""
+    ENGINE_POWER = "engine_power"
+    """Engine power, in kW."""
+    ENGINE_DISPLACEMENT = "engine_displacement"
+    """Engine displacement, in cm."""
+    PRIMARY_FUEL_TYPE = "primary_fuel_type"
+    """Primary fuel type."""
+    CARGO_TYPE = "cargo_type"
+    """Cargo type."""
+    CARRYING_CAPACITY = "carrying_capacity"
+    """Carrying capacity, in tons."""
+    WIDTH = "width"
+    """Width, in mm."""
+    HEIGHT = "height"
+    """Height, in mm."""
+    DEPTH = "depth"
+    """Depth, in mm."""
+    EFFECTIVE_CAPACITY = "effective_capacity"
+    """Effective capacity."""
+    GROSS_VEHICLE_WEIGHT = "gross_vehicle_weight"
+    """Gross vehicle weight."""
+    AXLES = "axles"
+    """Axles."""
+    VEHICLE_TYPE = "vehicle_type"
+    """Comment."""
+
+
 class WialonGeofenceType(enum.IntEnum):
     """
     A type of Wialon geofence.
