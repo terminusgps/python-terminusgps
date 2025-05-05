@@ -212,6 +212,23 @@ class WialonBase:
             if field["n"] == key:
                 return int(field["id"])
 
+    def update_pfield(self, key: str, value: str) -> None:
+        """
+        Updates a profile field by key.
+
+        :param key: A profile field key (name).
+        :type key: :py:obj:`str`
+        :param value: A string.
+        :type value: :py:obj:`str`
+        :raises WialonError: If something goes wrong with Wialon.
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
+        self.session.wialon_api.item_update_profile_field(
+            **{"itemId": self.id, "n": key, "v": value}
+        )
+
     def update_afield(self, key: str, value: str) -> None:
         """
         Updates an admin field by key.
@@ -298,4 +315,18 @@ class WialonBase:
             **{"id": self.id, "flags": flags.DataFlag.UNIT_ADMIN_FIELDS}
         )
         fields = response.get("item", {}).get("aflds") if response is not None else {}
+        return {field["n"]: field["v"] for field in fields.values()} if fields else {}
+
+    @property
+    def pfields(self) -> dict[str, str]:
+        """
+        Profile fields for the Wialon object.
+
+        :type: :py:obj:`dict`
+
+        """
+        response = self.session.wialon_api.core_search_item(
+            **{"id": self.id, "flags": flags.DataFlag.UNIT_PROFILE_FIELDS}
+        )
+        fields = response.get("item", {}).get("pflds") if response is not None else {}
         return {field["n"]: field["v"] for field in fields.values()} if fields else {}
