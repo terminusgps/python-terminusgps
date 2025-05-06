@@ -1,3 +1,5 @@
+import decimal
+
 from authorizenet import apicontractsv1, apicontrollers
 
 from terminusgps.authorizenet.constants import AuthorizenetSubscriptionStatus
@@ -8,6 +10,19 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
     """An Authorizenet subscription profile."""
 
     @property
+    def amount(self) -> decimal.Decimal | None:
+        """
+        The subscription amount.
+
+        :type: :py:obj:`~decimal.Decimal` | :py:obj:`None`
+
+        """
+        if self.id:
+            decimal.getcontext().prec = 4
+            sub = self._authorizenet_get_subscription().subscription
+            return decimal.Decimal(float(sub.amount)) * 1
+
+    @property
     def status(self) -> AuthorizenetSubscriptionStatus | None:
         """
         Current subscription status.
@@ -15,13 +30,10 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
         :type: :py:obj:`~terminusgps.authorizenet.constants.AuthorizenetSubscriptionStatus` | :py:obj:`None`
 
         """
-        return (
-            AuthorizenetSubscriptionStatus(
+        if self.id:
+            return AuthorizenetSubscriptionStatus(
                 self._authorizenet_get_subscription_status().status
             )
-            if self.id
-            else None
-        )
 
     @property
     def transactions(self) -> list[dict[str, str]]:

@@ -223,14 +223,14 @@ wheels = [
 
 [[package]]
 name = "botocore-stubs"
-version = "1.38.8"
+version = "1.38.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "types-awscrt" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/40/ac/9a46bf6ade735a726d21e2f9917de41459d5640e56885dd086352fa52046/botocore_stubs-1.38.8.tar.gz", hash = "sha256:d7f3783b664029a7f9da140530b82193ccb2ad0f2a9e13748fb35a7803c3ffc0", size = 42310 }
+sdist = { url = "https://files.pythonhosted.org/packages/df/39/801de2cf9b89e9aed24520a6aa1c7f7322ea6cdb47049396cad66bceefa2/botocore_stubs-1.38.9.tar.gz", hash = "sha256:a9fa4b77aebd463a6e0518961dc662f0e69bb8eb4fe035888fe9a1dbbf179b21", size = 42290 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/46/d7/cae712b1eb9c8e958b6a586ef3b17724b196ed30c95ac6fffb3ceb13463b/botocore_stubs-1.38.8-py3-none-any.whl", hash = "sha256:52bafa2a55b66d356969187e555e65b27b38456f724944fbe3549998539e4893", size = 65589 },
+    { url = "https://files.pythonhosted.org/packages/3a/b1/d0a41d083344d03b40a4cc535a259b15c5fa5cb16f8c56892fcc28f55ccb/botocore_stubs-1.38.9-py3-none-any.whl", hash = "sha256:2960c28500509acbe885b30907c997d96a6bfc492fb5165cebd45353111048d2", size = 65589 },
 ]
 
 [[package]]
@@ -964,7 +964,7 @@ wheels = [
 
 [[package]]
 name = "python-terminusgps"
-version = "36.4.2"
+version = "36.4.3"
 source = { editable = "." }
 dependencies = [
     { name = "aiobotocore" },
