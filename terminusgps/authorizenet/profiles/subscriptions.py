@@ -61,6 +61,30 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
         ).subscription
         return [t.arbTransaction for t in sub.arbTransactions]
 
+    @property
+    def address_id(self) -> int | None:
+        """
+        Returns the address id for the subscription profile.
+
+        :type: :py:obj:`int` | :py:obj:`None`
+
+        """
+        if self.id:
+            sub = self._authorizenet_get_subscription().subscription
+            return int(sub.profile.shippingProfile.customerAddressId)
+
+    @property
+    def payment_id(self) -> int | None:
+        """
+        Returns the payment id for the subscription profile.
+
+        :type: :py:obj:`int` | :py:obj:`None`
+
+        """
+        if self.id:
+            sub = self._authorizenet_get_subscription().subscription
+            return int(sub.profile.paymentProfile.customerPaymentProfileId)
+
     def create(self, subscription: apicontractsv1.ARBSubscriptionType) -> int:
         """
         Creates a subscription in Authorizenet.
