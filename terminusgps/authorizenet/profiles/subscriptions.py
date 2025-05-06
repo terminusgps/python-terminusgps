@@ -10,6 +10,18 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
     """An Authorizenet subscription profile."""
 
     @property
+    def name(self) -> str | None:
+        """
+        The subscription name.
+
+        :type: :py:obj:`str` | :py:obj:`None`
+
+        """
+        if self.id:
+            sub = self._authorizenet_get_subscription().subscription
+            return str(sub.name)
+
+    @property
     def amount(self) -> decimal.Decimal | None:
         """
         The subscription amount.
