@@ -85,6 +85,20 @@ class WialonResource(WialonBase):
         )
         return int(response.get("item", {}).get("bact")) == self.id
 
+    @property
+    def creator_id(self) -> int | None:
+        """
+        The account user id, if the resource is an account.
+
+        :type: :py:obj:`int` | :py:obj:`None`
+
+        """
+        if self.is_account:
+            response = self.session.wialon_api.core_search_item(
+                **{"id": self.id, "flags": flags.DataFlag.RESOURCE_BILLING_PROPERTIES}
+            )
+            return int(response.get("item", {}).get("crt"))
+
     def create_geofence(
         self,
         name: str,
@@ -201,6 +215,13 @@ class WialonResource(WialonBase):
 
         """
         assert self.is_account, "The resource is not an account"
+        self.session.wialon_api.user_update_item_access(
+            **{
+                "userId": self.creator_id,
+                "itemId": unit.id,
+                "accessMask": constants.ACCESSMASK_UNIT_MIGRATION,
+            }
+        )
         self.session.wialon_api.account_change_account(
             **{"itemId": unit.id, "resourceId": self.id}
         )
