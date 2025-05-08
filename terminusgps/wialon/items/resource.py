@@ -371,7 +371,7 @@ class WialonResource(WialonBase):
         :type code: :py:obj:`str`
         :param desc: Description for the driver.
         :type desc: :py:obj:`str`
-        :param phone: A phone number beginning in a country code. No spaces.
+        :param phone: A phone number in `E.164 <https://en.wikipedia.org/wiki/E.164>`_ format.
         :type phone: :py:obj:`str`
         :param mobile_auth_code: Authentication code for Wialon mobile app.
         :type mobile_auth_code: :py:obj:`str`

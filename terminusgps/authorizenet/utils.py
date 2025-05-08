@@ -124,6 +124,18 @@ def generate_customer_address(form: forms.Form) -> apicontractsv1.customerAddres
     """
     Takes a form and returns a :py:obj:`~authorizenet.apicontractsv1.customerAddressType`.
 
+    Required form fields:
+
+    +----------------+------------------------------------------------------------+
+    | name           | type                                                       |
+    +================+============================================================+
+    | ``address``    | :py:obj:`~authorizenet.apicontractsv1.customerAddressType` |
+    +----------------+------------------------------------------------------------+
+    | ``first_name`` | :py:obj:`str`                                              |
+    +----------------+------------------------------------------------------------+
+    | ``last_name``  | :py:obj:`str`                                              |
+    +----------------+------------------------------------------------------------+
+
     :param form: A Django form.
     :type form: :py:obj:`~django.forms.Form`
     :raises ValueError: If ``address`` wasn't in the form.
@@ -151,6 +163,14 @@ def generate_customer_address(form: forms.Form) -> apicontractsv1.customerAddres
 def generate_customer_payment(form: forms.Form) -> apicontractsv1.paymentType:
     """
     Takes a form and returns a :py:obj:`~authorizenet.apicontractsv1.paymentType`.
+
+    Required form fields:
+
+    +-----------------+-------------------------------------------------------+
+    | name            | type                                                  |
+    +=================+=======================================================+
+    | ``credit_card`` | :py:obj:`~authorizenet.apicontractsv1.creditCardType` |
+    +-----------------+-------------------------------------------------------+
 
     :param form: A Django form.
     :type form: :py:obj:`~django.forms.Form`

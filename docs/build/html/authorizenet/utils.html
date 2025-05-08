@@ -152,6 +152,25 @@
 <dt class="sig sig-object py" id="terminusgps.authorizenet.utils.generate_customer_address">
 <span class="sig-prename descclassname"><span class="pre">terminusgps.authorizenet.utils.</span></span><span class="sig-name descname"><span class="pre">generate_customer_address</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Form</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">customerAddressType</span></span></span><a class="reference internal" href="../_modules/terminusgps/authorizenet/utils.html#generate_customer_address"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.authorizenet.utils.generate_customer_address" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.utils.generate_customer_address'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd><p>Takes a form and returns a <code class="xref py py-obj docutils literal notranslate"><span class="pre">customerAddressType</span></code>.</p>
+<p>Required form fields:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>name</p></th>
+<th class="head"><p>type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">address</span></code></p></td>
+<td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">customerAddressType</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">first_name</span></code></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">last_name</span></code></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>form</strong> (<a class="reference external" href="http://docs.djangoproject.com/en/stable/ref/forms/api/#django.forms.Form" title="(in Django v5.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Form</span></code></a>) – A Django form.</p>
@@ -175,6 +194,19 @@
 <dt class="sig sig-object py" id="terminusgps.authorizenet.utils.generate_customer_payment">
 <span class="sig-prename descclassname"><span class="pre">terminusgps.authorizenet.utils.</span></span><span class="sig-name descname"><span class="pre">generate_customer_payment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Form</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">paymentType</span></span></span><a class="reference internal" href="../_modules/terminusgps/authorizenet/utils.html#generate_customer_payment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.authorizenet.utils.generate_customer_payment" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.utils.generate_customer_payment'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd><p>Takes a form and returns a <code class="xref py py-obj docutils literal notranslate"><span class="pre">paymentType</span></code>.</p>
+<p>Required form fields:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>name</p></th>
+<th class="head"><p>type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">credit_card</span></code></p></td>
+<td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">creditCardType</span></code></p></td>
+</tr>
+</tbody>
+</table>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>form</strong> (<a class="reference external" href="http://docs.djangoproject.com/en/stable/ref/forms/api/#django.forms.Form" title="(in Django v5.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Form</span></code></a>) – A Django form.</p>

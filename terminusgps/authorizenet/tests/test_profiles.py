@@ -29,9 +29,7 @@ class CustomerProfileTestCase(TestCase):
         """Fails if :py:attr:`email`, :py:attr:`desc` or :py:attr:`merchantCustomerId` weren't set properly."""
         self.assertTrue(self.test_customer_profile.email == self.test_email)
         self.assertTrue(self.test_customer_profile.desc == self.test_desc)
-        self.assertTrue(
-            self.test_customer_profile.merchantCustomerId == self.test_merchant_id
-        )
+        self.assertTrue(self.test_customer_profile.merchant_id == self.test_merchant_id)
 
     def test_customer_profile_generate_customer_profile_type(self) -> None:
         """Fails if :py:meth:`_generate_customer_profile_type` returns an object of the wrong type."""

@@ -12,9 +12,9 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
   
-    <title>terminusgps.authorizenet.utils | python-terminusgps 33.5.0 documentation</title>
-    <meta property="og:title" content="terminusgps.authorizenet.utils | python-terminusgps 33.5.0 documentation" />
-    <meta name="twitter:title" content="terminusgps.authorizenet.utils | python-terminusgps 33.5.0 documentation" />
+    <title>terminusgps.authorizenet.utils | python-terminusgps 36.5.0 documentation</title>
+    <meta property="og:title" content="terminusgps.authorizenet.utils | python-terminusgps 36.5.0 documentation" />
+    <meta name="twitter:title" content="terminusgps.authorizenet.utils | python-terminusgps 36.5.0 documentation" />
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d691ff6c" />
       <link rel="stylesheet" type="text/css" href="../../../_static/theme.css?v=42baaae4" />
       <link rel="stylesheet" type="text/css" href="../../../_static/autoclasstoc.css?v=08871587" />
@@ -40,7 +40,7 @@
     </a><header
   class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
     <div class="hidden mr-4 md:flex">
-      <a href="../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 33.5.0 documentation</span>
+      <a href="../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 36.5.0 documentation</span>
       </a></div><button
       class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden"
       type="button" @click="showSidebar = true">
@@ -95,7 +95,7 @@
   class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky"
   :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }">
 
-    <a href="../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 33.5.0 documentation</span>
+    <a href="../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 36.5.0 documentation</span>
     </a>
 
     <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
@@ -112,14 +112,15 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../aws/index.html">AWS API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../aws/notifications.html">Notifications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../aws/secrets.html">Secrets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../aws/utils.html">Utilities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../django/index.html">Django</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../django/forms.html">Forms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../django/mixins.html">Mixins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../django/settings.html">Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../django/validators.html">Validators</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../twilio/index.html">Twilio API</a><ul>
@@ -157,7 +158,7 @@
      class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
   <a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground"
      href="../../../index.html">
-    <span class="hidden md:inline">python-terminusgps 33.5.0 documentation</span>
+    <span class="hidden md:inline">python-terminusgps 36.5.0 documentation</span>
     <svg xmlns="http://www.w3.org/2000/svg"
          height="18"
          width="18"
@@ -310,53 +311,73 @@
 </span><span id="line-124"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="line-125"><span class="sd">    Takes a form and returns a :py:obj:`~authorizenet.apicontractsv1.customerAddressType`.</span>
 </span><span id="line-126">
-</span><span id="line-127"><span class="sd">    :param form: A Django form.</span>
-</span><span id="line-128"><span class="sd">    :type form: :py:obj:`~django.forms.Form`</span>
-</span><span id="line-129"><span class="sd">    :raises ValueError: If ``address`` wasn&#39;t in the form.</span>
-</span><span id="line-130"><span class="sd">    :raises ValueError: If ``first_name`` wasn&#39;t in the form.</span>
-</span><span id="line-131"><span class="sd">    :raises ValueError: If ``last_name`` wasn&#39;t in the form.</span>
-</span><span id="line-132"><span class="sd">    :returns: A customer address object.</span>
-</span><span id="line-133"><span class="sd">    :rtype: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`</span>
-</span><span id="line-134">
-</span><span id="line-135"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-136">    <span class="n">required_fields</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;address&quot;</span><span class="p">,</span> <span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;last_name&quot;</span><span class="p">]</span>
-</span><span id="line-137">    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">required_fields</span><span class="p">:</span>
-</span><span id="line-138">        <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span> <span class="ow">or</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-139">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-</span><span id="line-140">                <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2">&#39; was not provided by the form, got &#39;</span><span class="si">{</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
-</span><span id="line-141">            <span class="p">)</span>
-</span><span id="line-142">
-</span><span id="line-143">    <span class="n">address</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerAddressType</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;address&quot;</span><span class="p">]</span>
-</span><span id="line-144">    <span class="n">address</span><span class="o">.</span><span class="n">firstName</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;first_name&quot;</span><span class="p">]</span>
-</span><span id="line-145">    <span class="n">address</span><span class="o">.</span><span class="n">lastName</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;last_name&quot;</span><span class="p">]</span>
-</span><span id="line-146">    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;phone&quot;</span><span class="p">):</span>
-</span><span id="line-147">        <span class="n">address</span><span class="o">.</span><span class="n">phone</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;phone&quot;</span><span class="p">]</span>
-</span><span id="line-148">    <span class="k">return</span> <span class="n">address</span></div>
+</span><span id="line-127"><span class="sd">    Required form fields:</span>
+</span><span id="line-128">
+</span><span id="line-129"><span class="sd">    +----------------+------------------------------------------------------------+</span>
+</span><span id="line-130"><span class="sd">    | name           | type                                                       |</span>
+</span><span id="line-131"><span class="sd">    +================+============================================================+</span>
+</span><span id="line-132"><span class="sd">    | ``address``    | :py:obj:`~authorizenet.apicontractsv1.customerAddressType` |</span>
+</span><span id="line-133"><span class="sd">    +----------------+------------------------------------------------------------+</span>
+</span><span id="line-134"><span class="sd">    | ``first_name`` | :py:obj:`str`                                              |</span>
+</span><span id="line-135"><span class="sd">    +----------------+------------------------------------------------------------+</span>
+</span><span id="line-136"><span class="sd">    | ``last_name``  | :py:obj:`str`                                              |</span>
+</span><span id="line-137"><span class="sd">    +----------------+------------------------------------------------------------+</span>
+</span><span id="line-138">
+</span><span id="line-139"><span class="sd">    :param form: A Django form.</span>
+</span><span id="line-140"><span class="sd">    :type form: :py:obj:`~django.forms.Form`</span>
+</span><span id="line-141"><span class="sd">    :raises ValueError: If ``address`` wasn&#39;t in the form.</span>
+</span><span id="line-142"><span class="sd">    :raises ValueError: If ``first_name`` wasn&#39;t in the form.</span>
+</span><span id="line-143"><span class="sd">    :raises ValueError: If ``last_name`` wasn&#39;t in the form.</span>
+</span><span id="line-144"><span class="sd">    :returns: A customer address object.</span>
+</span><span id="line-145"><span class="sd">    :rtype: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`</span>
+</span><span id="line-146">
+</span><span id="line-147"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-148">    <span class="n">required_fields</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;address&quot;</span><span class="p">,</span> <span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;last_name&quot;</span><span class="p">]</span>
+</span><span id="line-149">    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">required_fields</span><span class="p">:</span>
+</span><span id="line-150">        <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span> <span class="ow">or</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-151">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span><span id="line-152">                <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2">&#39; was not provided by the form, got &#39;</span><span class="si">{</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+</span><span id="line-153">            <span class="p">)</span>
+</span><span id="line-154">
+</span><span id="line-155">    <span class="n">address</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerAddressType</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;address&quot;</span><span class="p">]</span>
+</span><span id="line-156">    <span class="n">address</span><span class="o">.</span><span class="n">firstName</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;first_name&quot;</span><span class="p">]</span>
+</span><span id="line-157">    <span class="n">address</span><span class="o">.</span><span class="n">lastName</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;last_name&quot;</span><span class="p">]</span>
+</span><span id="line-158">    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;phone&quot;</span><span class="p">):</span>
+</span><span id="line-159">        <span class="n">address</span><span class="o">.</span><span class="n">phone</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;phone&quot;</span><span class="p">]</span>
+</span><span id="line-160">    <span class="k">return</span> <span class="n">address</span></div>
 
-</span><span id="line-149">
-</span><span id="line-150">
+</span><span id="line-161">
+</span><span id="line-162">
 <div class="viewcode-block" id="generate_customer_payment">
 <a class="viewcode-back" href="../../../authorizenet/utils.html#terminusgps.authorizenet.utils.generate_customer_payment">[docs]</a>
-</span><span id="line-151"><span class="k">def</span><span class="w"> </span><span class="nf">generate_customer_payment</span><span class="p">(</span><span class="n">form</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">paymentType</span><span class="p">:</span>
-</span><span id="line-152"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-153"><span class="sd">    Takes a form and returns a :py:obj:`~authorizenet.apicontractsv1.paymentType`.</span>
-</span><span id="line-154">
-</span><span id="line-155"><span class="sd">    :param form: A Django form.</span>
-</span><span id="line-156"><span class="sd">    :type form: :py:obj:`~django.forms.Form`</span>
-</span><span id="line-157"><span class="sd">    :raises ValueError: If ``credit_card`` wasn&#39;t in the form.</span>
-</span><span id="line-158"><span class="sd">    :returns: A payment object.</span>
-</span><span id="line-159"><span class="sd">    :rtype: :py:obj:`~authorizenet.apicontractsv1.paymentType`</span>
-</span><span id="line-160">
-</span><span id="line-161"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-162">    <span class="n">required_fields</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;credit_card&quot;</span><span class="p">]</span>
-</span><span id="line-163">    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">required_fields</span><span class="p">:</span>
-</span><span id="line-164">        <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span> <span class="ow">or</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-165">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-</span><span id="line-166">                <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2">&#39; was not provided by the form, got &#39;</span><span class="si">{</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
-</span><span id="line-167">            <span class="p">)</span>
+</span><span id="line-163"><span class="k">def</span><span class="w"> </span><span class="nf">generate_customer_payment</span><span class="p">(</span><span class="n">form</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">paymentType</span><span class="p">:</span>
+</span><span id="line-164"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-165"><span class="sd">    Takes a form and returns a :py:obj:`~authorizenet.apicontractsv1.paymentType`.</span>
+</span><span id="line-166">
+</span><span id="line-167"><span class="sd">    Required form fields:</span>
 </span><span id="line-168">
-</span><span id="line-169">    <span class="n">credit_card</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">creditCardType</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;credit_card&quot;</span><span class="p">]</span>
-</span><span id="line-170">    <span class="k">return</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">paymentType</span><span class="p">(</span><span class="n">creditCard</span><span class="o">=</span><span class="n">credit_card</span><span class="p">)</span></div>
+</span><span id="line-169"><span class="sd">    +-----------------+-------------------------------------------------------+</span>
+</span><span id="line-170"><span class="sd">    | name            | type                                                  |</span>
+</span><span id="line-171"><span class="sd">    +=================+=======================================================+</span>
+</span><span id="line-172"><span class="sd">    | ``credit_card`` | :py:obj:`~authorizenet.apicontractsv1.creditCardType` |</span>
+</span><span id="line-173"><span class="sd">    +-----------------+-------------------------------------------------------+</span>
+</span><span id="line-174">
+</span><span id="line-175"><span class="sd">    :param form: A Django form.</span>
+</span><span id="line-176"><span class="sd">    :type form: :py:obj:`~django.forms.Form`</span>
+</span><span id="line-177"><span class="sd">    :raises ValueError: If ``credit_card`` wasn&#39;t in the form.</span>
+</span><span id="line-178"><span class="sd">    :returns: A payment object.</span>
+</span><span id="line-179"><span class="sd">    :rtype: :py:obj:`~authorizenet.apicontractsv1.paymentType`</span>
+</span><span id="line-180">
+</span><span id="line-181"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-182">    <span class="n">required_fields</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;credit_card&quot;</span><span class="p">]</span>
+</span><span id="line-183">    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">required_fields</span><span class="p">:</span>
+</span><span id="line-184">        <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span> <span class="ow">or</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-185">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span><span id="line-186">                <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2">&#39; was not provided by the form, got &#39;</span><span class="si">{</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+</span><span id="line-187">            <span class="p">)</span>
+</span><span id="line-188">
+</span><span id="line-189">    <span class="n">credit_card</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">creditCardType</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;credit_card&quot;</span><span class="p">]</span>
+</span><span id="line-190">    <span class="k">return</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">paymentType</span><span class="p">(</span><span class="n">creditCard</span><span class="o">=</span><span class="n">credit_card</span><span class="p">)</span></div>
 
 </span></code></pre></div>
     </div></div>
@@ -373,7 +394,7 @@
 </footer>
   </div>
   
-    <script src="../../../_static/documentation_options.js?v=67bd8566"></script>
+    <script src="../../../_static/documentation_options.js?v=d9ef4bba"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script defer="defer" src="../../../_static/theme.js?v=073f68d9"></script>
