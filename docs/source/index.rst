@@ -6,13 +6,16 @@
 python-terminusgps documentation
 ================================
 
+`python-terminusgps <https://pypi.org/project/python-terminusgps>`_ is a package [#f1]_ of subpackages that streamlines the use of web APIs for Terminus GPS developers.
+
+`Terminus GPS <https://terminusgps.com/>`_ is an IoT hardware/software GPS monitoring company.
+
+.. [#f1] In other programming languages, the term "library" is used to describe what Python calls a "package". Put simply, a "package" is a Python "library".
+
 ============
 Installation
 ============
 
-`python-terminusgps <https://pypi.org/project/python-terminusgps/>`_ is a collection of API libraries written for use by Terminus GPS.
-
-`Terminus GPS <https://terminusgps.com/>`_ is an IoT hardware/software GPS monitoring company.
 
 Use pip to install from `PyPI <https://pypi.org/project/python-terminusgps/>`_.
 
@@ -20,7 +23,7 @@ Use pip to install from `PyPI <https://pypi.org/project/python-terminusgps/>`_.
 
    pip install python-terminusgps
 
-In Python, all subpackages are nested within :py:mod:`terminusgps`:
+All subpackages are nested within :py:mod:`terminusgps`:
 
 .. code:: python
 
