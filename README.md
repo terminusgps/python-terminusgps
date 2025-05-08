@@ -1,5 +1,5 @@
 # python-terminusgps
 
-*python-terminusgps* is a collection of Python libraries intended for use by [Terminus GPS](https://terminusgps.com/) developers. 
+*python-terminusgps* adds libraries for working with web APIs used by [Terminus GPS](https://terminusgps.com/) developers. 
 
 [Documentation](https://docs.terminusgps.com/)
