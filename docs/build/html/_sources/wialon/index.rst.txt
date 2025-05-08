@@ -1,9 +1,21 @@
 Wialon API
 ==========
 
-:py:mod:`terminusgps` offers the :py:mod:`wialon` package; a Python library that makes it simple to operate within the Wialon API.
+:py:mod:`terminusgps` offers the :py:mod:`wialon` package.
 
-.. attention:: :confval:`WIALON_TOKEN` and :confval:`WIALON_ADMIN_ID` must be set before using this package.
+======
+Models
+======
+
+Most `Wialon <https://wialon.com/>`_ objects have been modeled:
+
+* :py:obj:`~terminusgps.wialon.items.resource.WialonResource` for manipulating Wialon resources/accounts.
+
+* :py:obj:`~terminusgps.wialon.items.user.WialonUser` for manipulating Wialon users.
+
+* :py:obj:`~terminusgps.wialon.items.unit.WialonUnit` for manipulating Wialon units.
+
+* And :doc:`more <items>`!
 
 .. toctree::
     :maxdepth: 2

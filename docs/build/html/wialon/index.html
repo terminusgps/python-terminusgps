@@ -131,11 +131,16 @@
 <div id="content" role="main">
 <section id="wialon-api">
 <h1>Wialon API<a class="headerlink" href="#wialon-api" title="Link to this heading"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
-<p><code class="xref py py-mod docutils literal notranslate"><span class="pre">terminusgps</span></code> offers the <code class="xref py py-mod docutils literal notranslate"><span class="pre">wialon</span></code> package; a Python library that makes it simple to operate within the Wialon API.</p>
-<div class="admonition attention">
-<p class="admonition-title">Attention</p>
-<p><a class="reference internal" href="../django/settings.html#confval-WIALON_TOKEN"><code class="xref std std-confval docutils literal notranslate"><span class="pre">WIALON_TOKEN</span></code></a> and <a class="reference internal" href="../django/settings.html#confval-WIALON_ADMIN_ID"><code class="xref std std-confval docutils literal notranslate"><span class="pre">WIALON_ADMIN_ID</span></code></a> must be set before using this package.</p>
-</div>
+<p><code class="xref py py-mod docutils literal notranslate"><span class="pre">terminusgps</span></code> offers the <code class="xref py py-mod docutils literal notranslate"><span class="pre">wialon</span></code> package.</p>
+<section id="models">
+<h2>Models<a class="headerlink" href="#models" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#models'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>Most <a class="reference external" href="https://wialon.com/">Wialon</a> objects have been modeled:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="items.html#terminusgps.wialon.items.resource.WialonResource" title="terminusgps.wialon.items.resource.WialonResource"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonResource</span></code></a> for manipulating Wialon resources/accounts.</p></li>
+<li><p><a class="reference internal" href="items.html#terminusgps.wialon.items.user.WialonUser" title="terminusgps.wialon.items.user.WialonUser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonUser</span></code></a> for manipulating Wialon users.</p></li>
+<li><p><a class="reference internal" href="items.html#terminusgps.wialon.items.unit.WialonUnit" title="terminusgps.wialon.items.unit.WialonUnit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonUnit</span></code></a> for manipulating Wialon units.</p></li>
+<li><p>And <a class="reference internal" href="items.html"><span class="doc">more</span></a>!</p></li>
+</ul>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -190,7 +195,14 @@
 </ul>
 </div>
 </section>
-</div></div>
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#models'" class="reference internal" href="#models">Models</a></li>
+</ul>
+</div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">
