@@ -1,3 +1,4 @@
+from datetime import datetime
 from urllib.parse import urljoin
 
 from django.conf import settings
@@ -82,28 +83,31 @@ class WialonUnit(WialonBase):
 
         Response format:
 
-        +----------+-----------------+-----------------+
-        | key      | type            | desc            |
-        +==========+=================+=================+
-        | ``"t"``  | :py:obj:`int`   | Time (UTC)      |
-        +----------+-----------------+-----------------+
-        | ``"y"``  | :py:obj:`float` | Latitude        |
-        +----------+-----------------+-----------------+
-        | ``"x"``  | :py:obj:`float` | Longitude       |
-        +----------+-----------------+-----------------+
-        | ``"z"``  | :py:obj:`float` | Altitude        |
-        +----------+-----------------+-----------------+
-        | ``"s"``  | :py:obj:`int`   | Speed           |
-        +----------+-----------------+-----------------+
-        | ``"c"``  | :py:obj:`int`   | Course          |
-        +----------+-----------------+-----------------+
-        | ``"sc"`` | :py:obj:`int`   | # of satellites |
-        +----------+-----------------+-----------------+
+        +----------+--------------------+-----------------+
+        | key      | type               | desc            |
+        +==========+====================+=================+
+        | ``"t"``  | :py:obj:`datetime` | Time (UTC)      |
+        +----------+--------------------+-----------------+
+        | ``"y"``  | :py:obj:`float`    | Latitude        |
+        +----------+--------------------+-----------------+
+        | ``"x"``  | :py:obj:`float`    | Longitude       |
+        +----------+--------------------+-----------------+
+        | ``"z"``  | :py:obj:`float`    | Altitude        |
+        +----------+--------------------+-----------------+
+        | ``"s"``  | :py:obj:`int`      | Speed           |
+        +----------+--------------------+-----------------+
+        | ``"c"``  | :py:obj:`int`      | Course          |
+        +----------+--------------------+-----------------+
+        | ``"sc"`` | :py:obj:`int`      | # of satellites |
+        +----------+--------------------+-----------------+
 
         """
-        return self.session.wialon_api.core_search_item(
+        response = self.session.wialon_api.core_search_item(
             **{"id": self.id, "flags": flags.DataFlag.UNIT_POSITION}
         ).get("pos", {})
+        if response:
+            response["t"] = datetime.fromtimestamp(response["t"])
+        return response
 
     def execute_command(
         self,
