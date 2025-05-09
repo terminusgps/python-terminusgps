@@ -97,7 +97,7 @@ class WialonUser(WialonBase):
 
     def update_password(self, old_password: str, new_password: str) -> None:
         """
-        Updates the user's password to ``new_password``.
+        Updates the user's password.
 
         :param old_password: The user's original password.
         :type old_password: :py:obj:`str`
