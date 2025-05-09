@@ -3,17 +3,19 @@ from terminusgps.wialon.items.base import WialonBase
 
 
 class WialonUnitGroup(WialonBase):
+    """A Wialon `unit group <https://help.wialon.com/en/wialon-local/2504/user-guide/monitoring-system/units/unit-groups>`_."""
+
     def create(self, creator_id: str | int, name: str) -> int | None:
         """
-        Creates a new Wialon unit group.
+        Creates a new Wialon unit group and returns its id.
 
-        :param creator_id: A Wialon user id.
+        :param creator_id: Creator user id.
         :type creator_id: :py:obj:`str` | :py:obj:`int`
-        :param name: A name for the group.
+        :param name: Name for the new unit group.
         :type name: :py:obj:`str`
-        :raises ValueError: If ``creator_id`` is not a digit.
-        :raises WialonError: If something goes wrong with Wialon.
-        :returns: The Wialon id for the new group, if it was created.
+        :raises ValueError: If ``creator_id`` wasn't a digit.
+        :raises WialonError: If something went wrong with a Wialon API call.
+        :returns: A new Wialon unit group id, if created.
         :rtype: :py:obj:`int` | :py:obj:`None`
 
         """
@@ -24,7 +26,7 @@ class WialonUnitGroup(WialonBase):
             **{
                 "creatorId": creator_id,
                 "name": name,
-                "dataFlags": flags.DataFlag.UNIT_BASE.value,
+                "dataFlags": flags.DataFlag.UNIT_BASE,
             }
         )
         return (
@@ -39,7 +41,7 @@ class WialonUnitGroup(WialonBase):
 
         :param new_items: A list of Wialon unit ids.
         :type new_items: :py:obj:`list`
-        :raises WialonError: If something goes wrong with Wialon.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -54,20 +56,23 @@ class WialonUnitGroup(WialonBase):
 
         :param item: A Wialon object.
         :type item: :py:obj:`~terminusgps.wialon.items.base.WialonBase`
-        :raises WialonError: If something goes wrong with Wialon.
-        :returns: :py:obj:`True` if ``item`` is a member of the group, else :py:obj:`False`.
+        :raises ValueError: If ``item`` didn't have an :py:attr:`id` attribute.
+        :raises WialonError: If something went wrong with a Wialon API call.
+        :returns: Whether or not ``item`` is a member of the group.
         :rtype: :py:obj:`bool`
 
         """
+        if not hasattr(item, "id"):
+            raise ValueError(f"'{item}' didn't have an id.")
         return True if item.id in self.items else False
 
     def add_item(self, item: WialonBase) -> None:
         """
-        Adds a Wialon item to the group.
+        Adds a Wialon object to the group.
 
         :param item: A Wialon object.
         :type item: :py:obj:`~terminusgps.wialon.items.base.WialonBase`
-        :raises WialonError: If something goes wrong with Wialon.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -77,17 +82,17 @@ class WialonUnitGroup(WialonBase):
 
     def rm_item(self, item: WialonBase) -> None:
         """
-        Removes a Wialon unit from the group, if it's a member of the group.
+        Removes a Wialon object from the group.
 
         :param item: A Wialon object.
         :type item: :py:obj:`~terminusgps.wialon.items.base.WialonBase`
-        :raises AssertionError: If the item wasn't in the group.
-        :raises WialonError: If something goes wrong with Wialon.
+        :raises AssertionError: If ``item`` wasn't a member of the group.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        assert self.is_member(item), f"Cannot remove {item}, it's not in the group"
+        assert self.is_member(item), f"Cannot remove {item}, it's not in the group."
         new_items: list[str] = self.items.copy()
         new_items.remove(str(item.id))
         self.set_items(new_items)
@@ -95,7 +100,7 @@ class WialonUnitGroup(WialonBase):
     @property
     def items(self) -> list[str]:
         """
-        Returns a list of the group's Wialon unit ids.
+        Returns a list of Wialon object ids in the group.
 
         :type: :py:obj:`list`
 

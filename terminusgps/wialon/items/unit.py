@@ -1,4 +1,4 @@
-from urllib.parse import quote_plus, urljoin
+from urllib.parse import urljoin
 
 from django.conf import settings
 
@@ -7,6 +7,8 @@ from terminusgps.wialon.items.base import WialonBase
 
 
 class WialonUnit(WialonBase):
+    """A Wialon `unit <https://help.wialon.com/en/wialon-hosting/user-guide/management-system/units>`_."""
+
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self._imei_number = None
@@ -19,15 +21,16 @@ class WialonUnit(WialonBase):
         """
         Creates a new Wialon unit.
 
-        :param creator_id: A Wialon user id.
+        :param creator_id: Creator user id.
         :type creator_id: :py:obj:`str` | :py:obj:`int`
-        :param name: A name for the unit.
+        :param name: A name for the new unit.
         :type name: :py:obj:`str`
-        :param hw_type_id: A Wialon hardware type ID.
+        :param hw_type_id: A Wialon hardware type id for the new unit.
         :type hw_type_id: :py:obj:`str` | :py:obj:`int`
-        :raises ValueError: If ``creator_id`` is a :py:obj:`str` but not a digit.
-        :raises ValueError: If ``hw_type_id`` is a :py:obj:`str` but not a digit.
-        :returns: An id for the new unit.
+        :raises ValueError: If ``creator_id`` isn't a digit.
+        :raises ValueError: If ``hw_type_id`` isnt' a digit.
+        :raises WialonError: If something went wrong with a Wialon API call.
+        :returns: A new Wialon unit id, if created.
         :rtype: :py:obj:`int` | :py:obj:`None`
 
         """
@@ -41,7 +44,7 @@ class WialonUnit(WialonBase):
                 "creatorId": str(creator_id),
                 "name": str(name),
                 "hwTypeId": str(hw_type_id),
-                "dataFlags": str(flags.DataFlag.UNIT_BASE),
+                "dataFlags": flags.DataFlag.UNIT_BASE,
             }
         )
         return (
@@ -51,6 +54,7 @@ class WialonUnit(WialonBase):
         )
 
     def populate(self) -> None:
+        """Sets :py:attr:`imei_number`, :py:attr:`active` and :py:attr:`image_uri`."""
         super().populate()
         response = self.session.wialon_api.core_search_item(
             **{
@@ -68,94 +72,38 @@ class WialonUnit(WialonBase):
             self._active = item.get("act", False)
             self._image_uri = item.get("uri")
 
-    def get_position(self) -> dict | None:
+    def get_position(self) -> dict:
+        """
+        Returns the current position of the unit.
+
+        :raises WialonError: If something went wrong with a Wialon API call.
+        :returns: The unit's current position.
+        :rtype: :py:obj:`dict`
+
+        Response format:
+
+        +----------+-----------------+--------------+
+        | key      | type            | desc         |
+        +==========+=================+==============+
+        | ``"t"``  | :py:obj:`int`   | Time (UTC)   |
+        +----------+-----------------+--------------+
+        | ``"y"``  | :py:obj:`float` | Latitude     |
+        +----------+---------------+----------------+
+        | ``"x"``  | :py:obj:`float` | Longitude    |
+        +----------+---------------+----------------+
+        | ``"z"``  | :py:obj:`float` | Altitude     |
+        +----------+-----------------+--------------+
+        | ``"s"``  | :py:obj:`int`   | Speed        |
+        +----------+-----------------+--------------+
+        | ``"c"``  | :py:obj:`int`   | Course       |
+        +----------+-----------------+--------------+
+        | ``"sc"`` | :py:obj:`int`   | Satellites # |
+        +----------+-----------------+--------------+
+
+        """
         return self.session.wialon_api.core_search_item(
             **{"id": self.id, "flags": flags.DataFlag.UNIT_POSITION}
-        )
-
-    @property
-    def position(self) -> dict | None:
-        """Current GPS position of the unit."""
-        return self.get_position()
-
-    @property
-    def exists(self) -> bool:
-        """Whether or not the unit exists in Wialon."""
-        return bool(
-            self.session.wialon_api.core_search_item(
-                **{"id": self.id, "flags": flags.DataFlag.UNIT_BASE.value}
-            ).get("item", False)
-        )
-
-    @property
-    def available_commands(self) -> dict:
-        """
-        Commands assigned to the unit.
-
-        :type: :py:obj:`dict`
-
-        """
-        return self.session.wialon_api.core_get_hw_cmds(
-            **{"deviceTypeId": 0, "unitId": self.id}
-        )
-
-    @property
-    def image_uri(self) -> str:
-        """
-        Image URI for the unit.
-
-        :type :py:obj:`str`
-
-        """
-        if self._image_uri is None:
-            self.populate()
-        return str(self._image_uri)
-
-    @property
-    def imei_number(self) -> str:
-        """
-        IMEI # for the unit.
-
-        :type: :py:obj:`str`
-
-        """
-        if self._imei_number is None:
-            self.populate()
-        return str(self._imei_number)
-
-    @property
-    def iccid(self) -> str | None:
-        """
-        SIM Card # for the unit, if any.
-
-        :type: :py:obj:`str` | :py:obj:`None`
-
-        """
-        return self.afields.get("iccid")
-
-    @property
-    def carrier(self) -> str | None:
-        """
-        Name of the telecommunications company associated with the unit's SIM card, if any.
-
-        :type: :py:obj:`str` | :py:obj:`None`
-
-        """
-        return self.afields.get("carrier")
-
-    @property
-    def active(self) -> bool:
-        """Whether or not the unit is activated."""
-        if self._active is None:
-            self.populate()
-        return bool(self._active)
-
-    @property
-    def image_url(self) -> str | None:
-        """Returns an absolute url to the unit's icon in Wialon."""
-        if settings.configured and hasattr(settings, "WIALON_HOST"):
-            return urljoin(settings.WIALON_HOST, self._image_uri)
-        return urljoin("https://hst-api.wialon.com", self._image_uri)
+        ).get("pos", {})
 
     def execute_command(
         self,
@@ -178,6 +126,7 @@ class WialonUnit(WialonBase):
         :type flags: :py:obj:`int`
         :param param: Additional parameters to execute the command with.
         :type param: :py:obj:`dict` | :py:obj:`None`
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -195,11 +144,11 @@ class WialonUnit(WialonBase):
 
     def set_access_password(self, password: str) -> None:
         """
-        Sets a new access password for the unit.
+        Sets the unit's access password.
 
         :param password: A new access password.
-        :type name: :py:obj:`str`
-        :raises WialonError: If something goes wrong with Wialon.
+        :type password: :py:obj:`str`
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -212,7 +161,7 @@ class WialonUnit(WialonBase):
         """
         Activates the unit.
 
-        :raises WialonError: If something goes wrong with Wialon.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -225,28 +174,13 @@ class WialonUnit(WialonBase):
         """
         Deactivates the unit.
 
-        :raises WialonError: If something goes wrong with Wialon.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
         self.session.wialon_api.unit_set_active(
             **{"itemId": self.id, "active": int(False)}
-        )
-
-    def assign_phone(self, phone: str) -> None:
-        """
-        Assigns a phone number to the unit.
-
-        :param phone: A phone number beginning with a country code.
-        :type phone: :py:obj:`str`
-        :raises WialonError: If something goes wrong with Wialon.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        self.session.wialon_api.unit_update_phone(
-            **{"itemId": self.id, "phoneNumber": quote_plus(phone)}
         )
 
     def get_phone_numbers(
@@ -325,3 +259,82 @@ class WialonUnit(WialonBase):
             dirty_phones = [driver[0].get("ph") for driver in response.values()]
             return self.clean_phone_numbers(dirty_phones)
         return []
+
+    @property
+    def exists(self) -> bool:
+        """Whether or not the unit exists in Wialon."""
+        return bool(
+            self.session.wialon_api.core_search_item(
+                **{"id": self.id, "flags": flags.DataFlag.UNIT_BASE}
+            ).get("item", False)
+        )
+
+    @property
+    def available_commands(self) -> dict:
+        """
+        Commands assigned to the unit.
+
+        :type: :py:obj:`dict`
+
+        """
+        return self.session.wialon_api.core_get_hw_cmds(
+            **{"deviceTypeId": 0, "unitId": self.id}
+        )
+
+    @property
+    def image_uri(self) -> str:
+        """
+        Image URI for the unit.
+
+        :type :py:obj:`str`
+
+        """
+        if self._image_uri is None:
+            self.populate()
+        return str(self._image_uri)
+
+    @property
+    def imei_number(self) -> str:
+        """
+        IMEI # for the unit.
+
+        :type: :py:obj:`str`
+
+        """
+        if self._imei_number is None:
+            self.populate()
+        return str(self._imei_number)
+
+    @property
+    def iccid(self) -> str | None:
+        """
+        SIM Card # for the unit, if any.
+
+        :type: :py:obj:`str` | :py:obj:`None`
+
+        """
+        return self.afields.get("iccid")
+
+    @property
+    def carrier(self) -> str | None:
+        """
+        Name of the telecommunications company associated with the unit's SIM card, if any.
+
+        :type: :py:obj:`str` | :py:obj:`None`
+
+        """
+        return self.afields.get("carrier")
+
+    @property
+    def active(self) -> bool:
+        """Whether or not the unit is activated."""
+        if self._active is None:
+            self.populate()
+        return bool(self._active)
+
+    @property
+    def image_url(self) -> str | None:
+        """Returns an absolute url to the unit's icon in Wialon."""
+        if settings.configured and hasattr(settings, "WIALON_HOST"):
+            return urljoin(settings.WIALON_HOST, self._image_uri)
+        return urljoin("https://hst-api.wialon.com", self._image_uri)

@@ -3,11 +3,13 @@ from terminusgps.wialon.items.base import WialonBase
 
 
 class WialonRetranslator(WialonBase):
+    """A Wialon `retranslator <https://wialon.com/en/gps-hardware/soft>`_."""
+
     def create(self, creator_id: str | int, name: str, config: dict) -> int | None:
         """
         Creates a Wialon retranslator.
 
-        :param creator_id: A Wialon user id.
+        :param creator_id: Creator user id.
         :type creator_id: :py:obj:`str` | :py:obj:`int`
         :param name: A name for the retranslator.
         :type name: :py:obj:`str`

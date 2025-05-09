@@ -1,3 +1,4 @@
+from collections.abc import Collection
 from urllib.parse import quote_plus
 
 from terminusgps.wialon import constants, flags
@@ -5,20 +6,25 @@ from terminusgps.wialon.items.base import WialonBase
 
 
 class WialonResource(WialonBase):
+    """A Wialon `resource/account <https://help.wialon.com/en/wialon-hosting/user-guide/management-system/accounts-and-resources>`_."""
+
+    def __init__(self) -> None:
+        self._is_account = None
+
     def create(
         self, creator_id: str | int, name: str, skip_creator_check: bool = False
     ) -> int | None:
         """
         Creates a new Wialon resource.
 
-        :param creator_id: A Wialon user id.
-        :type creator_id: :py:obj:`int` | :py:obj:`str`
+        :param creator_id: Creator user id.
+        :type creator_id: :py:obj:`str` | :py:obj:`int`
         :param name: A name for the resource.
         :type name: :py:obj:`str`
         :param skip_creator_check: Bypass object creation restrictions while creating the resource.
         :type skip_creator_check: :py:obj:`bool`
         :raises ValueError: If ``creator_id`` is not a digit.
-        :raises WialonError: If something goes wrong with Wialon.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: The Wialon id for the new resource, if it was created.
         :rtype: :py:obj:`int` | :py:obj:`None`
 
@@ -80,10 +86,12 @@ class WialonResource(WialonBase):
         :type: :py:obj:`bool`
 
         """
-        response = self.session.wialon_api.core_search_item(
-            **{"id": self.id, "flags": flags.DataFlag.RESOURCE_BILLING_PROPERTIES.value}
-        )
-        return int(response.get("item", {}).get("bact")) == self.id
+        if self._is_account is None:
+            response = self.session.wialon_api.core_search_item(
+                **{"id": self.id, "flags": flags.DataFlag.RESOURCE_BILLING_PROPERTIES}
+            )
+            self._is_account = int(response.get("item", {}).get("bact", 0)) == self.id
+        return self._is_account
 
     @property
     def creator_id(self) -> int | None:
@@ -141,6 +149,7 @@ class WialonResource(WialonBase):
         :type min_zoom: :py:obj:`int`
         :param max_zoom: *Optional* Maximum zoom level the geofence will be visible at.
         :type max_zoom: :py:obj:`int`
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -170,18 +179,21 @@ class WialonResource(WialonBase):
         """
         Checks if a unit is migrated into the account.
 
+        If the resource isn't an account, this always returns :py:obj:`False`.
+
         :param unit: A Wialon object.
         :type unit: :py:obj:`~terminusgps.wialon.items.base.WialonBase`
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Whether or not the unit is migrated into the account.
         :rtype: :py:obj:`bool`
 
         """
-        assert self.is_account, "The resource is not an acccount"
+        if not self.is_account:
+            return False
         response = self.session.wialon_api.account_list_change_accounts(
             **{"units": [unit.id]}
         )
-        results = [self.id == int(item.get("id")) for item in response]
-        return any(results)
+        return any([self.id == int(item.get("id")) for item in response])
 
     def set_dealer_rights(self, enabled: bool = False) -> None:
         """
@@ -189,18 +201,17 @@ class WialonResource(WialonBase):
 
         You **probably don't** need to use this method.
 
-        :param enabled: :py:obj:`True` to enable dealer rights, :py:obj:`False` to disable dealer rights. Default is :py:obj:`False`.
+        :param enabled: Whether or not to enable dealer rights on the account. Default is :py:obj:`False`.
         :type enabled: :py:obj:`bool`
-        :raises AssertionError: If the resource is not an account.
-        :raises WialonError: If something goes wrong with Wialon.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        assert self.is_account, "The resource is not an account"
-        self.session.wialon_api.account_update_dealer_rights(
-            **{"itemId": self.id, "enable": str(enabled).lower()}
-        )
+        if self.is_account:
+            self.session.wialon_api.account_update_dealer_rights(
+                **{"itemId": self.id, "enable": str(enabled).lower()}
+            )
 
     def migrate_unit(self, unit: WialonBase) -> None:
         """
@@ -208,23 +219,22 @@ class WialonResource(WialonBase):
 
         :param unit: A Wialon object.
         :type unit: :py:obj:`~terminusgps.wialon.items.base.WialonBase`
-        :raises AssertionError: If the resource is not an account.
-        :raises WialonError: If something goes wrong with Wialon.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        assert self.is_account, "The resource is not an account"
-        self.session.wialon_api.user_update_item_access(
-            **{
-                "userId": self.creator_id,
-                "itemId": unit.id,
-                "accessMask": constants.ACCESSMASK_UNIT_MIGRATION,
-            }
-        )
-        self.session.wialon_api.account_change_account(
-            **{"itemId": unit.id, "resourceId": self.id}
-        )
+        if self.is_account:
+            self.session.wialon_api.user_update_item_access(
+                **{
+                    "userId": self.creator_id,
+                    "itemId": unit.id,
+                    "accessMask": constants.ACCESSMASK_UNIT_MIGRATION,
+                }
+            )
+            self.session.wialon_api.account_change_account(
+                **{"itemId": unit.id, "resourceId": self.id}
+            )
 
     def update_plan(self, new_plan: str) -> None:
         """
@@ -232,16 +242,15 @@ class WialonResource(WialonBase):
 
         :param new_plan: The name of a billing plan.
         :type new_plan: :py:obj:`str`
-        :raises AssertionError: If the resource is not an account.
-        :raises WialonError: If something goes wrong with Wialon.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        assert self.is_account, "The resource is not an account"
-        self.session.wialon_api.account_update_plan(
-            **{"itemId": self.id, "plan": new_plan}
-        )
+        if self.is_account:
+            self.session.wialon_api.account_update_plan(
+                **{"itemId": self.id, "plan": new_plan}
+            )
 
     def create_account(self, billing_plan: str) -> None:
         """
@@ -249,60 +258,58 @@ class WialonResource(WialonBase):
 
         :param billing_plan: The name of a billing plan.
         :type billing_plan: :py:obj:`str`
-        :raises AssertionError: If the resource is already account.
-        :raises WialonError: If something goes wrong with Wialon.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        assert not self.is_account, "The resource is already an account"
-        self.session.wialon_api.account_create_account(
-            **{"itemId": self.id, "plan": billing_plan}
-        )
-        self.set_settings_flags()
+        if not self.is_account:
+            self.session.wialon_api.account_create_account(
+                **{"itemId": self.id, "plan": billing_plan}
+            )
+            self.set_settings_flags()
+            self._is_account = True
 
     def delete_account(self) -> None:
         """
         Deletes the account if it exists, as well as any micro-objects and macro-objects it contains.
 
-        :raises AssertionError: If the resource is not an account.
-        :raises WialonError: If something goes wrong with Wialon.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        assert self.is_account, "The resource is not an account"
-        self.session.wialon_api.account_delete_account(**{"itemId": self.id})
+        if self.is_account:
+            self.session.wialon_api.account_delete_account(**{"itemId": self.id})
+            self._is_account = False
 
     def enable_account(self) -> None:
         """
         Enables the Wialon account.
 
-        :raises AssertionError: If the resource is not an account.
-        :raises WialonError: If something goes wrong with Wialon.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        assert self.is_account, "The resource is not an account"
-        self.session.wialon_api.account_enable_account(
-            **{"itemId": self.id, "enable": int(True)}
-        )
+        if self.is_account:
+            self.session.wialon_api.account_enable_account(
+                **{"itemId": self.id, "enable": int(True)}
+            )
 
     def disable_account(self) -> None:
         """
         Disables the Wialon account.
 
-        :raises AssertionError: If the resource is not an account.
-        :raises WialonError: If something goes wrong with Wialon.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        assert self.is_account, "The resource is not an account"
-        self.session.wialon_api.account_enable_account(
-            **{"itemId": self.id, "enable": int(False)}
-        )
+        if self.is_account:
+            self.session.wialon_api.account_enable_account(
+                **{"itemId": self.id, "enable": int(False)}
+            )
 
     def set_minimum_days(self, days: int = 0) -> None:
         """
@@ -310,16 +317,15 @@ class WialonResource(WialonBase):
 
         :param days: Number of days to set the counter to. Default is ``0``.
         :type days: :py:obj:`int`
-        :raises AssertionError: If the resource is not an account.
-        :raises WialonError: If something goes wrong with Wialon.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        assert self.is_account, "The resource is not an account"
-        self.session.wialon_api.account_update_min_days(
-            **{"itemId": self.id, "minDays": days}
-        )
+        if self.is_account:
+            self.session.wialon_api.account_update_min_days(
+                **{"itemId": self.id, "minDays": days}
+            )
 
     def add_days(self, days: int = 30) -> None:
         """
@@ -333,15 +339,15 @@ class WialonResource(WialonBase):
         :rtype: :py:obj:`None`
 
         """
-        assert self.is_account, "The resource is not an account"
-        self.session.wialon_api.account_do_payment(
-            **{
-                "itemId": self.id,
-                "balanceUpdate": "0.00",
-                "daysUpdate": days,
-                "description": f"{self.session.id} - Added {days} days.",
-            }
-        )
+        if self.is_account:
+            self.session.wialon_api.account_do_payment(
+                **{
+                    "itemId": self.id,
+                    "balanceUpdate": "0.00",
+                    "daysUpdate": days,
+                    "description": f"{self.session.id} - Added {days} days.",
+                }
+            )
 
     def set_settings_flags(
         self,
@@ -358,21 +364,20 @@ class WialonResource(WialonBase):
         :type block_balance_val: :py:obj:`float`
         :param deny_balance_val: Minimum amount on the account's balance before denying the account.
         :type deny_balance_val: :py:obj:`float`
-        :raises AssertionError: If the resource is not an account.
-        :raises WialonError: If something goes wrong with Wialon.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        assert self.is_account, "The resource is not an account"
-        self.session.wialon_api.account_update_flags(
-            **{
-                "itemId": self.id,
-                "flags": flags,
-                "blockBalance": block_balance_val,
-                "denyBalance": deny_balance_val,
-            }
-        )
+        if self.is_account:
+            self.session.wialon_api.account_update_flags(
+                **{
+                    "itemId": self.id,
+                    "flags": flags,
+                    "blockBalance": block_balance_val,
+                    "denyBalance": deny_balance_val,
+                }
+            )
 
     def create_driver(
         self,
@@ -398,7 +403,7 @@ class WialonResource(WialonBase):
         :type mobile_auth_code: :py:obj:`str`
         :param custom_fields: Additional custom fields to add to the driver.
         :type custom_fields: :py:obj:`dict` | :py:obj:`None`
-        :raises WialonError: If something goes wrong calling the Wialon API.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -435,11 +440,11 @@ class WialonResource(WialonBase):
         :type name: :py:obj:`str`
         :param code: A unique code for the new passenger.
         :type code: :py:obj:`str`
-        :param phone: A phone number beginning in a country code. No spaces.
+        :param phone: A phone number in `E.164 <https://en.wikipedia.org/wiki/E.164>`_ format.
         :type phone: :py:obj:`str`
         :param custom_fields: Additional custom fields to add to the passenger.
         :type custom_fields: :py:obj:`dict` | :py:obj:`None`
-        :raises WialonError: If something goes wrong calling the Wialon API.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -457,14 +462,32 @@ class WialonResource(WialonBase):
             params.update({"jp": custom_fields})
         self.session.wialon_api.resource_update_tag(**params)
 
-    def update_attachable_drivers(self, units: list[str | int]) -> None:
-        """Updates the pool of units for the resource to attach drivers to the new unit list."""
+    def update_attachable_drivers(self, units: Collection[str | int]) -> None:
+        """
+        Updates the pool of units for the resource to attach drivers to the new unit list.
+
+        :param units: A collection of unit ids.
+        :type units: :py:obj:`~collections.abc.Collection`
+        :raises WialonError: If something went wrong with a Wialon API call.
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
         self.session.wialon_api.update_driver_units(
             **{"itemId": self.id, "units": units}
         )
 
-    def update_attachable_passengers(self, units: list[str | int]) -> None:
-        """Updates the pool of units for the resource to attach passengers to the new unit list."""
+    def update_attachable_passengers(self, units: Collection[str | int]) -> None:
+        """
+        Updates the pool of units for the resource to attach passengers to the new unit list.
+
+        :param units: A collection of unit ids.
+        :type units: :py:obj:`~collections.abc.Collection`
+        :raises WialonError: If something went wrong with a Wialon API call.
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
         self.session.wialon_api.update_tag_units(**{"itemId": self.id, "units": units})
 
     def create_trailer(
@@ -484,11 +507,11 @@ class WialonResource(WialonBase):
         :type code: :py:obj:`str`
         :param desc: A description for the trailer.
         :type desc: :py:obj:`str`
-        :param phone: A phone number beginning in a country code. No spaces.
+        :param phone: A phone number in `E.164 <https://en.wikipedia.org/wiki/E.164>`_ format.
         :type phone: :py:obj:`str`
         :param custom_fields: Additional custom fields to add to the trailer.
         :type custom_fields: :py:obj:`dict` | :py:obj:`None`
-        :raises WialonError: If something goes wrong calling the Wialon API.
+        :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 

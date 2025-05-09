@@ -3,6 +3,8 @@ from terminusgps.wialon.items.base import WialonBase
 
 
 class WialonRoute(WialonBase):
+    """A Wialon `route <https://help.wialon.com/en/wialon-hosting/user-guide/monitoring-system/routes>`_."""
+
     def create(self, creator_id: str | int, name: str) -> int | None:
         """
         Creates a new Wialon route.

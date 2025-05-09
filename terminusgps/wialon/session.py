@@ -1,6 +1,5 @@
 import dataclasses
 import datetime
-import os
 import typing
 
 import wialon.api
@@ -45,7 +44,7 @@ class Wialon(wialon.api.Wialon):
         return self.call("token_login", *args, **kwargs)
 
     def call(self, action_name: str, *argc, **kwargs) -> typing.Any:
-        logger.debug(f"Executing '{action_name}'...")
+        logger.debug("Executing '{}'...", action_name)
         call_record = WialonAPICall(
             action=action_name,
             timestamp=datetime.datetime.now(),
@@ -60,7 +59,7 @@ class Wialon(wialon.api.Wialon):
             return result
         except wialon.api.WialonError as e:
             call_record.error = e
-            logger.warning(f"Failed to execute '{action_name}': '{e}'")
+            logger.warning("Failed to execute '{}': '{}'", action_name, e)
             return
         finally:
             self.call_history.append(call_record)
@@ -102,7 +101,7 @@ class WialonSession:
             f"logs/{self.__class__.__name__}.log",
             level=log_level,
             retention=f"{log_days} days",
-            diagnose=debug or settings.DEBUG
+            diagnose=debug or settings.DEBUG,
         )
         self._token = token or settings.WIALON_TOKEN
         self._username = None
@@ -324,10 +323,10 @@ class WialonSession:
             logger.debug("Logging into Wialon API session...")
             response = self.wialon_api.token_login(**{"token": token, "fl": flags})
             self._set_login_response(response)
-            logger.debug(f"Logged into Wialon API session '{response.get('eid')}'")
+            logger.debug("Logged into Wialon API session '{}'", response.get("eid"))
             return response.get("eid")
         except (wialon.api.WialonError, AssertionError) as e:
-            logger.critical(f"Failed to login to Wialon API: '{e}'")
+            logger.critical("Failed to login to Wialon API: '{}'", e)
             raise
 
     def logout(self) -> None:
@@ -343,10 +342,10 @@ class WialonSession:
         self.wialon_api.sid = None
 
         if response.get("error") != 0:
-            logger.warning(f"Failed to logout of session: '{response.get('message')}'")
+            logger.warning("Failed to logout of session: '{}'", response.get("message"))
         else:
             logger.debug(
-                f"Logged out after {self.wialon_api.total_calls} Wialon API calls."
+                "Logged out after {} Wialon API calls.", self.wialon_api.total_calls
             )
 
     def _set_login_response(self, login_response: dict) -> None:
