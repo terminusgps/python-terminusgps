@@ -8,7 +8,8 @@ from terminusgps.wialon.items.base import WialonBase
 class WialonResource(WialonBase):
     """A Wialon `resource/account <https://help.wialon.com/en/wialon-hosting/user-guide/management-system/accounts-and-resources>`_."""
 
-    def __init__(self) -> None:
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
         self._is_account = None
 
     def create(
