@@ -357,9 +357,9 @@ class WialonSessionManager:
         :rtype: :py:obj:`None`
 
         """
-        self.token = token or settings.WIALON_TOKEN
-        self.lifetime = lifetime
-        self.session = WialonSession(sid=None)
+        self._token = token
+        self._lifetime = lifetime
+        self._session = WialonSession(sid=None)
         self.session.login(token=self.token)
 
     def check_active(self) -> bool:
@@ -400,7 +400,7 @@ class WialonSessionManager:
     @property
     def sid(self) -> str | None:
         """
-        Current id for the active Wialon session.
+        Current Wialon session id.
 
         :type: :py:obj:`str` | :py:obj:`None`
 
@@ -419,3 +419,77 @@ class WialonSessionManager:
 
         """
         self.session.wialon_api.sid = other
+
+    @property
+    def token(self) -> str:
+        """
+        A Wialon API token.
+
+        :type: :py:obj:`str`
+
+        """
+        return str(self._token)
+
+    @token.setter
+    def token(self, other: str | None) -> None:
+        """
+        Sets :py:attr:`token` to ``other`` if provided.
+
+        If ``other`` isn't provided, instead sets :py:attr:`token` to :confval:`WIALON_TOKEN`.
+
+        :param other: A Wialon API token.
+        :type other: :py:obj:`str` | :py:obj:`None`
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
+        if other is None:
+            self._token = settings.WIALON_TOKEN
+        self._token = other
+
+    @property
+    def session(self) -> WialonSession:
+        """
+        A Wialon API session.
+
+        :type: :py:obj:`~terminusgps.wialon.session.WialonSession`
+
+        """
+        return self._session
+
+    @session.setter
+    def session(self, other: WialonSession) -> None:
+        """
+        Sets :py:attr:`session` to ``other``.
+
+        :param other: A Wialon session.
+        :type other: :py:obj:`~terminusgps.wialon.session.WialonSession`
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
+        self._session = other
+
+    @property
+    def lifetime(self) -> int:
+        """
+        How long in seconds a Wialon session can live for.
+
+        :type: :py:obj:`int`
+        :value: :py:obj:`500`
+
+        """
+        return self._lifetime
+
+    @lifetime.setter
+    def lifetime(self, other: int) -> None:
+        """
+        Sets :py:attr:`lifetime` to ``other``.
+
+        :param other: An integer.
+        :type other: :py:obj:`int`
+        :returns: Nothing.
+        :rtype: :py:obj:`None`
+
+        """
+        self._lifetime = other
