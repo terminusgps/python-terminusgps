@@ -24,7 +24,7 @@ class WialonResource(WialonBase):
         :type name: :py:obj:`str`
         :param skip_creator_check: Bypass object creation restrictions while creating the resource.
         :type skip_creator_check: :py:obj:`bool`
-        :raises ValueError: If ``creator_id`` is not a digit.
+        :raises ValueError: If ``creator_id`` wasn't a digit.
         :raises WialonError: If something went wrong with a Wialon API call.
         :returns: The Wialon id for the new resource, if it was created.
         :rtype: :py:obj:`int` | :py:obj:`None`
