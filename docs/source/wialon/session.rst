@@ -6,6 +6,10 @@ Wialon API Sessions
    :class-doc-from: init
    :autoclasstoc:
 
+.. autoclass:: terminusgps.wialon.session.WialonSessionManager
+   :members:
+   :autoclasstoc:
+
 
 =====
 Usage
