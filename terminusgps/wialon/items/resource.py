@@ -9,6 +9,7 @@ class WialonResource(WialonBase):
     """A Wialon `resource/account <https://help.wialon.com/en/wialon-hosting/user-guide/management-system/accounts-and-resources>`_."""
 
     def __init__(self, *args, **kwargs) -> None:
+        """Sets :py:attr:`_is_account` to :py:obj:`None`."""
         super().__init__(*args, **kwargs)
         self._is_account = None
 

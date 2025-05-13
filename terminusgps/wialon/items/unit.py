@@ -11,6 +11,7 @@ class WialonUnit(WialonBase):
     """A Wialon `unit <https://help.wialon.com/en/wialon-hosting/user-guide/management-system/units>`_."""
 
     def __init__(self, *args, **kwargs) -> None:
+        """Sets :py:attr:`_imei_number`, :py:attr:`_active` and :py:attr:`_image_uri` to :py:obj:`None`."""
         super().__init__(*args, **kwargs)
         self._imei_number = None
         self._active = None
