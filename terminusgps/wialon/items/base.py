@@ -151,13 +151,23 @@ class WialonBase:
         :type key: :py:obj:`str`
         :param value: A string.
         :type value: :py:obj:`str`
+        :raises ValueError: If the admin field key was longer than 128 characters.
+        :raises ValueError: If the admin field value was longer than 128 characters.
         :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        field_id: int | None = self._get_afield_id(key)
+        if len(key) > 128:
+            raise ValueError(
+                f"'key' cannot be greater than 128 characters in length, got {len(key)}."
+            )
+        if len(value) > 128:
+            raise ValueError(
+                f"'value' cannot be greater than 128 characters in length, got {len(value)}."
+            )
 
+        field_id: int | None = self._get_afield_id(key)
         if field_id is not None:
             self.session.wialon_api.item_update_admin_field(
                 **{
@@ -181,13 +191,23 @@ class WialonBase:
         :type key: :py:obj:`str`
         :param value: A string.
         :type value: :py:obj:`str`
+        :raises ValueError: If the custom field key was longer than 128 characters.
+        :raises ValueError: If the custom field value was longer than 128 characters.
         :raises WialonError: If something went wrong with a Wialon API call.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
-        field_id: int | None = self._get_cfield_id(key)
+        if len(key) > 128:
+            raise ValueError(
+                f"'key' cannot be greater than 128 characters in length, got {len(key)}."
+            )
+        if len(value) > 128:
+            raise ValueError(
+                f"'value' cannot be greater than 128 characters in length, got {len(value)}."
+            )
 
+        field_id: int | None = self._get_cfield_id(key)
         if field_id is not None:
             self.session.wialon_api.item_update_custom_field(
                 **{
