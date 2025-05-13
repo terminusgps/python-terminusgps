@@ -1,8 +1,25 @@
+import datetime
+
 from authorizenet import apicontractsv1, apicontrollers
 from django import forms
 
 from .auth import get_merchant_auth
 from .controllers import AuthorizenetControllerExecutor
+
+
+def get_days_between(start_date: datetime.date, end_date: datetime.date) -> int:
+    """
+    Returns the total number of days between two dates.
+
+    :param start_date: Start date.
+    :type start_date: :py:obj:`~datetime.date`
+    :param end_date: End date.
+    :type end_date: :py:obj:`~datetime.date`
+    :returns: The number of days between the dates as an integer.
+    :rtype: :py:obj:`int`
+
+    """
+    return (end_date - start_date).days
 
 
 def get_payment_profile_transactions(
