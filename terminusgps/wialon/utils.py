@@ -7,6 +7,29 @@ from .items import WialonResource, WialonUnit
 from .session import WialonSession
 
 
+def get_hw_types(session: WialonSession) -> list[dict[str, str | int]]:
+    """
+    Returns a list of hardware type objects for Wialon.
+
+    :param session: A valid Wialon API session.
+    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :returns: A list of hardware types.
+    :rtype: :py:obj:`list`
+
+    Hardware type format:
+
+    +----------+--------------------+
+    | key      | value              |
+    +==========+====================+
+    | ``id``   | Hardware type id   |
+    +----------+--------------------+
+    | ``name`` | Hardware type name |
+    +----------+--------------------+
+
+    """
+    return session.wialon_api.core_get_hw_types()
+
+
 def get_user_by_name(name: str, session: WialonSession) -> WialonUnit | None:
     """
     Returns a Wialon user by name, if it exists.
