@@ -232,7 +232,7 @@ def get_unit_by_imei(imei: str, session: WialonSession) -> WialonUnit | None:
         return WialonUnit(id=results["items"][0].get("id"), session=session)
 
 
-def get_vin_info(vin_number: str, session: WialonSession) -> dict:
+def get_vin_info(vin_number: str, session: WialonSession) -> dict[str, typing.Any]:
     """
     Retrieves vehicle data from a VIN number.
 
