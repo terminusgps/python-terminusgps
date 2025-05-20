@@ -1,6 +1,13 @@
 Forms
 =====
 
+--------
+Renderer
+--------
+
+.. autoclass:: terminusgps.django.forms.renderer.TerminusgpsFormRenderer
+    :members:
+
 ------
 Fields
 ------

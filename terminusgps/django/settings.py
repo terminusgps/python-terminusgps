@@ -16,3 +16,4 @@ TWILIO_SID = os.getenv("TWILIO_SID")
 TWILIO_TOKEN = os.getenv("TWILIO_TOKEN")
 WIALON_ADMIN_ID = os.getenv("WIALON_ADMIN_ID")
 WIALON_TOKEN = os.getenv("WIALON_TOKEN")
+DEFAULT_FIELD_CLASS = "p-2 w-full bg-white dark:bg-gray-700 dark:text-white rounded border dark:border-terminus-gray-300"
