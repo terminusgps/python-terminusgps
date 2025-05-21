@@ -27,12 +27,12 @@ class AuthorizenetCustomerProfile(AuthorizenetBase):
     @property
     def email(self) -> str:
         """An email address assigned to the customer profile."""
-        return self._email
+        return str(self._email)
 
     @property
     def merchant_id(self) -> str:
         """A merchant designated id assigned to the customer profile."""
-        return self._merchant_id
+        return str(self._merchant_id)
 
     @email.setter
     def email(self, other: str) -> None:
@@ -60,9 +60,8 @@ class AuthorizenetCustomerProfile(AuthorizenetBase):
 
         """
 
-        profile = apicontractsv1.customerProfileType(
-            merchantCustomerId=self.merchant_id, email=self.email
-        )
+        profile = apicontractsv1.customerProfileType()
+        profile.merchantCustomerId = self.merchant_id
         if desc:
             profile.description = desc
 
@@ -144,8 +143,9 @@ class AuthorizenetCustomerProfile(AuthorizenetBase):
         if self.merchant_id:
             request.customerMerchantId = self.merchant_id
 
-        controller = apicontrollers.getCustomerProfileController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.getCustomerProfileController(request)
+        )
 
     def _authorizenet_create_customer_profile(
         self, profile: apicontractsv1.customerProfileType, validate: bool = False
@@ -165,19 +165,15 @@ class AuthorizenetCustomerProfile(AuthorizenetBase):
         :rtype: :py:obj:`dict` | :py:obj:`None`
 
         """
+        request = apicontractsv1.createCustomerProfileRequest()
+        request.merchantAuthentication = self.merchantAuthentication
+        request.profile = profile
         if validate:
-            request = apicontractsv1.createCustomerProfileRequest(
-                merchantAuthentication=self.merchantAuthentication,
-                profile=profile,
-                validationMode=self.validationMode,
-            )
-        else:
-            request = apicontractsv1.createCustomerProfileRequest(
-                merchantAuthentication=self.merchantAuthentication, profile=profile
-            )
+            request.validationMode = self.validationMode
 
-        controller = apicontrollers.createCustomerProfileController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.createCustomerProfileController(request)
+        )
 
     def _authorizenet_update_customer_profile(
         self, profile: apicontractsv1.customerProfileExType, validate: bool = False
@@ -196,19 +192,16 @@ class AuthorizenetCustomerProfile(AuthorizenetBase):
         :rtype: :py:obj:`dict` | :py:obj:`None`
 
         """
-        if validate:
-            request = apicontractsv1.updateCustomerProfileRequest(
-                merchantAuthentication=self.merchantAuthentication,
-                profile=profile,
-                validationMode=self.validationMode,
-            )
-        else:
-            request = apicontractsv1.updateCustomerProfileRequest(
-                merchantAuthentication=self.merchantAuthentication, profile=profile
-            )
 
-        controller = apicontrollers.updateCustomerProfileController(request)
-        return self.execute_controller(controller)
+        request = apicontractsv1.updateCustomerProfileRequest()
+        request.merchantAuthentication = self.merchantAuthentication
+        request.profile = profile
+        if validate:
+            request.validationMode = self.validationMode
+
+        return self.execute_controller(
+            apicontrollers.updateCustomerProfileController(request)
+        )
 
     def _authorizenet_delete_customer_profile(self) -> dict[str, typing.Any] | None:
         """
@@ -224,9 +217,11 @@ class AuthorizenetCustomerProfile(AuthorizenetBase):
         """
 
         assert self.id, "Customer profile id wasn't set."
-        request = apicontractsv1.deleteCustomerProfileRequest(
-            merchantAuthentication=self.merchantAuthentication,
-            customerProfileId=self.id,
+
+        request = apicontractsv1.deleteCustomerProfileRequest()
+        request.merchantAuthentication = self.merchantAuthentication
+        request.customerProfileId = self.id
+
+        return self.execute_controller(
+            apicontrollers.deleteCustomerProfileController(request)
         )
-        controller = apicontrollers.deleteCustomerProfileController(request)
-        return self.execute_controller(controller)

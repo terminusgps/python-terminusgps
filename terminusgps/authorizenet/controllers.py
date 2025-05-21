@@ -1,3 +1,5 @@
+import typing
+
 from authorizenet.apicontrollersbase import APIOperationBase
 
 from .auth import get_environment
@@ -7,7 +9,9 @@ class AuthorizenetControllerExecutor:
     """Allows objects to use :py:meth:`execute_controller` to execute Authorizenet API controllers."""
 
     @staticmethod
-    def execute_controller(controller: APIOperationBase) -> dict | None:
+    def execute_controller(
+        controller: APIOperationBase,
+    ) -> dict[str, typing.Any] | None:
         """
         Executes an Authorizenet API controller and returns its response.
 
