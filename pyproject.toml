@@ -1,6 +1,6 @@
 [project]
 name = "python-terminusgps"
-version = "37.0.0"
+version = "37.1.0"
 description = "Provides abstractions/utilities for working with Wialon API, Authorize.NET API, AWS API, and more."
 readme = "README.md"
 authors = [ {name = "Blake Nall", email = "blake@terminusgps.com" } ]
@@ -21,6 +21,8 @@ dependencies = [
     "loguru>=0.7.3",
     "matplotlib>=3.10.1",
     "pandas>=2.2.3",
+    "pillow-heif>=0.22.0",
+    "pillow>=11.2.1",
     "python-wialon>=1.2.4",
     "pyzbar>=0.1.9",
     "twilio>=9.4.5",

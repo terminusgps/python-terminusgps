@@ -4,7 +4,7 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from .session import WialonSession
+from .session import WialonSessionManager
 
 if settings.configured and not hasattr(settings, "WIALON_TOKEN"):
     raise ImproperlyConfigured("'WIALON_TOKEN' setting is required.")
@@ -12,8 +12,7 @@ if settings.configured and not hasattr(settings, "WIALON_TOKEN"):
 
 class WialonValidatorBase:
     def __init__(self) -> None:
-        self.session: WialonSession = WialonSession()
-        self.session.login(settings.WIALON_TOKEN)
+        self.session_manager = WialonSessionManager(token=settings.WIALON_TOKEN)
 
     def __call__(self, value: str) -> None:
         raise NotImplementedError("Subclasses must implement this method.")
@@ -21,10 +20,11 @@ class WialonValidatorBase:
 
 class WialonVinNumberValidator(WialonValidatorBase):
     def __call__(self, value: str) -> None:
-        response = self.session.wialon_api.unit_get_vin_info(vin=value)
+        session = self.session_manager.get_session(sid=None)
+        response = session.wialon_api.unit_get_vin_info(vin=value)
         if "error" in response["vin_lookup_result"].keys():
             raise ValidationError(
-                _("Failed to get info for VIN '%(value)s': '%(message)s'"),
+                _("Failed to get info for VIN # '%(value)s': '%(message)s'"),
                 code="invalid",
                 params={
                     "value": value,
@@ -35,7 +35,8 @@ class WialonVinNumberValidator(WialonValidatorBase):
 
 class WialonImeiNumberValidator(WialonValidatorBase):
     def __call__(self, value: str) -> None:
-        response = self.session.wialon_api.core_search_items(
+        session = self.session_manager.get_session(sid=None)
+        response = session.wialon_api.core_search_items(
             **{
                 "spec": {
                     "itemsType": "avl_unit",
@@ -51,7 +52,7 @@ class WialonImeiNumberValidator(WialonValidatorBase):
         )
         if response is None or not response.get("items"):
             raise ValidationError(
-                _("IMEI '%(value)s' was not found in Wialon."),
+                _("IMEI # '%(value)s' wasn't found in Wialon."),
                 code="invalid",
                 params={"value": value},
             )
