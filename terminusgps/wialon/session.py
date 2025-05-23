@@ -345,7 +345,13 @@ class WialonSession:
 class WialonSessionManager:
     """Provides an interface for generating automatically activated Wialon sessions."""
 
-    def __init__(self, token: str | None = None, lifetime: int = 500) -> None:
+    def __init__(
+        self,
+        token: str | None = None,
+        lifetime: int = 500,
+        session: WialonSession | None = None,
+        session_id: str | None = None,
+    ) -> None:
         """
         Sets :py:attr:`token` and :py:attr:`lifetime`.
 
@@ -357,10 +363,13 @@ class WialonSessionManager:
         :rtype: :py:obj:`None`
 
         """
-        self._token = token
-        self._lifetime = lifetime
-        self._session = WialonSession(sid=None)
-        self.session.login(token=self.token)
+        self.token = token
+        self.lifetime = lifetime
+
+        target_sid = session.id if session and session.id else session_id
+        self.session = WialonSession(sid=target_sid)
+        if not target_sid or not self.validate_session():
+            self.session.login(token=self.token)
 
     def check_active(self) -> bool:
         """
@@ -370,13 +379,18 @@ class WialonSessionManager:
         :rtype: :py:obj:`bool`
 
         """
+        if not self.session.id:
+            return False
         if not self.session.wialon_api.last_call_datetime:
-            return True
+            return self.validate_session()
 
         now = datetime.datetime.now()
         last_call = self.session.wialon_api.last_call_datetime
         session_expiry = last_call + datetime.timedelta(seconds=self.lifetime)
-        return now <= session_expiry
+
+        if now > session_expiry:
+            return False
+        return self.validate_session()
 
     def get_session(self, sid: str | None = None) -> WialonSession:
         """
@@ -391,11 +405,22 @@ class WialonSessionManager:
 
         """
         if sid is not None:
-            self.sid = sid
+            self.session = WialonSession(sid=sid)
+            if not self.validate_session():
+                self.session = WialonSession()
+                self.session.login(token=self.token)
+                return self.session
         if not self.check_active():
-            self.session = WialonSession(sid=None)
-            self.session.login(self.token)
+            self.session = WialonSession()
+            self.session.login(token=self.token)
         return self.session
+
+    def validate_session(self) -> bool:
+        try:
+            result = self.session.wialon_api.core_duplicate()
+            return result is not None
+        except wialon.api.WialonError:
+            return False
 
     @property
     def sid(self) -> str | None:
@@ -405,7 +430,7 @@ class WialonSessionManager:
         :type: :py:obj:`str` | :py:obj:`None`
 
         """
-        return self.session.wialon_api.sid
+        return self.session.wialon_api.sid if self.session else None
 
     @sid.setter
     def sid(self, other: str) -> None:
@@ -418,7 +443,10 @@ class WialonSessionManager:
         :rtype: :py:obj:`None`
 
         """
-        self.session.wialon_api.sid = other
+        if self.session:
+            self.session.wialon_api.sid = other
+        else:
+            self.session = WialonSession(sid=other)
 
     @property
     def token(self) -> str:
@@ -443,9 +471,7 @@ class WialonSessionManager:
         :rtype: :py:obj:`None`
 
         """
-        if other is None:
-            self._token = settings.WIALON_TOKEN
-        self._token = other
+        self._token = other if other is not None else settings.WIALON_TOKEN
 
     @property
     def session(self) -> WialonSession:
