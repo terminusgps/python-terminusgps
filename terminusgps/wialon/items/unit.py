@@ -103,9 +103,13 @@ class WialonUnit(WialonBase):
         +----------+------------------------------+-----------------+
 
         """
-        response = self.session.wialon_api.core_search_item(
-            **{"id": self.id, "flags": flags.DataFlag.UNIT_POSITION}
-        ).get("pos", {})
+        response = (
+            self.session.wialon_api.core_search_item(
+                **{"id": self.id, "flags": flags.DataFlag.UNIT_POSITION}
+            )
+            .get("item", {})
+            .get("pos", {})
+        )
         if response:
             response["t"] = datetime.fromtimestamp(response["t"])
         return response
