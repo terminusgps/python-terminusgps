@@ -299,7 +299,7 @@ class WialonSession:
             response = self.wialon_api.token_login(**{"token": token, "fl": flags})
             self._set_login_response(response)
             return response.get("eid")
-        except (wialon.api.WialonError, AssertionError):
+        except (wialon.api.WialonError, ValueError):
             raise
 
     def logout(self) -> None:
@@ -316,16 +316,20 @@ class WialonSession:
         if response.get("error") != 0:
             print(f"Failed to logout of session: '{response.get('message')}'")
 
-    def _set_login_response(self, login_response: dict) -> None:
+    def _set_login_response(self, login_response: dict | None) -> None:
         """
         Sets the Wialon API session's attributes based on a login response.
 
         :param login_response: A response returned from :py:meth:`login` or :py:meth:`duplicate`.
         :type login_response: :py:obj:`dict`
+        :raises ValueError: If ``login_response`` wasn't provided.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
+        if login_response is None:
+            raise ValueError("Failed to login to Wialon.")
+
         self.wialon_api.sid = login_response.get("eid")
         self._gis_geocode = login_response.get("gis_geocode")
         self._gis_render = login_response.get("gis_render")
