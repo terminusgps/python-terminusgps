@@ -12,9 +12,9 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
   
-    <title>terminusgps.wialon.items.unit | python-terminusgps 37.2.2 documentation</title>
-    <meta property="og:title" content="terminusgps.wialon.items.unit | python-terminusgps 37.2.2 documentation" />
-    <meta name="twitter:title" content="terminusgps.wialon.items.unit | python-terminusgps 37.2.2 documentation" />
+    <title>terminusgps.wialon.items.unit | python-terminusgps 37.3.0 documentation</title>
+    <meta property="og:title" content="terminusgps.wialon.items.unit | python-terminusgps 37.3.0 documentation" />
+    <meta name="twitter:title" content="terminusgps.wialon.items.unit | python-terminusgps 37.3.0 documentation" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d691ff6c" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/theme.css?v=42baaae4" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/autoclasstoc.css?v=08871587" />
@@ -40,7 +40,7 @@
     </a><header
   class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
     <div class="hidden mr-4 md:flex">
-      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 37.2.2 documentation</span>
+      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 37.3.0 documentation</span>
       </a></div><button
       class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden"
       type="button" @click="showSidebar = true">
@@ -95,7 +95,7 @@
   class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky"
   :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }">
 
-    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 37.2.2 documentation</span>
+    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 37.3.0 documentation</span>
     </a>
 
     <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
@@ -158,7 +158,7 @@
      class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
   <a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground"
      href="../../../../index.html">
-    <span class="hidden md:inline">python-terminusgps 37.2.2 documentation</span>
+    <span class="hidden md:inline">python-terminusgps 37.3.0 documentation</span>
     <svg xmlns="http://www.w3.org/2000/svg"
          height="18"
          width="18"
@@ -497,67 +497,71 @@
 </span><span id="line-286"><span class="sd">        :type: :py:obj:`dict`</span>
 </span><span id="line-287">
 </span><span id="line-288"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-289">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_get_hw_cmds</span><span class="p">(</span>
-</span><span id="line-290">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;deviceTypeId&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;unitId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">}</span>
-</span><span id="line-291">        <span class="p">)</span>
-</span><span id="line-292">
-</span><span id="line-293">    <span class="nd">@property</span>
-</span><span id="line-294">    <span class="k">def</span><span class="w"> </span><span class="nf">image_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="line-295"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-296"><span class="sd">        Image URI for the unit.</span>
-</span><span id="line-297">
-</span><span id="line-298"><span class="sd">        :type :py:obj:`str`</span>
-</span><span id="line-299">
-</span><span id="line-300"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-301">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_uri</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-302">            <span class="bp">self</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>
-</span><span id="line-303">        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_image_uri</span><span class="p">)</span>
-</span><span id="line-304">
-</span><span id="line-305">    <span class="nd">@property</span>
-</span><span id="line-306">    <span class="k">def</span><span class="w"> </span><span class="nf">imei_number</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="line-307"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-308"><span class="sd">        IMEI # for the unit.</span>
-</span><span id="line-309">
-</span><span id="line-310"><span class="sd">        :type: :py:obj:`str`</span>
-</span><span id="line-311">
-</span><span id="line-312"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-313">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imei_number</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-314">            <span class="bp">self</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>
-</span><span id="line-315">        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_imei_number</span><span class="p">)</span>
-</span><span id="line-316">
-</span><span id="line-317">    <span class="nd">@property</span>
-</span><span id="line-318">    <span class="k">def</span><span class="w"> </span><span class="nf">iccid</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-319"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-320"><span class="sd">        SIM Card # for the unit, if any.</span>
-</span><span id="line-321">
-</span><span id="line-322"><span class="sd">        :type: :py:obj:`str` | :py:obj:`None`</span>
-</span><span id="line-323">
-</span><span id="line-324"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-325">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">afields</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;iccid&quot;</span><span class="p">)</span>
-</span><span id="line-326">
-</span><span id="line-327">    <span class="nd">@property</span>
-</span><span id="line-328">    <span class="k">def</span><span class="w"> </span><span class="nf">carrier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-329"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-330"><span class="sd">        Name of the telecommunications company associated with the unit&#39;s SIM card, if any.</span>
-</span><span id="line-331">
-</span><span id="line-332"><span class="sd">        :type: :py:obj:`str` | :py:obj:`None`</span>
-</span><span id="line-333">
-</span><span id="line-334"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-335">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">afields</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;carrier&quot;</span><span class="p">)</span>
-</span><span id="line-336">
-</span><span id="line-337">    <span class="nd">@property</span>
-</span><span id="line-338">    <span class="k">def</span><span class="w"> </span><span class="nf">active</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="line-339"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether or not the unit is activated.&quot;&quot;&quot;</span>
-</span><span id="line-340">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-341">            <span class="bp">self</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>
-</span><span id="line-342">        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_active</span><span class="p">)</span>
-</span><span id="line-343">
-</span><span id="line-344">    <span class="nd">@property</span>
-</span><span id="line-345">    <span class="k">def</span><span class="w"> </span><span class="nf">image_url</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-346"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns an absolute url to the unit&#39;s icon in Wialon.&quot;&quot;&quot;</span>
-</span><span id="line-347">        <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">configured</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;WIALON_HOST&quot;</span><span class="p">):</span>
-</span><span id="line-348">            <span class="k">return</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">WIALON_HOST</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_uri</span><span class="p">)</span>
-</span><span id="line-349">        <span class="k">return</span> <span class="n">urljoin</span><span class="p">(</span><span class="s2">&quot;https://hst-api.wialon.com&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_uri</span><span class="p">)</span></div>
+</span><span id="line-289">        <span class="k">return</span> <span class="p">(</span>
+</span><span id="line-290">            <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_search_item</span><span class="p">(</span>
+</span><span id="line-291">                <span class="o">**</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;flags&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">DataFlag</span><span class="o">.</span><span class="n">UNIT_AVAILABLE_COMMANDS</span><span class="p">}</span>
+</span><span id="line-292">            <span class="p">)</span>
+</span><span id="line-293">            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">,</span> <span class="p">{})</span>
+</span><span id="line-294">            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cml&quot;</span><span class="p">,</span> <span class="p">{})</span>
+</span><span id="line-295">        <span class="p">)</span>
+</span><span id="line-296">
+</span><span id="line-297">    <span class="nd">@property</span>
+</span><span id="line-298">    <span class="k">def</span><span class="w"> </span><span class="nf">image_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="line-299"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-300"><span class="sd">        Image URI for the unit.</span>
+</span><span id="line-301">
+</span><span id="line-302"><span class="sd">        :type :py:obj:`str`</span>
+</span><span id="line-303">
+</span><span id="line-304"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-305">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_uri</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-306">            <span class="bp">self</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>
+</span><span id="line-307">        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_image_uri</span><span class="p">)</span>
+</span><span id="line-308">
+</span><span id="line-309">    <span class="nd">@property</span>
+</span><span id="line-310">    <span class="k">def</span><span class="w"> </span><span class="nf">imei_number</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="line-311"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-312"><span class="sd">        IMEI # for the unit.</span>
+</span><span id="line-313">
+</span><span id="line-314"><span class="sd">        :type: :py:obj:`str`</span>
+</span><span id="line-315">
+</span><span id="line-316"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-317">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imei_number</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-318">            <span class="bp">self</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>
+</span><span id="line-319">        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_imei_number</span><span class="p">)</span>
+</span><span id="line-320">
+</span><span id="line-321">    <span class="nd">@property</span>
+</span><span id="line-322">    <span class="k">def</span><span class="w"> </span><span class="nf">iccid</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-323"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-324"><span class="sd">        SIM Card # for the unit, if any.</span>
+</span><span id="line-325">
+</span><span id="line-326"><span class="sd">        :type: :py:obj:`str` | :py:obj:`None`</span>
+</span><span id="line-327">
+</span><span id="line-328"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-329">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">afields</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;iccid&quot;</span><span class="p">)</span>
+</span><span id="line-330">
+</span><span id="line-331">    <span class="nd">@property</span>
+</span><span id="line-332">    <span class="k">def</span><span class="w"> </span><span class="nf">carrier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-333"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-334"><span class="sd">        Name of the telecommunications company associated with the unit&#39;s SIM card, if any.</span>
+</span><span id="line-335">
+</span><span id="line-336"><span class="sd">        :type: :py:obj:`str` | :py:obj:`None`</span>
+</span><span id="line-337">
+</span><span id="line-338"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-339">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">afields</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;carrier&quot;</span><span class="p">)</span>
+</span><span id="line-340">
+</span><span id="line-341">    <span class="nd">@property</span>
+</span><span id="line-342">    <span class="k">def</span><span class="w"> </span><span class="nf">active</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="line-343"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether or not the unit is activated.&quot;&quot;&quot;</span>
+</span><span id="line-344">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-345">            <span class="bp">self</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>
+</span><span id="line-346">        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_active</span><span class="p">)</span>
+</span><span id="line-347">
+</span><span id="line-348">    <span class="nd">@property</span>
+</span><span id="line-349">    <span class="k">def</span><span class="w"> </span><span class="nf">image_url</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-350"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns an absolute url to the unit&#39;s icon in Wialon.&quot;&quot;&quot;</span>
+</span><span id="line-351">        <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">configured</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;WIALON_HOST&quot;</span><span class="p">):</span>
+</span><span id="line-352">            <span class="k">return</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">WIALON_HOST</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_uri</span><span class="p">)</span>
+</span><span id="line-353">        <span class="k">return</span> <span class="n">urljoin</span><span class="p">(</span><span class="s2">&quot;https://hst-api.wialon.com&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_uri</span><span class="p">)</span></div>
 
 </span></code></pre></div>
     </div></div>
@@ -574,7 +578,7 @@
 </footer>
   </div>
   
-    <script src="../../../../_static/documentation_options.js?v=39448b41"></script>
+    <script src="../../../../_static/documentation_options.js?v=db11cf6b"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script defer="defer" src="../../../../_static/theme.js?v=073f68d9"></script>
