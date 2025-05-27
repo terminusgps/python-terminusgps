@@ -78,8 +78,6 @@ class WialonSession:
         :type host: :py:obj:`str`
         :param port: Wialon API host port. Default is ``443``.
         :type port: :py:obj:`int`
-        :param log_level: Level of emitted logs. Default is ``10``.
-        :type log_level: :py:obj:`int`
         :param timeout: How long in seconds a session can be active for. Default is ``500`` (5 min).
         :type timeout: :py:obj:`int`
         :returns: Nothing.
@@ -420,6 +418,13 @@ class WialonSessionManager:
         return self.session
 
     def validate_session(self) -> bool:
+        """
+        Tries to make a Wialon API request and returns whether or not it was successful.
+
+        :returns: Whether or not validation Wialon API call was successful.
+        :rtype: :py:obj:`bool`
+
+        """
         try:
             result = self.session.wialon_api.core_duplicate()
             return result is not None

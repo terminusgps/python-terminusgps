@@ -286,8 +286,12 @@ class WialonUnit(WialonBase):
         :type: :py:obj:`dict`
 
         """
-        return self.session.wialon_api.core_get_hw_cmds(
-            **{"deviceTypeId": 0, "unitId": self.id}
+        return (
+            self.session.wialon_api.core_search_item(
+                **{"id": self.id, "flags": flags.DataFlag.UNIT_AVAILABLE_COMMANDS}
+            )
+            .get("item", {})
+            .get("cml", {})
         )
 
     @property
