@@ -4,7 +4,7 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from .session import WialonSessionManager
+from .session import WialonSession
 
 if settings.configured and not hasattr(settings, "WIALON_TOKEN"):
     raise ImproperlyConfigured("'WIALON_TOKEN' setting is required.")
@@ -12,7 +12,8 @@ if settings.configured and not hasattr(settings, "WIALON_TOKEN"):
 
 class WialonValidatorBase:
     def __init__(self) -> None:
-        self.session_manager = WialonSessionManager(token=settings.WIALON_TOKEN)
+        self.session = WialonSession()
+        self.session.login(self.session.token)
 
     def __call__(self, value: str) -> None:
         raise NotImplementedError("Subclasses must implement this method.")
@@ -20,8 +21,7 @@ class WialonValidatorBase:
 
 class WialonVinNumberValidator(WialonValidatorBase):
     def __call__(self, value: str) -> None:
-        session = self.session_manager.get_session(sid=None)
-        response = session.wialon_api.unit_get_vin_info(vin=value)
+        response = self.session.wialon_api.unit_get_vin_info(vin=value)
         if "error" in response["vin_lookup_result"].keys():
             raise ValidationError(
                 _("Failed to get info for VIN # '%(value)s': '%(message)s'"),
@@ -35,8 +35,7 @@ class WialonVinNumberValidator(WialonValidatorBase):
 
 class WialonImeiNumberValidator(WialonValidatorBase):
     def __call__(self, value: str) -> None:
-        session = self.session_manager.get_session(sid=None)
-        response = session.wialon_api.core_search_items(
+        response = self.session.wialon_api.core_search_items(
             **{
                 "spec": {
                     "itemsType": "avl_unit",
