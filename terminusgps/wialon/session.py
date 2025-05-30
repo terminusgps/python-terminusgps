@@ -299,11 +299,11 @@ class WialonSession:
                 | wialon_flags.TokenFlag.MANAGE_NONSENSITIVE
             )
         try:
-            print(f"{type(flags) = }")
             response = self.wialon_api.token_login(**{"token": token, "fl": flags})
             self._set_login_response(response)
             return response.get("eid", "")
         except (wialon.api.WialonError, ValueError):
+            logger.critical("Failed to login to the Wialon API.")
             raise
 
     def logout(self) -> None:
