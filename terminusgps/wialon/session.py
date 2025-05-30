@@ -4,54 +4,59 @@ import typing
 
 import wialon.api
 from django.conf import settings
+from loguru import logger
+
+from . import flags as wialon_flags
+
+logger.disable(__name__)
 
 
 @dataclasses.dataclass
 class WialonAPICall:
     action: str
     timestamp: datetime.datetime
-    args: tuple
-    kwargs: dict
     result: typing.Any = None
     error: Exception | None = None
 
 
 class Wialon(wialon.api.Wialon):
-    def __init__(self, token: str, timeout: int = 300, *args, **kwargs) -> None:
+    def __init__(self, token: str, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.token = token
         self.call_history: list[WialonAPICall] = []
-        self.last_call_datetime = None
-        self.timeout = timeout
 
     @property
     def total_calls(self) -> int:
         return len(self.call_history)
 
+    @property
+    def call_actions(self) -> list[str]:
+        return [call.action for call in self.call_history]
+
     def token_login(self, *args, **kwargs) -> typing.Any:
-        kwargs["appName"] = "python-terminusgps"
+        kwargs.setdefault("appName", "python-terminusgps")
         return self.call("token_login", *args, **kwargs)
 
-    def call(self, action_name: str, *argc, **kwargs) -> typing.Any:
-        now = datetime.datetime.now()
-
+    def call(self, action_name: str, *argc, **kwargs) -> dict[str, typing.Any]:
         try:
+            timestamp = datetime.datetime.now()
             result = super().call(action_name, *argc, **kwargs)
             call_record = WialonAPICall(
-                action=action_name,
-                timestamp=now,
-                args=argc,
-                kwargs=kwargs,
-                result=result,
+                action=action_name, timestamp=timestamp, result=result
             )
             return result
         except wialon.api.WialonError as e:
             call_record = WialonAPICall(
-                action=action_name, timestamp=now, args=argc, kwargs=kwargs, error=e
+                action=action_name, timestamp=timestamp, error=e
             )
-            return None
+            return {}
         finally:
-            self.last_call_datetime = now
+            if call_record.result:
+                logger.debug("Successfully executed '{}'", action_name)
+            elif call_record.error:
+                logger.warning(
+                    "Failed to execute '{}': {}", action_name, call_record.error
+                )
             self.call_history.append(call_record)
 
 
@@ -63,7 +68,6 @@ class WialonSession:
         scheme: str = "https",
         host: str = "hst-api.wialon.com",
         port: int = 443,
-        timeout: int = 300,
     ) -> None:
         """
         Starts or continues a Wialon API session.
@@ -76,10 +80,10 @@ class WialonSession:
         :type scheme: :py:obj:`str`
         :param host: Wialon API host url. Default is ``"hst-api.wialon.com"``.
         :type host: :py:obj:`str`
+        :param host: Wialon API rendering url. Default is ``"render-maps.wialon.com"``.
+        :type host: :py:obj:`str`
         :param port: Wialon API host port. Default is ``443``.
         :type port: :py:obj:`int`
-        :param timeout: How long in seconds a session can be active for. Default is ``500`` (5 min).
-        :type timeout: :py:obj:`int`
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
@@ -92,12 +96,7 @@ class WialonSession:
         self._wsdk_version = None
         self._uid = None
         self._wialon_api = Wialon(
-            scheme=scheme,
-            host=host,
-            port=port,
-            sid=sid,
-            timeout=timeout,
-            token=self.token,
+            scheme=scheme, host=host, port=port, sid=sid, token=self.token
         )
 
     def __str__(self) -> str:
@@ -110,12 +109,12 @@ class WialonSession:
         """
         Logs into the Wialon API using :py:meth:`login`.
 
-        :raises AssertionError: If the Wialon API token was not set.
+        :raises AssertionError: If the session's Wialon API :py:attr:`token` wasn't set.
         :returns: A valid Wialon API session.
         :rtype: :py:obj:`~terminusgps.wialon.session.WialonSession`
 
         """
-        assert self.token, "Wialon API token was not set"
+        assert self.token, "Wialon API token wasn't set."
         self.login(self.token)
         return self
 
@@ -279,7 +278,7 @@ class WialonSession:
         """
         return str(self._token)
 
-    def login(self, token: str, flags: int = sum([0x1, 0x2, 0x20])) -> str:
+    def login(self, token: str, flags: int | None = None) -> str:
         """
         Logs into the Wialon API and starts a new session.
 
@@ -293,10 +292,17 @@ class WialonSession:
         :rtype: :py:obj:`str`
 
         """
+        if flags is None:
+            flags = (
+                wialon_flags.TokenFlag.ONLINE_TRACKING
+                | wialon_flags.TokenFlag.VIEW_ACCESS
+                | wialon_flags.TokenFlag.MANAGE_NONSENSITIVE
+            )
         try:
+            print(f"{type(flags) = }")
             response = self.wialon_api.token_login(**{"token": token, "fl": flags})
             self._set_login_response(response)
-            return response.get("eid")
+            return response.get("eid", "")
         except (wialon.api.WialonError, ValueError):
             raise
 
@@ -312,13 +318,15 @@ class WialonSession:
         self.wialon_api.sid = None
 
         if response.get("error") != 0:
-            print(f"Failed to logout of session: '{response.get('message')}'")
+            logger.warning(
+                "Failed to logout of the session: '{}'", response.get("message")
+            )
 
     def _set_login_response(self, login_response: dict | None) -> None:
         """
         Sets the Wialon API session's attributes based on a login response.
 
-        :param login_response: A response returned from :py:meth:`login` or :py:meth:`duplicate`.
+        :param login_response: A dictionary returned from :py:meth:`login`.
         :type login_response: :py:obj:`dict`
         :raises ValueError: If ``login_response`` wasn't provided.
         :returns: Nothing.
@@ -342,189 +350,3 @@ class WialonSession:
         self._username = login_response.get("au")
         self._video_service_url = login_response.get("video_service_url")
         self._wsdk_version = login_response.get("wsdk_version")
-
-
-class WialonSessionManager:
-    """Provides an interface for generating automatically activated Wialon sessions."""
-
-    def __init__(
-        self,
-        token: str | None = None,
-        lifetime: int = 500,
-        session: WialonSession | None = None,
-        session_id: str | None = None,
-    ) -> None:
-        """
-        Sets :py:attr:`token` and :py:attr:`lifetime`.
-
-        :param token: A Wialon API token. Default is :confval:`WIALON_TOKEN`.
-        :type token: :py:obj:`str` | :py:obj:`None`
-        :param lifetime: How long in seconds a Wialon session can be valid for. Default is ``500``.
-        :type lifetime: :py:obj:`int`
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        self.token = token
-        self.lifetime = lifetime
-
-        target_sid = session.id if session and session.id else session_id
-        self.session = WialonSession(sid=target_sid)
-        if not target_sid or not self.validate_session():
-            self.session.login(token=self.token)
-
-    def check_active(self) -> bool:
-        """
-        Checks if :py:attr:`session` is active.
-
-        :returns: Whether or not :py:attr:`session` is an active Wialon session.
-        :rtype: :py:obj:`bool`
-
-        """
-        if not self.session.id:
-            return False
-        if not self.session.wialon_api.last_call_datetime:
-            return self.validate_session()
-
-        now = datetime.datetime.now()
-        last_call = self.session.wialon_api.last_call_datetime
-        session_expiry = last_call + datetime.timedelta(seconds=self.lifetime)
-
-        if now > session_expiry:
-            return False
-        return self.validate_session()
-
-    def get_session(self, sid: str | None = None) -> WialonSession:
-        """
-        Returns a valid Wialon API session.
-
-        If ``sid`` is provided, tries to continue the session and return it.
-
-        :param sid: A Wialon API session id.
-        :type sid: :py:obj:`str` | :py:obj:`None`
-        :returns: A valid Wialon API session.
-        :rtype: :py:obj:`~terminusgps.wialon.session.WialonSession`
-
-        """
-        if sid is not None:
-            self.session = WialonSession(sid=sid)
-            if not self.validate_session():
-                self.session = WialonSession()
-                self.session.login(token=self.token)
-                return self.session
-        if not self.check_active():
-            self.session = WialonSession()
-            self.session.login(token=self.token)
-        return self.session
-
-    def validate_session(self) -> bool:
-        """
-        Tries to make a Wialon API request and returns whether or not it was successful.
-
-        :returns: Whether or not validation Wialon API call was successful.
-        :rtype: :py:obj:`bool`
-
-        """
-        try:
-            result = self.session.wialon_api.core_duplicate()
-            return result is not None
-        except wialon.api.WialonError:
-            return False
-
-    @property
-    def sid(self) -> str | None:
-        """
-        Current Wialon session id.
-
-        :type: :py:obj:`str` | :py:obj:`None`
-
-        """
-        return self.session.wialon_api.sid if self.session else None
-
-    @sid.setter
-    def sid(self, other: str) -> None:
-        """
-        Sets :py:attr:`sid` to ``other``.
-
-        :param other: A Wialon session id.
-        :type other: :py:obj:`str`
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        if self.session:
-            self.session.wialon_api.sid = other
-        else:
-            self.session = WialonSession(sid=other)
-
-    @property
-    def token(self) -> str:
-        """
-        A Wialon API token.
-
-        :type: :py:obj:`str`
-
-        """
-        return str(self._token)
-
-    @token.setter
-    def token(self, other: str | None) -> None:
-        """
-        Sets :py:attr:`token` to ``other`` if provided.
-
-        If ``other`` isn't provided, instead sets :py:attr:`token` to :confval:`WIALON_TOKEN`.
-
-        :param other: A Wialon API token.
-        :type other: :py:obj:`str` | :py:obj:`None`
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        self._token = other if other is not None else settings.WIALON_TOKEN
-
-    @property
-    def session(self) -> WialonSession:
-        """
-        A Wialon API session.
-
-        :type: :py:obj:`~terminusgps.wialon.session.WialonSession`
-
-        """
-        return self._session
-
-    @session.setter
-    def session(self, other: WialonSession) -> None:
-        """
-        Sets :py:attr:`session` to ``other``.
-
-        :param other: A Wialon session.
-        :type other: :py:obj:`~terminusgps.wialon.session.WialonSession`
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        self._session = other
-
-    @property
-    def lifetime(self) -> int:
-        """
-        How long in seconds a Wialon session can live for.
-
-        :type: :py:obj:`int`
-        :value: :py:obj:`500`
-
-        """
-        return self._lifetime
-
-    @lifetime.setter
-    def lifetime(self, other: int) -> None:
-        """
-        Sets :py:attr:`lifetime` to ``other``.
-
-        :param other: An integer.
-        :type other: :py:obj:`int`
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        self._lifetime = other
