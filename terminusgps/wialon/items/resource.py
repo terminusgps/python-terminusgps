@@ -60,6 +60,16 @@ class WialonResource(WialonBase):
         """
         self.delete_account() if self.is_account else super().delete()
 
+    def get_remaining_days(self) -> int:
+        """Returns the remaining account days for the resource."""
+        if not self.is_account:
+            return 0
+        return int(
+            self.session.wialon_api.account_get_account_data(
+                **{"itemId": self.id, "type": 1}
+            ).get("daysCounter", 0)
+        )
+
     @property
     def is_dealer(self) -> bool:
         """
@@ -72,7 +82,7 @@ class WialonResource(WialonBase):
         """
         return (
             bool(
-                self.session.wialon_api.get_account_data(
+                self.session.wialon_api.account_get_account_data(
                     **{"itemId": self.id, "type": 1}
                 ).get("dealerRights")
             )

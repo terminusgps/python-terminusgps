@@ -46,6 +46,7 @@ class Wialon(wialon.api.Wialon):
             )
             return result
         except wialon.api.WialonError as e:
+            print(e)
             call_record = WialonAPICall(
                 action=action_name, timestamp=timestamp, error=e
             )
