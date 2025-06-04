@@ -21,6 +21,7 @@ def get_days_between(start_date: datetime.date, end_date: datetime.date) -> int:
     """
     return (end_date - start_date).days
 
+
 def get_merchant_details() -> dict | None:
     """
     Returns Authorizenet merchant details.
@@ -61,6 +62,21 @@ def get_transaction(id: int | str) -> dict | None:
     )
     controller = apicontrollers.getTransactionDetailsController(request)
     return AuthorizenetControllerExecutor.execute_controller(controller)
+
+
+def generate_monthly_subscription_schedule(
+    start_date: datetime.datetime,
+    total_occurrences: int = 9999,
+    trial_occurrences: int = 0,
+) -> apicontractsv1.paymentScheduleType:
+    return apicontractsv1.paymentScheduleType(
+        interval=apicontractsv1.paymentScheduleTypeInterval(
+            length=1, unit=apicontractsv1.ARBSubscriptionUnitEnum.months
+        ),
+        startDate=f"{start_date:%Y-%m-%d}",
+        totalOccurrences=str(total_occurrences),
+        trialOccurrences=str(trial_occurrences),
+    )
 
 
 def get_customer_profile_ids() -> list[int]:
