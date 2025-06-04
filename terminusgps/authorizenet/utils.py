@@ -65,9 +65,7 @@ def get_transaction(id: int | str) -> dict | None:
 
 
 def generate_monthly_subscription_schedule(
-    start_date: datetime.datetime,
-    total_occurrences: int = 9999,
-    trial_occurrences: int = 0,
+    start_date: datetime.date, total_occurrences: int = 9999, trial_occurrences: int = 0
 ) -> apicontractsv1.paymentScheduleType:
     return apicontractsv1.paymentScheduleType(
         interval=apicontractsv1.paymentScheduleTypeInterval(
