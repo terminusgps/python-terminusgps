@@ -12,9 +12,9 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
   
-    <title>terminusgps.authorizenet.profiles.subscriptions | python-terminusgps 37.5.1 documentation</title>
-    <meta property="og:title" content="terminusgps.authorizenet.profiles.subscriptions | python-terminusgps 37.5.1 documentation" />
-    <meta name="twitter:title" content="terminusgps.authorizenet.profiles.subscriptions | python-terminusgps 37.5.1 documentation" />
+    <title>terminusgps.authorizenet.profiles.subscriptions | python-terminusgps 37.5.2 documentation</title>
+    <meta property="og:title" content="terminusgps.authorizenet.profiles.subscriptions | python-terminusgps 37.5.2 documentation" />
+    <meta name="twitter:title" content="terminusgps.authorizenet.profiles.subscriptions | python-terminusgps 37.5.2 documentation" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d691ff6c" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/theme.css?v=42baaae4" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/autoclasstoc.css?v=08871587" />
@@ -40,7 +40,7 @@
     </a><header
   class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
     <div class="hidden mr-4 md:flex">
-      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 37.5.1 documentation</span>
+      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 37.5.2 documentation</span>
       </a></div><button
       class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden"
       type="button" @click="showSidebar = true">
@@ -95,7 +95,7 @@
   class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky"
   :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }">
 
-    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 37.5.1 documentation</span>
+    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 37.5.2 documentation</span>
     </a>
 
     <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
@@ -158,7 +158,7 @@
      class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
   <a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground"
      href="../../../../index.html">
-    <span class="hidden md:inline">python-terminusgps 37.5.1 documentation</span>
+    <span class="hidden md:inline">python-terminusgps 37.5.2 documentation</span>
     <svg xmlns="http://www.w3.org/2000/svg"
          height="18"
          width="18"
@@ -185,7 +185,7 @@
 </span><span id="line-3"><span class="kn">from</span><span class="w"> </span><span class="nn">authorizenet</span><span class="w"> </span><span class="kn">import</span> <span class="n">apicontractsv1</span><span class="p">,</span> <span class="n">apicontrollers</span>
 </span><span id="line-4">
 </span><span id="line-5"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.authorizenet.constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-</span><span id="line-6">    <span class="n">ANET_XML_NS</span><span class="p">,</span>
+</span><span id="line-6">    <span class="n">ANET_XMLNS</span><span class="p">,</span>
 </span><span id="line-7">    <span class="n">AuthorizenetSubscriptionStatus</span><span class="p">,</span>
 </span><span id="line-8"><span class="p">)</span>
 </span><span id="line-9"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.authorizenet.profiles.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthorizenetSubProfileBase</span>
@@ -207,8 +207,8 @@
 </span><span id="line-23">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
 </span><span id="line-24">            <span class="n">name</span> <span class="o">=</span> <span class="p">(</span>
 </span><span id="line-25">                <span class="bp">self</span><span class="o">.</span><span class="n">_authorizenet_get_subscription</span><span class="p">()</span>
-</span><span id="line-26">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">subscription&quot;</span><span class="p">)</span>
-</span><span id="line-27">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">name&quot;</span><span class="p">)</span>
+</span><span id="line-26">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">subscription&quot;</span><span class="p">)</span>
+</span><span id="line-27">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">name&quot;</span><span class="p">)</span>
 </span><span id="line-28">            <span class="p">)</span>
 </span><span id="line-29">            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
 </span><span id="line-30">
@@ -223,8 +223,8 @@
 </span><span id="line-39">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
 </span><span id="line-40">            <span class="n">amount</span> <span class="o">=</span> <span class="p">(</span>
 </span><span id="line-41">                <span class="bp">self</span><span class="o">.</span><span class="n">_authorizenet_get_subscription</span><span class="p">()</span>
-</span><span id="line-42">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">subscription&quot;</span><span class="p">)</span>
-</span><span id="line-43">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">amount&quot;</span><span class="p">)</span>
+</span><span id="line-42">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">subscription&quot;</span><span class="p">)</span>
+</span><span id="line-43">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">amount&quot;</span><span class="p">)</span>
 </span><span id="line-44">            <span class="p">)</span>
 </span><span id="line-45">            <span class="n">decimal</span><span class="o">.</span><span class="n">getcontext</span><span class="p">()</span><span class="o">.</span><span class="n">prec</span> <span class="o">=</span> <span class="mi">4</span>
 </span><span id="line-46">            <span class="k">return</span> <span class="n">decimal</span><span class="o">.</span><span class="n">Decimal</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">amount</span><span class="p">))</span> <span class="o">*</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">amount</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
@@ -239,7 +239,7 @@
 </span><span id="line-55"><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="line-56">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
 </span><span id="line-57">            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_authorizenet_get_subscription_status</span><span class="p">()</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
-</span><span id="line-58">                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">status&quot;</span>
+</span><span id="line-58">                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">status&quot;</span>
 </span><span id="line-59">            <span class="p">)</span>
 </span><span id="line-60">            <span class="k">return</span> <span class="p">(</span>
 </span><span id="line-61">                <span class="n">AuthorizenetSubscriptionStatus</span><span class="p">(</span><span class="n">status</span><span class="p">)</span> <span class="k">if</span> <span class="n">status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
@@ -258,9 +258,9 @@
 </span><span id="line-74">
 </span><span id="line-75">        <span class="n">transactions</span> <span class="o">=</span> <span class="p">(</span>
 </span><span id="line-76">            <span class="bp">self</span><span class="o">.</span><span class="n">_authorizenet_get_subscription</span><span class="p">(</span><span class="n">include_transactions</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span id="line-77">            <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">subscription&quot;</span><span class="p">)</span>
-</span><span id="line-78">            <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">arbTransactions&quot;</span><span class="p">)</span>
-</span><span id="line-79">            <span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">arbTransaction&quot;</span><span class="p">)</span>
+</span><span id="line-77">            <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">subscription&quot;</span><span class="p">)</span>
+</span><span id="line-78">            <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">arbTransactions&quot;</span><span class="p">)</span>
+</span><span id="line-79">            <span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">arbTransaction&quot;</span><span class="p">)</span>
 </span><span id="line-80">        <span class="p">)</span>
 </span><span id="line-81">        <span class="k">return</span> <span class="n">transactions</span> <span class="k">if</span> <span class="n">transactions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[{}]</span>
 </span><span id="line-82">
@@ -275,10 +275,10 @@
 </span><span id="line-91">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
 </span><span id="line-92">            <span class="n">address_id</span> <span class="o">=</span> <span class="p">(</span>
 </span><span id="line-93">                <span class="bp">self</span><span class="o">.</span><span class="n">_authorizenet_get_subscription</span><span class="p">()</span>
-</span><span id="line-94">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">subscription&quot;</span><span class="p">)</span>
-</span><span id="line-95">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">profile&quot;</span><span class="p">)</span>
-</span><span id="line-96">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">shippingProfile&quot;</span><span class="p">)</span>
-</span><span id="line-97">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">customerAddressId&quot;</span><span class="p">)</span>
+</span><span id="line-94">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">subscription&quot;</span><span class="p">)</span>
+</span><span id="line-95">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">profile&quot;</span><span class="p">)</span>
+</span><span id="line-96">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">shippingProfile&quot;</span><span class="p">)</span>
+</span><span id="line-97">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">customerAddressId&quot;</span><span class="p">)</span>
 </span><span id="line-98">            <span class="p">)</span>
 </span><span id="line-99">            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">address_id</span><span class="p">)</span> <span class="k">if</span> <span class="n">address_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
 </span><span id="line-100">
@@ -293,10 +293,10 @@
 </span><span id="line-109">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
 </span><span id="line-110">            <span class="n">payment_id</span> <span class="o">=</span> <span class="p">(</span>
 </span><span id="line-111">                <span class="bp">self</span><span class="o">.</span><span class="n">_authorizenet_get_subscription</span><span class="p">()</span>
-</span><span id="line-112">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">subscription&quot;</span><span class="p">)</span>
-</span><span id="line-113">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">profile&quot;</span><span class="p">)</span>
-</span><span id="line-114">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">paymentProfile&quot;</span><span class="p">)</span>
-</span><span id="line-115">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">customerPaymentProfileId&quot;</span><span class="p">)</span>
+</span><span id="line-112">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">subscription&quot;</span><span class="p">)</span>
+</span><span id="line-113">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">profile&quot;</span><span class="p">)</span>
+</span><span id="line-114">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">paymentProfile&quot;</span><span class="p">)</span>
+</span><span id="line-115">                <span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">customerPaymentProfileId&quot;</span><span class="p">)</span>
 </span><span id="line-116">            <span class="p">)</span>
 </span><span id="line-117">            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">payment_id</span><span class="p">)</span> <span class="k">if</span> <span class="n">payment_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
 </span><span id="line-118">
@@ -315,7 +315,7 @@
 </span><span id="line-129"><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="line-130">        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span>
 </span><span id="line-131">            <span class="bp">self</span><span class="o">.</span><span class="n">_authorizenet_create_subscription</span><span class="p">(</span><span class="n">subscription</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
-</span><span id="line-132">                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XML_NS</span><span class="si">}</span><span class="s2">subscriptionId&quot;</span>
+</span><span id="line-132">                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ANET_XMLNS</span><span class="si">}</span><span class="s2">subscriptionId&quot;</span>
 </span><span id="line-133">            <span class="p">)</span>
 </span><span id="line-134">        <span class="p">)</span></div>
 
@@ -503,7 +503,7 @@
 </footer>
   </div>
   
-    <script src="../../../../_static/documentation_options.js?v=80e7f0e5"></script>
+    <script src="../../../../_static/documentation_options.js?v=b71f7a8f"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script defer="defer" src="../../../../_static/theme.js?v=073f68d9"></script>
