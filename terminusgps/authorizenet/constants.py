@@ -1,6 +1,6 @@
 import enum
 
-ANET_XML_NS = "{AnetApi/xml/v1/schema/AnetApiSchema.xsd}"
+ANET_XMLNS = "{AnetApi/xml/v1/schema/AnetApiSchema.xsd}"
 """Authorizenet XML namespace."""
 
 

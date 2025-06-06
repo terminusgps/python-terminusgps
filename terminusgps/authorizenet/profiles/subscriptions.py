@@ -3,7 +3,7 @@ import decimal
 from authorizenet import apicontractsv1, apicontrollers
 
 from terminusgps.authorizenet.constants import (
-    ANET_XML_NS,
+    ANET_XMLNS,
     AuthorizenetSubscriptionStatus,
 )
 from terminusgps.authorizenet.profiles.base import AuthorizenetSubProfileBase
@@ -23,8 +23,8 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
         if self.id:
             name = (
                 self._authorizenet_get_subscription()
-                .find(f"{ANET_XML_NS}subscription")
-                .find(f"{ANET_XML_NS}name")
+                .find(f"{ANET_XMLNS}subscription")
+                .find(f"{ANET_XMLNS}name")
             )
             return str(name) if name is not None else None
 
@@ -39,8 +39,8 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
         if self.id:
             amount = (
                 self._authorizenet_get_subscription()
-                .find(f"{ANET_XML_NS}subscription")
-                .find(f"{ANET_XML_NS}amount")
+                .find(f"{ANET_XMLNS}subscription")
+                .find(f"{ANET_XMLNS}amount")
             )
             decimal.getcontext().prec = 4
             return decimal.Decimal(float(amount)) * 1 if amount is not None else None
@@ -55,7 +55,7 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
         """
         if self.id:
             status = self._authorizenet_get_subscription_status().find(
-                f"{ANET_XML_NS}status"
+                f"{ANET_XMLNS}status"
             )
             return (
                 AuthorizenetSubscriptionStatus(status) if status is not None else None
@@ -74,9 +74,9 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
 
         transactions = (
             self._authorizenet_get_subscription(include_transactions=True)
-            .find(f"{ANET_XML_NS}subscription")
-            .find(f"{ANET_XML_NS}arbTransactions")
-            .findall(f"{ANET_XML_NS}arbTransaction")
+            .find(f"{ANET_XMLNS}subscription")
+            .find(f"{ANET_XMLNS}arbTransactions")
+            .findall(f"{ANET_XMLNS}arbTransaction")
         )
         return transactions if transactions is not None else [{}]
 
@@ -91,10 +91,10 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
         if self.id:
             address_id = (
                 self._authorizenet_get_subscription()
-                .find(f"{ANET_XML_NS}subscription")
-                .find(f"{ANET_XML_NS}profile")
-                .find(f"{ANET_XML_NS}shippingProfile")
-                .find(f"{ANET_XML_NS}customerAddressId")
+                .find(f"{ANET_XMLNS}subscription")
+                .find(f"{ANET_XMLNS}profile")
+                .find(f"{ANET_XMLNS}shippingProfile")
+                .find(f"{ANET_XMLNS}customerAddressId")
             )
             return int(address_id) if address_id is not None else None
 
@@ -109,10 +109,10 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
         if self.id:
             payment_id = (
                 self._authorizenet_get_subscription()
-                .find(f"{ANET_XML_NS}subscription")
-                .find(f"{ANET_XML_NS}profile")
-                .find(f"{ANET_XML_NS}paymentProfile")
-                .find(f"{ANET_XML_NS}customerPaymentProfileId")
+                .find(f"{ANET_XMLNS}subscription")
+                .find(f"{ANET_XMLNS}profile")
+                .find(f"{ANET_XMLNS}paymentProfile")
+                .find(f"{ANET_XMLNS}customerPaymentProfileId")
             )
             return int(payment_id) if payment_id is not None else None
 
@@ -129,7 +129,7 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
         """
         return int(
             self._authorizenet_create_subscription(subscription).find(
-                f"{ANET_XML_NS}subscriptionId"
+                f"{ANET_XMLNS}subscriptionId"
             )
         )
 

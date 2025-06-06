@@ -1,6 +1,6 @@
 from authorizenet import apicontractsv1, apicontrollers
 
-from terminusgps.authorizenet.constants import ANET_XML_NS
+from terminusgps.authorizenet.constants import ANET_XMLNS
 from terminusgps.authorizenet.profiles.base import AuthorizenetSubProfileBase
 
 
@@ -18,10 +18,10 @@ class PaymentProfile(AuthorizenetSubProfileBase):
         if self.id:
             cc_num = (
                 self._authorizenet_get_payment_profile()
-                .find(f"{ANET_XML_NS}paymentProfile")
-                .find(f"{ANET_XML_NS}payment")
-                .find(f"{ANET_XML_NS}creditCard")
-                .find(f"{ANET_XML_NS}cardNumber")
+                .find(f"{ANET_XMLNS}paymentProfile")
+                .find(f"{ANET_XMLNS}payment")
+                .find(f"{ANET_XMLNS}creditCard")
+                .find(f"{ANET_XMLNS}cardNumber")
             )  # returns string like: "XXXX<last_4>"
             return int(str(cc_num[-4:])) if cc_num is not None else None
 
@@ -44,7 +44,7 @@ class PaymentProfile(AuthorizenetSubProfileBase):
         return int(
             self._authorizenet_create_payment_profile(
                 address=address, payment=payment
-            ).find(f"{ANET_XML_NS}customerPaymentProfileId")
+            ).find(f"{ANET_XMLNS}customerPaymentProfileId")
         )
 
     def update(

@@ -1,6 +1,6 @@
 from authorizenet import apicontractsv1, apicontrollers
 
-from terminusgps.authorizenet.constants import ANET_XML_NS
+from terminusgps.authorizenet.constants import ANET_XMLNS
 from terminusgps.authorizenet.profiles.base import AuthorizenetSubProfileBase
 
 
@@ -19,7 +19,7 @@ class AddressProfile(AuthorizenetSubProfileBase):
         """
         return int(
             self._authorizenet_create_shipping_address(address).find(
-                f"{ANET_XML_NS}customerAddressId"
+                f"{ANET_XMLNS}customerAddressId"
             )
         )
 

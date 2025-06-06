@@ -1,7 +1,7 @@
 from authorizenet import apicontractsv1, apicontrollers
 
 from terminusgps.authorizenet.auth import get_validation_mode
-from terminusgps.authorizenet.constants import ANET_XML_NS
+from terminusgps.authorizenet.constants import ANET_XMLNS
 from terminusgps.authorizenet.controllers import AuthorizenetControllerExecutionError
 from terminusgps.authorizenet.profiles.base import AuthorizenetProfileBase
 
@@ -32,8 +32,8 @@ class CustomerProfile(AuthorizenetProfileBase):
             try:
                 self.id = int(
                     self._authorizenet_get_customer_profile()
-                    .find(f"{ANET_XML_NS}profile")
-                    .find(f"{ANET_XML_NS}customerProfileId")
+                    .find(f"{ANET_XMLNS}profile")
+                    .find(f"{ANET_XMLNS}customerProfileId")
                 )
             except AuthorizenetControllerExecutionError:
                 self.id = self.create()
@@ -130,7 +130,7 @@ class CustomerProfile(AuthorizenetProfileBase):
         )
         return int(
             self._authorizenet_create_customer_profile().find(
-                f"{ANET_XML_NS}customerProfileId"
+                f"{ANET_XMLNS}customerProfileId"
             )
         )
 
@@ -167,12 +167,12 @@ class CustomerProfile(AuthorizenetProfileBase):
         """
         payment_profiles = (
             self._authorizenet_get_customer_profile()
-            .find(f"{ANET_XML_NS}profile")
-            .findall(f"{ANET_XML_NS}paymentProfiles")
+            .find(f"{ANET_XMLNS}profile")
+            .findall(f"{ANET_XMLNS}paymentProfiles")
         )
         return (
             [
-                int(profile.find(f"{ANET_XML_NS}customerPaymentProfileId"))
+                int(profile.find(f"{ANET_XMLNS}customerPaymentProfileId"))
                 for profile in payment_profiles
             ]
             if payment_profiles is not None
@@ -189,12 +189,12 @@ class CustomerProfile(AuthorizenetProfileBase):
         """
         address_profiles = (
             self._authorizenet_get_customer_profile()
-            .find(f"{ANET_XML_NS}profile")
-            .findall(f"{ANET_XML_NS}shipToList")
+            .find(f"{ANET_XMLNS}profile")
+            .findall(f"{ANET_XMLNS}shipToList")
         )
         return (
             [
-                int(profile.find(f"{ANET_XML_NS}customerAddressId"))
+                int(profile.find(f"{ANET_XMLNS}customerAddressId"))
                 for profile in address_profiles
             ]
             if address_profiles is not None
