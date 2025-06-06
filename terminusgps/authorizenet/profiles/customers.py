@@ -1,6 +1,7 @@
 from authorizenet import apicontractsv1, apicontrollers
 
 from terminusgps.authorizenet.auth import get_validation_mode
+from terminusgps.authorizenet.constants import ANET_XML_NS
 from terminusgps.authorizenet.controllers import AuthorizenetControllerExecutionError
 from terminusgps.authorizenet.profiles.base import AuthorizenetProfileBase
 
@@ -29,8 +30,11 @@ class CustomerProfile(AuthorizenetProfileBase):
 
         if not self.id:
             try:
-                response = self._authorizenet_get_customer_profile()
-                self.id = int(response.profile.customerProfileId)
+                self.id = int(
+                    self._authorizenet_get_customer_profile()
+                    .find(f"{ANET_XML_NS}profile")
+                    .find(f"{ANET_XML_NS}customerProfileId")
+                )
             except AuthorizenetControllerExecutionError:
                 self.id = self.create()
 
@@ -124,7 +128,11 @@ class CustomerProfile(AuthorizenetProfileBase):
         assert self.merchant_id or self.email, (
             "Neither 'merchant_id' nor 'email' were set."
         )
-        return int(self._authorizenet_create_customer_profile().customerProfileId)
+        return int(
+            self._authorizenet_create_customer_profile().find(
+                f"{ANET_XML_NS}customerProfileId"
+            )
+        )
 
     def update(self) -> None:
         """
@@ -157,13 +165,19 @@ class CustomerProfile(AuthorizenetProfileBase):
         :rtype: :py:obj:`list`
 
         """
-        response = self._authorizenet_get_customer_profile()
-        if response is not None and hasattr(response.profile, "paymentProfiles"):
-            return [
-                int(p.customerPaymentProfileId)
-                for p in response.profile.paymentProfiles
+        payment_profiles = (
+            self._authorizenet_get_customer_profile()
+            .find(f"{ANET_XML_NS}profile")
+            .findall(f"{ANET_XML_NS}paymentProfiles")
+        )
+        return (
+            [
+                int(profile.find(f"{ANET_XML_NS}customerPaymentProfileId"))
+                for profile in payment_profiles
             ]
-        return []
+            if payment_profiles is not None
+            else []
+        )
 
     def get_address_profile_ids(self) -> list[int]:
         """
@@ -173,10 +187,19 @@ class CustomerProfile(AuthorizenetProfileBase):
         :rtype: :py:obj:`list`
 
         """
-        response = self._authorizenet_get_customer_profile()
-        if response is not None and hasattr(response.profile, "shipToList"):
-            return [int(p.customerAddressId) for p in response.profile.shipToList]
-        return []
+        address_profiles = (
+            self._authorizenet_get_customer_profile()
+            .find(f"{ANET_XML_NS}profile")
+            .findall(f"{ANET_XML_NS}shipToList")
+        )
+        return (
+            [
+                int(profile.find(f"{ANET_XML_NS}customerAddressId"))
+                for profile in address_profiles
+            ]
+            if address_profiles is not None
+            else []
+        )
 
     def _generate_customer_profile_ex_type(
         self,
@@ -247,8 +270,9 @@ class CustomerProfile(AuthorizenetProfileBase):
         if self._email:
             request.email = self._email
 
-        controller = apicontrollers.getCustomerProfileController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.getCustomerProfileController(request)
+        )
 
     def _authorizenet_create_customer_profile(
         self, validate: bool = False
@@ -277,8 +301,9 @@ class CustomerProfile(AuthorizenetProfileBase):
         if validate:
             request.validationMode = self.validationMode
 
-        controller = apicontrollers.createCustomerProfileController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.createCustomerProfileController(request)
+        )
 
     def _authorizenet_update_customer_profile(
         self, validate: bool = False
@@ -305,8 +330,9 @@ class CustomerProfile(AuthorizenetProfileBase):
         if validate:
             request.validationMode = self.validationMode
 
-        controller = apicontrollers.updateCustomerProfileController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.updateCustomerProfileController(request)
+        )
 
     def _authorizenet_delete_customer_profile(self) -> dict | None:
         """
@@ -327,5 +353,6 @@ class CustomerProfile(AuthorizenetProfileBase):
             customerProfileId=self.id,
         )
 
-        controller = apicontrollers.deleteCustomerProfileController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.deleteCustomerProfileController(request)
+        )

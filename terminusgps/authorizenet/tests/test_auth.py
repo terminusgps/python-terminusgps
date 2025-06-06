@@ -16,8 +16,8 @@ class MerchantAuthenticationTestCase(TestCase):
         MERCHANT_AUTH_TRANSACTION_KEY=TEST_MERCHANT_AUTH_TRANSACTION_KEY,
         DEBUG=True,
     )
-    def test_merchant_authentication(self) -> None:
-        auth_obj: merchantAuthenticationType = auth.get_merchant_auth()
+    def test_merchant_authentication_init(self) -> None:
+        auth_obj = auth.get_merchant_auth()
         self.assertIsInstance(auth_obj, merchantAuthenticationType)
         self.assertTrue(auth_obj.name == TEST_MERCHANT_AUTH_LOGIN_ID)
         self.assertTrue(auth_obj.transactionKey == TEST_MERCHANT_AUTH_TRANSACTION_KEY)

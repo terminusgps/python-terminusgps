@@ -2,7 +2,10 @@ import decimal
 
 from authorizenet import apicontractsv1, apicontrollers
 
-from terminusgps.authorizenet.constants import AuthorizenetSubscriptionStatus
+from terminusgps.authorizenet.constants import (
+    ANET_XML_NS,
+    AuthorizenetSubscriptionStatus,
+)
 from terminusgps.authorizenet.profiles.base import AuthorizenetSubProfileBase
 
 
@@ -18,8 +21,12 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
 
         """
         if self.id:
-            sub = self._authorizenet_get_subscription().subscription
-            return str(sub.name)
+            name = (
+                self._authorizenet_get_subscription()
+                .find(f"{ANET_XML_NS}subscription")
+                .find(f"{ANET_XML_NS}name")
+            )
+            return str(name) if name is not None else None
 
     @property
     def amount(self) -> decimal.Decimal | None:
@@ -30,9 +37,13 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
 
         """
         if self.id:
+            amount = (
+                self._authorizenet_get_subscription()
+                .find(f"{ANET_XML_NS}subscription")
+                .find(f"{ANET_XML_NS}amount")
+            )
             decimal.getcontext().prec = 4
-            sub = self._authorizenet_get_subscription().subscription
-            return decimal.Decimal(float(sub.amount)) * 1
+            return decimal.Decimal(float(amount)) * 1 if amount is not None else None
 
     @property
     def status(self) -> AuthorizenetSubscriptionStatus | None:
@@ -43,47 +54,67 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
 
         """
         if self.id:
-            return AuthorizenetSubscriptionStatus(
-                self._authorizenet_get_subscription_status().status
+            status = self._authorizenet_get_subscription_status().find(
+                f"{ANET_XML_NS}status"
+            )
+            return (
+                AuthorizenetSubscriptionStatus(status) if status is not None else None
             )
 
     @property
     def transactions(self) -> list[dict[str, str]]:
         """
-        Subscription transactions.
+        Subscription transaction list.
 
         :type: :py:obj:`list`
+
         """
         if not self.id:
-            return []
-        sub = self._authorizenet_get_subscription(
-            include_transactions=True
-        ).subscription
-        return [t.arbTransaction for t in sub.arbTransactions]
+            return [{}]
+
+        transactions = (
+            self._authorizenet_get_subscription(include_transactions=True)
+            .find(f"{ANET_XML_NS}subscription")
+            .find(f"{ANET_XML_NS}arbTransactions")
+            .findall(f"{ANET_XML_NS}arbTransaction")
+        )
+        return transactions if transactions is not None else [{}]
 
     @property
     def address_id(self) -> int | None:
         """
-        Returns the address id for the subscription profile.
+        Subscription address id.
 
         :type: :py:obj:`int` | :py:obj:`None`
 
         """
         if self.id:
-            sub = self._authorizenet_get_subscription().subscription
-            return int(sub.profile.shippingProfile.customerAddressId)
+            address_id = (
+                self._authorizenet_get_subscription()
+                .find(f"{ANET_XML_NS}subscription")
+                .find(f"{ANET_XML_NS}profile")
+                .find(f"{ANET_XML_NS}shippingProfile")
+                .find(f"{ANET_XML_NS}customerAddressId")
+            )
+            return int(address_id) if address_id is not None else None
 
     @property
     def payment_id(self) -> int | None:
         """
-        Returns the payment id for the subscription profile.
+        Subscription payment id.
 
         :type: :py:obj:`int` | :py:obj:`None`
 
         """
         if self.id:
-            sub = self._authorizenet_get_subscription().subscription
-            return int(sub.profile.paymentProfile.customerPaymentProfileId)
+            payment_id = (
+                self._authorizenet_get_subscription()
+                .find(f"{ANET_XML_NS}subscription")
+                .find(f"{ANET_XML_NS}profile")
+                .find(f"{ANET_XML_NS}paymentProfile")
+                .find(f"{ANET_XML_NS}customerPaymentProfileId")
+            )
+            return int(payment_id) if payment_id is not None else None
 
     def create(self, subscription: apicontractsv1.ARBSubscriptionType) -> int:
         """
@@ -96,7 +127,11 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
         :rtype: :py:obj:`int`
 
         """
-        return int(self._authorizenet_create_subscription(subscription).subscriptionId)
+        return int(
+            self._authorizenet_create_subscription(subscription).find(
+                f"{ANET_XML_NS}subscriptionId"
+            )
+        )
 
     def update(self, subscription: apicontractsv1.ARBSubscriptionType) -> None:
         """
@@ -143,8 +178,9 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
             subscription=subscription,
         )
 
-        controller = apicontrollers.ARBCreateSubscriptionController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.ARBCreateSubscriptionController(request)
+        )
 
     def _authorizenet_get_subscription(
         self, include_transactions: bool = False
@@ -170,8 +206,9 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
             includeTransactions=str(include_transactions).lower(),
         )
 
-        controller = apicontrollers.ARBGetSubscriptionController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.ARBGetSubscriptionController(request)
+        )
 
     def _authorizenet_get_subscription_status(self) -> dict | None:
         """
@@ -191,8 +228,9 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
             merchantAuthentication=self.merchantAuthentication, subscriptionId=self.id
         )
 
-        controller = apicontrollers.ARBGetSubscriptionStatusController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.ARBGetSubscriptionStatusController(request)
+        )
 
     def _authorizenet_update_subscription(
         self, subscription: apicontractsv1.ARBSubscriptionType
@@ -216,8 +254,9 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
             subscription=subscription,
         )
 
-        controller = apicontrollers.ARBUpdateSubscriptionController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.ARBUpdateSubscriptionController(request)
+        )
 
     def _authorizenet_cancel_subscription(self) -> dict | None:
         """
@@ -237,5 +276,6 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
             merchantAuthentication=self.merchantAuthentication, subscriptionId=self.id
         )
 
-        controller = apicontrollers.ARBCancelSubscriptionController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.ARBCancelSubscriptionController(request)
+        )

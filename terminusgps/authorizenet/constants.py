@@ -1,5 +1,8 @@
 import enum
 
+ANET_XML_NS = "{AnetApi/xml/v1/schema/AnetApiSchema.xsd}"
+"""Authorizenet XML namespace."""
+
 
 class AuthorizenetSubscriptionStatus(enum.StrEnum):
     """Authorizenet subscription statuses."""

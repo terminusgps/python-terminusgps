@@ -1,5 +1,6 @@
 from authorizenet import apicontractsv1, apicontrollers
 
+from terminusgps.authorizenet.constants import ANET_XML_NS
 from terminusgps.authorizenet.profiles.base import AuthorizenetSubProfileBase
 
 
@@ -7,7 +8,7 @@ class PaymentProfile(AuthorizenetSubProfileBase):
     """An Authorizenet customer payment profile."""
 
     @property
-    def last_4(self) -> str | None:
+    def last_4(self) -> int | None:
         """
         Last 4 digits of the payment profile credit card.
 
@@ -15,8 +16,14 @@ class PaymentProfile(AuthorizenetSubProfileBase):
 
         """
         if self.id:
-            response = self._authorizenet_get_payment_profile()
-            return str(response.paymentProfile.payment.creditCard.cardNumber)[-4:]
+            cc_num = (
+                self._authorizenet_get_payment_profile()
+                .find(f"{ANET_XML_NS}paymentProfile")
+                .find(f"{ANET_XML_NS}payment")
+                .find(f"{ANET_XML_NS}creditCard")
+                .find(f"{ANET_XML_NS}cardNumber")
+            )  # returns string like: "XXXX<last_4>"
+            return int(str(cc_num[-4:])) if cc_num is not None else None
 
     def create(
         self,
@@ -37,7 +44,7 @@ class PaymentProfile(AuthorizenetSubProfileBase):
         return int(
             self._authorizenet_create_payment_profile(
                 address=address, payment=payment
-            ).customerPaymentProfileId
+            ).find(f"{ANET_XML_NS}customerPaymentProfileId")
         )
 
     def update(
@@ -112,8 +119,9 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             paging={"limit": str(limit), "offset": str(offset)},
         )
 
-        controller = apicontrollers.getTransactionListForCustomerController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.getTransactionListForCustomerController(request)
+        )
 
     def _authorizenet_create_payment_profile(
         self,
@@ -143,8 +151,9 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             validationMode=self.validationMode,
         )
 
-        controller = apicontrollers.createCustomerPaymentProfileController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.createCustomerPaymentProfileController(request)
+        )
 
     def _authorizenet_get_payment_profile(
         self, issuer_info: bool = True
@@ -171,8 +180,9 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             includeIssuerInfo=str(issuer_info).lower(),
         )
 
-        controller = apicontrollers.getCustomerPaymentProfileController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.getCustomerPaymentProfileController(request)
+        )
 
     def _authorizenet_update_payment_profile(
         self,
@@ -208,8 +218,9 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             validationMode=self.validationMode,
         )
 
-        controller = apicontrollers.updateCustomerPaymentProfileController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.updateCustomerPaymentProfileController(request)
+        )
 
     def _authorizenet_validate_payment_profile(self) -> dict | None:
         """
@@ -233,8 +244,9 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             validationMode=self.validationMode,
         )
 
-        controller = apicontrollers.validateCustomerPaymentProfileController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.validateCustomerPaymentProfileController(request)
+        )
 
     def _authorizenet_delete_payment_profile(self) -> dict | None:
         """
@@ -256,5 +268,6 @@ class PaymentProfile(AuthorizenetSubProfileBase):
             customerPaymentProfileId=self.id,
         )
 
-        controller = apicontrollers.deleteCustomerPaymentProfileController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.deleteCustomerPaymentProfileController(request)
+        )

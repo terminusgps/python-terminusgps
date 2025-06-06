@@ -1,5 +1,6 @@
 from authorizenet import apicontractsv1, apicontrollers
 
+from terminusgps.authorizenet.constants import ANET_XML_NS
 from terminusgps.authorizenet.profiles.base import AuthorizenetSubProfileBase
 
 
@@ -17,7 +18,9 @@ class AddressProfile(AuthorizenetSubProfileBase):
 
         """
         return int(
-            self._authorizenet_create_shipping_address(address).customerAddressId
+            self._authorizenet_create_shipping_address(address).find(
+                f"{ANET_XML_NS}customerAddressId"
+            )
         )
 
     def update(self, address: apicontractsv1.customerAddressType) -> None:
@@ -66,8 +69,10 @@ class AddressProfile(AuthorizenetSubProfileBase):
             customerProfileId=self.customerProfileId,
             customerAddressId=self.id,
         )
-        controller = apicontrollers.getCustomerShippingAddressController(request)
-        return self.execute_controller(controller)
+
+        return self.execute_controller(
+            apicontrollers.getCustomerShippingAddressController(request)
+        )
 
     def _authorizenet_create_shipping_address(
         self, address: apicontractsv1.customerAddressType
@@ -89,8 +94,9 @@ class AddressProfile(AuthorizenetSubProfileBase):
             defaultShippingAddress=self.default,
         )
 
-        controller = apicontrollers.createCustomerShippingAddressController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.createCustomerShippingAddressController(request)
+        )
 
     def _authorizenet_update_shipping_address(
         self, address: apicontractsv1.customerAddressType
@@ -117,8 +123,10 @@ class AddressProfile(AuthorizenetSubProfileBase):
             address=address,
             default=self.default,
         )
-        controller = apicontrollers.updateCustomerShippingAddressController(request)
-        return self.execute_controller(controller)
+
+        return self.execute_controller(
+            apicontrollers.updateCustomerShippingAddressController(request)
+        )
 
     def _authorizenet_delete_shipping_address(self) -> dict | None:
         """
@@ -142,5 +150,6 @@ class AddressProfile(AuthorizenetSubProfileBase):
             customerAddressId=self.id,
         )
 
-        controller = apicontrollers.deleteCustomerShippingAddressController(request)
-        return self.execute_controller(controller)
+        return self.execute_controller(
+            apicontrollers.deleteCustomerShippingAddressController(request)
+        )
