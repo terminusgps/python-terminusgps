@@ -190,7 +190,7 @@ class CustomerProfile(AuthorizenetProfileBase):
         address_profiles = (
             self._authorizenet_get_customer_profile()
             .find(f"{ANET_XMLNS}profile")
-            .findall(f"{ANET_XMLNS}shipToList")
+            .find(f"{ANET_XMLNS}shipToList")
         )
         return (
             [
