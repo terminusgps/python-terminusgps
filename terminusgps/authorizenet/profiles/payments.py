@@ -23,7 +23,7 @@ class PaymentProfile(AuthorizenetSubProfileBase):
                 .find(f"{ANET_XMLNS}creditCard")
                 .find(f"{ANET_XMLNS}cardNumber")
             )  # returns string like: "XXXX<last_4>"
-            return int(str(cc_num[-4:])) if cc_num is not None else None
+            return int(cc_num.text[-4:]) if cc_num is not None else None
 
     def create(
         self,
