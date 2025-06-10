@@ -1,5 +1,4 @@
 from authorizenet.apicontractsv1 import merchantAuthenticationType
-from authorizenet.constants import constants
 from django.conf import settings
 
 from terminusgps.django import settings as default_settings
@@ -30,7 +29,7 @@ def get_environment() -> str:
     :rtype: :py:obj:`str`
 
     """
-    return constants.SANDBOX if settings.DEBUG else constants.PRODUCTION
+    return settings.MERCHANT_AUTH_ENVIRONMENT
 
 
 def get_validation_mode() -> str:
@@ -41,4 +40,4 @@ def get_validation_mode() -> str:
     :rtype: :py:obj:`str`
 
     """
-    return "testMode" if settings.DEBUG else "liveMode"
+    return settings.MERCHANT_AUTH_VALIDATION_MODE
