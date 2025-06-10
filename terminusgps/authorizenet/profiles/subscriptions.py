@@ -72,13 +72,20 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
         if not self.id:
             return [{}]
 
+        subscription = self._authorizenet_get_subscription(
+            include_transactions=True
+        ).find(f"{ANET_XMLNS}subscription")
+
         transactions = (
-            self._authorizenet_get_subscription(include_transactions=True)
-            .find(f"{ANET_XMLNS}subscription")
-            .find(f"{ANET_XMLNS}arbTransactions")
-            .findall(f"{ANET_XMLNS}arbTransaction")
+            subscription.find(f"{ANET_XMLNS}arbTransactions")
+            if subscription is not None
+            else None
         )
-        return transactions if transactions is not None else [{}]
+        return (
+            transactions.findall(f"{ANET_XMLNS}arbTransaction")
+            if transactions is not None
+            else [{}]
+        )
 
     @property
     def address_id(self) -> int | None:
