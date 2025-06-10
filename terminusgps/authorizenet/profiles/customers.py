@@ -26,7 +26,6 @@ class CustomerProfile(AuthorizenetProfileBase):
         self._merchant_id = merchant_id
         self._email = email
         self._desc = desc
-        self.id = self._get_id()
 
     @property
     def merchant_id(self) -> str:
