@@ -2,7 +2,6 @@ from authorizenet import apicontractsv1, apicontrollers
 
 from terminusgps.authorizenet.auth import get_validation_mode
 from terminusgps.authorizenet.constants import ANET_XMLNS
-from terminusgps.authorizenet.controllers import AuthorizenetControllerExecutionError
 from terminusgps.authorizenet.profiles.base import AuthorizenetProfileBase
 
 
@@ -27,16 +26,7 @@ class CustomerProfile(AuthorizenetProfileBase):
         self._merchant_id = merchant_id
         self._email = email
         self._desc = desc
-
-        if not self.id:
-            try:
-                self.id = int(
-                    self._authorizenet_get_customer_profile()
-                    .find(f"{ANET_XMLNS}profile")
-                    .find(f"{ANET_XMLNS}customerProfileId")
-                )
-            except AuthorizenetControllerExecutionError:
-                self.id = self.create()
+        self.id = self._get_id()
 
     @property
     def merchant_id(self) -> str:
@@ -46,13 +36,11 @@ class CustomerProfile(AuthorizenetProfileBase):
         :type: :py:obj:`str`
 
         """
-        if self.id and not self._merchant_id:
-            response = self._authorizenet_get_customer_profile()
+        if self.id or self._email and not self._merchant_id:
             self._merchant_id = (
-                response.profile.merchantCustomerId
-                if response is not None
-                and hasattr(response.profile, "merchantCustomerId")
-                else None
+                self._authorizenet_get_customer_profile()
+                .find(f"{ANET_XMLNS}profile")
+                .find(f"{ANET_XMLNS}merchantCustomerId")
             )
         return str(self._merchant_id)
 
@@ -69,12 +57,11 @@ class CustomerProfile(AuthorizenetProfileBase):
         :type: :py:obj:`str`
 
         """
-        if self.id and not self._email:
-            response = self._authorizenet_get_customer_profile()
+        if self.id or self._merchant_id and not self._email:
             self._email = (
-                response.profile.email
-                if response is not None and hasattr(response.profile, "email")
-                else None
+                self._authorizenet_get_customer_profile()
+                .find(f"{ANET_XMLNS}profile")
+                .find(f"{ANET_XMLNS}email")
             )
         return str(self._email)
 
@@ -91,12 +78,11 @@ class CustomerProfile(AuthorizenetProfileBase):
         :type: :py:obj:`str`
 
         """
-        if self.id and not self._desc:
-            response = self._authorizenet_get_customer_profile()
+        if self.id or self._merchant_id or self._email and not self._desc:
             self._desc = (
-                response.profile.description
-                if response is not None and hasattr(response.profile, "description")
-                else None
+                self._authorizenet_get_customer_profile()
+                .find(f"{ANET_XMLNS}profile")
+                .find(f"{ANET_XMLNS}description")
             )
         return str(self._desc)
 
@@ -199,6 +185,13 @@ class CustomerProfile(AuthorizenetProfileBase):
             ]
             if address_profiles is not None
             else []
+        )
+
+    def _get_id(self) -> int:
+        return int(
+            self._authorizenet_get_customer_profile()
+            .find(f"{ANET_XMLNS}profile")
+            .find(f"{ANET_XMLNS}customerProfileId")
         )
 
     def _generate_customer_profile_ex_type(
