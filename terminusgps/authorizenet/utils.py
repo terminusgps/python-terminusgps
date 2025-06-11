@@ -1,10 +1,31 @@
 import datetime
+import decimal
 
 from authorizenet import apicontractsv1, apicontrollers
 from django import forms
+from django.conf import settings
 
 from .auth import get_merchant_auth
 from .controllers import AuthorizenetControllerExecutor
+
+
+def calculate_amount_plus_tax(
+    amount: decimal.Decimal, tax_rate: decimal.Decimal | None = None
+) -> decimal.Decimal:
+    """
+    Returns the amount + tax. Uses :confval:`DEFAULT_TAX_RATE` if ``tax_rate`` wasn't provided.
+
+    :param amount: Amount to add tax to.
+    :type amount: :py:obj:`~decimal.Decimal`
+    :param tax_rate: A tax rate to use in the calculation.
+    :type tax_rate: :py:obj:`~decimal.Decimal` | :py:obj:`None`
+    :returns: The amount + tax.
+    :rtype: :py:obj:`~decimal.Decimal`
+
+    """
+    if tax_rate is None:
+        tax_rate = settings.DEFAULT_TAX_RATE
+    return round(amount * (1 + tax_rate), ndigits=2)
 
 
 def get_days_between(start_date: datetime.date, end_date: datetime.date) -> int:
