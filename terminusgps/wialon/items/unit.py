@@ -114,6 +114,20 @@ class WialonUnit(WialonBase):
             response["t"] = datetime.fromtimestamp(response["t"])
         return response
 
+    def get_command_messages(
+        self, start_time: datetime, total: int = 1, count: int = 1
+    ) -> list[dict[str, str]]:
+        return self.session.wialon_api.messages_load_last(
+            **{
+                "itemId": self.id,
+                "lastTime": int(start_time.timestamp()),
+                "flags": 0x0200,
+                "flagsMask": 0,
+                "lastCount": total,
+                "loadCount": count,
+            }
+        )
+
     def execute_command(
         self,
         name: str,
