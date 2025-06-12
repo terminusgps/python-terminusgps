@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 def validate_credit_card_number(value: str) -> None:
     """
-    Raises :py:exec:`~django.core.exceptions.ValidationError` if the value is an invalid credit card number.
+    Raises :py:exc:`~django.core.exceptions.ValidationError` if the value is an invalid credit card number.
 
     Uses the `Luhn algorithm <https://en.wikipedia.org/wiki/Luhn_algorithm>`_ to validate the credit card number.
 
@@ -21,7 +21,7 @@ def validate_credit_card_number(value: str) -> None:
     """
     if not value.isdigit():
         raise ValidationError(
-            _("Card number must be a digit. Got '%(value)s'."),
+            _("Credit card number can only contain digits. Got '%(value)s'."),
             code="invalid",
             params={"value": value},
         )
@@ -42,7 +42,7 @@ def validate_credit_card_number(value: str) -> None:
 
 def validate_credit_card_expiry_month(value: str) -> None:
     """
-    Raises :py:exec:`~django.core.exceptions.ValidationError` if the value is an invalid credit card expiration date month.
+    Raises :py:exc:`~django.core.exceptions.ValidationError` if the value is an invalid credit card expiration date month.
 
     :param value: A credit card expiration year string.
     :type value: :py:obj:`str`
@@ -78,7 +78,7 @@ def validate_credit_card_expiry_month(value: str) -> None:
 
 def validate_credit_card_expiry_year(value: str) -> None:
     """
-    Raises :py:exec:`~django.core.exceptions.ValidationError` if the value is an invalid credit card expiration date year.
+    Raises :py:exc:`~django.core.exceptions.ValidationError` if the value is an invalid credit card expiration date year.
 
     :param value: A credit card expiration year string.
     :type value: :py:obj:`str`
