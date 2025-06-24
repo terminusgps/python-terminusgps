@@ -70,7 +70,7 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
 
         """
         if not self.id:
-            return [{}]
+            return []
 
         subscription = self._authorizenet_get_subscription(
             include_transactions=True
@@ -84,7 +84,7 @@ class SubscriptionProfile(AuthorizenetSubProfileBase):
         return (
             transactions.findall(f"{ANET_XMLNS}arbTransaction")
             if transactions is not None
-            else [{}]
+            else []
         )
 
     @property
