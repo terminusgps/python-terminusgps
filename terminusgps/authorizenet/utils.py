@@ -28,21 +28,6 @@ def calculate_amount_plus_tax(
     return round(amount * (1 + tax_rate), ndigits=2)
 
 
-def get_days_between(start_date: datetime.date, end_date: datetime.date) -> int:
-    """
-    Returns the total number of days between two dates.
-
-    :param start_date: Start date.
-    :type start_date: :py:obj:`~datetime.date`
-    :param end_date: End date.
-    :type end_date: :py:obj:`~datetime.date`
-    :returns: The number of days between the dates as an integer.
-    :rtype: :py:obj:`int`
-
-    """
-    return (end_date - start_date).days
-
-
 def get_merchant_details() -> dict | None:
     """
     Returns Authorizenet merchant details.
