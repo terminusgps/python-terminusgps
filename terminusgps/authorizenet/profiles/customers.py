@@ -258,7 +258,7 @@ class CustomerProfile(AuthorizenetProfileBase):
         if self.id:
             request.customerProfileId = self.id
         if self._merchant_id:
-            request.merchantCustomerId = self._merchant_id
+            request.merchantCustomerId = str(self._merchant_id)
         if self._email:
             request.email = self._email
 
