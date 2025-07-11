@@ -2,6 +2,18 @@ from authorizenet import apicontractsv1
 from django import forms
 
 
+class CaptchaWidget(forms.widgets.CheckboxInput):
+    template_name = "terminusgps/widgets/captcha.html"
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        print(f"{context = }")
+        return context
+
+    def check_test(self, value):
+        return bool(value)
+
+
 class CreditCardWidget(forms.widgets.MultiWidget):
     def __init__(self, widgets=(), attrs: dict | None = None) -> None:
         if not widgets:
