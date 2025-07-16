@@ -156,8 +156,8 @@ def get_unit_by_iccid(iccid: str, session: WialonSession) -> WialonUnit | None:
             "to": 0,
         }
     )
-    if results:
-        return WialonUnit(id=results.get("items", [{}])[0].get("id"), session=session)
+    if results and results.get("totalItemsCount") == 1:
+        return WialonUnit(id=results["items"][0]["id"], session=session)
 
 
 def get_resources(session: WialonSession) -> list[WialonResource] | None:
@@ -251,8 +251,8 @@ def get_unit_by_imei(imei: str, session: WialonSession) -> WialonUnit | None:
         }
     )
 
-    if results is not None and results.get("totalItemsCount", 0) == 1:
-        return WialonUnit(id=results["items"][0].get("id"), session=session)
+    if results and results.get("totalItemsCount", 0) == 1:
+        return WialonUnit(id=results["items"][0]["id"], session=session)
 
 
 def get_vin_info(vin_number: str, session: WialonSession) -> dict[str, typing.Any]:

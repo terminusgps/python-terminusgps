@@ -13,7 +13,7 @@ def get_secret(name: str, region: str = "us-east-1") -> dict[str, str]:
     :param region: An AWS region name. Default is :py:obj:`"us-east-1"`.
     :type region: :py:obj:`str`
     :returns: A secret value dictionary.
-    :rtype: :py:obj:`dict`\[:py:obj:`str`, :py:obj:`str`\]
+    :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
 
     .. _secretsmanager: https://docs.aws.amazon.com/secretsmanager/
