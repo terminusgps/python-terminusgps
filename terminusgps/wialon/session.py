@@ -1,9 +1,9 @@
 import dataclasses
 import datetime
+import os
 import typing
 
 import wialon.api
-from django.conf import settings
 from loguru import logger
 
 from . import flags as wialon_flags
@@ -90,7 +90,7 @@ class WialonSession:
 
         """
 
-        self._token = token or settings.WIALON_TOKEN
+        self._token = token or os.getenv("WIALON_TOKEN")
         self._username = None
         self._gis_sid = None
         self._hw_gp_ip = None
