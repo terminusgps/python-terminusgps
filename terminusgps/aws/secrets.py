@@ -1,6 +1,7 @@
 import json
 
 import boto3
+import botocore.exceptions
 
 
 def get_secret(name: str, region: str = "us-east-1") -> dict[str, str]:
@@ -18,7 +19,10 @@ def get_secret(name: str, region: str = "us-east-1") -> dict[str, str]:
     .. _secretsmanager: https://docs.aws.amazon.com/secretsmanager/
 
     """
-    session = boto3.Session(profile_name="terminusgps-site-role")
-    client = session.client(service_name="secretsmanager", region_name=region)
-    secret = client.get_secret_value(**{"SecretId": name})["SecretString"]
-    return json.loads(secret)
+    try:
+        session = boto3.Session(profile_name="terminusgps-site-role")
+        client = session.client(service_name="secretsmanager", region_name=region)
+        secret = client.get_secret_value(**{"SecretId": name})["SecretString"]
+        return json.loads(secret)
+    except botocore.exceptions.ProfileNotFound:
+        return {}

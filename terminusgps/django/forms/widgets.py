@@ -3,8 +3,6 @@ from django import forms
 
 
 class CaptchaWidget(forms.widgets.CheckboxInput):
-    template_name = "terminusgps/widgets/captcha.html"
-
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
         print(f"{context = }")
