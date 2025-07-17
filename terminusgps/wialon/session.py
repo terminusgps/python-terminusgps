@@ -1,5 +1,3 @@
-import dataclasses
-import datetime
 import os
 import typing
 
@@ -11,54 +9,15 @@ from . import flags as wialon_flags
 logger.disable(__name__)
 
 
-@dataclasses.dataclass
-class WialonAPICall:
-    action: str
-    timestamp: datetime.datetime
-    result: typing.Any = None
-    error: Exception | None = None
-
-
 class Wialon(wialon.api.Wialon):
-    def __init__(self, token: str, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-        self.token = token
-        self.call_history: list[WialonAPICall] = []
-
-    @property
-    def total_calls(self) -> int:
-        return len(self.call_history)
-
-    @property
-    def call_actions(self) -> list[str]:
-        return [call.action for call in self.call_history]
-
-    def token_login(self, *args, **kwargs) -> typing.Any:
-        kwargs.setdefault("appName", "python-terminusgps")
-        return self.call("token_login", *args, **kwargs)
-
     def call(self, action_name: str, *argc, **kwargs) -> dict[str, typing.Any]:
         try:
-            timestamp = datetime.datetime.now()
             result = super().call(action_name, *argc, **kwargs)
-            call_record = WialonAPICall(
-                action=action_name, timestamp=timestamp, result=result
-            )
+            logger.debug("Successfully executed '{}'", action_name)
             return result
-        except wialon.api.WialonError as e:
-            print(e)
-            call_record = WialonAPICall(
-                action=action_name, timestamp=timestamp, error=e
-            )
+        except wialon.api.WialonError:
+            logger.warning("Failed to execute '{}'", action_name)
             return {}
-        finally:
-            if call_record.result:
-                logger.debug("Successfully executed '{}'", action_name)
-            elif call_record.error:
-                logger.warning(
-                    "Failed to execute '{}': {}", action_name, call_record.error
-                )
-            self.call_history.append(call_record)
 
 
 class WialonSession:
@@ -101,7 +60,7 @@ class WialonSession:
         )
 
     def __str__(self) -> str:
-        return str(self.id)
+        return f"Session #{self.id}"
 
     def __repr__(self) -> str:
         return f"{self.__class__}(sid={self.id})"
@@ -134,61 +93,6 @@ class WialonSession:
         return self._wialon_api
 
     @property
-    def gis_geocode(self) -> str | None:
-        """
-        Gis geocode URL.
-
-        :type: :py:obj:`str` | :py:obj:`None`
-        :value: :py:obj:`None`
-
-        """
-        return self._gis_geocode
-
-    @property
-    def gis_render(self) -> str | None:
-        """
-        Gis rendering URL.
-
-        :type: :py:obj:`str` | :py:obj:`None`
-        :value: :py:obj:`None`
-
-        """
-        return self._gis_render
-
-    @property
-    def gis_routing(self) -> str | None:
-        """
-        Gis routing URL.
-
-        :type: :py:obj:`str` | :py:obj:`None`
-        :value: :py:obj:`None`
-
-        """
-        return self._gis_routing
-
-    @property
-    def gis_search(self) -> str | None:
-        """
-        Gis search URL.
-
-        :type: :py:obj:`str` | :py:obj:`None`
-        :value: :py:obj:`None`
-
-        """
-        return self._gis_search
-
-    @property
-    def gis_sid(self) -> str | None:
-        """
-        Gis session id.
-
-        :type: :py:obj:`str` | :py:obj:`None`
-        :value: :py:obj:`None`
-
-        """
-        return self._gis_sid
-
-    @property
     def host(self) -> str | None:
         """
         IP of the client hosting the Wialon session.
@@ -198,28 +102,6 @@ class WialonSession:
 
         """
         return self._host
-
-    @property
-    def hw_gw_ip(self) -> str | None:
-        """
-        Hardware gateway IP.
-
-        :type: :py:obj:`str` | :py:obj:`None`
-        :value: :py:obj:`None`
-
-        """
-        return self._hw_gw_ip
-
-    @property
-    def hw_gw_dns(self) -> str | None:
-        """
-        Hardware gateway domain name, should evaluate to :py:attr:`hw_gw_ip` if present.
-
-        :type: :py:obj:`str` | :py:obj:`None`
-        :value: :py:obj:`None`
-
-        """
-        return self._hw_gw_dns
 
     @property
     def wsdk_version(self) -> str | None:
@@ -315,15 +197,18 @@ class WialonSession:
         :rtype: :py:obj:`None`
 
         """
-        response: dict = self.wialon_api.core_logout({})
-        self.wialon_api.sid = None
+        sid = self.wialon_api.sid
+        response = self.wialon_api.core_logout({})
 
         if response.get("error") != 0:
             logger.warning(
-                "Failed to logout of the session: '{}'", response.get("message")
+                "Failed to properly logout of session #{}: '{}'",
+                sid,
+                response.get("message"),
             )
+        self.wialon_api.sid = None
 
-    def _set_login_response(self, login_response: dict | None) -> None:
+    def _set_login_response(self, login_response: dict | None = None) -> None:
         """
         Sets the Wialon API session's attributes based on a login response.
 
@@ -335,19 +220,11 @@ class WialonSession:
 
         """
         if login_response is None:
-            raise ValueError("Failed to login to Wialon.")
+            raise ValueError(f"Login response is required, got '{login_response}'")
 
         self.wialon_api.sid = login_response.get("eid")
-        self._gis_geocode = login_response.get("gis_geocode")
-        self._gis_render = login_response.get("gis_render")
-        self._gis_routing = login_response.get("gis_routing")
-        self._gis_search = login_response.get("gis_search")
-        self._gis_sid = login_response.get("gis_sid")
         self._host = login_response.get("host")
-        self._hw_gw_dns = login_response.get("hw_gw_dns")
-        self._hw_gw_ip = login_response.get("hw_gw_ip")
         self._uid = login_response.get("user", {}).get("id")
         self._nm = login_response.get("user", {}).get("nm")
         self._username = login_response.get("au")
-        self._video_service_url = login_response.get("video_service_url")
         self._wsdk_version = login_response.get("wsdk_version")

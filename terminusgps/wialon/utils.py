@@ -251,6 +251,7 @@ def get_unit_by_imei(imei: str, session: WialonSession) -> WialonUnit | None:
         }
     )
 
+    print(f"{results = }")
     if results and results.get("totalItemsCount", 0) == 1:
         return WialonUnit(id=results["items"][0]["id"], session=session)
 
