@@ -15,8 +15,8 @@ class Wialon(wialon.api.Wialon):
             result = super().call(action_name, *argc, **kwargs)
             logger.debug("Successfully executed '{}'", action_name)
             return result
-        except wialon.api.WialonError:
-            logger.warning("Failed to execute '{}'", action_name)
+        except wialon.api.WialonError as e:
+            logger.warning("Failed to execute '{}': '{}'", action_name, e)
             return {}
 
 
@@ -40,9 +40,7 @@ class WialonSession:
         :type scheme: :py:obj:`str`
         :param host: Wialon API host url. Default is ``"hst-api.wialon.com"``.
         :type host: :py:obj:`str`
-        :param host: Wialon API rendering url. Default is ``"render-maps.wialon.com"``.
-        :type host: :py:obj:`str`
-        :param port: Wialon API host port. Default is ``443``.
+        :param port: Wialon API port. Default is ``443``.
         :type port: :py:obj:`int`
         :returns: Nothing.
         :rtype: :py:obj:`None`
