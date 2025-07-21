@@ -1,9 +1,8 @@
 import asyncio
+import os
 from typing import Any
 
 import twilio.rest
-from django.conf import settings
-from loguru import logger
 from twilio.http.async_http_client import AsyncTwilioHttpClient
 
 
@@ -14,8 +13,6 @@ class TwilioCaller:
         client_token: str | None = None,
         from_number: str | None = None,
         messaging_sid: str | None = None,
-        log_level: int = 10,
-        log_days: int = 10,
     ) -> None:
         """
         Sets Twilio client session variables.
@@ -34,15 +31,10 @@ class TwilioCaller:
         :rtype: :py:obj:`None`
 
         """
-        logger.add(
-            f"logs/{self.__class__.__name__}.log",
-            level=log_level,
-            retention=f"{log_days} days",
-        )
-        self._client_sid = client_sid or settings.TWILIO_SID
-        self._client_token = client_token or settings.TWILIO_TOKEN
-        self._from_number = from_number or settings.TWILIO_FROM_NUMBER
-        self._messaging_sid = messaging_sid or settings.TWILIO_MESSAGING_SID
+        self._client_sid = client_sid or os.getenv("TWILIO_SID")
+        self._client_token = client_token or os.getenv("TWILIO_TOKEN")
+        self._from_number = from_number or os.getenv("TWILIO_FROM_NUMBER")
+        self._messaging_sid = messaging_sid or os.getenv("TWILIO_MESSAGING_SID")
 
     def __enter__(self) -> "TwilioCaller":
         """Opens a context manager and creates an asyncronous Twilio client."""
@@ -98,8 +90,6 @@ class TwilioCaller:
         :rtype: :py:obj:`None`
 
         """
-        logger.info("Creating a call notification...")
-        logger.debug(f"Reading '{message}' to '{to_number}'...")
         await self.client.calls.create_async(
             to=to_number,
             from_=self.from_number,
@@ -118,8 +108,6 @@ class TwilioCaller:
         :rtype: :py:obj:`None`
 
         """
-        logger.info("Creating an sms notification...")
-        logger.debug(f"Texting '{message}' to '{to_number}'...")
         await self.client.messages.create_async(
             to=to_number,
             from_=self.from_number,
@@ -128,7 +116,7 @@ class TwilioCaller:
         )
 
     @property
-    def client_sid(self) -> str:
+    def client_sid(self) -> str | None:
         """
         Client session id.
 
@@ -138,7 +126,7 @@ class TwilioCaller:
         return self._client_sid
 
     @property
-    def from_number(self) -> str:
+    def from_number(self) -> str | None:
         """
         Origin phone number.
 
@@ -148,7 +136,7 @@ class TwilioCaller:
         return self._from_number
 
     @property
-    def messaging_sid(self) -> str:
+    def messaging_sid(self) -> str | None:
         """
         Messaging service session id.
 
