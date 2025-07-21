@@ -322,10 +322,13 @@ class WialonBase:
         :type: :py:obj:`dict`
 
         """
+        print(f"Retrieving cfields for {self.id}...")
         response = self.session.wialon_api.core_search_item(
             **{"id": self.id, "flags": flags.DataFlag.UNIT_ADMIN_FIELDS}
         )
+        print(f"{response = }")
         fields = response.get("item", {}).get("aflds") if response is not None else {}
+        print(f"{fields = }")
         return {field["n"]: field["v"] for field in fields.values()} if fields else {}
 
     @property
@@ -336,10 +339,13 @@ class WialonBase:
         :type: :py:obj:`dict`
 
         """
+        print(f"Retrieving cfields for {self.id}...")
         response = self.session.wialon_api.core_search_item(
             **{"id": self.id, "flags": flags.DataFlag.UNIT_CUSTOM_FIELDS}
         )
+        print(f"{response = }")
         fields = response.get("item", {}).get("flds") if response is not None else {}
+        print(f"{fields = }")
         return {field["n"]: field["v"] for field in fields.values()} if fields else {}
 
     @property

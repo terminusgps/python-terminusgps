@@ -275,9 +275,11 @@ class WialonUnit(WialonBase):
         :rtype: :py:obj:`list`
 
         """
+        print("Getting driver phone numbers...")
         response = self.session.wialon_api.resource_get_unit_drivers(
             **{"unitId": self.id}
         )
+        print(f"{response = }")
         if response:
             dirty_phones = [driver[0].get("ph") for driver in response.values()]
             return self.clean_phone_numbers(dirty_phones)
