@@ -2,21 +2,16 @@ import os
 import typing
 
 import wialon.api
-from loguru import logger
 
 from . import flags as wialon_flags
-
-logger.disable(__name__)
 
 
 class Wialon(wialon.api.Wialon):
     def call(self, action_name: str, *argc, **kwargs) -> dict[str, typing.Any]:
         try:
-            result = super().call(action_name, *argc, **kwargs)
-            logger.debug("Successfully executed '{}'", action_name)
-            return result
+            return super().call(action_name, *argc, **kwargs)
         except wialon.api.WialonError as e:
-            logger.warning("Failed to execute '{}': '{}'", action_name, e)
+            print(f"Failed to execute '{action_name}': '{e}'")
             return {}
 
 
@@ -184,7 +179,7 @@ class WialonSession:
             self._set_login_response(response)
             return response.get("eid", "")
         except (wialon.api.WialonError, ValueError):
-            logger.critical("Failed to login to the Wialon API.")
+            print("Failed to login to the Wialon API.")
             raise
 
     def logout(self) -> None:
@@ -199,10 +194,8 @@ class WialonSession:
         response = self.wialon_api.core_logout({})
 
         if response.get("error") != 0:
-            logger.warning(
-                "Failed to properly logout of session #{}: '{}'",
-                sid,
-                response.get("message"),
+            print(
+                f"Failed to properly logout of session #{sid}: '{response.get('message')}'"
             )
         self.wialon_api.sid = None
 
