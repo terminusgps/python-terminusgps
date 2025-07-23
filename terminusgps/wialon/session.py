@@ -3,8 +3,6 @@ import typing
 
 import wialon.api
 
-from . import flags as wialon_flags
-
 
 class Wialon(wialon.api.Wialon):
     def call(self, action_name: str, *argc, **kwargs) -> dict[str, typing.Any]:
@@ -44,9 +42,6 @@ class WialonSession:
 
         self._token = token or os.getenv("WIALON_TOKEN")
         self._username = None
-        self._gis_sid = None
-        self._hw_gp_ip = None
-        self._wsdk_version = None
         self._uid = None
         self._wialon_api = Wialon(
             scheme=scheme, host=host, port=port, sid=sid, token=self.token
@@ -84,28 +79,6 @@ class WialonSession:
     @property
     def wialon_api(self) -> Wialon:
         return self._wialon_api
-
-    @property
-    def host(self) -> str | None:
-        """
-        IP of the client hosting the Wialon session.
-
-        :type: :py:obj:`str` | :py:obj:`None`
-        :value: :py:obj:`None`
-
-        """
-        return self._host
-
-    @property
-    def wsdk_version(self) -> str | None:
-        """
-        The Wialon Source Developer Kit (WSDK) version number of the session.
-
-        :type: :py:obj:`str` | :py:obj:`None`
-        :value: :py:obj:`None`
-
-        """
-        return self._wsdk_version
 
     @property
     def uid(self) -> str | None:
@@ -168,14 +141,10 @@ class WialonSession:
         :rtype: :py:obj:`str`
 
         """
-        if flags is None:
-            flags = (
-                wialon_flags.TokenFlag.ONLINE_TRACKING
-                | wialon_flags.TokenFlag.VIEW_ACCESS
-                | wialon_flags.TokenFlag.MANAGE_NONSENSITIVE
-            )
         try:
-            response = self.wialon_api.token_login(**{"token": token, "fl": flags})
+            response = self.wialon_api.token_login(
+                **{"token": token, "fl": flags if flags else 0x2}
+            )
             self._set_login_response(response)
             return response.get("eid", "")
         except (wialon.api.WialonError, ValueError):
@@ -214,8 +183,5 @@ class WialonSession:
             raise ValueError(f"Login response is required, got '{login_response}'")
 
         self.wialon_api.sid = login_response.get("eid")
-        self._host = login_response.get("host")
         self._uid = login_response.get("user", {}).get("id")
-        self._nm = login_response.get("user", {}).get("nm")
         self._username = login_response.get("au")
-        self._wsdk_version = login_response.get("wsdk_version")
