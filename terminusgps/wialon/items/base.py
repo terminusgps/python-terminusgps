@@ -180,7 +180,13 @@ class WialonBase:
             )
         else:
             self.session.wialon_api.item_update_admin_field(
-                **{"itemId": self.id, "callMode": "create", "n": key, "v": value}
+                **{
+                    "itemId": self.id,
+                    "id": 0,
+                    "callMode": "create",
+                    "n": key,
+                    "v": value,
+                }
             )
 
     def update_cfield(self, key: str, value: str) -> None:
@@ -208,6 +214,7 @@ class WialonBase:
             )
 
         field_id: int | None = self._get_cfield_id(key)
+        print(f"{field_id = }")
         if field_id is not None:
             self.session.wialon_api.item_update_custom_field(
                 **{
@@ -220,7 +227,13 @@ class WialonBase:
             )
         else:
             self.session.wialon_api.item_update_custom_field(
-                **{"itemId": self.id, "callMode": "create", "n": key, "v": value}
+                **{
+                    "itemId": self.id,
+                    "id": 0,
+                    "callMode": "create",
+                    "n": key,
+                    "v": value,
+                }
             )
 
     def _get_cfield_id(self, key: str) -> int | None:
