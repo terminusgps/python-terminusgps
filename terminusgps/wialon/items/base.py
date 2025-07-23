@@ -214,7 +214,6 @@ class WialonBase:
             )
 
         field_id: int | None = self._get_cfield_id(key)
-        print(f"{field_id = }")
         if field_id is not None:
             self.session.wialon_api.item_update_custom_field(
                 **{
