@@ -399,9 +399,9 @@ class WialonResource(WialonBase):
         phone: str = "",
         mobile_auth_code: str = "",
         custom_fields: dict[str, str] | None = None,
-    ) -> None:
+    ) -> int:
         """
-        Creates a driver for the resource.
+        Creates a driver for the resource and returns its id.
 
         :param name: A name for the new driver.
         :type name: :py:obj:`str`
@@ -436,7 +436,7 @@ class WialonResource(WialonBase):
             params.update({"p": quote_plus(phone)})
         if custom_fields:
             params.update({"jp": custom_fields})
-        self.session.wialon_api.resource_update_driver(**params)
+        self.session.wialon_api.resource_update_driver(**params)[0]
 
     def create_passenger(
         self,
