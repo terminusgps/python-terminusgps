@@ -391,6 +391,28 @@ class WialonResource(WialonBase):
                 }
             )
 
+    def bind_unit_driver(self, unit_id: int, driver_id: int) -> None:
+        self.session.wialon_api.resource_bind_unit_driver(
+            **{
+                "resourceId": self.id,
+                "unitId": unit_id,
+                "driverId": driver_id,
+                "time": 0,
+                "mode": 1,  # Assign driver
+            }
+        )
+
+    def unbind_unit_driver(self, unit_id: int, driver_id: int) -> None:
+        self.session.wialon_api.resource_bind_unit_driver(
+            **{
+                "resourceId": self.id,
+                "unitId": unit_id,
+                "driverId": driver_id,
+                "time": 0,
+                "mode": 0,  # Separate driver
+            }
+        )
+
     def create_driver(
         self,
         name: str,
