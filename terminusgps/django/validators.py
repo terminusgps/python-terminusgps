@@ -6,6 +6,12 @@ VALID_COUNTRY_CODES = ("+1", "+52")
 
 def validate_e164_phone_number(value: str) -> None:
     """Raises :py:exc:`~django.core.exceptions.ValidationError` if the value is not a valid `E.164 <https://en.wikipedia.org/wiki/E.164>`_ formatted phone number."""
+    if not value:
+        raise ValidationError(
+            _("This field is required, got '%(value)s'"),
+            code="invalid",
+            params={"value": value},
+        )
     if not value.startswith("+"):
         raise ValidationError(
             _("E.164 phone number must begin with a '+', got '%(char)s'."),
