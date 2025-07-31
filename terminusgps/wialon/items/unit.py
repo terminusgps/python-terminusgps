@@ -1,8 +1,8 @@
 from datetime import datetime
-from urllib.parse import urljoin
 
-from django.conf import settings
+from django.core.exceptions import ValidationError
 
+from terminusgps.django.validators import validate_e164_phone_number
 from terminusgps.wialon import flags
 from terminusgps.wialon.items.base import WialonBase
 
@@ -11,11 +11,10 @@ class WialonUnit(WialonBase):
     """A Wialon `unit <https://help.wialon.com/en/wialon-hosting/user-guide/management-system/units>`_."""
 
     def __init__(self, *args, **kwargs) -> None:
-        """Sets :py:attr:`_imei_number`, :py:attr:`_active` and :py:attr:`_image_uri` to :py:obj:`None`."""
+        """Sets :py:attr:`_imei_number` and :py:attr:`_active` to :py:obj:`None`."""
         super().__init__(*args, **kwargs)
         self._imei_number = None
         self._active = None
-        self._image_uri = None
 
     def create(
         self, creator_id: str | int, name: str, hw_type_id: str | int
@@ -72,7 +71,6 @@ class WialonUnit(WialonBase):
             item = response.get("item", {})
             self._imei_number = item.get("uid")
             self._active = item.get("act", False)
-            self._image_uri = item.get("uri")
 
     def get_position(self) -> dict:
         """
@@ -226,15 +224,20 @@ class WialonUnit(WialonBase):
         phones_0: list[str] = self._get_driver_phone_numbers()
         phones_1: list[str] = self._get_cfield_phone_numbers(key=cfield_key)
         phones_2: list[str] = self._get_afield_phone_numbers(key=afield_key)
-        return list(frozenset(phones_0 + phones_1 + phones_2))
 
-    def clean_phone_numbers(self, phones: list[str]) -> list[str]:
-        """Takes a list of phone numbers and returns a list of clean phone numbers."""
         return [
-            clean_num
-            for num in phones
-            for clean_num in (num.split(",") if "," in num else [num])
+            phone
+            for phone in list(frozenset(phones_0 + phones_1 + phones_2))
+            if self._validate_phone_number(phone)
         ]
+
+    def _validate_phone_number(self, phone: str) -> bool:
+        """Returns :py:obj:`True` if ``phone`` is a valid E.164 formatted phone number."""
+        try:
+            validate_e164_phone_number(phone)
+            return True
+        except ValidationError:
+            return False
 
     def _get_afield_phone_numbers(self, key: str) -> list[str]:
         """
@@ -249,7 +252,9 @@ class WialonUnit(WialonBase):
         """
         if key not in self.afields.keys():
             return []
-        return self.clean_phone_numbers([self.afields[key]])
+
+        afield_val = self.afields[key]
+        return afield_val.split(",") if "," in afield_val else [afield_val]
 
     def _get_cfield_phone_numbers(self, key: str) -> list[str]:
         """
@@ -264,7 +269,9 @@ class WialonUnit(WialonBase):
         """
         if key not in self.cfields.keys():
             return []
-        return self.clean_phone_numbers([self.cfields[key]])
+
+        cfield_val = self.cfields[key]
+        return cfield_val.split(",") if "," in cfield_val else [cfield_val]
 
     def _get_driver_phone_numbers(self) -> list[str]:
         """
@@ -278,10 +285,10 @@ class WialonUnit(WialonBase):
         response = self.session.wialon_api.resource_get_unit_drivers(
             **{"unitId": self.id}
         )
-        if response:
-            dirty_phones = [driver[0].get("ph") for driver in response.values()]
-            return self.clean_phone_numbers(dirty_phones)
-        return []
+        if not response:
+            return []
+
+        return [driver[0].get("ph") for driver in response.values()]
 
     @property
     def exists(self) -> bool:
@@ -307,18 +314,6 @@ class WialonUnit(WialonBase):
             .get("item", {})
             .get("cml", {})
         )
-
-    @property
-    def image_uri(self) -> str:
-        """
-        Image URI for the unit.
-
-        :type :py:obj:`str`
-
-        """
-        if self._image_uri is None:
-            self.populate()
-        return str(self._image_uri)
 
     @property
     def imei_number(self) -> str:
@@ -358,10 +353,3 @@ class WialonUnit(WialonBase):
         if self._active is None:
             self.populate()
         return bool(self._active)
-
-    @property
-    def image_url(self) -> str | None:
-        """Returns an absolute url to the unit's icon in Wialon."""
-        if settings.configured and hasattr(settings, "WIALON_HOST"):
-            return urljoin(settings.WIALON_HOST, self._image_uri)
-        return urljoin("https://hst-api.wialon.com", self._image_uri)
