@@ -24,7 +24,6 @@ Some `Authorizenet <https://www.authorize.net/>`_ API objects have been modeled,
     auth.rst
     constants.rst
     controllers.rst
-    examples.rst
     profiles.rst
     utils.rst
     validators.rst
