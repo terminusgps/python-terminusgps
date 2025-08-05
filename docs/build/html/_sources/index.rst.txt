@@ -27,7 +27,6 @@ All subpackages are nested within :py:mod:`terminusgps`:
 
 .. code:: python
 
-    from terminusgps.aws.secrets import get_secret # Retrieves a secret from AWS
     from terminusgps.wialon.session import WialonSession # Creates Wialon API sessions
 
 .. toctree::
@@ -35,7 +34,5 @@ All subpackages are nested within :py:mod:`terminusgps`:
     :caption: Contents:
 
     authorizenet/index.rst
-    aws/index.rst
     django/index.rst
-    twilio/index.rst
     wialon/index.rst

@@ -18,7 +18,7 @@ django.setup()
 project = "python-terminusgps"
 copyright = "2025, Terminus GPS, LLC"
 author = "Terminus GPS, LLC"
-release = "38.3.1"
+release = "39.0.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -33,7 +33,6 @@ extensions = [
 
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
-    "boto3": ("https://boto3.amazonaws.com/v1/documentation/api/latest/", None),
     "django": (
         "http://docs.djangoproject.com/en/stable/",
         "http://docs.djangoproject.com/en/stable/_objects/",
