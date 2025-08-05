@@ -1,155 +1,117 @@
 from authorizenet import apicontractsv1, apicontrollers
 
-from terminusgps.authorizenet.constants import ANET_XMLNS
-from terminusgps.authorizenet.profiles.base import AuthorizenetSubProfileBase
+from terminusgps.authorizenet.auth import get_merchant_auth
+from terminusgps.authorizenet.controllers import AuthorizenetControllerExecutor
+
+__all__ = [
+    "create_customer_shipping_address",
+    "delete_customer_shipping_address",
+    "get_customer_shipping_address",
+    "update_customer_shipping_address",
+]
 
 
-class AddressProfile(AuthorizenetSubProfileBase):
-    """An Authorizenet customer address profile."""
+def create_customer_shipping_address(
+    customer_profile_id: int,
+    new_address: apicontractsv1.customerAddressType,
+    default: bool = True,
+):
+    """
+    `createCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-create-customer-shipping-address>`_.
 
-    def create(self, address: apicontractsv1.customerAddressType) -> int:
-        """
-        Creates the customer shipping address profile in Authorizenet.
+    :param customer_profile_id: An Authorizenet customer profile id.
+    :type customer_profile_id: :py:obj:`int`
+    :param new_address: An Authorizenet customer address object.
+    :type new_address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
+    :param default: Whether or not to mark the new shipping address as default. Default is :py:obj:`True`.
+    :type default: :py:obj:`bool`
+    :returns: An Authorizenet createCustomerShippingAddress response.
+    :rtype: :py:obj:`dict`
 
-        :param address: A customer address.
-        :type address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
-        :returns: An address profile id.
-        :rtype: :py:obj:`int`
+    """
+    request = apicontractsv1.createCustomerShippingAddressRequest(
+        merchantAuthentication=get_merchant_auth(),
+        customerProfileId=str(customer_profile_id),
+        address=new_address,
+        defaultShippingAddress=str(default).lower(),
+    )
+    return AuthorizenetControllerExecutor.execute_controller(
+        apicontrollers.createCustomerShippingAddressController(request)
+    )
 
-        """
-        return int(
-            self._authorizenet_create_shipping_address(address).find(
-                f"{ANET_XMLNS}customerAddressId"
-            )
-        )
 
-    def update(self, address: apicontractsv1.customerAddressType) -> None:
-        """
-        Updates the customer shipping address to the new address in Authorizenet.
+def get_customer_shipping_address(
+    customer_profile_id: int, customer_address_profile_id: int
+):
+    """
+    `getCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-shipping-address>`_.
 
-        :param address: A customer address.
-        :type address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
+    :param customer_profile_id: An Authorizenet customer profile id.
+    :type customer_profile_id: :py:obj:`int`
+    :param customer_address_profile_id: An Authorizenet customer address profile id.
+    :type customer_address_profile_id: :py:obj:`int`
+    :returns: An Authorizenet getCustomerShippingAddress response.
+    :rtype: :py:obj:`dict`
 
-        """
-        if self.id:
-            self._authorizenet_update_shipping_address(address)
+    """
+    request = apicontractsv1.getCustomerShippingAddressRequest(
+        merchantAuthentication=get_merchant_auth(),
+        customerProfileId=str(customer_profile_id),
+        customerAddressId=str(customer_address_profile_id),
+    )
+    return AuthorizenetControllerExecutor.execute_controller(
+        apicontrollers.getCustomerShippingAddressController(request)
+    )
 
-    def delete(self) -> None:
-        """
-        Deletes the customer address profile in Authorizenet and sets :py:attr:`id` to :py:obj:`None` if :py:attr:`id` is set.
 
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
+def update_customer_shipping_address(
+    customer_profile_id: int,
+    new_address: apicontractsv1.customerAddressType,
+    default: bool = False,
+):
+    """
+    `updateCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-update-customer-shipping-address>`_.
 
-        """
-        if self.id:
-            self._authorizenet_delete_shipping_address()
-            self.id = None
+    :param customer_profile_id: An Authorizenet customer profile id.
+    :type customer_profile_id: :py:obj:`int`
+    :param new_address: An Authorizenet customer address object.
+    :type new_address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
+    :param default: Whether or not to mark the new shipping address as default. Default is :py:obj:`False`.
+    :type default: :py:obj:`bool`
+    :returns: An Authorizenet updateCustomerShippingAddress response.
+    :rtype: :py:obj:`dict`
 
-    def _authorizenet_get_shipping_address(self) -> dict | None:
-        """
-        Executes a :py:obj:`~authorizenet.apicontractsv1.getCustomerShippingAddressRequest` using the Authorizenet API.
+    """
+    request = apicontractsv1.updateCustomerShippingAddressRequest(
+        merchantAuthentication=get_merchant_auth(),
+        customerProfileId=str(customer_profile_id),
+        address=new_address,
+        defaultShippingAddress=str(default).lower(),
+    )
+    return AuthorizenetControllerExecutor.execute_controller(
+        apicontrollers.updateCustomerShippingAddressController(request)
+    )
 
-        `getCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-shipping-address>`_
 
-        :raises AssertionError: If :py:attr:`id` wasn't set.
-        :raises AssertionError: If :py:attr:`customerProfileId` wasn't set.
-        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
-        :returns: An Authorizenet API response, if any.
-        :rtype: :py:obj:`dict` | :py:obj:`None`
+def delete_customer_shipping_address(
+    customer_profile_id: int, customer_address_profile_id: int
+):
+    """
+    `deleteCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-delete-customer-shipping-address>`_.
 
-        """
-        assert self.id, "'id' wasn't set."
-        assert self.customerProfileId, "'customerProfileId' wasn't set."
+    :param customer_profile_id: An Authorizenet customer profile id.
+    :type customer_profile_id: :py:obj:`int`
+    :param customer_address_profile_id: An Authorizenet customer address profile id.
+    :type customer_address_profile_id: :py:obj:`int`
+    :returns: An Authorizenet deleteCustomerShippingAddress response.
+    :rtype: :py:obj:`dict`
 
-        request = apicontractsv1.getCustomerShippingAddressRequest(
-            merchantAuthentication=self.merchantAuthentication,
-            customerProfileId=self.customerProfileId,
-            customerAddressId=self.id,
-        )
-
-        return self.execute_controller(
-            apicontrollers.getCustomerShippingAddressController(request)
-        )
-
-    def _authorizenet_create_shipping_address(
-        self, address: apicontractsv1.customerAddressType
-    ) -> dict | None:
-        """
-        Executes a :py:obj:`~authorizenet.apicontractsv1.createCustomerShippingAddressRequest` using the Authorizenet API.
-
-        `createCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-create-customer-shipping-address>`_
-
-        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
-        :returns: An Authorizenet API response, if any.
-        :rtype: :py:obj:`dict` | :py:obj:`None`
-
-        """
-        request = apicontractsv1.createCustomerShippingAddressRequest(
-            merchantAuthentication=self.merchantAuthentication,
-            customerProfileId=self.customerProfileId,
-            address=address,
-            defaultShippingAddress=self.default,
-        )
-
-        return self.execute_controller(
-            apicontrollers.createCustomerShippingAddressController(request)
-        )
-
-    def _authorizenet_update_shipping_address(
-        self, address: apicontractsv1.customerAddressType
-    ) -> dict | None:
-        """
-        Executes a :py:obj:`~authorizenet.apicontractsv1.updateCustomerShippingAddressRequest` using the Authorizenet API.
-
-        `updateCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-update-customer-shipping-address>`_
-
-        :raises AssertionError: If :py:attr:`id` wasn't set.
-        :raises AssertionError: If :py:attr:`customerProfileId` wasn't set.
-        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
-        :returns: An Authorizenet API response, if any.
-        :rtype: :py:obj:`dict` | :py:obj:`None`
-
-        """
-        assert self.id, "'id' wasn't set."
-        assert self.customerProfileId, "'customerProfileId' wasn't set."
-
-        address.customerAddressId = self.id
-        request = apicontractsv1.updateCustomerShippingAddressRequest(
-            merchantAuthentication=self.merchantAuthentication,
-            customerProfileId=self.customerProfileId,
-            address=address,
-            default=self.default,
-        )
-
-        return self.execute_controller(
-            apicontrollers.updateCustomerShippingAddressController(request)
-        )
-
-    def _authorizenet_delete_shipping_address(self) -> dict | None:
-        """
-        Executes a :py:obj:`~authorizenet.apicontractsv1.deleteCustomerShippingAddressRequest` using the Authorizenet API.
-
-        `deleteCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-delete-customer-shipping-address>`_
-
-        :raises AssertionError: If :py:attr:`id` wasn't set.
-        :raises AssertionError: If :py:attr:`customerProfileId` wasn't set.
-        :raises ControllerExecutionError: If something goes wrong during an Authorizenet API call.
-        :returns: An Authorizenet API response, if any.
-        :rtype: :py:obj:`dict` | :py:obj:`None`
-
-        """
-        assert self.id, "'id' wasn't set."
-        assert self.customerProfileId, "'customerProfileId' wasn't set."
-
-        request = apicontractsv1.deleteCustomerShippingAddressRequest(
-            merchantAuthentication=self.merchantAuthentication,
-            customerProfileId=self.customerProfileId,
-            customerAddressId=self.id,
-        )
-
-        return self.execute_controller(
-            apicontrollers.deleteCustomerShippingAddressController(request)
-        )
+    """
+    request = apicontractsv1.deleteCustomerShippingAddressRequest(
+        merchantAuthentication=get_merchant_auth(),
+        customerProfileId=str(customer_profile_id),
+        customerAddressId=str(customer_address_profile_id),
+    )
+    return AuthorizenetControllerExecutor.execute_controller(
+        apicontrollers.deleteCustomerShippingAddressController(request)
+    )

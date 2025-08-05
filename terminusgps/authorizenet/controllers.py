@@ -22,12 +22,9 @@ class AuthorizenetControllerExecutor:
         :rtype: :py:obj:`dict` | :py:obj:`None`
 
         """
-        try:
-            controller.setenvironment(get_environment())
-            controller.execute()
-            response = controller.getresponse()
-        except Exception as e:
-            raise AuthorizenetControllerExecutionError(message=str(e), code="1")
+        controller.setenvironment(get_environment())
+        controller.execute()
+        response = controller.getresponse()
 
         if response is not None and response.messages.resultCode != "Ok":
             raise AuthorizenetControllerExecutionError(
