@@ -1,7 +1,7 @@
 from authorizenet import apicontractsv1, apicontrollers
 
 from terminusgps.authorizenet.auth import get_merchant_auth, get_validation_mode
-from terminusgps.authorizenet.controllers import AuthorizenetControllerExecutor
+from terminusgps.authorizenet.controllers import execute_controller
 
 __all__ = [
     "create_customer_profile",
@@ -33,9 +33,7 @@ def create_customer_profile(merchant_id: int | str, email: str, description: str
         ),
         validationMode=get_validation_mode(),
     )
-    return AuthorizenetControllerExecutor.execute_controller(
-        apicontrollers.createCustomerProfileController(request)
-    )
+    return execute_controller(apicontrollers.createCustomerProfileController(request))
 
 
 def get_customer_profile(customer_profile_id: int, include_issuer_info: bool = False):
@@ -55,9 +53,7 @@ def get_customer_profile(customer_profile_id: int, include_issuer_info: bool = F
         customerProfileId=str(customer_profile_id),
         includeIssuerInfo=str(include_issuer_info).lower(),
     )
-    return AuthorizenetControllerExecutor.execute_controller(
-        apicontrollers.getCustomerProfileController(request)
-    )
+    return execute_controller(apicontrollers.getCustomerProfileController(request))
 
 
 def get_customer_profile_ids():
@@ -71,9 +67,7 @@ def get_customer_profile_ids():
     request = apicontractsv1.getCustomerProfileIdsRequest(
         merchantAuthentication=get_merchant_auth()
     )
-    return AuthorizenetControllerExecutor.execute_controller(
-        apicontrollers.getCustomerProfileIdsController(request)
-    )
+    return execute_controller(apicontrollers.getCustomerProfileIdsController(request))
 
 
 def update_customer_profile(
@@ -94,9 +88,7 @@ def update_customer_profile(
     request = apicontractsv1.updateCustomerProfileRequest(
         merchantAuthentication=get_merchant_auth(), profile=new_profile
     )
-    return AuthorizenetControllerExecutor.execute_controller(
-        apicontrollers.updateCustomerProfileController(request)
-    )
+    return execute_controller(apicontrollers.updateCustomerProfileController(request))
 
 
 def delete_customer_profile(customer_profile_id: int):
@@ -113,6 +105,4 @@ def delete_customer_profile(customer_profile_id: int):
         merchantAuthentication=get_merchant_auth(),
         customerProfileId=str(customer_profile_id),
     )
-    return AuthorizenetControllerExecutor.execute_controller(
-        apicontrollers.deleteCustomerProfileController(request)
-    )
+    return execute_controller(apicontrollers.deleteCustomerProfileController(request))

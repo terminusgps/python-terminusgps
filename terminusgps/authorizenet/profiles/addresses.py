@@ -1,7 +1,7 @@
 from authorizenet import apicontractsv1, apicontrollers
 
 from terminusgps.authorizenet.auth import get_merchant_auth
-from terminusgps.authorizenet.controllers import AuthorizenetControllerExecutor
+from terminusgps.authorizenet.controllers import execute_controller
 
 __all__ = [
     "create_customer_shipping_address",
@@ -35,7 +35,7 @@ def create_customer_shipping_address(
         address=new_address,
         defaultShippingAddress=str(default).lower(),
     )
-    return AuthorizenetControllerExecutor.execute_controller(
+    return execute_controller(
         apicontrollers.createCustomerShippingAddressController(request)
     )
 
@@ -59,7 +59,7 @@ def get_customer_shipping_address(
         customerProfileId=str(customer_profile_id),
         customerAddressId=str(customer_address_profile_id),
     )
-    return AuthorizenetControllerExecutor.execute_controller(
+    return execute_controller(
         apicontrollers.getCustomerShippingAddressController(request)
     )
 
@@ -88,7 +88,7 @@ def update_customer_shipping_address(
         address=new_address,
         defaultShippingAddress=str(default).lower(),
     )
-    return AuthorizenetControllerExecutor.execute_controller(
+    return execute_controller(
         apicontrollers.updateCustomerShippingAddressController(request)
     )
 
@@ -112,6 +112,6 @@ def delete_customer_shipping_address(
         customerProfileId=str(customer_profile_id),
         customerAddressId=str(customer_address_profile_id),
     )
-    return AuthorizenetControllerExecutor.execute_controller(
+    return execute_controller(
         apicontrollers.deleteCustomerShippingAddressController(request)
     )
