@@ -1,11 +1,8 @@
-import logging
 import typing
 
 from authorizenet.apicontrollersbase import APIOperationBase
 
 from .auth import get_environment
-
-logger = logging.getLogger(__name__)
 
 
 def execute_controller(controller: APIOperationBase) -> dict[str, typing.Any] | None:
@@ -23,8 +20,7 @@ def execute_controller(controller: APIOperationBase) -> dict[str, typing.Any] | 
         controller.setenvironment(get_environment())
         controller.execute()
         response = controller.getresponse()
-    except Exception as e:
-        logger.critical(e)
+    except Exception:
         response = None
 
     if response is not None and response.messages.resultCode != "Ok":
