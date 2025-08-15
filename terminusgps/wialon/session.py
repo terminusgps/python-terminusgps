@@ -4,13 +4,23 @@ import typing
 import wialon.api
 
 
+class WialonAPIError(Exception):
+    def __init__(self, message, *args, **kwargs) -> None:
+        self.message = message
+        self._code = int(message._code)
+        super().__init__(message, *args, **kwargs)
+
+    @property
+    def code(self) -> int:
+        return self._code
+
+
 class Wialon(wialon.api.Wialon):
-    def call(self, action_name: str, *argc, **kwargs) -> dict[str, typing.Any]:
+    def call(self, *argc, **kwargs) -> dict[str, typing.Any]:
         try:
-            return super().call(action_name, *argc, **kwargs)
+            return super().call(*argc, **kwargs)
         except wialon.api.WialonError as e:
-            print(f"Failed to execute '{action_name}': '{e}'")
-            return {}
+            raise WialonAPIError(e)
 
 
 class WialonSession:
