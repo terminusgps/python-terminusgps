@@ -1,6 +1,6 @@
 from authorizenet import apicontractsv1, apicontrollers
 
-from terminusgps.authorizenet.auth import get_merchant_auth, get_validation_mode
+from terminusgps.authorizenet.auth import get_merchant_auth
 from terminusgps.authorizenet.controllers import execute_controller
 
 __all__ = [
@@ -29,9 +29,8 @@ def create_customer_profile(merchant_id: int | str, email: str, description: str
     request = apicontractsv1.createCustomerProfileRequest(
         merchantAuthentication=get_merchant_auth(),
         profile=apicontractsv1.customerProfileType(
-            merchantCustomerId=merchant_id, description=description, email=email
+            merchantCustomerId=str(merchant_id), description=description, email=email
         ),
-        validationMode=get_validation_mode(),
     )
     return execute_controller(apicontrollers.createCustomerProfileController(request))
 
