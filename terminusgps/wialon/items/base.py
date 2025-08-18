@@ -1,38 +1,31 @@
 from abc import abstractmethod
-from typing import Type
 
-from terminusgps.wialon import constants, flags
+from terminusgps.wialon import flags
 from terminusgps.wialon.session import WialonSession
 
 
-class WialonBase:
+class WialonObject:
     """Base class for Wialon objects."""
 
-    def __init__(
-        self, id: str | int | None, session: WialonSession, *args, **kwargs
-    ) -> None:
+    def __init__(self, session: WialonSession, id: int | str | None = None) -> None:
         """
-        Sets the Wialon session and id for the Wialon object.
+        Sets the session and id for the Wialon object.
 
-        If no id was provided, :py:meth:`create` is executed to get one.
+        If ``id`` is :py:obj:`None` most methods will raise :py:exec:`AssertionError`.
 
-        :param id: An optional Wialon object id.
-        :type id: :py:obj:`str` | :py:obj:`int` | :py:obj:`None`
         :param session: A valid Wialon API session.
         :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+        :param id: A Wialon object id. Default is :py:obj:`None`.
+        :type id: :py:obj:`str` | :py:obj:`int` | :py:obj:`None`
         :raises ValueError: If ``id`` wasn't a digit.
         :returns: Nothing.
         :rtype: :py:obj:`None`
 
         """
         if isinstance(id, str) and not id.isdigit():
-            raise ValueError(f"'id' must be a digit. Got '{id}'.")
-
+            raise ValueError(f"'id' must be a digit, got '{id}'.")
         self._session = session
-        self._id = str(id if id else self.create(*args, **kwargs))
-        self._name = None
-        self._hw_type = None
-        self._access_lvl = None
+        self._id = id
 
     def __str__(self) -> str:
         """Returns the Wialon object id as a string."""
@@ -43,327 +36,173 @@ class WialonBase:
         return f"{type(self).__name__}(id={self.id}, session={self.session.id})"
 
     @abstractmethod
-    def create(self, *args, **kwargs) -> int | None:
-        """Creates a Wialon object and returns its id."""
+    def create(self, *args, **kwargs) -> dict[str, str]:
+        """Creates the Wialon object and sets its id."""
         raise NotImplementedError("Subclasses must implement this method.")
 
-    def populate(self) -> None:
-        """
-        Retrieves and saves the latest data for the item from Wialon.
-
-        :raises AssertionError: If :py:attr:`id` wasn't set.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        assert self.id, "No Wialon object id set."
-        response = self.session.wialon_api.core_search_item(
-            **{"id": str(self.id), "flags": flags.DataFlag.UNIT_BASE}
-        )
-        if response is not None:
-            item = response.get("item", {})
-            self._name = item.get("nm")
-            self._hw_type = item.get("cls")
-            self._access_lvl = item.get("uacl")
-
-    def has_access(self, other: Type["WialonBase"]) -> bool:
-        """
-        Checks if this Wialon object has access to ``other``.
-
-        :type: :py:obj:`bool`
-
-        """
-        response = self.session.wialon_api.core_check_accessors(
-            **{"items": [other.id], "flags": False}
-        )
-        return True if self.id in response.keys() else False
-
-    def set_measurement_unit(
-        self,
-        unit: constants.WialonMeasurementUnit = constants.WialonMeasurementUnit.US,
-        convert: bool = False,
-    ) -> None:
-        """
-        Sets the Wialon object's measurement unit.
-
-        :param unit: A Wialon measurement unit. Default is :py:obj:`~terminusgps.wialon.constants.WialonMeasurementUnit.US`.
-        :type unit: :py:obj:`~terminusgps.constants.WialonMeasurementUnit`
-        :param convert: Whether or not to convert the object's measurements before setting the new unit.
-        :type convert: :py:obj:`bool`
-        :raises WialonError: If something went wrong with a Wialon API call.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        self.session.wialon_api.item_update_measure_units(
-            **{"itemId": str(self.id), "type": unit, "flags": int(convert)}
-        )
-
-    def rename(self, new_name: str) -> None:
-        """
-        Renames the Wialon object to the new name.
-
-        :param new_name: A new name.
-        :type new_name: :py:obj:`str`
-        :raises WialonError: If something went wrong with a Wialon API call.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        self.session.wialon_api.item_update_name(
-            **{"itemId": self.id, "name": new_name}
-        )
-        self._name = new_name
-
-    def delete(self) -> None:
-        """
-        Deletes the Wialon object.
-
-        :raises WialonError: If something went wrong with a Wialon API call.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        self.session.wialon_api.item_delete_item(**{"itemId": self.id})
-
-    def update_pfield(self, key: constants.WialonProfileField, value: str) -> None:
-        """
-        Updates a profile field by key.
-
-        :param key: A profile field key (name).
-        :type key: :py:obj:`~terminusgps.wialon.constants.WialonProfileField`
-        :param value: A string.
-        :type value: :py:obj:`str`
-        :raises WialonError: If something went wrong with a Wialon API call.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        self.session.wialon_api.item_update_profile_field(
-            **{"itemId": self.id, "n": key.value, "v": value}
-        )
-
-    def update_afield(self, key: str, value: str) -> None:
-        """
-        Updates an admin field by key.
-
-        :param key: An admin field key (name).
-        :type key: :py:obj:`str`
-        :param value: A string.
-        :type value: :py:obj:`str`
-        :raises ValueError: If the admin field key was longer than 128 characters.
-        :raises ValueError: If the admin field value was longer than 128 characters.
-        :raises WialonError: If something went wrong with a Wialon API call.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        if len(key) > 128:
-            raise ValueError(
-                f"'key' cannot be greater than 128 characters in length, got {len(key)}."
-            )
-        if len(value) > 128:
-            raise ValueError(
-                f"'value' cannot be greater than 128 characters in length, got {len(value)}."
-            )
-
-        field_id: int | None = self._get_afield_id(key)
-        if field_id is not None:
-            self.session.wialon_api.item_update_admin_field(
-                **{
-                    "itemId": self.id,
-                    "id": field_id,
-                    "callMode": "update",
-                    "n": key,
-                    "v": value,
-                }
-            )
-        else:
-            self.session.wialon_api.item_update_admin_field(
-                **{
-                    "itemId": self.id,
-                    "id": 0,
-                    "callMode": "create",
-                    "n": key,
-                    "v": value,
-                }
-            )
-
-    def update_cfield(self, key: str, value: str) -> None:
-        """
-        Updates a custom field by key.
-
-        :param key: A custom field key (name).
-        :type key: :py:obj:`str`
-        :param value: A string.
-        :type value: :py:obj:`str`
-        :raises ValueError: If the custom field key was longer than 128 characters.
-        :raises ValueError: If the custom field value was longer than 128 characters.
-        :raises WialonError: If something went wrong with a Wialon API call.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        if len(key) > 128:
-            raise ValueError(
-                f"'key' cannot be greater than 128 characters in length, got {len(key)}."
-            )
-        if len(value) > 128:
-            raise ValueError(
-                f"'value' cannot be greater than 128 characters in length, got {len(value)}."
-            )
-
-        field_id: int | None = self._get_cfield_id(key)
-        if field_id is not None:
-            self.session.wialon_api.item_update_custom_field(
-                **{
-                    "itemId": self.id,
-                    "id": field_id,
-                    "callMode": "update",
-                    "n": key,
-                    "v": value,
-                }
-            )
-        else:
-            self.session.wialon_api.item_update_custom_field(
-                **{
-                    "itemId": self.id,
-                    "id": 0,
-                    "callMode": "create",
-                    "n": key,
-                    "v": value,
-                }
-            )
-
-    def _get_cfield_id(self, key: str) -> int | None:
-        """
-        Returns a custom field id by key.
-
-        :param key: A custom field key (name).
-        :type key: :py:obj:`str`
-        :raises WialonError: If something went wrong with a Wialon API call.
-        :returns: The custom field's id as an integer, if found.
-        :rtype: :py:obj:`int` | :py:obj:`None`
-
-        """
-        fields = (
-            self.session.wialon_api.core_search_item(
-                **{"id": str(self.id), "flags": flags.DataFlag.UNIT_CUSTOM_FIELDS}
-            )
-            .get("item", {})
-            .get("flds", {})
-            .values()
-        )
-
-        for field in fields:
-            if field["n"] == key:
-                return int(field["id"])
-
-    def _get_afield_id(self, key: str) -> int | None:
-        """
-        Returns an admin field id by key.
-
-        :param key: An admin field key (name).
-        :type key: :py:obj:`str`
-        :raises WialonError: If something went wrong with a Wialon API call.
-        :returns: The admin field's id as an integer, if found.
-        :rtype: :py:obj:`int` | :py:obj:`None`
-
-        """
-        fields = (
-            self.session.wialon_api.core_search_item(
-                **{"id": str(self.id), "flags": flags.DataFlag.UNIT_ADMIN_FIELDS}
-            )
-            .get("item", {})
-            .get("aflds", {})
-            .values()
-        )
-
-        for field in fields:
-            if field["n"] == key:
-                return int(field["id"])
-
-    @property
-    def name(self) -> str:
-        """Name of the Wialon object."""
-        if self._name is None:
-            self.populate()
-        return str(self._name)
-
-    @property
-    def hw_type(self) -> str:
-        """Hardware type of the Wialon object."""
-        if self._hw_type is None:
-            self.populate()
-        return str(self._hw_type)
-
-    @property
-    def access_lvl(self) -> str:
-        """Access level of the Wialon object."""
-        if self._access_lvl is None:
-            self.populate()
-        return str(self._access_lvl)
+    @abstractmethod
+    def delete(self, *args, **kwargs) -> dict[str, str]:
+        """Deletes the Wialon object."""
+        raise NotImplementedError("Subclasses must implement this method.")
 
     @property
     def session(self) -> WialonSession:
-        """
-        A valid Wialon API session.
-
-        :type: :py:obj:`~terminusgps.wialon.session.WialonSession`
-
-        """
-
+        """Wialon object API session."""
         return self._session
 
     @property
     def id(self) -> int | None:
+        """Wialon object id."""
+        return int(self._id) if self._id is not None else None
+
+    @id.setter
+    def id(self, other: int | str | None = None) -> None:
+        """Sets :py:attr:`_id` to ``other``."""
+        self._id = other
+
+    def set_admin_field(
+        self, key: str, value: str, id: int | str | None = None
+    ) -> dict[str, str]:
         """
-        A Wialon object id.
+        Sets an admin field for the Wialon object.
 
-        :type: :py:obj:`int` | :py:obj:`None`
+        If ``id`` isn't provided, a new admin field is created.
+
+        :param key: An admin field key.
+        :type key: :py:obj:`str`
+        :param value: An admin field value.
+        :type value: :py:obj:`str`
+        :param id: An admin field id. Default is :py:obj:`None`.
+        :type id: :py:obj:`int` | :py:obj:`str` | :py:obj:`None`
+        :raises AssertionError: If the Wialon object id wasn't set.
+        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :returns: A dictionary of admin field data.
+        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-
-        return int(self._id) if self._id else None
-
-    @property
-    def afields(self) -> dict[str, str]:
-        """
-        Admin fields for the Wialon object.
-
-        :type: :py:obj:`dict`
-
-        """
-        response = self.session.wialon_api.core_search_item(
-            **{"id": self.id, "flags": flags.DataFlag.UNIT_ADMIN_FIELDS}
+        assert self.id, "Wialon object id wasn't set."
+        if isinstance(id, str) and not id.isdigit():
+            raise ValueError(f"'id' can only be digits, got '{id}'.")
+        return self.session.wialon_api.item_update_admin_field(
+            **{
+                "itemId": self.id,
+                "id": int(id) if id else 0,
+                "callMode": "update" if id else "create",
+                "n": key,
+                "v": value,
+            }
         )
-        fields = response.get("item", {}).get("aflds") if response is not None else {}
-        return {field["n"]: field["v"] for field in fields.values()} if fields else {}
 
-    @property
-    def cfields(self) -> dict[str, str]:
+    def set_custom_field(
+        self, key: str, value: str, id: int | str | None = None
+    ) -> dict[str, str]:
         """
-        Custom fields for the Wialon object.
+        Sets a custom field for the Wialon object.
 
-        :type: :py:obj:`dict`
+        If ``id`` isn't provided, a new custom field is created.
+
+        :param key: A custom field key.
+        :type key: :py:obj:`str`
+        :param value: A custom field value.
+        :type value: :py:obj:`str`
+        :param id: A custom field id. Default is :py:obj:`None`.
+        :type id: :py:obj:`int` | :py:obj:`str` | :py:obj:`None`
+        :raises AssertionError: If the Wialon object id wasn't set.
+        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :returns: A dictionary of custom field data.
+        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        response = self.session.wialon_api.core_search_item(
-            **{"id": self.id, "flags": flags.DataFlag.UNIT_CUSTOM_FIELDS}
+        assert self.id, "Wialon object id wasn't set."
+        if isinstance(id, str) and not id.isdigit():
+            raise ValueError(f"'id' can only be digits, got '{id}'.")
+        return self.session.wialon_api.item_update_custom_field(
+            **{
+                "itemId": self.id,
+                "id": int(id) if id else 0,
+                "callMode": "update" if id else "create",
+                "n": key,
+                "v": value,
+            }
         )
-        fields = response.get("item", {}).get("flds") if response is not None else {}
-        return {field["n"]: field["v"] for field in fields.values()} if fields else {}
 
-    @property
-    def pfields(self) -> dict[str, str]:
+    def set_profile_field(self, key: str, value: str) -> dict[str, str]:
         """
-        Profile fields for the Wialon object.
+        Sets a profile field for the Wialon object.
 
-        :type: :py:obj:`dict`
+        :param key: A profile field key.
+        :type key: :py:obj:`str`
+        :param value: A profile field value.
+        :type value: :py:obj:`str`
+        :raises AssertionError: If the Wialon object id wasn't set.
+        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :returns: A dictionary of profile field data.
+        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        response = self.session.wialon_api.core_search_item(
-            **{"id": self.id, "flags": flags.DataFlag.UNIT_PROFILE_FIELDS}
+        assert self.id, "Wialon object id wasn't set."
+        if isinstance(id, str) and not id.isdigit():
+            raise ValueError(f"'id' can only be digits, got '{id}'.")
+        return self.session.wialon_api.item_update_profile_field(
+            **{"itemId": self.id, "n": key, "v": value}
         )
-        fields = response.get("item", {}).get("pflds") if response is not None else {}
-        return {field["n"]: field["v"] for field in fields.values()} if fields else {}
+
+    def set_name(self, new_name: str) -> dict[str, str]:
+        """
+        Sets the Wialon object's name to the new name.
+
+        :param new_name: A new name for the Wialon object.
+        :type new_name: :py:obj:`str`
+        :raises AssertionError: If the Wialon object id wasn't set.
+        :raises WialonAPIError: If something went wrong calling the Wialon API.
+
+        """
+        assert self.id, "Wialon object id wasn't set."
+        return self.session.wialon_api.item_update_name(
+            **{"itemId": self.id, "name": new_name}
+        )
+
+    def add_log_record(
+        self, action: str, new_value: str, old_value: str
+    ) -> dict[str, str]:
+        """
+        Adds a log record for the Wialon object.
+
+        :param action: A Wialon log action.
+        :type action: :py:obj:`str`
+        :param new_value: New log record value.
+        :type new_value: :py:obj:`str`
+        :param old_value: Old log record value.
+        :type old_value: :py:obj:`str`
+        :raises AssertionError: If the Wialon object id wasn't set.
+        :raises WialonAPIError: If something went wrong calling the Wialon API.
+
+        """
+        assert self.id, "Wialon object id wasn't set."
+        return self.session.wialon_api.item_add_log_record(
+            **{
+                "itemId": self.id,
+                "action": action,
+                "newValue": new_value,
+                "oldValue": old_value,
+            }
+        )
+
+    def get_name(self) -> str:
+        """
+        Returns the Wialon object's name.
+
+        :raises AssertionError: If the Wialon object id wasn't set.
+        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :returns: The Wialon object's name.
+        :rtype: :py:obj:`str`
+
+        """
+        assert self.id, "Wialon object id wasn't set."
+        return str(
+            self.session.wialon_api.core_search_item(
+                **{"id": self.id, "flags": flags.DataFlag.UNIT_BASE}
+            )
+            .get("item")
+            .get("nm")
+        )
