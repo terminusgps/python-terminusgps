@@ -1,146 +1,127 @@
-from terminusgps.wialon import constants, flags
-from terminusgps.wialon.items.base import WialonBase
+from terminusgps.wialon import flags
+from terminusgps.wialon.items.base import WialonObject, requires_id
 
 
-class WialonUser(WialonBase):
+class WialonUser(WialonObject):
     """A Wialon `user <https://help.wialon.com/en/wialon-hosting/user-guide/management-system/users>`_."""
 
-    def create(self, creator_id: str | int, name: str, password: str) -> int | None:
+    def create(self, creator_id: int | str, name: str, password: str) -> dict[str, str]:
         """
-        Creates a new Wialon user.
+        Creates the user in Wialon and sets its id.
 
-        :param creator_id: Creator user id.
-        :type creator_id: :py:obj:`str` | :py:obj:`int`
-        :param name: Name for the new user.
+        :param creator_id: A Wialon user id to set as the new user's creator.
+        :type creator_id: :py:obj:`int` | :py:obj:`str`
+        :param name: Wialon user name.
         :type name: :py:obj:`str`
-        :param password: Password for the new user.
+        :param password: Wialon user password.
         :type password: :py:obj:`str`
         :raises ValueError: If ``creator_id`` wasn't a digit.
-        :raises WialonError: If something went wrong with a Wialon API call.
-        :returns: A new Wialon user id, if created.
-        :rtype: :py:obj:`int` | :py:obj:`None`
+        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :returns: A Wialon object dictionary.
+        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
         if isinstance(creator_id, str) and not creator_id.isdigit():
             raise ValueError(f"'creator_id' must be a digit, got '{creator_id}'.")
-
         response = self.session.wialon_api.core_create_user(
             **{
-                "creatorId": str(creator_id),
+                "creatorId": int(creator_id),
                 "name": name,
                 "password": password,
-                "dataFlags": flags.DataFlag.UNIT_BASE,
+                "dataFlags": flags.DataFlag.USER_BASE,
             }
         )
-        return (
-            int(response.get("item", {}).get("id"))
-            if response and response.get("item")
-            else None
-        )
+        self.id = int(response.get("item", {}).get("id"))
+        return response
 
-    def grant_access(
-        self, item: WialonBase, access_mask: int = constants.ACCESSMASK_UNIT_BASIC
-    ) -> None:
+    @requires_id
+    def get_access(
+        self, object_type: str, direct: bool = True, flags: int = 0x1
+    ) -> dict[str, str]:
         """
-        Grants the user access to ``item``.
+        Returns a dictionary of Wialon objects the user has access to.
 
-        :param item: A Wialon object.
-        :type item: :py:obj:`~terminusgps.wialon.items.base.WialonBase`
-        :param access_mask: A Wialon access mask integer. Default is :py:obj:`~terminusgps.wialon.constants.ACCESSMASK_UNIT_BASIC`
-        :type access_mask: :py:obj:`int`
-        :raises ValueError: If ``item`` didn't have an :py:attr:`id` attribute.
-        :raises WialonError: If something went wrong with a Wialon API call.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        if not hasattr(item, "id"):
-            raise ValueError(f"'{item}' doesn't have an id.")
-
-        self.session.wialon_api.user_update_item_access(
-            **{"userId": self.id, "itemId": item.id, "accessMask": access_mask}
-        )
-
-    def set_settings_flags(self, flags: int, mask: int) -> None:
-        """
-        Sets the user's settings flags.
-
-        :param flags: A user settings flag integer.
+        :param object_type: A Wialon object type.
+        :type object_type: :py:obj:`str`
+        :param direct: Whether or not to exclude objects the user doesn't have direct access to. Default is :py:obj:`True`.
+        :type direct: :py:obj:`bool`
+        :param flags: Response flags. Default is ``0x1``.
         :type flags: :py:obj:`int`
-        :param mask: A user settings flag mask.
-        :type mask: :py:obj:`int`
-        :raises WialonError: If something went wrong with a Wialon API call.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
+        :raises AssertionError: If the Wialon user id wasn't set.
+        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :returns: A dictionary of Wialon objects.
+        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        self.session.wialon_api.user_update_user_flags(
-            **{"userId": self.id, "flags": flags, "flagsMask": mask}
+        return self.session.wialon_api.user_get_items_access(
+            **{
+                "userId": self.id,
+                "directAccess": int(direct),
+                "itemSuperclass": object_type,
+                "flags": flags,
+            }
         )
 
-    def reset_password(self, email: str, url: str) -> None:
+    @requires_id
+    def set_access(self, obj: WialonObject, access_mask: int) -> dict[str, str]:
         """
-        Sends a password reset email for a user to ``email``.
+        Sets the user's access to ``obj`` according to ``access_mask`` in Wialon.
 
-        :param email: An email address.
-        :type email: :py:obj:`str`
-        :param url: A password reset URL.
-        :type url: :py:obj:`str`
-        :raises WialonError: If something went wrong with a Wialon API call.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
+        :param object_id: A Wialon object id.
+        :type object_id: :py:obj:`int`
+        :param access_mask: A Wialon access mask integer.
+        :type access_mask: :py:obj:`int`
+        :raises AssertionError: If the Wialon user id wasn't set.
+        :raises ValueError: If the other Wialon object's id wasn't set.
+        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :returns: An empty dictionary.
+        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        self.session.wialon_api.core_reset_password_request(
-            **{"user": self.name, "url": url, "email": email}
+        if obj.id is None:
+            raise ValueError("Other Wialon object's id wasn't set.")
+        return self.session.wialon_api.user_update_item_access(
+            **{"userId": self.id, "itemId": obj.id, "accessMask": access_mask}
         )
 
-    def update_password(self, old_password: str, new_password: str) -> None:
+    @requires_id
+    def set_flags(self, flags: int, flags_mask: int) -> dict[str, str]:
         """
-        Updates the user's password.
+        Sets the user settings flags in Wialon.
 
-        :param old_password: The user's original password.
+        :param flags: A Wialon user settings flag integer.
+        :type flags: :py:obj:`int`
+        :param flags_mask: An integer mask which determines which bits will be changed.
+        :type flags_mask: :py:obj:`int`
+        :raises AssertionError: If the Wialon user id wasn't set.
+        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :returns: A dictionary containing the user's new settings flags.
+        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+
+        """
+        return self.session.wialon_api.user_update_user_flags(
+            **{"userId": self.id, "flags": flags, "flagsMask": flags_mask}
+        )
+
+    @requires_id
+    def set_password(self, old_password: str, new_password: str) -> dict[str, str]:
+        """
+        Sets the user's password to ``new_password`` in Wialon.
+
+        :param old_password: The user's old Wialon password.
         :type old_password: :py:obj:`str`
-        :param new_password: A new password.
+        :param new_password: The user's new Wialon password.
         :type new_password: :py:obj:`str`
-        :raises WialonError: If something went wrong with a Wialon API call.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
+        :raises AssertionError: If the Wialon user id wasn't set.
+        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :returns: An empty dictionary.
+        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        self.session.wialon_api.user_update_password(
+        return self.session.wialon_api.user_update_password(
             **{
                 "userId": self.id,
                 "oldPassword": old_password,
                 "newPassword": new_password,
             }
         )
-
-    def verify_auth(self, destination: str, method: str = "email") -> str:
-        """
-        Sends an authentication code to ``destination`` via ``method``.
-
-        Destination should be an email address or an `E.164 <https://en.wikipedia.org/wiki/E.164>`_ format phone number.
-
-        Method can be ``"email"`` or ``"sms"``.
-
-        :param destination: The email or phone number to send an auth code to.
-        :type destination: :py:obj:`str`
-        :param method: Authentication method to use. Default is ``"email"``.
-        :type method: :py:obj:`str`
-        :raises ValueError: If the authentication method wasn't ``"email"`` or ``"sms"``.
-        :raises WialonError: If something went wrong with a Wialon API call.
-        :returns: An auth code string.
-        :rtype: :py:obj:`str`
-
-        """
-        if method != "email" or "sms":
-            raise ValueError(f"Invalid method '{method}'.")
-
-        return self.session.wialon_api.user_verify_auth(
-            **{
-                "userId": self.id,
-                "type": 1 if method == "email" else 0,
-                "destination": destination,
-            }
-        ).get("code", "")

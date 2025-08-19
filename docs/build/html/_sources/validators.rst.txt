@@ -1,4 +1,0 @@
-Validators
-==========
-
-.. automodule:: terminusgps.validators

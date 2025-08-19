@@ -2,8 +2,8 @@ import secrets
 import string
 import typing
 
-from . import constants, flags
-from .items import WialonResource, WialonUnit
+from . import flags
+from .items import WialonUnit
 from .session import WialonSession
 
 
@@ -42,13 +42,14 @@ def get_user_by_name(name: str, session: WialonSession) -> WialonUnit | None:
     :rtype: :py:obj:`~terminusgps.wialon.items.unit.WialonUnit` | :py:obj:`None`
 
     """
-    results: dict = session.wialon_api.core_search_items(
+    response = session.wialon_api.core_search_items(
         **{
             "spec": {
-                "itemsType": constants.WialonItemsType.USER,
-                "propName": constants.WialonItemProperty.NAME,
+                "itemsType": "user",
+                "propName": "sys_name",
                 "propValueMask": name,
-                "sortType": constants.WialonItemProperty.NAME,
+                "sortType": "sys_name",
+                "propType": "property",
             },
             "force": 0,
             "flags": flags.DataFlag.USER_BASE,
@@ -56,8 +57,9 @@ def get_user_by_name(name: str, session: WialonSession) -> WialonUnit | None:
             "to": 0,
         }
     )
-    if results and results.get("items", [{}]):
-        return WialonUnit(id=results.get("items", [{}])[0].get("id"), session=session)
+    if int(response.get("totalItemsCount")) == 1:
+        if unit_id := int(response.get("items")[0].get("id")):
+            return WialonUnit(session, unit_id)
 
 
 def get_carrier_names(session: WialonSession) -> list[str]:
@@ -70,15 +72,14 @@ def get_carrier_names(session: WialonSession) -> list[str]:
     :rtype: :py:obj:`list`
 
     """
-    afname: str = constants.WialonItemProperty.ADMIN_FIELD_NAME
-    afval: str = constants.WialonItemProperty.ADMIN_FIELD_VALUE
-    results: dict = session.wialon_api.core_search_items(
+    response = session.wialon_api.core_search_items(
         **{
             "spec": {
-                "itemsType": constants.WialonItemsType.UNIT,
-                "propName": ",".join([afname, afval]),
+                "itemsType": "avl_unit",
+                "propName": "rel_adminfield_name,rel_adminfield_value",
                 "propValueMask": "carrier,*",
-                "sortType": ",".join([afname, afval]),
+                "sortType": "sys_id,sys_id",
+                "propType": "property",
             },
             "force": 0,
             "flags": flags.DataFlag.UNIT_BASE + flags.DataFlag.UNIT_ADMIN_FIELDS,
@@ -88,7 +89,7 @@ def get_carrier_names(session: WialonSession) -> list[str]:
     )
     carrier_names: list[str] = [
         field["v"]
-        for item in results.get("items", [{}])
+        for item in response.get("items", [{}])
         for field in item.get("aflds", {}).values()
         if field["n"] == "carrier" and field["v"]
     ]
@@ -109,13 +110,14 @@ def get_units_by_carrier(
     :rtype: :py:obj:`list`
 
     """
-    results = session.wialon_api.core_search_items(
+    response = session.wialon_api.core_search_items(
         **{
             "spec": {
                 "itemsType": "avl_unit",
-                "propName": constants.WialonItemProperty.ADMIN_FIELD_NAME_VALUE,
+                "propName": "rel_adminfield_name",
                 "propValueMask": f"carrier:{carrier_name}",
-                "sortType": constants.WialonItemProperty.ADMIN_FIELD_NAME_VALUE,
+                "sortType": "rel_adminfield_name",
+                "propType": "property",
             },
             "force": 0,
             "flags": flags.DataFlag.UNIT_BASE,
@@ -123,11 +125,8 @@ def get_units_by_carrier(
             "to": 0,
         }
     )
-    if results:
-        return [
-            WialonUnit(id=item.get("id"), session=session)
-            for item in results.get("items", [])
-        ]
+    if units := response.get("items", []):
+        return [WialonUnit(session=session, id=int(unit.get("id"))) for unit in units]
 
 
 def get_unit_by_iccid(iccid: str, session: WialonSession) -> WialonUnit | None:
@@ -142,13 +141,14 @@ def get_unit_by_iccid(iccid: str, session: WialonSession) -> WialonUnit | None:
     :rtype: :py:obj:`~terminusgps.wialon.items.WialonUnit` | :py:obj:`None`
 
     """
-    results = session.wialon_api.core_search_items(
+    response = session.wialon_api.core_search_items(
         **{
             "spec": {
                 "itemsType": "avl_unit",
-                "propName": constants.WialonItemProperty.ADMIN_FIELD_NAME_VALUE,
+                "propName": "rel_adminfield_name",
                 "propValueMask": f"iccid:{iccid}",
-                "sortType": constants.WialonItemProperty.ADMIN_FIELD_NAME_VALUE,
+                "sortType": "rel_adminfield_name",
+                "propType": "property",
             },
             "force": 0,
             "flags": flags.DataFlag.UNIT_BASE,
@@ -156,69 +156,12 @@ def get_unit_by_iccid(iccid: str, session: WialonSession) -> WialonUnit | None:
             "to": 0,
         }
     )
-    if results and results.get("totalItemsCount") == 1:
-        return WialonUnit(id=results["items"][0]["id"], session=session)
+    if int(response.get("totalItemsCount", 0)) == 1:
+        if unit_id := int(response.get("items")[0].get("id")):
+            return WialonUnit(session, unit_id)
 
 
-def get_resources(session: WialonSession) -> list[WialonResource] | None:
-    """
-    Returns a list of all resources in Wialon.
-
-    :param session: A valid Wialon API session.
-    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
-    :returns: A list of resources, if found.
-    :rtype: :py:obj:`list` | :py:obj:`None`
-
-    """
-    results = session.wialon_api.core_search_items(
-        **{
-            "spec": {
-                "itemsType": "avl_resource",
-                "propName": "sys_id",
-                "propValueMask": "*",
-                "sortType": "sys_id",
-                "propType": "property",
-                "or_logic": False,
-            },
-            "force": 0,
-            "flags": 1,
-            "from": 0,
-            "to": 0,
-        }
-    )
-    if results:
-        return [
-            WialonResource(id=item.get("id"), session=session)
-            for item in results.get("items", [])
-        ]
-
-
-def get_hw_type_id(name: str, session: WialonSession) -> int | None:
-    """
-    Takes a Wialon hardware type name and returns its id, if it exists.
-
-    :param name: The name of a Wialon hardware type.
-    :type name: :py:obj:`str`
-    :param session: A valid Wialon API session.
-    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
-    :raises WialonError: If something goes wrong during a Wialon API call.
-    :returns: A Wialon hardware type id, if it was found.
-    :rtype: :py:obj:`int` | :py:obj:`None`
-
-    """
-    response = session.wialon_api.core_get_hw_types(
-        **{
-            "filterType": "id",
-            "filterValue": "name,id",
-            "includeType": "true",
-            "ignoreRename": "true",
-        }
-    )
-    hw_types = {item.get("name"): item.get("id") for item in response}
-    return int(hw_types.get(name)) if name in hw_types.keys() else None
-
-
-def get_unit_by_imei(imei: str, session: WialonSession) -> WialonUnit | None:
+def get_unit_by_imei(imei: int | str, session: WialonSession) -> WialonUnit | None:
     """
     Takes a Wialon unit's IMEI # and returns its unit id.
 
@@ -226,15 +169,15 @@ def get_unit_by_imei(imei: str, session: WialonSession) -> WialonUnit | None:
     :type imei: :py:obj:`str`
     :param session: A valid Wialon API session.
     :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
-    :raises ValueError: If ``imei`` contains non-digit characters.
-    :returns: A Wialon object id, if it was found.
+    :raises ValueError: If ``imei`` wasn't a digit.
+    :raises WialonAPIError: If something went wrong calling the Wialon API.
+    :returns: A Wialon unit, if it was found.
     :rtype: :py:obj:`str` | :py:obj:`None`
 
     """
-    if not imei.isdigit():
+    if isinstance(imei, str) and not imei.isdigit():
         raise ValueError(f"'imei' must be a digit, got '{imei}'.")
-
-    results: dict[str, typing.Any] | None = session.wialon_api.core_search_items(
+    response = session.wialon_api.core_search_items(
         **{
             "spec": {
                 "itemsType": "avl_unit",
@@ -249,9 +192,9 @@ def get_unit_by_imei(imei: str, session: WialonSession) -> WialonUnit | None:
             "to": 0,
         }
     )
-
-    if results and results.get("totalItemsCount", 0) == 1:
-        return WialonUnit(id=results["items"][0]["id"], session=session)
+    if int(response.get("totalItemsCount", 0)) == 1:
+        if unit_id := response.get("items")[0].get("id"):
+            return WialonUnit(session, unit_id)
 
 
 def get_vin_info(vin_number: str, session: WialonSession) -> dict[str, typing.Any]:
@@ -266,42 +209,19 @@ def get_vin_info(vin_number: str, session: WialonSession) -> dict[str, typing.An
     :rtype: :py:obj:`dict`
 
     """
-    response: dict[str, typing.Any] | None = session.wialon_api.unit_get_vin_info(
-        **{"vin": vin_number}
-    )
-
-    if response is None or "error" in response.get("vin_lookup_result", {}).keys():
+    response = session.wialon_api.unit_get_vin_info(**{"vin": vin_number})
+    results = response.get("vin_lookup_result", {})
+    if "error" in results.keys():
         return {}
-
-    return {
-        field.get("n"): field.get("v")
-        for field in response.get("vin_lookup_result", {}).get("pflds")
-    }
+    return {field.get("n"): field.get("v") for field in results.get("pflds")}
 
 
-def is_unique(
-    value: str,
-    session: WialonSession,
-    items_type: str = constants.WialonItemsType.UNIT.value,
-) -> bool:
-    """
-    Determines if the value is unique among Wialon objects of type 'items_type'.
-
-    :param value: A Wialon object name.
-    :type value: :py:obj:`str`
-    :param session: A valid Wialon API session.
-    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
-    :param items_type: Type of Wialon objects to validate the value against. Default is ``"avl_unit"``.
-    :type items_type: :py:obj:`str`
-    :raises WialonError: If something goes wrong during a Wialon API call.
-    :returns: Whether or not the value is unique among 'items_type'.
-    :rtype: :py:obj:`bool`
-
-    """
-    response = session.wialon_api.core_check_unique(
-        **{"type": items_type, "value": value.strip()}
+def check_unique(object_type: str, name: str, session: WialonSession) -> bool:
+    return bool(
+        session.wialon_api.core_check_unique(
+            **{"type": object_type, "value": name}
+        ).get("result")
     )
-    return not bool(response.get("result")) if response else False
 
 
 def generate_wialon_password(length: int = 32) -> str:
