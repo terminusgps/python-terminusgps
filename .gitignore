@@ -1,7 +1,5 @@
 .*
 !.gitignore
-!.readthedocs.yaml
-logs/
 
 # Python-generated files
 __pycache__/
@@ -12,3 +10,5 @@ wheels/
 
 # Virtual environments
 .venv
+venv
+docs/build/
