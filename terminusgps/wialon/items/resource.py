@@ -30,7 +30,7 @@ class WialonResource(WialonObject):
             raise ValueError(f"'creator_id' must be a digit, got '{creator_id}'.")
         response = self.session.wialon_api.core_create_resource(
             **{
-                "creator_id": int(creator_id),
+                "creatorId": int(creator_id),
                 "name": name,
                 "dataFlags": flags.DataFlag.RESOURCE_BASE,
                 "skipCreatorCheck": int(skip_creator_check),
