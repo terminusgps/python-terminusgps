@@ -30,16 +30,3 @@ class WialonRoute(WialonObject):
         )
         self.id = int(response.get("item", {}).get("id"))
         return response
-
-    def delete(self) -> None:
-        """
-        Deletes the route in Wialon.
-
-        :raises AssertionError: If the Wialon route id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
-        :returns: Nothing.
-        :rtype: :py:obj:`None`
-
-        """
-        assert self.id, "Wialon route id wasn't set."
-        self.session.wialon_api.item_delete_item(**{"itemId": self.id})

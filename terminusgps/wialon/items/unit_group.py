@@ -1,7 +1,7 @@
-from collections.abc import Sequence
+from collections.abc import Iterable
 
 from terminusgps.wialon import flags
-from terminusgps.wialon.items.base import WialonObject
+from terminusgps.wialon.items.base import WialonObject, requires_id
 
 
 class WialonUnitGroup(WialonObject):
@@ -33,32 +33,19 @@ class WialonUnitGroup(WialonObject):
         self.id = int(response.get("item", {}).get("id"))
         return response
 
-    def delete(self) -> dict[str, str]:
-        """
-        Deletes the unit group in Wialon.
-
-        :raises AssertionError: If the Wialon unit group id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
-        :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
-
-        """
-        assert self.id, "Wialon unit group id wasn't set."
-        return self.session.wialon_api.item_delete_item(**{"itemId": self.id})
-
-    def update_units(self, unit_ids: Sequence[int]) -> dict[str, str]:
+    @requires_id
+    def update_units(self, unit_ids: Iterable[int]) -> dict[str, str]:
         """
         Sets the unit group's unit list in Wialon to ``unit_ids``.
 
-        :param unit_ids: A sequence of Wialon unit id integers.
-        :type unit_ids: :py:obj:`~typing.Sequence`[:py:obj:`int`]
+        :param unit_ids: An iterable of Wialon unit id integers.
+        :type unit_ids: :py:obj:`~typing.Iterable`[:py:obj:`int`]
         :raises AssertionError: If the Wialon unit group id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary containing the unit group's new unit list.
         :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        assert self.id, "Wialon unit group id wasn't set."
         return self.session.wialon_api.unit_group_update_units(
             **{"itemId": self.id, "units": unit_ids}
         )

@@ -1,7 +1,8 @@
-from collections.abc import Sequence
+from collections.abc import Iterable
 from decimal import Decimal
+from typing import override
 
-from terminusgps.wialon.items.base import WialonObject
+from terminusgps.wialon.items.base import WialonObject, requires_id
 
 
 class WialonAccount(WialonObject):
@@ -29,25 +30,57 @@ class WialonAccount(WialonObject):
         self.id = resource_id
         return response
 
-    def delete(self, reasons: Sequence[str] | None = None) -> dict[str, str]:
+    @override
+    @requires_id
+    def delete(self, reasons: Iterable[str] | None = None) -> dict[str, str]:
         """
         Deletes the account in Wialon.
 
-        :param reasons: A sequence of reason strings.
-        :type reasons: :py:obj:`~collections.abc.Sequence`[:py:obj:`str`]
+        :param reasons: An iterable of reason strings.
+        :type reasons: :py:obj:`~collections.abc.Iterable`[:py:obj:`str`]
         :raises AssertionError: If the Wialon account id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
         :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        params = (
-            {"itemId": self.id, "reasons": reasons}
+        return self.session.wialon_api.account_delete_account(
+            **{"itemId": self.id, "reasons": reasons}
             if reasons is not None
             else {"itemId": self.id}
         )
-        return self.session.wialon_api.account_delete_account(**params)
 
+    @requires_id
+    def activate(self) -> dict[str, str]:
+        """
+        Enables the account in Wialon.
+
+        :raises AssertionError: If the Wialon account id wasn't set.
+        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :returns: An empty dictionary.
+        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+
+        """
+        return self.session.wialon_api.account_enable_account(
+            **{"itemId": self.id, "enable": 1}
+        )
+
+    @requires_id
+    def deactivate(self) -> dict[str, str]:
+        """
+        Disables the account in Wialon.
+
+        :raises AssertionError: If the Wialon account id wasn't set.
+        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :returns: An empty dictionary.
+        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+
+        """
+        return self.session.wialon_api.account_enable_account(
+            **{"itemId": self.id, "enable": 0}
+        )
+
+    @requires_id
     def do_payment(
         self, balance_update: Decimal, days_update: int, description: str
     ) -> dict[str, str]:
@@ -66,32 +99,16 @@ class WialonAccount(WialonObject):
         :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        assert self.id, "Wialon account id wasn't set."
         return self.session.wialon_api.account_do_payment(
             **{
                 "itemId": self.id,
-                "balanceUpdate": balance_update,
+                "balanceUpdate": str(balance_update),
                 "daysUpdate": days_update,
                 "description": description,
             }
         )
 
-    def set_active(self, enabled: bool) -> dict[str, str]:
-        """
-        Enables or disables the account in Wialon.
-
-        :param enabled: Whether to set the account as enabled or disabled.
-        :type enabled: :py:obj:`bool`
-        :raises AssertionError: If the Wialon account id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
-        :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
-
-        """
-        return self.session.wialon_api.account_enable_account(
-            **{"itemId": self.id, "enable": int(enabled)}
-        )
-
+    @requires_id
     def set_dealer_rights(self, enabled: bool) -> dict[str, str]:
         """
         Enables or disables the account's dealer rights in Wialon.
@@ -108,6 +125,7 @@ class WialonAccount(WialonObject):
             **{"itemId": self.id, "enable": int(enabled)}
         )
 
+    @requires_id
     def set_flags(
         self,
         flags: int,
@@ -129,7 +147,6 @@ class WialonAccount(WialonObject):
         :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        assert self.id, "Wialon account id wasn't set."
         return self.session.wialon_api.account_update_flags(
             **{
                 "itemId": self.id,
@@ -139,6 +156,7 @@ class WialonAccount(WialonObject):
             }
         )
 
+    @requires_id
     def set_plan(self, name: str) -> dict[str, str]:
         """
         Sets the account's billing plan to ``name``.
@@ -151,11 +169,11 @@ class WialonAccount(WialonObject):
         :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        assert self.id, "Wialon account id wasn't set."
         return self.session.wialon_api.account_update_plan(
             **{"itemId": self.id, "plan": name}
         )
 
+    @requires_id
     def set_minimum_days(self, days: int) -> dict[str, str]:
         """
         Sets the account's minimum days to ``days`` in Wialon.
@@ -168,11 +186,11 @@ class WialonAccount(WialonObject):
         :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        assert self.id, "Wialon account id wasn't set."
         return self.session.wialon_api.account_update_min_days(
             **{"itemId": self.id, "minDays": days}
         )
 
+    @requires_id
     def get_data(self, response_type: int = 1) -> dict[str, str]:
         """
         Returns account data from Wialon.
@@ -185,7 +203,6 @@ class WialonAccount(WialonObject):
         :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        assert self.id, "Wialon account id wasn't set."
         return self.session.wialon_api.account_get_account_data(
             **{"itemId": self.id, "type": response_type}
         )

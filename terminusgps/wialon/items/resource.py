@@ -1,8 +1,8 @@
-from collections.abc import Sequence
+from collections.abc import Iterable
 from datetime import datetime
 
 from terminusgps.wialon import flags
-from terminusgps.wialon.items.base import WialonObject
+from terminusgps.wialon.items.base import WialonObject, requires_id
 
 
 class WialonResource(WialonObject):
@@ -39,43 +39,30 @@ class WialonResource(WialonObject):
         self.id = int(response.get("item", {}).get("id"))
         return response
 
-    def delete(self) -> dict[str, str]:
-        """
-        Deletes the resource in Wialon.
-
-        :raises AssertionError: If the Wialon resource id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
-        :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
-
-        """
-        assert self.id, "Wialon resource id wasn't set."
-        return self.session.wialon_api.item_delete_item(**{"itemId": self.id})
-
+    @requires_id
     def get_notification_data(
-        self, notification_ids: Sequence[int] | None = None
+        self, notification_ids: Iterable[int] | None = None
     ) -> dict[str, str]:
         """
         Returns the resource's notification data by id(s).
 
         Returns *all* notification data if ``notification_ids`` is :py:obj:`None`.
 
-        :param notification_ids: A sequence of notification id integers. Default is :py:obj:`None`.
-        :type notification_ids: :py:obj:`~typing.Sequence`[:py:obj:`int`] | :py:obj:`None`
+        :param notification_ids: An iterable of notification id integers. Default is :py:obj:`None`.
+        :type notification_ids: :py:obj:`~typing.Iterable`[:py:obj:`int`] | :py:obj:`None`
         :raises AssertionError: If the Wialon resource id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary of notification data.
         :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        assert self.id, "Wialon resource id wasn't set."
-        params = (
-            {"itemId": self.id, "col": notification_ids}
+        return self.session.wialon_api.resource_get_notification_data(
+            **{"itemId": self.id, "col": notification_ids}
             if notification_ids is not None
             else {"itemId": self.id}
         )
-        return self.session.wialon_api.resource_get_notification_data(**params)
 
+    @requires_id
     def get_driver_bindings(
         self,
         start: datetime,
@@ -102,7 +89,6 @@ class WialonResource(WialonObject):
         :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        assert self.id, "Wialon resource id wasn't set."
         if isinstance(unit_id, str) and not unit_id.isdigit():
             raise ValueError(f"'unit_id' can only contain digits, got '{unit_id}'.")
         if isinstance(driver_id, str) and not driver_id.isdigit():

@@ -1,7 +1,7 @@
-from collections.abc import Sequence
+from collections.abc import Iterable
 
 from terminusgps.wialon import flags
-from terminusgps.wialon.items.base import WialonObject
+from terminusgps.wialon.items.base import WialonObject, requires_id
 
 
 class WialonUnit(WialonObject):
@@ -38,22 +38,40 @@ class WialonUnit(WialonObject):
                 "dataFlags": flags.DataFlag.UNIT_BASE,
             }
         )
-        self.id = int(response.get("item").get("id"))
+        self.id = int(response.get("item", {}).get("id"))
         return response
 
-    def delete(self) -> dict[str, str]:
+    @requires_id
+    def activate(self) -> dict[str, str]:
         """
-        Deletes the unit in Wialon.
+        Activates the unit in Wialon.
 
         :raises AssertionError: If the Wialon unit id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
-        :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`
+        :returns: A dictionary with the unit's current status.
+        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        assert self.id, "Wialon unit id wasn't set."
-        return self.session.wialon_api.item_delete_item(**{"itemId": self.id})
+        return self.session.wialon_api.unit_set_active(
+            **{"itemId": self.id, "active": 1}
+        )
 
+    @requires_id
+    def deactivate(self) -> dict[str, str]:
+        """
+        Deactivates the unit in Wialon.
+
+        :raises AssertionError: If the Wialon unit id wasn't set.
+        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :returns: A dictionary with the unit's current status.
+        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+
+        """
+        return self.session.wialon_api.unit_set_active(
+            **{"itemId": self.id, "active": 0}
+        )
+
+    @requires_id
     def execute_command(
         self,
         command_name: str,
@@ -81,7 +99,6 @@ class WialonUnit(WialonObject):
         :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        assert self.id, "Wialon unit id wasn't set."
         return self.session.wialon_api.unit_exec_cmd(
             **{
                 "itemId": self.id,
@@ -93,56 +110,25 @@ class WialonUnit(WialonObject):
             }
         )
 
+    @requires_id
     def get_command_definitions(
-        self, command_ids: Sequence[int] | None = None
+        self, command_ids: Iterable[int] | None = None
     ) -> dict[str, str]:
         """
         Returns the unit's command definition data by id(s).
 
         Returns *all* command definition data if ``command_ids`` is :py:obj:`None`.
 
-        :param command_ids: A sequence of command id integers. Default is :py:obj:`None`.
-        :type command_ids: :py:obj:`~collections.abc.Sequence`[:py:obj:`int`] | :py:obj:`None`
+        :param command_ids: An iterable of command id integers. Default is :py:obj:`None`.
+        :type command_ids: :py:obj:`~collections.abc.Iterable`[:py:obj:`int`] | :py:obj:`None`
         :raises AssertionError: If the Wialon unit id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary of command definition data.
         :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
 
         """
-        assert self.id, "Wialon unit id wasn't set."
-        params = (
-            {"itemId": self.id, "col": command_ids}
+        return self.session.wialon_api.unit_get_command_definition_data(
+            **{"itemId": self.id, "col": command_ids}
             if command_ids is not None
             else {"itemId": self.id}
-        )
-        return self.session.wialon_api.unit_get_command_definition_data(**params)
-
-    def activate(self) -> dict[str, str]:
-        """
-        Activates the unit in Wialon.
-
-        :raises AssertionError: If the Wialon unit id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
-        :returns: A dictionary with the unit's current status.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
-
-        """
-        assert self.id, "Wialon unit id wasn't set."
-        return self.session.wialon_api.unit_set_active(
-            **{"itemId": self.id, "active": 1}
-        )
-
-    def deactivate(self) -> dict[str, str]:
-        """
-        Deactivates the unit in Wialon.
-
-        :raises AssertionError: If the Wialon unit id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
-        :returns: A dictionary with the unit's current status.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
-
-        """
-        assert self.id, "Wialon unit id wasn't set."
-        return self.session.wialon_api.unit_set_active(
-            **{"itemId": self.id, "active": 0}
         )

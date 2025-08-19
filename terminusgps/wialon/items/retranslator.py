@@ -47,16 +47,3 @@ class WialonRetranslator(WialonObject):
         )
         self.id = int(response.get("item", {}).get("id"))
         return response
-
-    def delete(self) -> dict[str, str]:
-        """
-        Deletes the retranslator in Wialon.
-
-        :raises AssertionError: If the Wialon retranslator id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
-        :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
-
-        """
-        assert self.id, "Wialon retranslator id wasn't set."
-        return self.session.wialon_api.item_delete_item(**{"itemId": self.id})
