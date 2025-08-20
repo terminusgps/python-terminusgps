@@ -3,6 +3,7 @@ import string
 import typing
 
 from terminusgps.wialon import flags
+from terminusgps.wialon.items import WialonObjectFactory
 from terminusgps.wialon.items.unit import WialonUnit
 from terminusgps.wialon.items.user import WialonUser
 from terminusgps.wialon.session import WialonSession
@@ -31,16 +32,16 @@ def get_hw_types(session: WialonSession) -> list[dict[str, str | int]]:
     return session.wialon_api.core_get_hw_types()
 
 
-def get_user_by_name(name: str, session: WialonSession) -> WialonUser | None:
+def get_user_by_name(name: str, session: WialonSession) -> WialonUser:
     """
-    Returns a Wialon user by name, if it exists.
+    Returns a Wialon user by name.
 
     :param name: A Wialon user name.
     :type name: :py:obj:`str`
     :param session: A valid Wialon API session.
     :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
-    :returns: A Wialon unit, if any.
-    :rtype: :py:obj:`~terminusgps.wialon.items.unit.WialonUnit` | :py:obj:`None`
+    :returns: A Wialon user.
+    :rtype: :py:obj:`~terminusgps.wialon.items.user.WialonUser` | :py:obj:`None`
 
     """
     response = session.wialon_api.core_search_items(
@@ -58,9 +59,14 @@ def get_user_by_name(name: str, session: WialonSession) -> WialonUser | None:
             "to": 0,
         }
     )
-    if int(response.get("totalItemsCount")) == 1:
-        if user_id := int(response.get("items")[0].get("id")):
-            return WialonUser(session, user_id)
+    num_items: int = int(response.get("totalItemsCount"))
+    if num_items > 1:
+        raise ValueError(f"Multiple users returned for '{name}'.")
+    elif num_items <= 0:
+        raise ValueError(f"Couldn't find a Wialon user named '{name}'.")
+
+    factory = WialonObjectFactory(session)
+    return factory.get("user", id=int(response.get("items")[0].get("id")))
 
 
 def get_carrier_names(session: WialonSession) -> list[str]:
@@ -97,9 +103,7 @@ def get_carrier_names(session: WialonSession) -> list[str]:
     return sorted(list(frozenset(carrier_names)))
 
 
-def get_units_by_carrier(
-    carrier_name: str, session: WialonSession
-) -> list[WialonUnit] | None:
+def get_units_by_carrier(carrier_name: str, session: WialonSession) -> list[WialonUnit]:
     """
     Returns a list of all units by telecommunications carrier company name.
 
@@ -115,22 +119,27 @@ def get_units_by_carrier(
         **{
             "spec": {
                 "itemsType": "avl_unit",
-                "propName": "rel_adminfield_name",
-                "propValueMask": f"carrier:{carrier_name}",
-                "sortType": "rel_adminfield_name",
-                "propType": "property",
+                "propName": "admin_fields,rel_adminfield_value",
+                "propValueMask": f"carrier,{carrier_name}",
+                "sortType": "admin_fields,admin_fields",
+                "propType": "propitemname",
             },
             "force": 0,
-            "flags": flags.DataFlag.UNIT_BASE,
+            "flags": flags.DataFlag.UNIT_BASE | flags.DataFlag.UNIT_ADMIN_FIELDS,
             "from": 0,
             "to": 0,
         }
     )
-    if units := response.get("items", []):
-        return [WialonUnit(session=session, id=int(unit.get("id"))) for unit in units]
+    num_items: int = int(response.get("totalItemsCount"))
+    if num_items <= 0:
+        raise ValueError(f"Couldn't find any units by carrier '{carrier_name}'.")
+
+    factory = WialonObjectFactory(session)
+    unit_ids = [int(unit.get("id")) for unit in response.get("items")]
+    return [factory.get("avl_unit", id) for id in unit_ids]
 
 
-def get_unit_by_iccid(iccid: str, session: WialonSession) -> WialonUnit | None:
+def get_unit_by_iccid(iccid: str, session: WialonSession) -> WialonUnit:
     """
     Returns a unit by iccid (SIM card #).
 
@@ -138,8 +147,8 @@ def get_unit_by_iccid(iccid: str, session: WialonSession) -> WialonUnit | None:
     :type iccid: :py:obj:`str`
     :param session: A valid Wialon API session.
     :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
-    :returns: The unit, if it was found.
-    :rtype: :py:obj:`~terminusgps.wialon.items.WialonUnit` | :py:obj:`None`
+    :returns: The Wialon unit.
+    :rtype: :py:obj:`~terminusgps.wialon.items.WialonUnit`
 
     """
     response = session.wialon_api.core_search_items(
@@ -157,9 +166,15 @@ def get_unit_by_iccid(iccid: str, session: WialonSession) -> WialonUnit | None:
             "to": 0,
         }
     )
-    if int(response.get("totalItemsCount", 0)) == 1:
-        if unit_id := int(response.get("items")[0].get("id")):
-            return WialonUnit(session, unit_id)
+
+    num_items: int = int(response.get("totalItemsCount"))
+    if num_items > 1:
+        raise ValueError(f"Multiple units returned for '{iccid}'.")
+    elif num_items <= 0:
+        raise ValueError(f"Couldn't find a Wialon unit with iccid '{iccid}'.")
+
+    factory = WialonObjectFactory(session)
+    return factory.get("avl_unit", id=int(response.get("items")[0].get("id")))
 
 
 def get_unit_by_imei(imei: int | str, session: WialonSession) -> WialonUnit | None:
@@ -193,9 +208,14 @@ def get_unit_by_imei(imei: int | str, session: WialonSession) -> WialonUnit | No
             "to": 0,
         }
     )
-    if int(response.get("totalItemsCount", 0)) == 1:
-        if unit_id := response.get("items")[0].get("id"):
-            return WialonUnit(session, unit_id)
+    num_items: int = int(response.get("totalItemsCount"))
+    if num_items > 1:
+        raise ValueError(f"Multiple units returned for IMEI #: '{imei}'.")
+    elif num_items <= 0:
+        raise ValueError(f"Couldn't find a Wialon unit with IMEI #: '{imei}'.")
+
+    factory = WialonObjectFactory(session)
+    return factory.get("avl_unit", id=int(response.get("items")[0].get("id")))
 
 
 def get_vin_info(vin_number: str, session: WialonSession) -> dict[str, typing.Any]:
