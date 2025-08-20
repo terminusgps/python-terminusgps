@@ -1,3 +1,5 @@
+from typing import Literal, overload
+
 from terminusgps.wialon.items.account import WialonAccount
 from terminusgps.wialon.items.base import WialonObject
 from terminusgps.wialon.items.resource import WialonResource
@@ -26,6 +28,39 @@ class WialonObjectFactory:
     def __init__(self, session: WialonSession) -> None:
         # TODO: Add session refreshing
         self.session = session
+
+    @overload
+    def create(self, items_type: Literal["user"], *args, **kwargs) -> WialonUser: ...
+
+    @overload
+    def create(
+        self, items_type: Literal["account"], *args, **kwargs
+    ) -> WialonAccount: ...
+
+    @overload
+    def create(
+        self, items_type: Literal["avl_resource"], *args, **kwargs
+    ) -> WialonResource: ...
+
+    @overload
+    def create(
+        self, items_type: Literal["avl_retranslator"], *args, **kwargs
+    ) -> WialonRetranslator: ...
+
+    @overload
+    def create(
+        self, items_type: Literal["avl_route"], *args, **kwargs
+    ) -> WialonRoute: ...
+
+    @overload
+    def create(
+        self, items_type: Literal["avl_unit"], *args, **kwargs
+    ) -> WialonUnit: ...
+
+    @overload
+    def create(
+        self, items_type: Literal["avl_unit_group"], *args, **kwargs
+    ) -> WialonUnitGroup: ...
 
     def create(self, items_type: str, *args, **kwargs) -> WialonObject:
         """Creates a Wialon object in Wialon and returns its Python equivalent."""
