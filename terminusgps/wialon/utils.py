@@ -83,13 +83,13 @@ def get_carrier_names(session: WialonSession) -> list[str]:
         **{
             "spec": {
                 "itemsType": "avl_unit",
-                "propName": "rel_adminfield_name,rel_adminfield_value",
+                "propName": "admin_fields,rel_adminfield_value",
                 "propValueMask": "carrier,*",
-                "sortType": "sys_id,sys_id",
-                "propType": "property",
+                "sortType": "admin_fields,admin_fields",
+                "propType": "propitemname",
             },
             "force": 0,
-            "flags": flags.DataFlag.UNIT_BASE + flags.DataFlag.UNIT_ADMIN_FIELDS,
+            "flags": flags.DataFlag.UNIT_BASE | flags.DataFlag.UNIT_ADMIN_FIELDS,
             "from": 0,
             "to": 0,
         }
@@ -155,13 +155,13 @@ def get_unit_by_iccid(iccid: str, session: WialonSession) -> WialonUnit:
         **{
             "spec": {
                 "itemsType": "avl_unit",
-                "propName": "rel_adminfield_name",
-                "propValueMask": f"iccid:{iccid}",
-                "sortType": "rel_adminfield_name",
-                "propType": "property",
+                "propName": "admin_fields,rel_adminfield_value",
+                "propValueMask": f"iccid,{iccid}",
+                "sortType": "admin_fields,admin_fields",
+                "propType": "propitemname",
             },
             "force": 0,
-            "flags": flags.DataFlag.UNIT_BASE,
+            "flags": flags.DataFlag.UNIT_BASE | flags.DataFlag.UNIT_ADMIN_FIELDS,
             "from": 0,
             "to": 0,
         }
