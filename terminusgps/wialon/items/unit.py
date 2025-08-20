@@ -132,3 +132,13 @@ class WialonUnit(WialonObject):
             if command_ids is not None
             else {"itemId": self.id}
         )
+
+    @requires_id
+    def get_imei(self) -> str:
+        return str(
+            self.session.wialon_api.core_search_item(
+                **{"id": self.id, "flags": flags.DataFlag.UNIT_ADVANCED_PROPERTIES}
+            )
+            .get("item", {})
+            .get("uid")
+        )
