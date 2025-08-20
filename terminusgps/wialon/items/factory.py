@@ -33,13 +33,24 @@ class WialonObjectFactory:
     def create(self, items_type: Literal["user"], *args, **kwargs) -> WialonUser: ...
 
     @overload
+    def get(self, items_type: Literal["user"], id: int | str) -> WialonUser: ...
+
+    @overload
     def create(
         self, items_type: Literal["account"], *args, **kwargs
     ) -> WialonAccount: ...
 
     @overload
+    def get(self, items_type: Literal["account"], id: int | str) -> WialonAccount: ...
+
+    @overload
     def create(
         self, items_type: Literal["avl_resource"], *args, **kwargs
+    ) -> WialonResource: ...
+
+    @overload
+    def get(
+        self, items_type: Literal["avl_resource"], id: int | str
     ) -> WialonResource: ...
 
     @overload
@@ -48,9 +59,17 @@ class WialonObjectFactory:
     ) -> WialonRetranslator: ...
 
     @overload
+    def get(
+        self, items_type: Literal["avl_retranslator"], id: int | str
+    ) -> WialonRetranslator: ...
+
+    @overload
     def create(
         self, items_type: Literal["avl_route"], *args, **kwargs
     ) -> WialonRoute: ...
+
+    @overload
+    def get(self, items_type: Literal["avl_route"], id: int | str) -> WialonRoute: ...
 
     @overload
     def create(
@@ -58,8 +77,16 @@ class WialonObjectFactory:
     ) -> WialonUnit: ...
 
     @overload
+    def get(self, items_type: Literal["avl_unit"], id: int | str) -> WialonUnit: ...
+
+    @overload
     def create(
         self, items_type: Literal["avl_unit_group"], *args, **kwargs
+    ) -> WialonUnitGroup: ...
+
+    @overload
+    def get(
+        self, items_type: Literal["avl_unit_group"], id: int | str
     ) -> WialonUnitGroup: ...
 
     def create(self, items_type: str, *args, **kwargs) -> WialonObject:
