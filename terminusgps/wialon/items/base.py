@@ -1,4 +1,4 @@
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from functools import wraps
 
 from terminusgps.wialon import constants, flags
@@ -16,7 +16,7 @@ def requires_id(meth):
     return wrapper
 
 
-class WialonObject:
+class WialonObject(ABC):
     """Base class for Wialon objects in a Wialon session."""
 
     def __init__(self, session: WialonSession, id: int | str | None = None) -> None:

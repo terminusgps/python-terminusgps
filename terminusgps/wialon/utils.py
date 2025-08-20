@@ -2,9 +2,10 @@ import secrets
 import string
 import typing
 
-from . import flags
-from .items import WialonUnit
-from .session import WialonSession
+from terminusgps.wialon import flags
+from terminusgps.wialon.items.unit import WialonUnit
+from terminusgps.wialon.items.user import WialonUser
+from terminusgps.wialon.session import WialonSession
 
 
 def get_hw_types(session: WialonSession) -> list[dict[str, str | int]]:
@@ -30,7 +31,7 @@ def get_hw_types(session: WialonSession) -> list[dict[str, str | int]]:
     return session.wialon_api.core_get_hw_types()
 
 
-def get_user_by_name(name: str, session: WialonSession) -> WialonUnit | None:
+def get_user_by_name(name: str, session: WialonSession) -> WialonUser | None:
     """
     Returns a Wialon user by name, if it exists.
 
@@ -58,8 +59,8 @@ def get_user_by_name(name: str, session: WialonSession) -> WialonUnit | None:
         }
     )
     if int(response.get("totalItemsCount")) == 1:
-        if unit_id := int(response.get("items")[0].get("id")):
-            return WialonUnit(session, unit_id)
+        if user_id := int(response.get("items")[0].get("id")):
+            return WialonUser(session, user_id)
 
 
 def get_carrier_names(session: WialonSession) -> list[str]:
