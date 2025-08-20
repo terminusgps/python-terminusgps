@@ -1,4 +1,5 @@
 from terminusgps.wialon.items import (
+    WialonAccount,
     WialonResource,
     WialonRetranslator,
     WialonRoute,
@@ -10,13 +11,14 @@ from terminusgps.wialon.items.base import WialonObject
 from terminusgps.wialon.session import WialonSession
 
 WIALON_ITEM_MAP = {
+    "account": WialonAccount,
     "avl_hw": None,
     "avl_resource": WialonResource,
     "avl_retranslator": WialonRetranslator,
+    "avl_route": WialonRoute,
     "avl_unit": WialonUnit,
     "avl_unit_group": WialonUnitGroup,
     "user": WialonUser,
-    "avl_route": WialonRoute,
 }
 
 
