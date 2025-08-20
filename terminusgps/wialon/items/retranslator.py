@@ -3,15 +3,18 @@ from typing import TypedDict
 from terminusgps.wialon import flags
 from terminusgps.wialon.items.base import WialonObject
 
-
-class WialonRetranslatorConfiguration(TypedDict):
-    protocol: str
-    server: str
-    port: int
-    auth: str
-    ssl: int
-    debug: int
-    v6type: int
+WialonRetranslatorConfiguration = TypedDict(
+    "WialonRetranslatorConfiguration",
+    {
+        "protocol": str,
+        "server": str,
+        "port": int,
+        "auth": str,
+        "ssl": int,
+        "debug": int,
+        "v6type": int,
+    },
+)
 
 
 class WialonRetranslator(WialonObject):
