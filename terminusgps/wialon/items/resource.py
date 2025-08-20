@@ -102,3 +102,11 @@ class WialonResource(WialonObject):
                 "timeTo": stop.timestamp(),
             }
         )
+
+    @requires_id
+    def get_creator_id(self) -> str:
+        return str(
+            self.session.wialon_api.core_search_item(
+                **{"id": self.id, "flags": flags.DataFlag.RESOURCE_BILLING_PROPERTIES}
+            ).get("crt")
+        )
