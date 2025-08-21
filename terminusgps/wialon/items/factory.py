@@ -112,4 +112,5 @@ class WialonObjectFactory:
         return obj
 
     def _retrieve_wialon_obj(self, cls, id) -> WialonObject:
-        return cls(session=self.session, id=int(id))
+        obj = cls(session=self.session, id=int(id))
+        return obj

@@ -104,9 +104,11 @@ class WialonResource(WialonObject):
         )
 
     @requires_id
-    def get_creator_id(self) -> str:
-        return str(
+    def get_creator_id(self) -> str | None:
+        return (
             self.session.wialon_api.core_search_item(
                 **{"id": self.id, "flags": flags.DataFlag.RESOURCE_BILLING_PROPERTIES}
-            ).get("crt")
+            )
+            .get("item", {})
+            .get("crt")
         )
