@@ -30,26 +30,26 @@ def validate_e164_phone_number(value: str) -> None:
             code="invalid",
             params={"value": value},
         )
-    if len(value) < 11:
+    if len(value) < 12:
         raise ValidationError(
             _(
-                "E.164 phone number cannot be less than 11 characters in length, got %(len)s."
+                "E.164 phone number cannot be less than 12 characters in length, got %(len)s."
             ),
             code="invalid",
             params={"len": len(value)},
         )
-    if len(value) > 16:
+    if len(value) > 15:
         raise ValidationError(
             _(
-                "E.164 phone number cannot be greater than 16 characters in length, got %(len)s."
+                "E.164 phone number cannot be greater than 15 characters in length, got %(len)s."
             ),
             code="invalid",
             params={"len": len(value)},
         )
 
-    country_code: str = value[:-10]
-    area_code: str = value[-10:-7]
-    subscriber_number: str = value[-7:]
+    country_code = value[:-10]
+    area_code = value[-10:-7]
+    subscriber_number = value[-7:]
 
     if len(country_code) < 2 or len(country_code) > 5:
         raise ValidationError(
@@ -77,7 +77,7 @@ def validate_e164_phone_number(value: str) -> None:
         )
     if not area_code.isdigit():
         raise ValidationError(
-            _("E.164 phone number must have a valid area code, got '%(area_code)s'"),
+            _("E.164 phone number must have a valid area code, got '%(area_code)s'."),
             code="invalid",
             params={"area_code": area_code},
         )
@@ -92,7 +92,7 @@ def validate_e164_phone_number(value: str) -> None:
     if not subscriber_number.isdigit():
         raise ValidationError(
             _(
-                "E.164 phone number must have a valid subscriber number, got '%(subscriber_number)s'"
+                "E.164 phone number must have a valid subscriber number, got '%(subscriber_number)s'."
             ),
             code="invalid",
             params={"subscriber_number": subscriber_number},
