@@ -30,10 +30,10 @@ def validate_e164_phone_number(value: str) -> None:
             code="invalid",
             params={"value": value},
         )
-    if len(value) < 13:
+    if len(value) < 11:
         raise ValidationError(
             _(
-                "E.164 phone number cannot be less than 13 characters in length, got %(len)s."
+                "E.164 phone number cannot be less than 11 characters in length, got %(len)s."
             ),
             code="invalid",
             params={"len": len(value)},
