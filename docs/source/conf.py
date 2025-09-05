@@ -5,8 +5,6 @@
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
-from sphinxawesome_theme.postprocess import Icons
-
 project = "python-terminusgps"
 copyright = "2025, Terminus GPS, LLC"
 author = "Terminus GPS, LLC"
@@ -39,7 +37,6 @@ exclude_patterns = []
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "sphinxawesome_theme"
-html_permalinks_icon = Icons.permalinks_icon
 pygments_style = "sas"
 pygments_style_dark = "lightbulb"
 html_static_path = ["_static"]
