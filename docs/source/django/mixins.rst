@@ -3,7 +3,6 @@ Mixins
 
 .. autoclass:: terminusgps.django.mixins.HtmxTemplateResponseMixin
    :members:
-   :autoclasstoc:
 
 =====
 Usage
