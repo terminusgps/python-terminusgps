@@ -19,7 +19,6 @@ markupsafe==3.0.2
 more-itertools==10.8.0
 packaging==25.0
 pygments==2.19.2
--e file:///home/blake/Projects/python-terminusgps
 python-wialon==1.2.4
 pyxb-x==1.2.6.3
 requests==2.32.5
