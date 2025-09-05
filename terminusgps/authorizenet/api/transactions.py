@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 
 from authorizenet import apicontractsv1, apicontrollers
 from lxml.objectify import ObjectifiedElement
@@ -10,7 +10,9 @@ __all__ = []
 
 
 def get_settled_batch_list(
-    start: datetime, end: datetime, include_statistics: bool = False
+    start: datetime.datetime,
+    end: datetime.datetime,
+    include_statistics: bool = False,
 ) -> ObjectifiedElement | None:
     """
     `getSettledBatchListRequest <https://developer.authorize.net/api/reference/index.html#transaction-reporting-get-settled-batch-list>`_.
