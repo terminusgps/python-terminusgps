@@ -32,7 +32,10 @@ def validate_credit_card_number(value: str) -> None:
 
     checksum = 0
     checksum += sum(
-        [digit * 2 if digit * 2 <= 9 else (digit * 2) % 9 or 9 for digit in even_digits]
+        [
+            digit * 2 if digit * 2 <= 9 else (digit * 2) % 9 or 9
+            for digit in even_digits
+        ]
     )
     checksum += sum([digit for digit in odd_digits])
 
@@ -61,7 +64,9 @@ def validate_credit_card_expiry_month(value: str) -> None:
         )
     if not int(value) > 0:
         raise ValidationError(
-            _("Expiration month can only be a positive value, got '%(value)s'."),
+            _(
+                "Expiration month can only be a positive value, got '%(value)s'."
+            ),
             code="invalid",
             params={"value": value},
         )
@@ -97,7 +102,9 @@ def validate_credit_card_expiry_year(value: str) -> None:
         )
     if not int(value) > 0:
         raise ValidationError(
-            _("Expiration year can only be a positive value, got '%(value)s'."),
+            _(
+                "Expiration year can only be a positive value, got '%(value)s'."
+            ),
             code="invalid",
             params={"value": value},
         )
