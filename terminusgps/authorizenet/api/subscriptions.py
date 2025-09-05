@@ -21,7 +21,7 @@ def create_subscription(
 
     :param subscription: An Authorizenet ARBSubscriptionType element.
     :type subscription: :py:obj:`~authorizenet.apicontractsv1.ARBSubscriptionType`
-    :returns: An Authorizenet ARBCreateSubscription response.
+    :returns: An Authorizenet ARBCreateSubscriptionResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
@@ -42,17 +42,17 @@ def get_subscription(
 
     :param subscription_id: An Authorizenet subscription id.
     :type subscription_id: :py:obj:`int`
-    :param include_transactions: Whether or not to include the subscription transaction list in the response. Default is :py:obj:`True`.
+    :param include_transactions: Whether to include the subscription transaction list in the response. Default is :py:obj:`True`.
     :type include_transactions: :py:obj:`bool`
-    :returns: An Authorizenet ARBGetSubscription response.
+    :returns: An Authorizenet ARBGetSubscriptionResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
-    request = apicontractsv1.ARBGetSubscriptionRequest(
-        merchantAuthentication=get_merchant_auth(),
-        subscriptionId=str(subscription_id),
-        includeTransactions=str(include_transactions).lower(),
-    )
+    request = apicontractsv1.ARBGetSubscriptionRequest()
+    request.merchantAuthentication = get_merchant_auth()
+    request.subscriptionId = str(subscription_id)
+    request.includeTransactions = str(include_transactions).lower()
+
     return execute_controller(
         apicontrollers.ARBGetSubscriptionController(request)
     )
@@ -64,38 +64,38 @@ def get_subscription_status(subscription_id: int) -> ObjectifiedElement | None:
 
     :param subscription_id: An Authorizenet subscription id.
     :type subscription_id: :py:obj:`int`
-    :returns: An Authorizenet ARBGetSubscriptionStatus response.
+    :returns: An Authorizenet ARBGetSubscriptionStatusResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
-    request = apicontractsv1.ARBGetSubscriptionStatusRequest(
-        merchantAuthentication=get_merchant_auth(),
-        subscriptionId=str(subscription_id),
-    )
+    request = apicontractsv1.ARBGetSubscriptionStatusRequest()
+    request.merchantAuthentication = get_merchant_auth()
+    request.subscriptionId = str(subscription_id)
+
     return execute_controller(
         apicontrollers.ARBGetSubscriptionStatusController(request)
     )
 
 
 def update_subscription(
-    subscription_id: int, subscription_obj: apicontractsv1.ARBSubscriptionType
+    subscription_id: int, subscription: apicontractsv1.ARBSubscriptionType
 ) -> ObjectifiedElement | None:
     """
     `ARBUpdateSubscriptionRequest <https://developer.authorize.net/api/reference/index.html#recurring-billing-update-a-subscription>`_.
 
     :param subscription_id: An Authorizenet subscription id.
     :type subscription_id: :py:obj:`int`
-    :param subscription_obj: An Authorizenet subscription object.
-    :type subscription_obj: :py:obj:`~authorizenet.apicontractsv1.ARBSubscriptionType`
-    :returns: An Authorizenet ARBUpdateSubscription response.
+    :param subscription: An Authorizenet ARBSubscriptionType element.
+    :type subscription: :py:obj:`~authorizenet.apicontractsv1.ARBSubscriptionType`
+    :returns: An Authorizenet ARBUpdateSubscriptionResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
-    request = apicontractsv1.ARBUpdateSubscriptionRequest(
-        merchantAuthentication=get_merchant_auth(),
-        subscriptionId=str(subscription_id),
-        subscription=subscription_obj,
-    )
+    request = apicontractsv1.ARBUpdateSubscriptionRequest()
+    request.merchantAuthentication = get_merchant_auth()
+    request.subscriptionId = str(subscription_id)
+    request.subscription = subscription
+
     return execute_controller(
         apicontrollers.ARBUpdateSubscriptionController(request)
     )
@@ -107,14 +107,14 @@ def cancel_subscription(subscription_id: int) -> ObjectifiedElement | None:
 
     :param subscription_id: An Authorizenet subscription id.
     :type subscription_id: :py:obj:`int`
-    :returns: An Authorizenet ARBCancelSubscription response.
+    :returns: An Authorizenet ARBCancelSubscriptionResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
-    request = apicontractsv1.ARBCancelSubscriptionRequest(
-        merchantAuthentication=get_merchant_auth(),
-        subscriptionId=str(subscription_id),
-    )
+    request = apicontractsv1.ARBCancelSubscriptionRequest()
+    request.merchantAuthentication = get_merchant_auth()
+    request.subscriptionId = str(subscription_id)
+
     return execute_controller(
         apicontrollers.ARBCancelSubscriptionController(request)
     )

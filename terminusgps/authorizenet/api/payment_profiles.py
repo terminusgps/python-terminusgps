@@ -19,7 +19,7 @@ __all__ = [
 def create_customer_payment_profile(
     customer_profile_id: int,
     payment_profile: apicontractsv1.customerPaymentProfileType,
-    validate: bool = False,
+    validate: bool = True,
 ) -> ObjectifiedElement | None:
     """
     `createCustomerPaymentProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-create-customer-payment-profile>`_.
@@ -28,7 +28,8 @@ def create_customer_payment_profile(
     :type customer_profile_id: :py:obj:`int`
     :param payment_profile: An Authorizenet payment profile element.
     :type payment_profile: :py:obj:`~authorizenet.apicontractsv1.customerPaymentProfileType`
-    :returns: An Authorizenet createCustomerPaymentProfile response.
+    :param validate: Whether to validate the payment profile. Default is :py:obj:`True`.
+    :returns: An Authorizenet createCustomerPaymentProfileResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
@@ -58,7 +59,7 @@ def get_customer_payment_profile(
     :type payment_profile_id: :py:obj:`int`
     :param include_issuer_info: Whether to include issuer info in the response. Default is :py:obj:`False`.
     :type include_issuer_info: :py:obj:`bool`
-    :returns: An Authorizenet getCustomerPaymentProfile response.
+    :returns: An Authorizenet getCustomerPaymentProfileResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
@@ -81,9 +82,9 @@ def validate_customer_payment_profile(
 
     :param customer_profile_id: An Authorizenet customer profile id.
     :type customer_profile_id: :py:obj:`int`
-    :param customer_payment_profile_id: An Authorizenet customer payment profile id.
-    :type customer_payment_profile_id: :py:obj:`int`
-    :returns: An Authorizenet validateCustomerPaymentProfile response.
+    :param payment_profile_id: An Authorizenet customer payment profile id.
+    :type payment_profile_id: :py:obj:`int`
+    :returns: An Authorizenet validateCustomerPaymentProfileResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
@@ -102,7 +103,7 @@ def update_customer_payment_profile(
     customer_profile_id: int,
     payment_profile_id: int,
     payment_profile: apicontractsv1.customerPaymentProfileType,
-    validate: bool = False,
+    validate: bool = True,
 ) -> ObjectifiedElement | None:
     """
     `updateCustomerPaymentProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-update-customer-payment-profile>`_.
@@ -113,9 +114,9 @@ def update_customer_payment_profile(
     :type payment_profile_id: :py:obj:`int`
     :param payment_profile: An Authorizenet payment profile element.
     :type payment_profile: :py:obj:`~authorizenet.apicontractsv1.customerPaymentProfileType`
-    :param validate: Whether to validate the updated payment profile. Default is :py:obj:`False`.
+    :param validate: Whether to validate the payment profile. Default is :py:obj:`True`.
     :type validate: :py:obj:`bool`
-    :returns: An Authorizenet updateCustomerPaymentProfile response.
+    :returns: An Authorizenet updateCustomerPaymentProfileResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
@@ -144,7 +145,7 @@ def delete_customer_payment_profile(
     :type customer_profile_id: :py:obj:`int`
     :param payment_profile_id: An Authorizenet customer payment profile id.
     :type payment_profile_id: :py:obj:`int`
-    :returns: An Authorizenet deleteCustomerPaymentProfile response.
+    :returns: An Authorizenet deleteCustomerPaymentProfileResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """

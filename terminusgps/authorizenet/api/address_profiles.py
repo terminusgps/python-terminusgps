@@ -15,18 +15,18 @@ __all__ = [
 def create_customer_shipping_address(
     customer_profile_id: int,
     address: apicontractsv1.customerAddressType,
-    default: bool = True,
+    default: bool = False,
 ) -> ObjectifiedElement | None:
     """
     `createCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-create-customer-shipping-address>`_.
 
     :param customer_profile_id: An Authorizenet customer profile id.
     :type customer_profile_id: :py:obj:`int`
-    :param elem: An Authorizenet customer address element.
-    :type elem: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
-    :param default: Whether or not to mark the new shipping address as default. Default is :py:obj:`True`.
+    :param address: An Authorizenet customer address element.
+    :type address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
+    :param default: Whether to set the address profile as default. Default is :py:obj:`False`.
     :type default: :py:obj:`bool`
-    :returns: An Authorizenet createCustomerShippingAddress response.
+    :returns: An Authorizenet createCustomerShippingAddressResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
@@ -51,7 +51,7 @@ def get_customer_shipping_address(
     :type customer_profile_id: :py:obj:`int`
     :param address_profile_id: An Authorizenet customer address profile id.
     :type address_profile_id: :py:obj:`int`
-    :returns: An Authorizenet getCustomerShippingAddress response.
+    :returns: An Authorizenet getCustomerShippingAddressResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
@@ -77,9 +77,9 @@ def update_customer_shipping_address(
     :type customer_profile_id: :py:obj:`int`
     :param address: An Authorizenet customer address element.
     :type address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
-    :param default: Whether or not to mark the new shipping address as default. Default is :py:obj:`False`.
+    :param default: Whether to set the address profile as default. Default is :py:obj:`False`.
     :type default: :py:obj:`bool`
-    :returns: An Authorizenet updateCustomerShippingAddress response.
+    :returns: An Authorizenet updateCustomerShippingAddressResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """

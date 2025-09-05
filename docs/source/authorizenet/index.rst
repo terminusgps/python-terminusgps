@@ -7,10 +7,9 @@ Authorizenet API
     :maxdepth: 2
     :caption: Contents:
 
+    api.rst
     auth.rst
     constants.rst
     controllers.rst
-    profiles.rst
-    subscriptions.rst
-    utils.rst
+    usage.rst
     validators.rst

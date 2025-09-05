@@ -21,10 +21,4 @@ Most `Wialon <https://wialon.com/>`_ objects have been modeled:
     :maxdepth: 2
     :caption: Contents:
 
-    constants.rst
-    errors.rst
-    examples.rst
-    flags.rst
-    items.rst
     session.rst
-    utils.rst

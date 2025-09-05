@@ -25,7 +25,7 @@ def create_customer_profile(
     :type email: :py:obj:`str`
     :param description: An optional customer description.
     :type description: :py:obj:`str`
-    :returns: An Authorizenet createCustomerProfile response.
+    :returns: An Authorizenet createCustomerProfileResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
@@ -49,9 +49,9 @@ def get_customer_profile(
 
     :param customer_profile_id: An Authorizenet customer profile id.
     :type customer_profile_id: :py:obj:`int`
-    :param include_issuer_info: Whether or not to include issuer info in the response. Default is :py:obj:`False`.
+    :param include_issuer_info: Whether to include issuer info in the response. Default is :py:obj:`False`.
     :type include_issuer_info: :py:obj:`bool`
-    :returns: An Authorizenet getCustomerProfile response.
+    :returns: An Authorizenet getCustomerProfileResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
@@ -69,7 +69,7 @@ def get_customer_profile_ids() -> ObjectifiedElement | None:
     """
     `getCustomerProfileIdsRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-profile-ids>`_.
 
-    :returns: An Authorizenet getCustomerProfileIds response.
+    :returns: An Authorizenet getCustomerProfileIdsResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
@@ -89,7 +89,7 @@ def update_customer_profile(
 
     :param profile: An Authorizenet customer profile ex element.
     :type profile: :py:obj:`~authorizenet.apicontractsv1.customerProfileExType`
-    :returns: An Authorizenet updateCustomerProfile response.
+    :returns: An Authorizenet updateCustomerProfileResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
@@ -110,7 +110,7 @@ def delete_customer_profile(
 
     :param customer_profile_id: An Authorizenet customer profile id.
     :type customer_profile_id: :py:obj:`int`
-    :returns: An Authorizenet deleteCustomerProfile response.
+    :returns: An Authorizenet deleteCustomerProfileResponse element.
     :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
 
     """
