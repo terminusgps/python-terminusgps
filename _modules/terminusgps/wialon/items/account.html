@@ -179,231 +179,235 @@
 </span><span id="line-10">
 <div class="viewcode-block" id="WialonAccount.create">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.account.WialonAccount.create">[docs]</a>
-</span><span id="line-11">    <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">billing_plan</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-12"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-13"><span class="sd">        Creates the account in Wialon and sets its id.</span>
-</span><span id="line-14">
-</span><span id="line-15"><span class="sd">        :param resource_id: A Wialon resource id.</span>
-</span><span id="line-16"><span class="sd">        :type creator_id: :py:obj:`int` | :py:obj:`str`</span>
-</span><span id="line-17"><span class="sd">        :param billing_plan: A Wialon account billing plan.</span>
-</span><span id="line-18"><span class="sd">        :type billing_plan: :py:obj:`str`</span>
-</span><span id="line-19"><span class="sd">        :raises ValueError: If ``resource_id`` wasn&#39;t a digit.</span>
-</span><span id="line-20"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-21"><span class="sd">        :returns: A Wialon object dictionary.</span>
-</span><span id="line-22"><span class="sd">        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]</span>
-</span><span id="line-23">
-</span><span id="line-24"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-25">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resource_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">resource_id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
-</span><span id="line-26">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;resource_id&#39; must be a digit, got &#39;</span><span class="si">{</span><span class="n">resource_id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
-</span><span id="line-27">        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_create_account</span><span class="p">(</span>
-</span><span id="line-28">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="n">resource_id</span><span class="p">,</span> <span class="s2">&quot;plan&quot;</span><span class="p">:</span> <span class="n">billing_plan</span><span class="p">}</span>
-</span><span id="line-29">        <span class="p">)</span>
-</span><span id="line-30">        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">resource_id</span>
-</span><span id="line-31">        <span class="k">return</span> <span class="n">response</span></div>
+</span><span id="line-11">    <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span>
+</span><span id="line-12">        <span class="bp">self</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">billing_plan</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="line-13">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-14"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-15"><span class="sd">        Creates the account in Wialon and sets its id.</span>
+</span><span id="line-16">
+</span><span id="line-17"><span class="sd">        :param resource_id: A Wialon resource id.</span>
+</span><span id="line-18"><span class="sd">        :type creator_id: int | str</span>
+</span><span id="line-19"><span class="sd">        :param billing_plan: A Wialon account billing plan.</span>
+</span><span id="line-20"><span class="sd">        :type billing_plan: str</span>
+</span><span id="line-21"><span class="sd">        :raises ValueError: If ``resource_id`` wasn&#39;t a digit.</span>
+</span><span id="line-22"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-23"><span class="sd">        :returns: A Wialon object dictionary.</span>
+</span><span id="line-24"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-25">
+</span><span id="line-26"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-27">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resource_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">resource_id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+</span><span id="line-28">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span><span id="line-29">                <span class="sa">f</span><span class="s2">&quot;&#39;resource_id&#39; must be a digit, got &#39;</span><span class="si">{</span><span class="n">resource_id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+</span><span id="line-30">            <span class="p">)</span>
+</span><span id="line-31">        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_create_account</span><span class="p">(</span>
+</span><span id="line-32">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="n">resource_id</span><span class="p">,</span> <span class="s2">&quot;plan&quot;</span><span class="p">:</span> <span class="n">billing_plan</span><span class="p">}</span>
+</span><span id="line-33">        <span class="p">)</span>
+</span><span id="line-34">        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">resource_id</span>
+</span><span id="line-35">        <span class="k">return</span> <span class="n">response</span></div>
 
-</span><span id="line-32">
+</span><span id="line-36">
 <div class="viewcode-block" id="WialonAccount.delete">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.account.WialonAccount.delete">[docs]</a>
-</span><span id="line-33">    <span class="nd">@override</span>
-</span><span id="line-34">    <span class="nd">@requires_id</span>
-</span><span id="line-35">    <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reasons</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-36"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-37"><span class="sd">        Deletes the account in Wialon.</span>
-</span><span id="line-38">
-</span><span id="line-39"><span class="sd">        :param reasons: An iterable of reason strings.</span>
-</span><span id="line-40"><span class="sd">        :type reasons: :py:obj:`~collections.abc.Iterable`[:py:obj:`str`]</span>
-</span><span id="line-41"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
-</span><span id="line-42"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-43"><span class="sd">        :returns: An empty dictionary.</span>
-</span><span id="line-44"><span class="sd">        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]</span>
-</span><span id="line-45">
-</span><span id="line-46"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-47">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_delete_account</span><span class="p">(</span>
-</span><span id="line-48">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;reasons&quot;</span><span class="p">:</span> <span class="n">reasons</span><span class="p">}</span>
-</span><span id="line-49">            <span class="k">if</span> <span class="n">reasons</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-</span><span id="line-50">            <span class="k">else</span> <span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">}</span>
-</span><span id="line-51">        <span class="p">)</span></div>
+</span><span id="line-37">    <span class="nd">@override</span>
+</span><span id="line-38">    <span class="nd">@requires_id</span>
+</span><span id="line-39">    <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reasons</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-40"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-41"><span class="sd">        Deletes the account in Wialon.</span>
+</span><span id="line-42">
+</span><span id="line-43"><span class="sd">        :param reasons: An iterable of reason strings. Default is :py:obj:`None`.</span>
+</span><span id="line-44"><span class="sd">        :type reasons: ~collections.abc.Iterable[str] | None</span>
+</span><span id="line-45"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
+</span><span id="line-46"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-47"><span class="sd">        :returns: An empty dictionary.</span>
+</span><span id="line-48"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-49">
+</span><span id="line-50"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-51">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_delete_account</span><span class="p">(</span>
+</span><span id="line-52">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;reasons&quot;</span><span class="p">:</span> <span class="n">reasons</span><span class="p">}</span>
+</span><span id="line-53">            <span class="k">if</span> <span class="n">reasons</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+</span><span id="line-54">            <span class="k">else</span> <span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">}</span>
+</span><span id="line-55">        <span class="p">)</span></div>
 
-</span><span id="line-52">
+</span><span id="line-56">
 <div class="viewcode-block" id="WialonAccount.activate">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.account.WialonAccount.activate">[docs]</a>
-</span><span id="line-53">    <span class="nd">@requires_id</span>
-</span><span id="line-54">    <span class="k">def</span><span class="w"> </span><span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-55"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-56"><span class="sd">        Enables the account in Wialon.</span>
-</span><span id="line-57">
-</span><span id="line-58"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
-</span><span id="line-59"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-60"><span class="sd">        :returns: An empty dictionary.</span>
-</span><span id="line-61"><span class="sd">        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]</span>
-</span><span id="line-62">
-</span><span id="line-63"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-64">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_enable_account</span><span class="p">(</span>
-</span><span id="line-65">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;enable&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
-</span><span id="line-66">        <span class="p">)</span></div>
+</span><span id="line-57">    <span class="nd">@requires_id</span>
+</span><span id="line-58">    <span class="k">def</span><span class="w"> </span><span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-59"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-60"><span class="sd">        Enables the account in Wialon.</span>
+</span><span id="line-61">
+</span><span id="line-62"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
+</span><span id="line-63"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-64"><span class="sd">        :returns: An empty dictionary.</span>
+</span><span id="line-65"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-66">
+</span><span id="line-67"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-68">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_enable_account</span><span class="p">(</span>
+</span><span id="line-69">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;enable&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+</span><span id="line-70">        <span class="p">)</span></div>
 
-</span><span id="line-67">
+</span><span id="line-71">
 <div class="viewcode-block" id="WialonAccount.deactivate">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.account.WialonAccount.deactivate">[docs]</a>
-</span><span id="line-68">    <span class="nd">@requires_id</span>
-</span><span id="line-69">    <span class="k">def</span><span class="w"> </span><span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-70"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-71"><span class="sd">        Disables the account in Wialon.</span>
-</span><span id="line-72">
-</span><span id="line-73"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
-</span><span id="line-74"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-75"><span class="sd">        :returns: An empty dictionary.</span>
-</span><span id="line-76"><span class="sd">        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]</span>
-</span><span id="line-77">
-</span><span id="line-78"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-79">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_enable_account</span><span class="p">(</span>
-</span><span id="line-80">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;enable&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
-</span><span id="line-81">        <span class="p">)</span></div>
+</span><span id="line-72">    <span class="nd">@requires_id</span>
+</span><span id="line-73">    <span class="k">def</span><span class="w"> </span><span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-74"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-75"><span class="sd">        Disables the account in Wialon.</span>
+</span><span id="line-76">
+</span><span id="line-77"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
+</span><span id="line-78"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-79"><span class="sd">        :returns: An empty dictionary.</span>
+</span><span id="line-80"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-81">
+</span><span id="line-82"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-83">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_enable_account</span><span class="p">(</span>
+</span><span id="line-84">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;enable&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+</span><span id="line-85">        <span class="p">)</span></div>
 
-</span><span id="line-82">
+</span><span id="line-86">
 <div class="viewcode-block" id="WialonAccount.do_payment">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.account.WialonAccount.do_payment">[docs]</a>
-</span><span id="line-83">    <span class="nd">@requires_id</span>
-</span><span id="line-84">    <span class="k">def</span><span class="w"> </span><span class="nf">do_payment</span><span class="p">(</span>
-</span><span id="line-85">        <span class="bp">self</span><span class="p">,</span> <span class="n">balance_update</span><span class="p">:</span> <span class="n">Decimal</span><span class="p">,</span> <span class="n">days_update</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="line-86">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-87"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-88"><span class="sd">        Makes an account payment in Wialon.</span>
-</span><span id="line-89">
-</span><span id="line-90"><span class="sd">        :param balance_update: Amount to update the account balance by. Can be negative.</span>
-</span><span id="line-91"><span class="sd">        :type balance_update: :py:obj:`~decimal.Decimal`</span>
-</span><span id="line-92"><span class="sd">        :param days_update: Amount of days to add to the account.</span>
-</span><span id="line-93"><span class="sd">        :type days_update: :py:obj:`int`</span>
-</span><span id="line-94"><span class="sd">        :param description: A description for the payment.</span>
-</span><span id="line-95"><span class="sd">        :type description: :py:obj:`str`</span>
-</span><span id="line-96"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
-</span><span id="line-97"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-98"><span class="sd">        :returns: An empty dictionary.</span>
-</span><span id="line-99"><span class="sd">        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]</span>
-</span><span id="line-100">
-</span><span id="line-101"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-102">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_do_payment</span><span class="p">(</span>
-</span><span id="line-103">            <span class="o">**</span><span class="p">{</span>
-</span><span id="line-104">                <span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-</span><span id="line-105">                <span class="s2">&quot;balanceUpdate&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">balance_update</span><span class="p">),</span>
-</span><span id="line-106">                <span class="s2">&quot;daysUpdate&quot;</span><span class="p">:</span> <span class="n">days_update</span><span class="p">,</span>
-</span><span id="line-107">                <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
-</span><span id="line-108">            <span class="p">}</span>
-</span><span id="line-109">        <span class="p">)</span></div>
+</span><span id="line-87">    <span class="nd">@requires_id</span>
+</span><span id="line-88">    <span class="k">def</span><span class="w"> </span><span class="nf">do_payment</span><span class="p">(</span>
+</span><span id="line-89">        <span class="bp">self</span><span class="p">,</span> <span class="n">balance_update</span><span class="p">:</span> <span class="n">Decimal</span><span class="p">,</span> <span class="n">days_update</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="line-90">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-91"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-92"><span class="sd">        Makes an account payment in Wialon.</span>
+</span><span id="line-93">
+</span><span id="line-94"><span class="sd">        :param balance_update: Amount to update the account balance by. Can be negative.</span>
+</span><span id="line-95"><span class="sd">        :type balance_update: ~decimal.Decimal</span>
+</span><span id="line-96"><span class="sd">        :param days_update: Amount of days to add to the account.</span>
+</span><span id="line-97"><span class="sd">        :type days_update: str</span>
+</span><span id="line-98"><span class="sd">        :param description: A description for the payment.</span>
+</span><span id="line-99"><span class="sd">        :type description: str</span>
+</span><span id="line-100"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
+</span><span id="line-101"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-102"><span class="sd">        :returns: An empty dictionary.</span>
+</span><span id="line-103"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-104">
+</span><span id="line-105"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-106">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_do_payment</span><span class="p">(</span>
+</span><span id="line-107">            <span class="o">**</span><span class="p">{</span>
+</span><span id="line-108">                <span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+</span><span id="line-109">                <span class="s2">&quot;balanceUpdate&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">balance_update</span><span class="p">),</span>
+</span><span id="line-110">                <span class="s2">&quot;daysUpdate&quot;</span><span class="p">:</span> <span class="n">days_update</span><span class="p">,</span>
+</span><span id="line-111">                <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+</span><span id="line-112">            <span class="p">}</span>
+</span><span id="line-113">        <span class="p">)</span></div>
 
-</span><span id="line-110">
+</span><span id="line-114">
 <div class="viewcode-block" id="WialonAccount.set_dealer_rights">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.account.WialonAccount.set_dealer_rights">[docs]</a>
-</span><span id="line-111">    <span class="nd">@requires_id</span>
-</span><span id="line-112">    <span class="k">def</span><span class="w"> </span><span class="nf">set_dealer_rights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-113"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-114"><span class="sd">        Enables or disables the account&#39;s dealer rights in Wialon.</span>
-</span><span id="line-115">
-</span><span id="line-116"><span class="sd">        :param enabled: Whether to set the account as a dealer or not.</span>
-</span><span id="line-117"><span class="sd">        :type enabled: :py:obj:`bool`</span>
-</span><span id="line-118"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
-</span><span id="line-119"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-120"><span class="sd">        :returns: An empty dictionary.</span>
-</span><span id="line-121"><span class="sd">        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]</span>
-</span><span id="line-122">
-</span><span id="line-123"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-124">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_update_dealer_rights</span><span class="p">(</span>
-</span><span id="line-125">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;enable&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">enabled</span><span class="p">)}</span>
-</span><span id="line-126">        <span class="p">)</span></div>
+</span><span id="line-115">    <span class="nd">@requires_id</span>
+</span><span id="line-116">    <span class="k">def</span><span class="w"> </span><span class="nf">set_dealer_rights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-117"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-118"><span class="sd">        Enables or disables the account&#39;s dealer rights in Wialon.</span>
+</span><span id="line-119">
+</span><span id="line-120"><span class="sd">        :param enabled: Whether to set the account as a dealer or not.</span>
+</span><span id="line-121"><span class="sd">        :type enabled: bool</span>
+</span><span id="line-122"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
+</span><span id="line-123"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-124"><span class="sd">        :returns: An empty dictionary.</span>
+</span><span id="line-125"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-126">
+</span><span id="line-127"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-128">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_update_dealer_rights</span><span class="p">(</span>
+</span><span id="line-129">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;enable&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">enabled</span><span class="p">)}</span>
+</span><span id="line-130">        <span class="p">)</span></div>
 
-</span><span id="line-127">
+</span><span id="line-131">
 <div class="viewcode-block" id="WialonAccount.set_flags">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.account.WialonAccount.set_flags">[docs]</a>
-</span><span id="line-128">    <span class="nd">@requires_id</span>
-</span><span id="line-129">    <span class="k">def</span><span class="w"> </span><span class="nf">set_flags</span><span class="p">(</span>
-</span><span id="line-130">        <span class="bp">self</span><span class="p">,</span>
-</span><span id="line-131">        <span class="n">flags</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-</span><span id="line-132">        <span class="n">block_balance</span><span class="p">:</span> <span class="n">Decimal</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.00&quot;</span><span class="p">),</span>
-</span><span id="line-133">        <span class="n">deny_balance</span><span class="p">:</span> <span class="n">Decimal</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.00&quot;</span><span class="p">),</span>
-</span><span id="line-134">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-135"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-136"><span class="sd">        Sets settings flags for the account in Wialon.</span>
-</span><span id="line-137">
-</span><span id="line-138"><span class="sd">        :param flags: A Wialon account settings flag integer.</span>
-</span><span id="line-139"><span class="sd">        :type flags: :py:obj:`int`</span>
-</span><span id="line-140"><span class="sd">        :param block_balance: Balance required for account blocking. Default is ``&quot;0.00&quot;``.</span>
-</span><span id="line-141"><span class="sd">        :type block_balance: :py:obj:`~decimal.Decimal`</span>
-</span><span id="line-142"><span class="sd">        :param deny_balance: Balance required for service denial. Default is ``&quot;0.00&quot;``.</span>
-</span><span id="line-143"><span class="sd">        :type deny_balance: :py:obj:`~decimal.Decimal`</span>
-</span><span id="line-144"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
-</span><span id="line-145"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-146"><span class="sd">        :returns: An empty dictionary.</span>
-</span><span id="line-147"><span class="sd">        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]</span>
-</span><span id="line-148">
-</span><span id="line-149"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-150">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_update_flags</span><span class="p">(</span>
-</span><span id="line-151">            <span class="o">**</span><span class="p">{</span>
-</span><span id="line-152">                <span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-</span><span id="line-153">                <span class="s2">&quot;flags&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="p">,</span>
-</span><span id="line-154">                <span class="s2">&quot;blockBalance&quot;</span><span class="p">:</span> <span class="n">block_balance</span><span class="p">,</span>
-</span><span id="line-155">                <span class="s2">&quot;denyBalance&quot;</span><span class="p">:</span> <span class="n">deny_balance</span><span class="p">,</span>
-</span><span id="line-156">            <span class="p">}</span>
-</span><span id="line-157">        <span class="p">)</span></div>
+</span><span id="line-132">    <span class="nd">@requires_id</span>
+</span><span id="line-133">    <span class="k">def</span><span class="w"> </span><span class="nf">set_flags</span><span class="p">(</span>
+</span><span id="line-134">        <span class="bp">self</span><span class="p">,</span>
+</span><span id="line-135">        <span class="n">flags</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span><span id="line-136">        <span class="n">block_balance</span><span class="p">:</span> <span class="n">Decimal</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.00&quot;</span><span class="p">),</span>
+</span><span id="line-137">        <span class="n">deny_balance</span><span class="p">:</span> <span class="n">Decimal</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.00&quot;</span><span class="p">),</span>
+</span><span id="line-138">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-139"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-140"><span class="sd">        Sets settings flags for the account in Wialon.</span>
+</span><span id="line-141">
+</span><span id="line-142"><span class="sd">        :param flags: A Wialon account settings flag integer.</span>
+</span><span id="line-143"><span class="sd">        :type flags: int</span>
+</span><span id="line-144"><span class="sd">        :param block_balance: Balance required for account blocking. Default is ``0.00``.</span>
+</span><span id="line-145"><span class="sd">        :type block_balance: ~decimal.Decimal</span>
+</span><span id="line-146"><span class="sd">        :param deny_balance: Balance required for service denial. Default is ``0.00``.</span>
+</span><span id="line-147"><span class="sd">        :type deny_balance: ~decimal.Decimal</span>
+</span><span id="line-148"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
+</span><span id="line-149"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-150"><span class="sd">        :returns: An empty dictionary.</span>
+</span><span id="line-151"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-152">
+</span><span id="line-153"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-154">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_update_flags</span><span class="p">(</span>
+</span><span id="line-155">            <span class="o">**</span><span class="p">{</span>
+</span><span id="line-156">                <span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+</span><span id="line-157">                <span class="s2">&quot;flags&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="p">,</span>
+</span><span id="line-158">                <span class="s2">&quot;blockBalance&quot;</span><span class="p">:</span> <span class="n">block_balance</span><span class="p">,</span>
+</span><span id="line-159">                <span class="s2">&quot;denyBalance&quot;</span><span class="p">:</span> <span class="n">deny_balance</span><span class="p">,</span>
+</span><span id="line-160">            <span class="p">}</span>
+</span><span id="line-161">        <span class="p">)</span></div>
 
-</span><span id="line-158">
+</span><span id="line-162">
 <div class="viewcode-block" id="WialonAccount.set_plan">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.account.WialonAccount.set_plan">[docs]</a>
-</span><span id="line-159">    <span class="nd">@requires_id</span>
-</span><span id="line-160">    <span class="k">def</span><span class="w"> </span><span class="nf">set_plan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-161"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-162"><span class="sd">        Sets the account&#39;s billing plan to ``name``.</span>
-</span><span id="line-163">
-</span><span id="line-164"><span class="sd">        :param name: A Wialon billing plan name.</span>
-</span><span id="line-165"><span class="sd">        :type name: :py:obj:`str`</span>
-</span><span id="line-166"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
-</span><span id="line-167"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-168"><span class="sd">        :returns: An empty dictionary.</span>
-</span><span id="line-169"><span class="sd">        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]</span>
-</span><span id="line-170">
-</span><span id="line-171"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-172">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_update_plan</span><span class="p">(</span>
-</span><span id="line-173">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;plan&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>
-</span><span id="line-174">        <span class="p">)</span></div>
+</span><span id="line-163">    <span class="nd">@requires_id</span>
+</span><span id="line-164">    <span class="k">def</span><span class="w"> </span><span class="nf">set_plan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-165"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-166"><span class="sd">        Sets the account&#39;s billing plan to ``name``.</span>
+</span><span id="line-167">
+</span><span id="line-168"><span class="sd">        :param name: A Wialon billing plan name.</span>
+</span><span id="line-169"><span class="sd">        :type name: str</span>
+</span><span id="line-170"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
+</span><span id="line-171"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-172"><span class="sd">        :returns: An empty dictionary.</span>
+</span><span id="line-173"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-174">
+</span><span id="line-175"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-176">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_update_plan</span><span class="p">(</span>
+</span><span id="line-177">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;plan&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>
+</span><span id="line-178">        <span class="p">)</span></div>
 
-</span><span id="line-175">
+</span><span id="line-179">
 <div class="viewcode-block" id="WialonAccount.set_minimum_days">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.account.WialonAccount.set_minimum_days">[docs]</a>
-</span><span id="line-176">    <span class="nd">@requires_id</span>
-</span><span id="line-177">    <span class="k">def</span><span class="w"> </span><span class="nf">set_minimum_days</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">days</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-178"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-179"><span class="sd">        Sets the account&#39;s minimum days to ``days`` in Wialon.</span>
-</span><span id="line-180">
-</span><span id="line-181"><span class="sd">        :param days: Minimum number of days as an integer.</span>
-</span><span id="line-182"><span class="sd">        :type days: :py:obj:`int`</span>
-</span><span id="line-183"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
-</span><span id="line-184"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-185"><span class="sd">        :returns: An empty dictionary.</span>
-</span><span id="line-186"><span class="sd">        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]</span>
-</span><span id="line-187">
-</span><span id="line-188"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-189">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_update_min_days</span><span class="p">(</span>
-</span><span id="line-190">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;minDays&quot;</span><span class="p">:</span> <span class="n">days</span><span class="p">}</span>
-</span><span id="line-191">        <span class="p">)</span></div>
+</span><span id="line-180">    <span class="nd">@requires_id</span>
+</span><span id="line-181">    <span class="k">def</span><span class="w"> </span><span class="nf">set_minimum_days</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">days</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-182"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-183"><span class="sd">        Sets the account&#39;s minimum days to ``days`` in Wialon.</span>
+</span><span id="line-184">
+</span><span id="line-185"><span class="sd">        :param days: Minimum number of days as an integer.</span>
+</span><span id="line-186"><span class="sd">        :type days: int</span>
+</span><span id="line-187"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
+</span><span id="line-188"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-189"><span class="sd">        :returns: An empty dictionary.</span>
+</span><span id="line-190"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-191">
+</span><span id="line-192"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-193">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_update_min_days</span><span class="p">(</span>
+</span><span id="line-194">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;minDays&quot;</span><span class="p">:</span> <span class="n">days</span><span class="p">}</span>
+</span><span id="line-195">        <span class="p">)</span></div>
 
-</span><span id="line-192">
+</span><span id="line-196">
 <div class="viewcode-block" id="WialonAccount.get_data">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.account.WialonAccount.get_data">[docs]</a>
-</span><span id="line-193">    <span class="nd">@requires_id</span>
-</span><span id="line-194">    <span class="k">def</span><span class="w"> </span><span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response_type</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-195"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-196"><span class="sd">        Returns account data from Wialon.</span>
-</span><span id="line-197">
-</span><span id="line-198"><span class="sd">        :param response_type: A response flag integer. Default is ``1``.</span>
-</span><span id="line-199"><span class="sd">        :type response_type: :py:obj:`int`</span>
-</span><span id="line-200"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
-</span><span id="line-201"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-202"><span class="sd">        :returns: A dictionary containing the account&#39;s data from Wialon.</span>
-</span><span id="line-203"><span class="sd">        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]</span>
-</span><span id="line-204">
-</span><span id="line-205"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-206">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_get_account_data</span><span class="p">(</span>
-</span><span id="line-207">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">response_type</span><span class="p">}</span>
-</span><span id="line-208">        <span class="p">)</span></div>
+</span><span id="line-197">    <span class="nd">@requires_id</span>
+</span><span id="line-198">    <span class="k">def</span><span class="w"> </span><span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response_type</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-199"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-200"><span class="sd">        Returns account data from Wialon.</span>
+</span><span id="line-201">
+</span><span id="line-202"><span class="sd">        :param response_type: A response flag integer. Default is ``1``.</span>
+</span><span id="line-203"><span class="sd">        :type response_type: int</span>
+</span><span id="line-204"><span class="sd">        :raises AssertionError: If the Wialon account id wasn&#39;t set.</span>
+</span><span id="line-205"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-206"><span class="sd">        :returns: A dictionary containing the account&#39;s data from Wialon.</span>
+</span><span id="line-207"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-208">
+</span><span id="line-209"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-210">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">account_get_account_data</span><span class="p">(</span>
+</span><span id="line-211">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">response_type</span><span class="p">}</span>
+</span><span id="line-212">        <span class="p">)</span></div>
 </div>
 
 </span></code></pre></div>
