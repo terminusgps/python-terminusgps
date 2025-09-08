@@ -1,7 +1,9 @@
 Constants
 =========
 
-.. autoclass:: terminusgps.authorizenet.constants.AuthorizenetSubscriptionStatus
-    :members:
+.. py:currentmodule:: terminusgps.authorizenet.constants
 
-.. autodata:: terminusgps.authorizenet.constants.ANET_XMLNS
+.. autodata:: ANET_XMLNS
+
+.. autoclass:: AuthorizenetSubscriptionStatus
+    :members:
