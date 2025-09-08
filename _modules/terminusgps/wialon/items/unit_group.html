@@ -165,7 +165,7 @@
 
     <div id="content" role="main">
       <h1>Source code for terminusgps.wialon.items.unit_group</h1><div class="highlight"><pre>
-<span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
+<span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">collections.abc</span>
 </span><span id="line-2">
 </span><span id="line-3"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon</span><span class="w"> </span><span class="kn">import</span> <span class="n">flags</span>
 </span><span id="line-4"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.items.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">WialonObject</span><span class="p">,</span> <span class="n">requires_id</span>
@@ -210,21 +210,23 @@
 <div class="viewcode-block" id="WialonUnitGroup.update_units">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.unit_group.WialonUnitGroup.update_units">[docs]</a>
 </span><span id="line-38">    <span class="nd">@requires_id</span>
-</span><span id="line-39">    <span class="k">def</span><span class="w"> </span><span class="nf">update_units</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unit_ids</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-40"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-41"><span class="sd">        Sets the unit group&#39;s unit list in Wialon to ``unit_ids``.</span>
-</span><span id="line-42">
-</span><span id="line-43"><span class="sd">        :param unit_ids: An iterable of Wialon unit id integers.</span>
-</span><span id="line-44"><span class="sd">        :type unit_ids: ~collections.abc.Iterable[int]</span>
-</span><span id="line-45"><span class="sd">        :raises AssertionError: If the Wialon unit group id wasn&#39;t set.</span>
-</span><span id="line-46"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-47"><span class="sd">        :returns: A dictionary containing the unit group&#39;s new unit list.</span>
-</span><span id="line-48"><span class="sd">        :rtype: dict[str, str]</span>
-</span><span id="line-49">
-</span><span id="line-50"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-51">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">unit_group_update_units</span><span class="p">(</span>
-</span><span id="line-52">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">unit_ids</span><span class="p">}</span>
-</span><span id="line-53">        <span class="p">)</span></div>
+</span><span id="line-39">    <span class="k">def</span><span class="w"> </span><span class="nf">update_units</span><span class="p">(</span>
+</span><span id="line-40">        <span class="bp">self</span><span class="p">,</span> <span class="n">unit_ids</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+</span><span id="line-41">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-42"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-43"><span class="sd">        Sets the unit group&#39;s unit list in Wialon to ``unit_ids``.</span>
+</span><span id="line-44">
+</span><span id="line-45"><span class="sd">        :param unit_ids: A collection of Wialon unit ids.</span>
+</span><span id="line-46"><span class="sd">        :type unit_ids: ~collections.abc.Collection[int]</span>
+</span><span id="line-47"><span class="sd">        :raises AssertionError: If the Wialon unit group id wasn&#39;t set.</span>
+</span><span id="line-48"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-49"><span class="sd">        :returns: A dictionary containing the unit group&#39;s new unit list.</span>
+</span><span id="line-50"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-51">
+</span><span id="line-52"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-53">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">unit_group_update_units</span><span class="p">(</span>
+</span><span id="line-54">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">unit_ids</span><span class="p">}</span>
+</span><span id="line-55">        <span class="p">)</span></div>
 </div>
 
 </span></code></pre></div>

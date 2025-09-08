@@ -165,8 +165,8 @@
 
     <div id="content" role="main">
       <h1>Source code for terminusgps.wialon.items.resource</h1><div class="highlight"><pre>
-<span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
-</span><span id="line-2"><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">collections.abc</span>
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
 </span><span id="line-3">
 </span><span id="line-4"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon</span><span class="w"> </span><span class="kn">import</span> <span class="n">flags</span>
 </span><span id="line-5"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.wialon.items.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">WialonObject</span><span class="p">,</span> <span class="n">requires_id</span>
@@ -220,15 +220,15 @@
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.resource.WialonResource.get_notification_data">[docs]</a>
 </span><span id="line-47">    <span class="nd">@requires_id</span>
 </span><span id="line-48">    <span class="k">def</span><span class="w"> </span><span class="nf">get_notification_data</span><span class="p">(</span>
-</span><span id="line-49">        <span class="bp">self</span><span class="p">,</span> <span class="n">notification_ids</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="line-49">        <span class="bp">self</span><span class="p">,</span> <span class="n">notification_ids</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="line-50">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 </span><span id="line-51"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="line-52"><span class="sd">        Returns the resource&#39;s notification data by id(s).</span>
 </span><span id="line-53">
 </span><span id="line-54"><span class="sd">        Returns *all* notification data if ``notification_ids`` is :py:obj:`None`.</span>
 </span><span id="line-55">
-</span><span id="line-56"><span class="sd">        :param notification_ids: An iterable of notification id integers. Default is :py:obj:`None`.</span>
-</span><span id="line-57"><span class="sd">        :type notification_ids: ~collections.abc.Iterable[int] | None</span>
+</span><span id="line-56"><span class="sd">        :param notification_ids: An optional collection of notification ids. Default is :py:obj:`None`.</span>
+</span><span id="line-57"><span class="sd">        :type notification_ids: ~collections.abc.Collection[int] | None</span>
 </span><span id="line-58"><span class="sd">        :raises AssertionError: If the Wialon resource id wasn&#39;t set.</span>
 </span><span id="line-59"><span class="sd">        :raises WialonAPIError: If something went wrong calling the Wialon API.</span>
 </span><span id="line-60"><span class="sd">        :returns: A dictionary of notification data.</span>
@@ -247,8 +247,8 @@
 </span><span id="line-70">    <span class="nd">@requires_id</span>
 </span><span id="line-71">    <span class="k">def</span><span class="w"> </span><span class="nf">get_driver_bindings</span><span class="p">(</span>
 </span><span id="line-72">        <span class="bp">self</span><span class="p">,</span>
-</span><span id="line-73">        <span class="n">start</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
-</span><span id="line-74">        <span class="n">stop</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
+</span><span id="line-73">        <span class="n">start</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">,</span>
+</span><span id="line-74">        <span class="n">stop</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">,</span>
 </span><span id="line-75">        <span class="n">unit_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
 </span><span id="line-76">        <span class="n">driver_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
 </span><span id="line-77">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
