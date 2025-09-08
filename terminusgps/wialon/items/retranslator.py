@@ -1,9 +1,9 @@
-from typing import TypedDict
+import typing
 
 from terminusgps.wialon import flags
 from terminusgps.wialon.items.base import WialonObject
 
-WialonRetranslatorConfiguration = TypedDict(
+WialonRetranslatorConfiguration = typing.TypedDict(
     "WialonRetranslatorConfiguration",
     {
         "protocol": str,

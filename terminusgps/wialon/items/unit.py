@@ -1,4 +1,4 @@
-from collections.abc import Iterable
+import collections.abc
 
 from terminusgps.wialon import flags
 from terminusgps.wialon.items.base import WialonObject, requires_id
@@ -116,15 +116,15 @@ class WialonUnit(WialonObject):
 
     @requires_id
     def get_command_definitions(
-        self, command_ids: Iterable[int] | None = None
+        self, command_ids: collections.abc.Collection[int] | None = None
     ) -> dict[str, str]:
         """
         Returns the unit's command definition data by id(s).
 
         Returns *all* command definition data if ``command_ids`` is :py:obj:`None`.
 
-        :param command_ids: An iterable of command id integers. Default is :py:obj:`None`.
-        :type command_ids: ~collections.abc.Iterable[int] | None
+        :param command_ids: An optional collection of command ids. Default is :py:obj:`None`.
+        :type command_ids: ~collections.abc.Collection[int] | None
         :raises AssertionError: If the Wialon unit id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary of command definition data.
@@ -139,6 +139,7 @@ class WialonUnit(WialonObject):
 
     @requires_id
     def get_imei(self) -> str:
+        """Returns the IMEI (sys_unique_id) for the unit."""
         return str(
             self.session.wialon_api.core_search_item(
                 **{

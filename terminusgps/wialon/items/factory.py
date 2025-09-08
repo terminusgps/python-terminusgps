@@ -1,4 +1,4 @@
-from typing import Literal, overload
+import typing
 
 from terminusgps.wialon.items.account import WialonAccount
 from terminusgps.wialon.items.base import WialonObject
@@ -29,64 +29,74 @@ class WialonObjectFactory:
         # TODO: Add session refreshing
         self.session = session
 
-    @overload
-    def create(self, items_type: Literal["user"], *args, **kwargs) -> WialonUser: ...
-
-    @overload
-    def get(self, items_type: Literal["user"], id: int | str) -> WialonUser: ...
-
-    @overload
+    @typing.overload
     def create(
-        self, items_type: Literal["account"], *args, **kwargs
+        self, items_type: typing.Literal["user"], *args, **kwargs
+    ) -> WialonUser: ...
+
+    @typing.overload
+    def get(
+        self, items_type: typing.Literal["user"], id: int | str
+    ) -> WialonUser: ...
+
+    @typing.overload
+    def create(
+        self, items_type: typing.Literal["account"], *args, **kwargs
     ) -> WialonAccount: ...
 
-    @overload
-    def get(self, items_type: Literal["account"], id: int | str) -> WialonAccount: ...
+    @typing.overload
+    def get(
+        self, items_type: typing.Literal["account"], id: int | str
+    ) -> WialonAccount: ...
 
-    @overload
+    @typing.overload
     def create(
-        self, items_type: Literal["avl_resource"], *args, **kwargs
+        self, items_type: typing.Literal["avl_resource"], *args, **kwargs
     ) -> WialonResource: ...
 
-    @overload
+    @typing.overload
     def get(
-        self, items_type: Literal["avl_resource"], id: int | str
+        self, items_type: typing.Literal["avl_resource"], id: int | str
     ) -> WialonResource: ...
 
-    @overload
+    @typing.overload
     def create(
-        self, items_type: Literal["avl_retranslator"], *args, **kwargs
+        self, items_type: typing.Literal["avl_retranslator"], *args, **kwargs
     ) -> WialonRetranslator: ...
 
-    @overload
+    @typing.overload
     def get(
-        self, items_type: Literal["avl_retranslator"], id: int | str
+        self, items_type: typing.Literal["avl_retranslator"], id: int | str
     ) -> WialonRetranslator: ...
 
-    @overload
+    @typing.overload
     def create(
-        self, items_type: Literal["avl_route"], *args, **kwargs
+        self, items_type: typing.Literal["avl_route"], *args, **kwargs
     ) -> WialonRoute: ...
 
-    @overload
-    def get(self, items_type: Literal["avl_route"], id: int | str) -> WialonRoute: ...
+    @typing.overload
+    def get(
+        self, items_type: typing.Literal["avl_route"], id: int | str
+    ) -> WialonRoute: ...
 
-    @overload
+    @typing.overload
     def create(
-        self, items_type: Literal["avl_unit"], *args, **kwargs
+        self, items_type: typing.Literal["avl_unit"], *args, **kwargs
     ) -> WialonUnit: ...
 
-    @overload
-    def get(self, items_type: Literal["avl_unit"], id: int | str) -> WialonUnit: ...
+    @typing.overload
+    def get(
+        self, items_type: typing.Literal["avl_unit"], id: int | str
+    ) -> WialonUnit: ...
 
-    @overload
+    @typing.overload
     def create(
-        self, items_type: Literal["avl_unit_group"], *args, **kwargs
+        self, items_type: typing.Literal["avl_unit_group"], *args, **kwargs
     ) -> WialonUnitGroup: ...
 
-    @overload
+    @typing.overload
     def get(
-        self, items_type: Literal["avl_unit_group"], id: int | str
+        self, items_type: typing.Literal["avl_unit_group"], id: int | str
     ) -> WialonUnitGroup: ...
 
     def create(self, items_type: str, *args, **kwargs) -> WialonObject:

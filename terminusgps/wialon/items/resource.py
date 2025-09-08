@@ -1,5 +1,5 @@
-from collections.abc import Iterable
-from datetime import datetime
+import collections.abc
+import datetime
 
 from terminusgps.wialon import flags
 from terminusgps.wialon.items.base import WialonObject, requires_id
@@ -46,15 +46,15 @@ class WialonResource(WialonObject):
 
     @requires_id
     def get_notification_data(
-        self, notification_ids: Iterable[int] | None = None
+        self, notification_ids: collections.abc.Collection[int] | None = None
     ) -> dict[str, str]:
         """
         Returns the resource's notification data by id(s).
 
         Returns *all* notification data if ``notification_ids`` is :py:obj:`None`.
 
-        :param notification_ids: An iterable of notification id integers. Default is :py:obj:`None`.
-        :type notification_ids: ~collections.abc.Iterable[int] | None
+        :param notification_ids: An optional collection of notification ids. Default is :py:obj:`None`.
+        :type notification_ids: ~collections.abc.Collection[int] | None
         :raises AssertionError: If the Wialon resource id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary of notification data.
@@ -70,8 +70,8 @@ class WialonResource(WialonObject):
     @requires_id
     def get_driver_bindings(
         self,
-        start: datetime,
-        stop: datetime,
+        start: datetime.datetime,
+        stop: datetime.datetime,
         unit_id: int | str = 0,
         driver_id: int | str = 0,
     ) -> dict[str, str]:

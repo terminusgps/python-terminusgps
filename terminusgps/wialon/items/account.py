@@ -1,6 +1,6 @@
-from collections.abc import Iterable
-from decimal import Decimal
-from typing import override
+import collections.abc
+import decimal
+import typing
 
 from terminusgps.wialon.items.base import WialonObject, requires_id
 
@@ -34,14 +34,16 @@ class WialonAccount(WialonObject):
         self.id = resource_id
         return response
 
-    @override
+    @typing.override
     @requires_id
-    def delete(self, reasons: Iterable[str] | None = None) -> dict[str, str]:
+    def delete(
+        self, reasons: collections.abc.Collection[str] | None = None
+    ) -> dict[str, str]:
         """
         Deletes the account in Wialon.
 
-        :param reasons: An iterable of reason strings. Default is :py:obj:`None`.
-        :type reasons: ~collections.abc.Iterable[str] | None
+        :param reasons: An optional collection of reason strings. Default is :py:obj:`None`.
+        :type reasons: ~collections.abc.Collection[str] | None
         :raises AssertionError: If the Wialon account id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
@@ -86,7 +88,10 @@ class WialonAccount(WialonObject):
 
     @requires_id
     def do_payment(
-        self, balance_update: Decimal, days_update: int, description: str
+        self,
+        balance_update: decimal.Decimal,
+        days_update: int,
+        description: str,
     ) -> dict[str, str]:
         """
         Makes an account payment in Wialon.
@@ -133,8 +138,8 @@ class WialonAccount(WialonObject):
     def set_flags(
         self,
         flags: int,
-        block_balance: Decimal = Decimal("0.00"),
-        deny_balance: Decimal = Decimal("0.00"),
+        block_balance: decimal.Decimal = decimal.Decimal("0.00"),
+        deny_balance: decimal.Decimal = decimal.Decimal("0.00"),
     ) -> dict[str, str]:
         """
         Sets settings flags for the account in Wialon.

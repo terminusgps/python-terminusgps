@@ -1,4 +1,4 @@
-from collections.abc import Iterable
+import collections.abc
 
 from terminusgps.wialon import flags
 from terminusgps.wialon.items.base import WialonObject, requires_id
@@ -36,12 +36,14 @@ class WialonUnitGroup(WialonObject):
         return response
 
     @requires_id
-    def update_units(self, unit_ids: Iterable[int]) -> dict[str, str]:
+    def update_units(
+        self, unit_ids: collections.abc.Collection[int]
+    ) -> dict[str, str]:
         """
         Sets the unit group's unit list in Wialon to ``unit_ids``.
 
-        :param unit_ids: An iterable of Wialon unit id integers.
-        :type unit_ids: ~collections.abc.Iterable[int]
+        :param unit_ids: A collection of Wialon unit ids.
+        :type unit_ids: ~collections.abc.Collection[int]
         :raises AssertionError: If the Wialon unit group id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary containing the unit group's new unit list.
