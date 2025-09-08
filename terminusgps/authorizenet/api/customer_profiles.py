@@ -20,13 +20,13 @@ def create_customer_profile(
     `createCustomerProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-create-customer-profile>`_.
 
     :param merchant_id: A merchant designated customer id.
-    :type merchant_id: :py:obj:`str`
+    :type merchant_id: str
     :param email: A customer email address.
-    :type email: :py:obj:`str`
+    :type email: str
     :param description: An optional customer description.
-    :type description: :py:obj:`str`
+    :type description: str
     :returns: An Authorizenet createCustomerProfileResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     request = apicontractsv1.createCustomerProfileRequest()
@@ -48,11 +48,11 @@ def get_customer_profile(
     `getCustomerProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-profile>`_.
 
     :param customer_profile_id: An Authorizenet customer profile id.
-    :type customer_profile_id: :py:obj:`int`
-    :param include_issuer_info: Whether to include issuer info in the response. Default is :py:obj:`False`.
-    :type include_issuer_info: :py:obj:`bool`
+    :type customer_profile_id: int
+    :param include_issuer_info: Whether to include issuer info in the response. Default is False.
+    :type include_issuer_info: bool
     :returns: An Authorizenet getCustomerProfileResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     request = apicontractsv1.getCustomerProfileRequest()
@@ -70,7 +70,7 @@ def get_customer_profile_ids() -> ObjectifiedElement | None:
     `getCustomerProfileIdsRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-profile-ids>`_.
 
     :returns: An Authorizenet getCustomerProfileIdsResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     request = apicontractsv1.getCustomerProfileIdsRequest()
@@ -88,9 +88,9 @@ def update_customer_profile(
     `updateCustomerProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-update-customer-profile>`_.
 
     :param profile: An Authorizenet customer profile ex element.
-    :type profile: :py:obj:`~authorizenet.apicontractsv1.customerProfileExType`
+    :type profile: ~authorizenet.apicontractsv1.customerProfileExType
     :returns: An Authorizenet updateCustomerProfileResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     request = apicontractsv1.updateCustomerProfileRequest()
@@ -109,9 +109,9 @@ def delete_customer_profile(
     `deleteCustomerProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-delete-customer-profile>`_.
 
     :param customer_profile_id: An Authorizenet customer profile id.
-    :type customer_profile_id: :py:obj:`int`
+    :type customer_profile_id: int
     :returns: An Authorizenet deleteCustomerProfileResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     request = apicontractsv1.deleteCustomerProfileRequest()

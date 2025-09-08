@@ -18,11 +18,11 @@ def get_settled_batch_list(
     `getSettledBatchListRequest <https://developer.authorize.net/api/reference/index.html#transaction-reporting-get-settled-batch-list>`_.
 
     :param start: First settlement date.
-    :type start: :py:obj:`~datetime.datetime`
+    :type start: ~datetime.datetime
     :param end: Last settlement date.
-    :type end: :py:obj:`~datetime.datetime`
+    :type end: ~datetime.datetime
     :returns: An Authorizenet getSettledBatchListResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     request = apicontractsv1.getSettledBatchListRequest()
@@ -47,17 +47,17 @@ def get_transaction_list(
     `getTransactionListRequest <https://developer.authorize.net/api/reference/index.html#transaction-reporting-get-transaction-list>`_.
 
     :param batch_id: An Authorizenet transaction batch id.
-    :type batch_id :py:obj:`int`
-    :param ordering: An Authorizenet transaction list ordering string. Default is :py:obj:`"submitTimeUTC"`.
-    :type ordering: :py:obj:`str`
-    :param descending: Whether to sort the transaction list in descending order. Default is :py:obj:`False` (ascending order).
-    :type descending: :py:obj:`bool`
+    :type batch_id int
+    :param ordering: An Authorizenet transaction list ordering string. Default is "submitTimeUTC".
+    :type ordering: str
+    :param descending: Whether to sort the transaction list in descending order. Default is False (ascending order).
+    :type descending: bool
     :param limit: Total number of transactions to return in the list.
-    :type limit: :py:obj:`int`
+    :type limit: int
     :param offset: Page number to return results from.
-    :type offset: :py:obj:`int`
+    :type offset: int
     :returns: An Authorizenet getTransactionListResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     sorting = apicontractsv1.TransactionListSorting()

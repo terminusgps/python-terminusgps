@@ -20,9 +20,9 @@ def create_subscription(
     `ARBCreateSubscriptionRequest <https://developer.authorize.net/api/reference/index.html#recurring-billing-create-a-subscription>`_.
 
     :param subscription: An Authorizenet ARBSubscriptionType element.
-    :type subscription: :py:obj:`~authorizenet.apicontractsv1.ARBSubscriptionType`
+    :type subscription: ~authorizenet.apicontractsv1.ARBSubscriptionType
     :returns: An Authorizenet ARBCreateSubscriptionResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     request = apicontractsv1.ARBCreateSubscriptionRequest()
@@ -41,11 +41,11 @@ def get_subscription(
     `ARBGetSubscriptionRequest <https://developer.authorize.net/api/reference/index.html#recurring-billing-get-subscription>`_.
 
     :param subscription_id: An Authorizenet subscription id.
-    :type subscription_id: :py:obj:`int`
-    :param include_transactions: Whether to include the subscription transaction list in the response. Default is :py:obj:`True`.
-    :type include_transactions: :py:obj:`bool`
+    :type subscription_id: int
+    :param include_transactions: Whether to include the subscription transaction list in the response. Default is True.
+    :type include_transactions: bool
     :returns: An Authorizenet ARBGetSubscriptionResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     request = apicontractsv1.ARBGetSubscriptionRequest()
@@ -63,9 +63,9 @@ def get_subscription_status(subscription_id: int) -> ObjectifiedElement | None:
     `ARBGetSubscriptionStatusRequest <https://developer.authorize.net/api/reference/index.html#recurring-billing-get-subscription-status>`_.
 
     :param subscription_id: An Authorizenet subscription id.
-    :type subscription_id: :py:obj:`int`
+    :type subscription_id: int
     :returns: An Authorizenet ARBGetSubscriptionStatusResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     request = apicontractsv1.ARBGetSubscriptionStatusRequest()
@@ -84,11 +84,11 @@ def update_subscription(
     `ARBUpdateSubscriptionRequest <https://developer.authorize.net/api/reference/index.html#recurring-billing-update-a-subscription>`_.
 
     :param subscription_id: An Authorizenet subscription id.
-    :type subscription_id: :py:obj:`int`
+    :type subscription_id: int
     :param subscription: An Authorizenet ARBSubscriptionType element.
-    :type subscription: :py:obj:`~authorizenet.apicontractsv1.ARBSubscriptionType`
+    :type subscription: ~authorizenet.apicontractsv1.ARBSubscriptionType
     :returns: An Authorizenet ARBUpdateSubscriptionResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     request = apicontractsv1.ARBUpdateSubscriptionRequest()
@@ -106,9 +106,9 @@ def cancel_subscription(subscription_id: int) -> ObjectifiedElement | None:
     `ARBCancelSubscriptionRequest <https://developer.authorize.net/api/reference/index.html#recurring-billing-cancel-a-subscription>`_.
 
     :param subscription_id: An Authorizenet subscription id.
-    :type subscription_id: :py:obj:`int`
+    :type subscription_id: int
     :returns: An Authorizenet ARBCancelSubscriptionResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     request = apicontractsv1.ARBCancelSubscriptionRequest()

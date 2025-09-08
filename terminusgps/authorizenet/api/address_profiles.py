@@ -21,13 +21,13 @@ def create_customer_shipping_address(
     `createCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-create-customer-shipping-address>`_.
 
     :param customer_profile_id: An Authorizenet customer profile id.
-    :type customer_profile_id: :py:obj:`int`
+    :type customer_profile_id: int
     :param address: An Authorizenet customer address element.
-    :type address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
-    :param default: Whether to set the address profile as default. Default is :py:obj:`False`.
-    :type default: :py:obj:`bool`
+    :type address: ~authorizenet.apicontractsv1.customerAddressType
+    :param default: Whether to set the address profile as default. Default is False.
+    :type default: bool
     :returns: An Authorizenet createCustomerShippingAddressResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     request = apicontractsv1.createCustomerShippingAddressRequest()
@@ -48,11 +48,11 @@ def get_customer_shipping_address(
     `getCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-shipping-address>`_.
 
     :param customer_profile_id: An Authorizenet customer profile id.
-    :type customer_profile_id: :py:obj:`int`
+    :type customer_profile_id: int
     :param address_profile_id: An Authorizenet customer address profile id.
-    :type address_profile_id: :py:obj:`int`
+    :type address_profile_id: int
     :returns: An Authorizenet getCustomerShippingAddressResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     request = apicontractsv1.getCustomerShippingAddressRequest()
@@ -74,13 +74,13 @@ def update_customer_shipping_address(
     `updateCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-update-customer-shipping-address>`_.
 
     :param customer_profile_id: An Authorizenet customer profile id.
-    :type customer_profile_id: :py:obj:`int`
+    :type customer_profile_id: int
     :param address: An Authorizenet customer address element.
-    :type address: :py:obj:`~authorizenet.apicontractsv1.customerAddressType`
-    :param default: Whether to set the address profile as default. Default is :py:obj:`False`.
-    :type default: :py:obj:`bool`
+    :type address: ~authorizenet.apicontractsv1.customerAddressType
+    :param default: Whether to set the address profile as default. Default is False.
+    :type default: bool
     :returns: An Authorizenet updateCustomerShippingAddressResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     request = apicontractsv1.updateCustomerShippingAddressRequest()
@@ -101,11 +101,11 @@ def delete_customer_shipping_address(
     `deleteCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-delete-customer-shipping-address>`_.
 
     :param customer_profile_id: An Authorizenet customer profile id.
-    :type customer_profile_id: :py:obj:`int`
+    :type customer_profile_id: int
     :param address_profile_id: An Authorizenet customer address profile id.
-    :type address_profile_id: :py:obj:`int`
+    :type address_profile_id: int
     :returns: An Authorizenet deleteCustomerShippingAddressResponse element.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     request = apicontractsv1.deleteCustomerShippingAddressRequest()
