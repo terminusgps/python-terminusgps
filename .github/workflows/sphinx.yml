@@ -14,10 +14,6 @@ jobs:
 
       - name: Build HTML
         uses: ammaraskar/sphinx-action@8.2.3
-        with:
-          pre-build-command: "apt-get update -y && apt-get install -y libxml2-dev libxslt-dev gcc"
-          build-command: "make html"
-          docs-folder: "docs/"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
