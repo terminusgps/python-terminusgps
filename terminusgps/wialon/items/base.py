@@ -19,16 +19,18 @@ def requires_id(meth):
 class WialonObject(ABC):
     """Base class for Wialon objects in a Wialon session."""
 
-    def __init__(self, session: WialonSession, id: int | str | None = None) -> None:
+    def __init__(
+        self, session: WialonSession, id: int | str | None = None
+    ) -> None:
         """
         Sets the Wialon object's session and id.
 
         :param session: An active Wialon API session.
-        :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+        :type session: ~terminusgps.wialon.session.WialonSession
         :param id: A Wialon object id. Default is :py:obj:`None`.
-        :type id: :py:obj:`int` | :py:obj:`str` | :py:obj:`None`
+        :type id: int | str | None
         :returns: Nothing.
-        :rtype: :py:obj:`None`
+        :rtype: None
 
         """
         if isinstance(id, str) and not id.isdigit():
@@ -42,7 +44,9 @@ class WialonObject(ABC):
 
     def __repr__(self) -> str:
         """Returns the Wialon object type and parameters used to initialize it."""
-        return f"{type(self).__name__}(id={self.id}, session={self.session.id})"
+        return (
+            f"{type(self).__name__}(id={self.id}, session={self.session.id})"
+        )
 
     @property
     def session(self) -> WialonSession:
@@ -80,7 +84,9 @@ class WialonObject(ABC):
     def get_name(self) -> str:
         """Gets and returns the object's name from Wialon."""
         return str(
-            self.session.wialon_api.core_search_item(**{"id": self.id, "flags": 1})
+            self.session.wialon_api.core_search_item(
+                **{"id": self.id, "flags": 1}
+            )
             .get("item", {})
             .get("nm")
         )
@@ -107,7 +113,7 @@ class WialonObject(ABC):
         :raises AssertionError: If the Wialon object id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A list of admin field dictionaries.
-        :rtype: :py:obj:`list`[:py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]]
+        :rtype: list[dict[str, str]]
 
         """
         return list(
@@ -128,11 +134,17 @@ class WialonObject(ABC):
 
         If ``id`` isn't provided, a new admin field is created.
 
+        :param key: Admin field key.
+        :type key: str
+        :param value: Admin key value.
+        :type value: str
+        :param id: Admin field id. If not provided, a new admin field is created. Default is :py:obj:`None`.
+        :type id: int | str | None
         :raises AssertionError: If the Wialon object id wasn't set.
         :raises ValueError: If ``id`` wasn't a digit.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An admin field dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         if isinstance(id, str) and not id.isdigit():
@@ -152,11 +164,13 @@ class WialonObject(ABC):
         """
         Deletes an admin field by id in Wialon.
 
+        :param id: Admin field id.
+        :type id: int | str
         :raises AssertionError: If the Wialon object id wasn't set.
         :raises ValueError: If ``id`` wasn't a digit.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         if isinstance(id, str) and not id.isdigit():
@@ -173,7 +187,7 @@ class WialonObject(ABC):
         :raises AssertionError: If the Wialon object id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A list of admin field dictionaries.
-        :rtype: :py:obj:`list`[:py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]]
+        :rtype: list[dict[str, str]]
 
         """
         return list(
@@ -192,13 +206,17 @@ class WialonObject(ABC):
         """
         Sets a custom field in Wialon.
 
-        If ``id`` isn't provided, a new custom field is created.
-
+        :param key: Custom field key.
+        :type key: str
+        :param value: Custom field key value.
+        :type value: str
+        :param id: Custom field id. If not provided, a new custom field is created. Default is :py:obj:`None`.
+        :type id: int | str | None
         :raises AssertionError: If the Wialon object id wasn't set.
         :raises ValueError: If ``id`` wasn't a digit.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A custom field dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         if isinstance(id, str) and not id.isdigit():
@@ -218,11 +236,13 @@ class WialonObject(ABC):
         """
         Deletes a custom field by id in Wialon.
 
+        :param id: Custom field id.
+        :type id: int | str
         :raises AssertionError: If the Wialon object id wasn't set.
         :raises ValueError: If ``id`` wasn't a digit.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         if isinstance(id, str) and not id.isdigit():
@@ -236,10 +256,14 @@ class WialonObject(ABC):
         """
         Sets a profile field for the object in Wialon.
 
+        :param key: Profile field key.
+        :type key: str
+        :param value: Profile field value.
+        :type value: str
         :raises AssertionError: If the Wialon object id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A profile field dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.item_update_profile_field(

@@ -14,22 +14,26 @@ class WialonUnit(WialonObject):
         Creates the unit in Wialon and sets its id.
 
         :param creator_id: A Wialon user id to set as the unit's creator.
-        :type creator_id: :py:obj:`int` | :py:obj:`str`
+        :type creator_id: int | str
         :param name: Wialon unit name.
-        :type name: :py:obj:`str`
+        :type name: str
         :param hw_type_id: A Wialon hardware type id.
-        :type hw_type_id: :py:obj:`int` | :py:obj:`str`
+        :type hw_type_id: int | str
         :raises ValueError: If ``creator_id`` wasn't a digit.
         :raises ValueError: If ``hw_type_id`` wasn't a digit.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A Wialon object dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         if isinstance(creator_id, str) and not creator_id.isdigit():
-            raise ValueError(f"'creator_id' must be a digit, got '{creator_id}'.")
+            raise ValueError(
+                f"'creator_id' must be a digit, got '{creator_id}'."
+            )
         if isinstance(hw_type_id, str) and not hw_type_id.isdigit():
-            raise ValueError(f"'hw_type_id' must be a digit, got '{hw_type_id}'.")
+            raise ValueError(
+                f"'hw_type_id' must be a digit, got '{hw_type_id}'."
+            )
         response = self.session.wialon_api.core_create_unit(
             **{
                 "creatorId": int(creator_id),
@@ -49,7 +53,7 @@ class WialonUnit(WialonObject):
         :raises AssertionError: If the Wialon unit id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary with the unit's current status.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.unit_set_active(
@@ -64,7 +68,7 @@ class WialonUnit(WialonObject):
         :raises AssertionError: If the Wialon unit id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary with the unit's current status.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.unit_set_active(
@@ -84,19 +88,19 @@ class WialonUnit(WialonObject):
         Executes a unit command in Wialon.
 
         :param command_name: Name of the command.
-        :type command_name: :py:obj:`str`
+        :type command_name: str
         :param link_type: Link type to send the command with. Default is ``"vrt"``.
-        :type link_type: :py:obj:`str`
+        :type link_type: str
         :param parameters: Additional command execution parameters. Default is ``""``.
-        :type parameters: :py:obj:`str`
+        :type parameters: str
         :param timeout: How long (in seconds) before timing out the command execution. Default is ``300``.
-        :type timeout: :py:obj:`int`
+        :type timeout: int
         :param flags: Command execution flags. Default is ``0``.
-        :type flags: :py:obj:`int`
+        :type flags: int
         :raises AssertionError: If the Wialon unit id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.unit_exec_cmd(
@@ -120,11 +124,11 @@ class WialonUnit(WialonObject):
         Returns *all* command definition data if ``command_ids`` is :py:obj:`None`.
 
         :param command_ids: An iterable of command id integers. Default is :py:obj:`None`.
-        :type command_ids: :py:obj:`~collections.abc.Iterable`[:py:obj:`int`] | :py:obj:`None`
+        :type command_ids: ~collections.abc.Iterable[int] | None
         :raises AssertionError: If the Wialon unit id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary of command definition data.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.unit_get_command_definition_data(
@@ -137,7 +141,10 @@ class WialonUnit(WialonObject):
     def get_imei(self) -> str:
         return str(
             self.session.wialon_api.core_search_item(
-                **{"id": self.id, "flags": flags.DataFlag.UNIT_ADVANCED_PROPERTIES}
+                **{
+                    "id": self.id,
+                    "flags": flags.DataFlag.UNIT_ADVANCED_PROPERTIES,
+                }
             )
             .get("item", {})
             .get("uid")

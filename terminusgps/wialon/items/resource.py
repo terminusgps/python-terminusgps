@@ -9,25 +9,30 @@ class WialonResource(WialonObject):
     """A Wialon `resource/account <https://help.wialon.com/en/wialon-hosting/user-guide/management-system/accounts-and-resources>`_."""
 
     def create(
-        self, creator_id: int | str, name: str, skip_creator_check: bool = False
+        self,
+        creator_id: int | str,
+        name: str,
+        skip_creator_check: bool = False,
     ) -> dict[str, str]:
         """
         Creates the resource in Wialon and sets its id.
 
         :param creator_id: A Wialon user id to set as the resource's creator.
-        :type creator_id: :py:obj:`int` | :py:obj:`str`
+        :type creator_id: int | str
         :param name: Wialon resource name.
-        :type name: :py:obj:`str`
-        :param skip_creator_check: Whether or not to ignore creator check during the API call. Default is :py:obj:`False`.
-        :type skip_creator_check: :py:obj:`bool`
+        :type name: str
+        :param skip_creator_check: Whether to ignore creator check during the API call. Default is :py:obj:`False`.
+        :type skip_creator_check: bool
         :raises ValueError: If ``creator_id`` wasn't a digit.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A Wialon object dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         if isinstance(creator_id, str) and not creator_id.isdigit():
-            raise ValueError(f"'creator_id' must be a digit, got '{creator_id}'.")
+            raise ValueError(
+                f"'creator_id' must be a digit, got '{creator_id}'."
+            )
         response = self.session.wialon_api.core_create_resource(
             **{
                 "creatorId": int(creator_id),
@@ -49,11 +54,11 @@ class WialonResource(WialonObject):
         Returns *all* notification data if ``notification_ids`` is :py:obj:`None`.
 
         :param notification_ids: An iterable of notification id integers. Default is :py:obj:`None`.
-        :type notification_ids: :py:obj:`~typing.Iterable`[:py:obj:`int`] | :py:obj:`None`
+        :type notification_ids: ~collections.abc.Iterable[int] | None
         :raises AssertionError: If the Wialon resource id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary of notification data.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.resource_get_notification_data(
@@ -74,25 +79,29 @@ class WialonResource(WialonObject):
         Returns the resource's bound drivers from ``start`` to ``stop``.
 
         :param start: Interval start date/time.
-        :type start: :py:obj:`~datetime.datetime`
+        :type start: ~datetime.datetime
         :param stop: Interval end date/time.
-        :type stop: :py:obj:`~datetime.datetime`
+        :type stop: ~datetime.datetime
         :param unit_id: A Wialon unit id to retrieve drivers for. If not provided, assume *all* units in the resource.
-        :type unit_id: :py:obj:`int` | :py:obj:`str`
+        :type unit_id: int | str
         :param driver_id: A Wialon driver id to retrieve data for. If not provided, assume *all* drivers.
-        :type driver_id: :py:obj:`int`
+        :type driver_id: int
         :raises AssertionError: If the Wialon resource id wasn't set.
         :raises ValueError: If ``unit_id`` wasn't a digit.
         :raises ValueError: If ``driver_id`` wasn't a digit.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary of Wialon drivers.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         if isinstance(unit_id, str) and not unit_id.isdigit():
-            raise ValueError(f"'unit_id' can only contain digits, got '{unit_id}'.")
+            raise ValueError(
+                f"'unit_id' can only contain digits, got '{unit_id}'."
+            )
         if isinstance(driver_id, str) and not driver_id.isdigit():
-            raise ValueError(f"'driver_id' can only contain digits, got '{driver_id}'.")
+            raise ValueError(
+                f"'driver_id' can only contain digits, got '{driver_id}'."
+            )
         return self.session.wialon_api.resource_get_driver_bindings(
             **{
                 "resourceId": self.id,
@@ -107,7 +116,10 @@ class WialonResource(WialonObject):
     def get_creator_id(self) -> str | None:
         return (
             self.session.wialon_api.core_search_item(
-                **{"id": self.id, "flags": flags.DataFlag.RESOURCE_BILLING_PROPERTIES}
+                **{
+                    "id": self.id,
+                    "flags": flags.DataFlag.RESOURCE_BILLING_PROPERTIES,
+                }
             )
             .get("item", {})
             .get("crt")

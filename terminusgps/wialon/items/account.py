@@ -8,22 +8,26 @@ from terminusgps.wialon.items.base import WialonObject, requires_id
 class WialonAccount(WialonObject):
     """A Wialon `account <https://help.wialon.com/en/wialon-hosting/user-guide/management-system/accounts-and-resources>`_."""
 
-    def create(self, resource_id: int | str, billing_plan: str) -> dict[str, str]:
+    def create(
+        self, resource_id: int | str, billing_plan: str
+    ) -> dict[str, str]:
         """
         Creates the account in Wialon and sets its id.
 
         :param resource_id: A Wialon resource id.
-        :type creator_id: :py:obj:`int` | :py:obj:`str`
+        :type creator_id: int | str
         :param billing_plan: A Wialon account billing plan.
-        :type billing_plan: :py:obj:`str`
+        :type billing_plan: str
         :raises ValueError: If ``resource_id`` wasn't a digit.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A Wialon object dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         if isinstance(resource_id, str) and not resource_id.isdigit():
-            raise ValueError(f"'resource_id' must be a digit, got '{resource_id}'.")
+            raise ValueError(
+                f"'resource_id' must be a digit, got '{resource_id}'."
+            )
         response = self.session.wialon_api.account_create_account(
             **{"itemId": resource_id, "plan": billing_plan}
         )
@@ -36,12 +40,12 @@ class WialonAccount(WialonObject):
         """
         Deletes the account in Wialon.
 
-        :param reasons: An iterable of reason strings.
-        :type reasons: :py:obj:`~collections.abc.Iterable`[:py:obj:`str`]
+        :param reasons: An iterable of reason strings. Default is :py:obj:`None`.
+        :type reasons: ~collections.abc.Iterable[str] | None
         :raises AssertionError: If the Wialon account id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.account_delete_account(
@@ -58,7 +62,7 @@ class WialonAccount(WialonObject):
         :raises AssertionError: If the Wialon account id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.account_enable_account(
@@ -73,7 +77,7 @@ class WialonAccount(WialonObject):
         :raises AssertionError: If the Wialon account id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.account_enable_account(
@@ -88,15 +92,15 @@ class WialonAccount(WialonObject):
         Makes an account payment in Wialon.
 
         :param balance_update: Amount to update the account balance by. Can be negative.
-        :type balance_update: :py:obj:`~decimal.Decimal`
+        :type balance_update: ~decimal.Decimal
         :param days_update: Amount of days to add to the account.
-        :type days_update: :py:obj:`int`
+        :type days_update: str
         :param description: A description for the payment.
-        :type description: :py:obj:`str`
+        :type description: str
         :raises AssertionError: If the Wialon account id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.account_do_payment(
@@ -114,11 +118,11 @@ class WialonAccount(WialonObject):
         Enables or disables the account's dealer rights in Wialon.
 
         :param enabled: Whether to set the account as a dealer or not.
-        :type enabled: :py:obj:`bool`
+        :type enabled: bool
         :raises AssertionError: If the Wialon account id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.account_update_dealer_rights(
@@ -136,15 +140,15 @@ class WialonAccount(WialonObject):
         Sets settings flags for the account in Wialon.
 
         :param flags: A Wialon account settings flag integer.
-        :type flags: :py:obj:`int`
-        :param block_balance: Balance required for account blocking. Default is ``"0.00"``.
-        :type block_balance: :py:obj:`~decimal.Decimal`
-        :param deny_balance: Balance required for service denial. Default is ``"0.00"``.
-        :type deny_balance: :py:obj:`~decimal.Decimal`
+        :type flags: int
+        :param block_balance: Balance required for account blocking. Default is ``0.00``.
+        :type block_balance: ~decimal.Decimal
+        :param deny_balance: Balance required for service denial. Default is ``0.00``.
+        :type deny_balance: ~decimal.Decimal
         :raises AssertionError: If the Wialon account id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.account_update_flags(
@@ -162,11 +166,11 @@ class WialonAccount(WialonObject):
         Sets the account's billing plan to ``name``.
 
         :param name: A Wialon billing plan name.
-        :type name: :py:obj:`str`
+        :type name: str
         :raises AssertionError: If the Wialon account id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.account_update_plan(
@@ -179,11 +183,11 @@ class WialonAccount(WialonObject):
         Sets the account's minimum days to ``days`` in Wialon.
 
         :param days: Minimum number of days as an integer.
-        :type days: :py:obj:`int`
+        :type days: int
         :raises AssertionError: If the Wialon account id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.account_update_min_days(
@@ -196,11 +200,11 @@ class WialonAccount(WialonObject):
         Returns account data from Wialon.
 
         :param response_type: A response flag integer. Default is ``1``.
-        :type response_type: :py:obj:`int`
+        :type response_type: int
         :raises AssertionError: If the Wialon account id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary containing the account's data from Wialon.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.account_get_account_data(

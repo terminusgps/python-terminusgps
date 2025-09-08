@@ -12,17 +12,19 @@ class WialonUnitGroup(WialonObject):
         Creates the unit group in Wialon and sets its id.
 
         :param creator_id: A Wialon user id to set as the unit group's creator.
-        :type creator_id: :py:obj:`int` | :py:obj:`str`
+        :type creator_id: int | str
         :param name: Name for the unit group.
-        :type name: :py:obj:`str`
+        :type name: str
         :raises ValueError: If ``creator_id`` wasn't a digit.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A Wialon object dictionary.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         if isinstance(creator_id, str) and not creator_id.isdigit():
-            raise ValueError(f"'creator_id' must be a digit, got '{creator_id}'.")
+            raise ValueError(
+                f"'creator_id' must be a digit, got '{creator_id}'."
+            )
         response = self.session.wialon_api.core_create_unit_group(
             **{
                 "creatorId": int(creator_id),
@@ -39,11 +41,11 @@ class WialonUnitGroup(WialonObject):
         Sets the unit group's unit list in Wialon to ``unit_ids``.
 
         :param unit_ids: An iterable of Wialon unit id integers.
-        :type unit_ids: :py:obj:`~typing.Iterable`[:py:obj:`int`]
+        :type unit_ids: ~collections.abc.Iterable[int]
         :raises AssertionError: If the Wialon unit group id wasn't set.
         :raises WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary containing the unit group's new unit list.
-        :rtype: :py:obj:`dict`[:py:obj:`str`, :py:obj:`str`]
+        :rtype: dict[str, str]
 
         """
         return self.session.wialon_api.unit_group_update_units(
