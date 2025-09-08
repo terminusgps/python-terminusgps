@@ -9,7 +9,6 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath("../../"))
-sys.path.insert(0, os.path.abspath("../../terminusgps/"))
 project = "python-terminusgps"
 copyright = "2025, Terminus GPS, LLC"
 author = "Terminus GPS, LLC"
