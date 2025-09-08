@@ -4,7 +4,6 @@ on: push
 jobs:
   builds:
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
 
@@ -16,13 +15,14 @@ jobs:
       - name: Build HTML
         uses: ammaraskar/sphinx-action@8.2.3
         with:
-          docs-folder: "docs/"
           pre-build-command: "apt-get update -y && apt-get install -y libxml2 libxslt"
+          build-command: "make html"
+          docs-folder: "docs/"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: html-docs
+          name: Documentation
           path: docs/build/html/
 
       - name: Deploy
