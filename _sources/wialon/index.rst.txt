@@ -7,4 +7,5 @@ Wialon API
     :maxdepth: 2
     :caption: Contents:
 
+    items.rst
     session.rst

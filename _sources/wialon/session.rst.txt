@@ -1,7 +1,9 @@
 Wialon API Sessions
 ===================
 
-.. autoclass:: terminusgps.wialon.session.WialonSession
+.. py:currentmodule:: terminusgps.wialon.session
+
+.. autoclass:: WialonSession
    :members:
    :class-doc-from: init
 
