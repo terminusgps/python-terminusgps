@@ -1,17 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Validators &#8212; python-terminusgps 43.0.1 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=2da93098" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=c41b8747"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Django" href="../django/index.html" />
@@ -19,8 +18,9 @@
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   
@@ -32,19 +32,91 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="validators">
-<h1>Validators<a class="headerlink" href="#validators" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+  <section id="module-terminusgps.authorizenet.validators">
+<span id="validators"></span><h1>Validators<a class="headerlink" href="#module-terminusgps.authorizenet.validators" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.validators.validate_credit_card_expiry_month">
+<span class="sig-prename descclassname"><span class="pre">terminusgps.authorizenet.validators.</span></span><span class="sig-name descname"><span class="pre">validate_credit_card_expiry_month</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/authorizenet/validators.html#validate_credit_card_expiry_month"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.authorizenet.validators.validate_credit_card_expiry_month" title="Link to this definition">¶</a></dt>
+<dd><p>Raises <a class="reference external" href="http://docs.djangoproject.com/en/stable/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValidationError</span></code></a> if the value is an invalid credit card expiration date month.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A credit card expiration year string.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValidationError</strong> – If the value contains non-digit characters.</p></li>
+<li><p><strong>ValidationError</strong> – If the value is negative.</p></li>
+<li><p><strong>ValidationError</strong> – If the value isn’t between 1-12.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Nothing.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
-<span class="kn">from</span> <span class="nn">terminusgps.authorizenet.validators</span> <span class="kn">import</span> <span class="p">(</span>
+<dl class="py function">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.validators.validate_credit_card_expiry_year">
+<span class="sig-prename descclassname"><span class="pre">terminusgps.authorizenet.validators.</span></span><span class="sig-name descname"><span class="pre">validate_credit_card_expiry_year</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/authorizenet/validators.html#validate_credit_card_expiry_year"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.authorizenet.validators.validate_credit_card_expiry_year" title="Link to this definition">¶</a></dt>
+<dd><p>Raises <a class="reference external" href="http://docs.djangoproject.com/en/stable/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValidationError</span></code></a> if the value is an invalid credit card expiration date year.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A credit card expiration year string.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValidationError</strong> – If the value contains non-digit characters.</p></li>
+<li><p><strong>ValidationError</strong> – If the value is negative.</p></li>
+<li><p><strong>ValidationError</strong> – If the value is a year in the past.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Nothing.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.validators.validate_credit_card_number">
+<span class="sig-prename descclassname"><span class="pre">terminusgps.authorizenet.validators.</span></span><span class="sig-name descname"><span class="pre">validate_credit_card_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/authorizenet/validators.html#validate_credit_card_number"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.authorizenet.validators.validate_credit_card_number" title="Link to this definition">¶</a></dt>
+<dd><p>Raises <a class="reference external" href="http://docs.djangoproject.com/en/stable/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValidationError</span></code></a> if the value is an invalid credit card number.</p>
+<p>Uses the <a class="reference external" href="https://en.wikipedia.org/wiki/Luhn_algorithm">Luhn algorithm</a> to validate the credit card number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A credit card number string.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValidationError</strong> – If the value contains non-digit characters.</p></li>
+<li><p><strong>ValidationError</strong> – If the value fails the Luhn algorithm.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Nothing.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django</span><span class="w"> </span><span class="kn">import</span> <span class="n">forms</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.authorizenet.validators</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">validate_credit_card_number</span><span class="p">,</span>
     <span class="n">validate_credit_card_expiry_month</span><span class="p">,</span>
     <span class="n">validate_credit_card_expiry_year</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="k">class</span> <span class="nc">CreditCardForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CreditCardForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
     <span class="c1"># Adding the validators to a form field renders error messages properly</span>
     <span class="n">cc_number</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
         <span class="n">max_length</span><span class="o">=</span><span class="mi">17</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_credit_card_number</span><span class="p">]</span>
@@ -57,15 +129,15 @@
     <span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
           
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="../index.html">python-terminusgps</a></h1>
 
@@ -103,7 +175,7 @@
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
@@ -111,8 +183,8 @@
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
-<script>$('#searchbox').show(0);</script>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -126,11 +198,11 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2025, Terminus GPS, LLC.
+      &#169;2025, Terminus GPS, LLC.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
       
       |
       <a href="../_sources/authorizenet/validators.rst.txt"
