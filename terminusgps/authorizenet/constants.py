@@ -1,3 +1,4 @@
+from authorizenet import apicontractsv1
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -18,3 +19,12 @@ class AuthorizenetSubscriptionStatus(models.TextChoices):
     """Canceled subscription."""
     TERMINATED = "terminated", _("Terminated")
     """Terminated subscription."""
+
+
+class AuthorizenetSubscriptionIntervalUnit(models.TextChoices):
+    """An Authorizenet subscription interval unit."""
+
+    DAYS = apicontractsv1.ARBSubscriptionUnitEnum.days, _("Days")
+    """Days interval unit."""
+    MONTHS = apicontractsv1.ARBSubscriptionUnitEnum.months, _("Months")
+    """Months interval unit."""
