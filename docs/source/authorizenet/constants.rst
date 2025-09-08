@@ -7,3 +7,6 @@ Constants
 
 .. autoclass:: AuthorizenetSubscriptionStatus
     :members:
+
+.. autoclass:: AuthorizenetSubscriptionIntervalUnit
+    :members:
