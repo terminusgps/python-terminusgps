@@ -1,3 +1,4 @@
+autoclasstoc>=1.7.0
 django>=5.2.1
 furo==2024.04.27
 python-wialon>=1.2.4
