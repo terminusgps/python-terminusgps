@@ -1,6 +1,7 @@
 .*
 !.gitignore
-!.github
+!.github/
+docs/build/
 
 # Python-generated files
 __pycache__/
@@ -12,4 +13,3 @@ wheels/
 # Virtual environments
 .venv
 venv
-docs/build/
