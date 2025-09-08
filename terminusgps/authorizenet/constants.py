@@ -9,7 +9,12 @@ class AuthorizenetSubscriptionStatus(models.TextChoices):
     """An Authorizenet subscription status."""
 
     ACTIVE = "active", _("Active")
+    """Active subscription."""
     EXPIRED = "expired", _("Expired")
+    """Expired subscription."""
     SUSPENDED = "suspended", _("Suspended")
+    """Suspended subscription."""
     CANCELED = "canceled", _("Canceled")
+    """Canceled subscription."""
     TERMINATED = "terminated", _("Terminated")
+    """Terminated subscription."""
