@@ -50,7 +50,7 @@ class WialonSession:
 
         """
 
-        self._token = token or os.getenv("WIALON_TOKEN")
+        self._token = token if token else os.getenv("WIALON_TOKEN")
         self._username = None
         self._uid = None
         self._wialon_api = Wialon(
@@ -93,7 +93,7 @@ class WialonSession:
     @property
     def uid(self) -> str | None:
         """
-        A Wialon user ID this session is operating as.
+        User id of the session's authenticated Wialon user.
 
         :type: :py:obj:`str` | :py:obj:`None`
         :value: :py:obj:`None`
@@ -103,7 +103,7 @@ class WialonSession:
     @property
     def username(self) -> str | None:
         """
-        A Wialon username the session is operating as.
+        Username of the session's authenticated Wialon user.
 
         :type: :py:obj:`str` | :py:obj:`None`
         :value: :py:obj:`None`
@@ -114,6 +114,8 @@ class WialonSession:
     @property
     def id(self) -> str | None:
         """
+        Wialon API session id.
+
         Shortcut property for :py:attr:`WialonSession.wialon_api.sid`.
 
         Returns :py:obj:`None` if the session wasn't logged in.
@@ -127,19 +129,16 @@ class WialonSession:
     @property
     def token(self) -> str:
         """
-        A Wialon API token set during :py:meth:`WialonSession.__init__`.
-
-        Default token value is :confval:`WIALON_TOKEN`.
+        Wialon API token set during :py:meth:`WialonSession.__init__`.
 
         :type: :py:obj:`str`
-        :value: :confval:`WIALON_TOKEN`
 
         """
         return str(self._token)
 
     def login(self, token: str, flags: int | None = None) -> str:
         """
-        Logs into the Wialon API and starts a new session.
+        Logs into the Wialon API, starts a new session then returns its id.
 
         :param token: An active Wialon API token.
         :type token: :py:obj:`str`
@@ -190,7 +189,9 @@ class WialonSession:
 
         """
         if login_response is None:
-            raise ValueError(f"Login response is required, got '{login_response}'")
+            raise ValueError(
+                f"Login response is required, got '{login_response}'"
+            )
 
         self.wialon_api.sid = login_response.get("eid")
         self._uid = login_response.get("user", {}).get("id")
