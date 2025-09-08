@@ -30,6 +30,9 @@ Wialon objects
 .. autoclass:: terminusgps.wialon.items.retranslator.WialonRetranslator
     :members:
 
+.. autoclass:: terminusgps.wialon.items.retranslator.WialonRetranslatorConfiguration
+    :members:
+
 .. autoclass:: terminusgps.wialon.items.route.WialonRoute
     :members:
 
