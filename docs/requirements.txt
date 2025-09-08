@@ -1,1 +1,4 @@
 furo==2021.11.16
+django>=5.2.6
+python-wialon>=1.2.4
+authorizenet>=1.1.5
