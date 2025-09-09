@@ -118,13 +118,13 @@
 <dd><p>Raises <a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValidationError</span></code></a> if the value is an invalid credit card expiration date month.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A credit card expiration year string.</p>
+<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A credit card expiration month.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>ValidationError</strong> – If the value contains non-digit characters.</p></li>
-<li><p><strong>ValidationError</strong> – If the value is negative.</p></li>
-<li><p><strong>ValidationError</strong> – If the value isn’t between 1-12.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the expiration month contained non-digit characters.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the expiration month was negative.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the expiration month was an invalid (non-existent) month.</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -141,13 +141,13 @@
 <dd><p>Raises <a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValidationError</span></code></a> if the value is an invalid credit card expiration date year.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A credit card expiration year string.</p>
+<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A credit card expiration year.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>ValidationError</strong> – If the value contains non-digit characters.</p></li>
-<li><p><strong>ValidationError</strong> – If the value is negative.</p></li>
-<li><p><strong>ValidationError</strong> – If the value is a year in the past.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the expiration year contained non-digit characters.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the expiration year was negative.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the expiration year was a year in the past.</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -165,12 +165,12 @@
 <p>Uses the <a class="reference external" href="https://en.wikipedia.org/wiki/Luhn_algorithm">Luhn algorithm</a> to validate the credit card number.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A credit card number string.</p>
+<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A credit card number.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>ValidationError</strong> – If the value contains non-digit characters.</p></li>
-<li><p><strong>ValidationError</strong> – If the value fails the Luhn algorithm.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the credit card number contained non-digit characters.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the credit card number failed the Luhn algorithm check.</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -185,6 +185,38 @@
 <dt class="sig sig-object py" id="terminusgps.validators.validate_e164_phone_number">
 <span class="sig-prename descclassname"><span class="pre">terminusgps.validators.</span></span><span class="sig-name descname"><span class="pre">validate_e164_phone_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/terminusgps/validators.html#validate_e164_phone_number"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.validators.validate_e164_phone_number" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.validators.validate_e164_phone_number'">¶</a></dt>
 <dd><p>Raises <a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValidationError</span></code></a> if the value is not a valid <a class="reference external" href="https://en.wikipedia.org/wiki/E.164">E.164</a> formatted phone number.</p>
+<ul class="simple">
+<li><p>Country Code: A 2-5 character code with a leading ‘+’ indicating the phone number’s destination country.</p></li>
+<li><p>Area Code: The first 3 digits of the phone number.</p></li>
+<li><p>Subscriber Number: The last 7 digits of the phone number.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – <p>A phone number in <a class="reference external" href="https://en.wikipedia.org/wiki/E.164">E.164</a> format.</p>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the phone number wasn’t provided.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the phone number didn’t start with a ‘+’ character.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the phone number contained any number of spaces.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the phone number contained any number of hyphens.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the phone number was less than 12 characters in length.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the phone number was greater than 15 characters in length.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the country code was invalid.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the area code wasn’t exactly 3 characters in length.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the area code wasn’t a digit.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the subscriber number (non-area code number) wasn’t exactly 7 characters in length.</p></li>
+<li><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ValidationError" title="(in Django v5.2)"><strong>ValidationError</strong></a> – If the subscriber number (non-area code number) wasn’t a digit.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Nothing.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">

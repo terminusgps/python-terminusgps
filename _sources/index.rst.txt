@@ -6,9 +6,11 @@
 python-terminusgps documentation
 ================================
 
-`python-terminusgps <https://pypi.org/project/python-terminusgps>`_ is a package [#f1]_ of subpackages that streamlines the use of web APIs for Terminus GPS developers.
+`python-terminusgps <https://pypi.org/project/python-terminusgps>`_ is a Python package [#f1]_ that streamlines the use of web APIs for Terminus GPS developers.
 
 `Terminus GPS <https://terminusgps.com/>`_ is an IoT software/hardware GPS monitoring company.
+
+Commonly written and repeated Python code used in Terminus GPS Django projects is accessible from the :py:mod:`terminusgps` package, e.g. :py:obj:`~terminusgps.mixins.HtmxTemplateResponseMixin` for HTMX-enabled Django views and :py:obj:`~terminusgps.validators.validate_e164_phone_number` for validating Django model/form fields.
 
 .. [#f1] In other programming languages, the term "library" is used to describe what Python calls a "package". Put simply, a "package" is a Python "library".
 
