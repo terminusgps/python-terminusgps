@@ -304,6 +304,7 @@ dependencies = [
     { name = "authorizenet" },
     { name = "django" },
     { name = "python-wialon" },
+    { name = "pyxb-x" },
 ]
 
 [package.dev-dependencies]
@@ -321,6 +322,7 @@ requires-dist = [
     { name = "authorizenet", specifier = ">=1.1.5" },
     { name = "django", specifier = ">=5.2.6" },
     { name = "python-wialon", specifier = ">=1.2.4" },
+    { name = "pyxb-x", specifier = ">=1.2.6.3" },
 ]
 
 [package.metadata.requires-dev]

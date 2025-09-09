@@ -11,10 +11,10 @@ def execute_controller(
     Executes an Authorizenet API controller and returns its response.
 
     :param controller: An Authorizenet API controller.
-    :type controller: :py:obj:`~authorizenet.apicontrollersbase.APIOperationBase`
+    :type controller: ~authorizenet.apicontrollersbase.APIOperationBase
     :raises AuthorizenetControllerExecutionError: If the API call fails.
     :returns: An Authorizenet API response, if any.
-    :rtype: :py:obj:`~lxml.objectify.ObjectifiedElement` | :py:obj:`None`
+    :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
     controller.setenvironment(get_environment())
