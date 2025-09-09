@@ -8,7 +8,30 @@ VALID_COUNTRY_CODES = ("+1", "+52")
 
 
 def validate_e164_phone_number(value: str) -> None:
-    """Raises :py:exc:`~django.core.exceptions.ValidationError` if the value is not a valid `E.164 <https://en.wikipedia.org/wiki/E.164>`_ formatted phone number."""
+    """
+    Raises :py:exc:`~django.core.exceptions.ValidationError` if the value is not a valid `E.164 <https://en.wikipedia.org/wiki/E.164>`_ formatted phone number.
+
+    * Country Code: A 2-5 character code with a leading '+' indicating the phone number's destination country.
+    * Area Code: The first 3 digits of the phone number.
+    * Subscriber Number: The last 7 digits of the phone number.
+
+    :param value: A phone number in `E.164 <https://en.wikipedia.org/wiki/E.164>`_ format.
+    :type value: str
+    :raises ~django.core.exceptions.ValidationError: If the phone number wasn't provided.
+    :raises ~django.core.exceptions.ValidationError: If the phone number didn't start with a '+' character.
+    :raises ~django.core.exceptions.ValidationError: If the phone number contained any number of spaces.
+    :raises ~django.core.exceptions.ValidationError: If the phone number contained any number of hyphens.
+    :raises ~django.core.exceptions.ValidationError: If the phone number was less than 12 characters in length.
+    :raises ~django.core.exceptions.ValidationError: If the phone number was greater than 15 characters in length.
+    :raises ~django.core.exceptions.ValidationError: If the country code was invalid.
+    :raises ~django.core.exceptions.ValidationError: If the area code wasn't exactly 3 characters in length.
+    :raises ~django.core.exceptions.ValidationError: If the area code wasn't a digit.
+    :raises ~django.core.exceptions.ValidationError: If the subscriber number (non-area code number) wasn't exactly 7 characters in length.
+    :raises ~django.core.exceptions.ValidationError: If the subscriber number (non-area code number) wasn't a digit.
+    :returns: Nothing.
+    :rtype: None
+
+    """
     if not value:
         raise ValidationError(
             _("This field is required, got '%(value)s'"),
@@ -110,10 +133,10 @@ def validate_credit_card_number(value: str) -> None:
 
     Uses the `Luhn algorithm <https://en.wikipedia.org/wiki/Luhn_algorithm>`_ to validate the credit card number.
 
-    :param value: A credit card number string.
+    :param value: A credit card number.
     :type value: str
-    :raises ValidationError: If the value contains non-digit characters.
-    :raises ValidationError: If the value fails the Luhn algorithm.
+    :raises ~django.core.exceptions.ValidationError: If the credit card number contained non-digit characters.
+    :raises ~django.core.exceptions.ValidationError: If the credit card number failed the Luhn algorithm check.
     :returns: Nothing.
     :rtype: None
 
@@ -146,11 +169,11 @@ def validate_credit_card_expiry_month(value: str) -> None:
     """
     Raises :py:exc:`~django.core.exceptions.ValidationError` if the value is an invalid credit card expiration date month.
 
-    :param value: A credit card expiration year string.
+    :param value: A credit card expiration month.
     :type value: str
-    :raises ValidationError: If the value contains non-digit characters.
-    :raises ValidationError: If the value is negative.
-    :raises ValidationError: If the value isn't between 1-12.
+    :raises ~django.core.exceptions.ValidationError: If the expiration month contained non-digit characters.
+    :raises ~django.core.exceptions.ValidationError: If the expiration month was negative.
+    :raises ~django.core.exceptions.ValidationError: If the expiration month was an invalid (non-existent) month.
     :returns: Nothing.
     :rtype: None
 
@@ -184,11 +207,11 @@ def validate_credit_card_expiry_year(value: str) -> None:
     """
     Raises :py:exc:`~django.core.exceptions.ValidationError` if the value is an invalid credit card expiration date year.
 
-    :param value: A credit card expiration year string.
+    :param value: A credit card expiration year.
     :type value: str
-    :raises ValidationError: If the value contains non-digit characters.
-    :raises ValidationError: If the value is negative.
-    :raises ValidationError: If the value is a year in the past.
+    :raises ~django.core.exceptions.ValidationError: If the expiration year contained non-digit characters.
+    :raises ~django.core.exceptions.ValidationError: If the expiration year was negative.
+    :raises ~django.core.exceptions.ValidationError: If the expiration year was a year in the past.
     :returns: Nothing.
     :rtype: None
 
