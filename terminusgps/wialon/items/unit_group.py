@@ -16,7 +16,7 @@ class WialonUnitGroup(WialonObject):
         :param name: Name for the unit group.
         :type name: str
         :raises ValueError: If ``creator_id`` wasn't a digit.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A Wialon object dictionary.
         :rtype: dict[str, str]
 
@@ -45,7 +45,7 @@ class WialonUnitGroup(WialonObject):
         :param unit_ids: A collection of Wialon unit ids.
         :type unit_ids: ~collections.abc.Collection[int]
         :raises AssertionError: If the Wialon unit group id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary containing the unit group's new unit list.
         :rtype: dict[str, str]
 

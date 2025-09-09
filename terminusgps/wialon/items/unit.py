@@ -21,7 +21,7 @@ class WialonUnit(WialonObject):
         :type hw_type_id: int | str
         :raises ValueError: If ``creator_id`` wasn't a digit.
         :raises ValueError: If ``hw_type_id`` wasn't a digit.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A Wialon object dictionary.
         :rtype: dict[str, str]
 
@@ -51,7 +51,7 @@ class WialonUnit(WialonObject):
         Activates the unit in Wialon.
 
         :raises AssertionError: If the Wialon unit id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary with the unit's current status.
         :rtype: dict[str, str]
 
@@ -66,7 +66,7 @@ class WialonUnit(WialonObject):
         Deactivates the unit in Wialon.
 
         :raises AssertionError: If the Wialon unit id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary with the unit's current status.
         :rtype: dict[str, str]
 
@@ -98,7 +98,7 @@ class WialonUnit(WialonObject):
         :param flags: Command execution flags. Default is ``0``.
         :type flags: int
         :raises AssertionError: If the Wialon unit id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
         :rtype: dict[str, str]
 
@@ -126,7 +126,7 @@ class WialonUnit(WialonObject):
         :param command_ids: An optional collection of command ids. Default is :py:obj:`None`.
         :type command_ids: ~collections.abc.Collection[int] | None
         :raises AssertionError: If the Wialon unit id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary of command definition data.
         :rtype: dict[str, str]
 

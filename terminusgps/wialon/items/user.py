@@ -18,7 +18,7 @@ class WialonUser(WialonObject):
         :param password: Wialon user password.
         :type password: str
         :raises ValueError: If ``creator_id`` wasn't a digit.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A Wialon object dictionary.
         :rtype: dict[str, str]
 
@@ -52,7 +52,7 @@ class WialonUser(WialonObject):
         :param flags: Response flags. Default is ``0x1``.
         :type flags: int
         :raises AssertionError: If the Wialon user id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary of Wialon objects.
         :rtype: dict[str, str]
 
@@ -79,7 +79,7 @@ class WialonUser(WialonObject):
         :type access_mask: int
         :raises AssertionError: If the Wialon user id wasn't set.
         :raises ValueError: If the other Wialon object's id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
         :rtype: dict[str, str]
 
@@ -100,7 +100,7 @@ class WialonUser(WialonObject):
         :param flags_mask: An integer mask which determines which bits will be changed.
         :type flags_mask: int
         :raises AssertionError: If the Wialon user id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary containing the user's new settings flags.
         :rtype: dict[str, str]
 
@@ -121,7 +121,7 @@ class WialonUser(WialonObject):
         :param new_password: The user's new Wialon password.
         :type new_password: str
         :raises AssertionError: If the Wialon user id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
         :rtype: dict[str, str]
 

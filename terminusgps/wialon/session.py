@@ -5,6 +5,8 @@ import wialon.api
 
 
 class WialonAPIError(Exception):
+    """Raised when a Wialon API call fails."""
+
     def __init__(self, message, *args, **kwargs) -> None:
         self.message = message
         self._code = int(message._code)
@@ -12,6 +14,7 @@ class WialonAPIError(Exception):
 
     @property
     def code(self) -> int:
+        """Wialon API error code."""
         return self._code
 
 
@@ -35,18 +38,18 @@ class WialonSession:
         """
         Starts or continues a Wialon API session.
 
-        :param token: An optional Wialon API token. Default is :confval:`WIALON_TOKEN`.
-        :type token: :py:obj:`str` | :py:obj:`None`
+        :param token: A Wialon API token. If not provided, the environment variable ``"WIALON_TOKEN"`` is used.
+        :type token: str | None
         :param sid: An optional Wialon API session id. If provided, the session is continued.
-        :type sid: :py:obj:`str` | :py:obj:`None`
+        :type sid: str | None
         :param scheme: HTTP request scheme to use. Default is ``"https"``.
-        :type scheme: :py:obj:`str`
+        :type scheme: str
         :param host: Wialon API host url. Default is ``"hst-api.wialon.com"``.
-        :type host: :py:obj:`str`
+        :type host: str
         :param port: Wialon API port. Default is ``443``.
-        :type port: :py:obj:`int`
+        :type port: int
         :returns: Nothing.
-        :rtype: :py:obj:`None`
+        :rtype: None
 
         """
 
@@ -69,7 +72,7 @@ class WialonSession:
 
         :raises AssertionError: If the session's Wialon API :py:attr:`token` wasn't set.
         :returns: A valid Wialon API session.
-        :rtype: :py:obj:`~terminusgps.wialon.session.WialonSession`
+        :rtype: ~terminusgps.wialon.session.WialonSession
 
         """
         assert self.token, "Wialon API token wasn't set."
@@ -81,7 +84,7 @@ class WialonSession:
         Logs out of the session by calling :py:meth:`logout`.
 
         :returns: Nothing.
-        :rtype: :py:obj:`None`
+        :rtype: None
 
         """
         self.logout()
@@ -95,8 +98,8 @@ class WialonSession:
         """
         User id of the session's authenticated Wialon user.
 
-        :type: :py:obj:`str` | :py:obj:`None`
-        :value: :py:obj:`None`
+        :type: str | None
+        :value: None
         """
         return self._uid
 
@@ -105,8 +108,8 @@ class WialonSession:
         """
         Username of the session's authenticated Wialon user.
 
-        :type: :py:obj:`str` | :py:obj:`None`
-        :value: :py:obj:`None`
+        :type: str | None
+        :value: None
 
         """
         return self._username
@@ -120,8 +123,8 @@ class WialonSession:
 
         Returns :py:obj:`None` if the session wasn't logged in.
 
-        :type: :py:obj:`str` | :py:obj:`None`
-        :value: :py:obj:`None`
+        :type: str | None
+        :value: None
 
         """
         return self.wialon_api.sid
@@ -131,7 +134,7 @@ class WialonSession:
         """
         Wialon API token set during :py:meth:`WialonSession.__init__`.
 
-        :type: :py:obj:`str`
+        :type: str
 
         """
         return str(self._token)
@@ -141,13 +144,13 @@ class WialonSession:
         Logs into the Wialon API, starts a new session then returns its id.
 
         :param token: An active Wialon API token.
-        :type token: :py:obj:`str`
+        :type token: str
         :param flags: A login response flag integer.
-        :type flags: :py:obj:`int`
+        :type flags: int
         :raises WialonError: If the login fails.
         :raises AssertionError: If the login token was not set.
         :returns: The new session id.
-        :rtype: :py:obj:`str`
+        :rtype: str
 
         """
         try:
@@ -165,7 +168,7 @@ class WialonSession:
         Logs out of the Wialon API session.
 
         :returns: Nothing.
-        :rtype: :py:obj:`None`
+        :rtype: None
 
         """
         sid = self.wialon_api.sid
@@ -182,10 +185,10 @@ class WialonSession:
         Sets the Wialon API session's attributes based on a login response.
 
         :param login_response: A dictionary returned from :py:meth:`login`.
-        :type login_response: :py:obj:`dict`
+        :type login_response: dict
         :raises ValueError: If ``login_response`` wasn't provided.
         :returns: Nothing.
-        :rtype: :py:obj:`None`
+        :rtype: None
 
         """
         if login_response is None:

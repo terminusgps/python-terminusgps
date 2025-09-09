@@ -1,30 +1,12 @@
-import typing
-
 from terminusgps.wialon import flags
 from terminusgps.wialon.items.base import WialonObject
-
-WialonRetranslatorConfiguration = typing.TypedDict(
-    "WialonRetranslatorConfiguration",
-    {
-        "protocol": str,
-        "server": str,
-        "port": int,
-        "auth": str,
-        "ssl": int,
-        "debug": int,
-        "v6type": int,
-    },
-)
 
 
 class WialonRetranslator(WialonObject):
     """A Wialon `retranslator <https://wialon.com/en/gps-hardware/soft>`_."""
 
     def create(
-        self,
-        creator_id: int | str,
-        name: str,
-        config: WialonRetranslatorConfiguration,
+        self, creator_id: int | str, name: str, config: str
     ) -> dict[str, str]:
         """
         Creates the retranslator in Wialon and sets its id.
@@ -34,9 +16,9 @@ class WialonRetranslator(WialonObject):
         :param name: Wialon retranslator name.
         :type name: str
         :param config: Wialon retranslator configuration.
-        :type config: ~terminusgps.wialon.items.retranslator.WialonRetranslatorConfiguration
+        :type config: str
         :raises ValueError: If ``creator_id`` wasn't a digit.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A Wialon object dictionary.
         :rtype: dict[str, str]
 

@@ -14,7 +14,7 @@ class WialonRoute(WialonObject):
         :param name: Wialon route name.
         :type name: str
         :raises ValueError: If ``creator_id`` wasn't a digit.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A Wialon object dictionary.
         :rtype: dict[str, str]
 

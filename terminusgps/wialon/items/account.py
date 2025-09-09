@@ -19,7 +19,7 @@ class WialonAccount(WialonObject):
         :param billing_plan: A Wialon account billing plan.
         :type billing_plan: str
         :raises ValueError: If ``resource_id`` wasn't a digit.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A Wialon object dictionary.
         :rtype: dict[str, str]
 
@@ -45,7 +45,7 @@ class WialonAccount(WialonObject):
         :param reasons: An optional collection of reason strings. Default is :py:obj:`None`.
         :type reasons: ~collections.abc.Collection[str] | None
         :raises AssertionError: If the Wialon account id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
         :rtype: dict[str, str]
 
@@ -62,7 +62,7 @@ class WialonAccount(WialonObject):
         Enables the account in Wialon.
 
         :raises AssertionError: If the Wialon account id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
         :rtype: dict[str, str]
 
@@ -77,7 +77,7 @@ class WialonAccount(WialonObject):
         Disables the account in Wialon.
 
         :raises AssertionError: If the Wialon account id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
         :rtype: dict[str, str]
 
@@ -103,7 +103,7 @@ class WialonAccount(WialonObject):
         :param description: A description for the payment.
         :type description: str
         :raises AssertionError: If the Wialon account id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
         :rtype: dict[str, str]
 
@@ -125,7 +125,7 @@ class WialonAccount(WialonObject):
         :param enabled: Whether to set the account as a dealer or not.
         :type enabled: bool
         :raises AssertionError: If the Wialon account id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
         :rtype: dict[str, str]
 
@@ -151,7 +151,7 @@ class WialonAccount(WialonObject):
         :param deny_balance: Balance required for service denial. Default is ``0.00``.
         :type deny_balance: ~decimal.Decimal
         :raises AssertionError: If the Wialon account id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
         :rtype: dict[str, str]
 
@@ -173,7 +173,7 @@ class WialonAccount(WialonObject):
         :param name: A Wialon billing plan name.
         :type name: str
         :raises AssertionError: If the Wialon account id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
         :rtype: dict[str, str]
 
@@ -190,7 +190,7 @@ class WialonAccount(WialonObject):
         :param days: Minimum number of days as an integer.
         :type days: int
         :raises AssertionError: If the Wialon account id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
         :rtype: dict[str, str]
 
@@ -207,7 +207,7 @@ class WialonAccount(WialonObject):
         :param response_type: A response flag integer. Default is ``1``.
         :type response_type: int
         :raises AssertionError: If the Wialon account id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary containing the account's data from Wialon.
         :rtype: dict[str, str]
 

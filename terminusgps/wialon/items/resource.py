@@ -24,7 +24,7 @@ class WialonResource(WialonObject):
         :param skip_creator_check: Whether to ignore creator check during the API call. Default is :py:obj:`False`.
         :type skip_creator_check: bool
         :raises ValueError: If ``creator_id`` wasn't a digit.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A Wialon object dictionary.
         :rtype: dict[str, str]
 
@@ -56,7 +56,7 @@ class WialonResource(WialonObject):
         :param notification_ids: An optional collection of notification ids. Default is :py:obj:`None`.
         :type notification_ids: ~collections.abc.Collection[int] | None
         :raises AssertionError: If the Wialon resource id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary of notification data.
         :rtype: dict[str, str]
 
@@ -89,7 +89,7 @@ class WialonResource(WialonObject):
         :raises AssertionError: If the Wialon resource id wasn't set.
         :raises ValueError: If ``unit_id`` wasn't a digit.
         :raises ValueError: If ``driver_id`` wasn't a digit.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A dictionary of Wialon drivers.
         :rtype: dict[str, str]
 

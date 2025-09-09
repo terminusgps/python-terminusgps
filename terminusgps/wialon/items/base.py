@@ -111,7 +111,7 @@ class WialonObject(ABC):
         Returns a list of admin field dictionaries from Wialon.
 
         :raises AssertionError: If the Wialon object id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A list of admin field dictionaries.
         :rtype: list[dict[str, str]]
 
@@ -142,7 +142,7 @@ class WialonObject(ABC):
         :type id: int | str | None
         :raises AssertionError: If the Wialon object id wasn't set.
         :raises ValueError: If ``id`` wasn't a digit.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An admin field dictionary.
         :rtype: dict[str, str]
 
@@ -168,7 +168,7 @@ class WialonObject(ABC):
         :type id: int | str
         :raises AssertionError: If the Wialon object id wasn't set.
         :raises ValueError: If ``id`` wasn't a digit.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
         :rtype: dict[str, str]
 
@@ -185,7 +185,7 @@ class WialonObject(ABC):
         Returns a list of custom field dictionaries from Wialon.
 
         :raises AssertionError: If the Wialon object id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A list of admin field dictionaries.
         :rtype: list[dict[str, str]]
 
@@ -214,7 +214,7 @@ class WialonObject(ABC):
         :type id: int | str | None
         :raises AssertionError: If the Wialon object id wasn't set.
         :raises ValueError: If ``id`` wasn't a digit.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A custom field dictionary.
         :rtype: dict[str, str]
 
@@ -240,7 +240,7 @@ class WialonObject(ABC):
         :type id: int | str
         :raises AssertionError: If the Wialon object id wasn't set.
         :raises ValueError: If ``id`` wasn't a digit.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: An empty dictionary.
         :rtype: dict[str, str]
 
@@ -261,7 +261,7 @@ class WialonObject(ABC):
         :param value: Profile field value.
         :type value: str
         :raises AssertionError: If the Wialon object id wasn't set.
-        :raises WialonAPIError: If something went wrong calling the Wialon API.
+        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.
         :returns: A profile field dictionary.
         :rtype: dict[str, str]
 

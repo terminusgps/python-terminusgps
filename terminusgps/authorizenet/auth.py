@@ -1,7 +1,8 @@
 from authorizenet.apicontractsv1 import merchantAuthenticationType
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 
-from terminusgps.django import settings as default_settings
+from terminusgps import default_settings
 
 if not settings.configured:
     settings.configure(default_settings)
@@ -9,12 +10,21 @@ if not settings.configured:
 
 def get_merchant_auth() -> merchantAuthenticationType:
     """
-    Returns the current merchant authentication information for Authorizenet API requests.
+    Returns the merchant authentication information for Authorizenet API controller execution.
 
+    :raises ~django.core.exceptions.ImproperlyConfigured: If the :py:data:`MERCHANT_AUTH_LOGIN_ID` or the :py:data:`MERCHANT_AUTH_TRANSACTION_KEY` settings weren't set.
     :returns: A merchant authentication object.
     :rtype: :py:obj:`~authorizenet.apicontractsv1.merchantAuthenticationType`
 
     """
+    if not all(
+        [
+            hasattr(settings, "MERCHANT_AUTH_LOGIN_ID"),
+            hasattr(settings, "MERCHANT_AUTH_TRANSACTION_KEY"),
+        ]
+    ):
+        error_msg: str = "'MERCHANT_AUTH_LOGIN_ID' and 'MERCHANT_AUTH_TRANSACTION_KEY' settings are required."
+        raise ImproperlyConfigured(error_msg)
     return merchantAuthenticationType(
         name=str(settings.MERCHANT_AUTH_LOGIN_ID),
         transactionKey=str(settings.MERCHANT_AUTH_TRANSACTION_KEY),
@@ -23,21 +33,29 @@ def get_merchant_auth() -> merchantAuthenticationType:
 
 def get_environment() -> str:
     """
-    Returns the current environment for Authorizenet API requests.
+    Returns the environment for Authorizenet API controller execution.
 
+    :raises ~django.core.exceptions.ImproperlyConfigured: If the :py:data:`MERCHANT_AUTH_ENVIRONMENT` setting wasn't set.
     :returns: An Authorizenet API environment string.
     :rtype: :py:obj:`str`
 
     """
+    if not hasattr(settings, "MERCHANT_AUTH_ENVIRONMENT"):
+        error_msg: str = "'MERCHANT_AUTH_ENVIRONMENT' setting is required."
+        raise ImproperlyConfigured(error_msg)
     return settings.MERCHANT_AUTH_ENVIRONMENT
 
 
 def get_validation_mode() -> str:
     """
-    Returns the current validation mode for Authorizenet API requests.
+    Returns the validation mode for Authorizenet API controller execution.
 
+    :raises ~django.core.exceptions.ImproperlyConfigured: If the :py:data:`MERCHANT_AUTH_VALIDATION_MODE` setting wasn't set.
     :returns: An Authorizenet API validation string.
     :rtype: :py:obj:`str`
 
     """
+    if not hasattr(settings, "MERCHANT_AUTH_VALIDATION_MODE"):
+        error_msg: str = "'MERCHANT_AUTH_VALIDATION_MODE' setting is required."
+        raise ImproperlyConfigured(error_msg)
     return settings.MERCHANT_AUTH_VALIDATION_MODE
