@@ -9,7 +9,7 @@ def get_merchant_auth() -> merchantAuthenticationType:
 
     :raises ~django.core.exceptions.ImproperlyConfigured: If the :py:data:`MERCHANT_AUTH_LOGIN_ID` or the :py:data:`MERCHANT_AUTH_TRANSACTION_KEY` settings weren't set.
     :returns: A merchant authentication object.
-    :rtype: :py:obj:`~authorizenet.apicontractsv1.merchantAuthenticationType`
+    :rtype: ~authorizenet.apicontractsv1.merchantAuthenticationType
 
     """
     if not all(
@@ -32,7 +32,7 @@ def get_environment() -> str:
 
     :raises ~django.core.exceptions.ImproperlyConfigured: If the :py:data:`MERCHANT_AUTH_ENVIRONMENT` setting wasn't set.
     :returns: An Authorizenet API environment string.
-    :rtype: :py:obj:`str`
+    :rtype: str
 
     """
     if not hasattr(settings, "MERCHANT_AUTH_ENVIRONMENT"):
@@ -47,7 +47,7 @@ def get_validation_mode() -> str:
 
     :raises ~django.core.exceptions.ImproperlyConfigured: If the :py:data:`MERCHANT_AUTH_VALIDATION_MODE` setting wasn't set.
     :returns: An Authorizenet API validation string.
-    :rtype: :py:obj:`str`
+    :rtype: str
 
     """
     if not hasattr(settings, "MERCHANT_AUTH_VALIDATION_MODE"):
