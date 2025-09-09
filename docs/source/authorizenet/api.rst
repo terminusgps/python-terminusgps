@@ -1,5 +1,5 @@
-Authorizenet API Endpoints
-==========================
+Functions
+=========
 
 ================
 Address Profiles

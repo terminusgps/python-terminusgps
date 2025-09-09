@@ -40,7 +40,9 @@ exclude_patterns = []
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
+autodoc_member_order = "groupwise"
 html_theme = "sphinxawesome_theme"
 pygments_style = "sas"
 pygments_style_dark = "lightbulb"
 html_static_path = ["_static"]
+graphviz_dot = "/usr/bin/dot"
