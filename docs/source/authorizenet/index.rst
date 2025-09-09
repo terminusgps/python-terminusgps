@@ -30,4 +30,3 @@ Most `Authorizenet API endpoints <https://developer.authorize.net/api/reference/
     constants.rst
     exceptions.rst
     usage.rst
-    validators.rst
