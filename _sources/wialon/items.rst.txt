@@ -9,38 +9,43 @@ Base
     :autoclasstoc:
     :members:
 
-=======
-Factory
-=======
+=========
+Factories
+=========
 
 .. autoclass:: terminusgps.wialon.items.factory.WialonObjectFactory
     :autoclasstoc:
-    :members:
+
 
 ==============
 Wialon objects
 ==============
 
 .. autoclass:: terminusgps.wialon.items.account.WialonAccount
+    :autoclasstoc:
     :members:
 
 .. autoclass:: terminusgps.wialon.items.resource.WialonResource
+    :autoclasstoc:
     :members:
 
 .. autoclass:: terminusgps.wialon.items.retranslator.WialonRetranslator
-    :members:
-
-.. autoclass:: terminusgps.wialon.items.retranslator.WialonRetranslatorConfiguration
+    :autoclasstoc:
     :members:
 
 .. autoclass:: terminusgps.wialon.items.route.WialonRoute
+    :autoclasstoc:
     :members:
 
 .. autoclass:: terminusgps.wialon.items.unit.WialonUnit
+    :autoclasstoc:
     :members:
 
 .. autoclass:: terminusgps.wialon.items.unit_group.WialonUnitGroup
+    :autoclasstoc:
     :members:
 
 .. autoclass:: terminusgps.wialon.items.user.WialonUser
+    :autoclasstoc:
     :members:
+
