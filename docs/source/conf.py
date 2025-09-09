@@ -28,8 +28,8 @@ extensions = [
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3/", None),
     "django": (
-        "http://docs.djangoproject.com/en/stable/",
-        "http://docs.djangoproject.com/en/stable/_objects/",
+        "https://docs.djangoproject.com/en/5.2/",
+        "https://docs.djangoproject.com/en/5.2/objects.inv",
     ),
 }
 
