@@ -8,7 +8,8 @@ Most Wialon objects are modeled as plain Python objects which have attributes an
     :maxdepth: 2
     :caption: Contents:
 
-    items.rst
+    constants.rst
     exceptions.rst
+    items.rst
     session.rst
     usage.rst

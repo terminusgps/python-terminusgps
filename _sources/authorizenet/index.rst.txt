@@ -25,8 +25,8 @@ Most `Authorizenet API endpoints <https://developer.authorize.net/api/reference/
     :maxdepth: 2
     :caption: Contents:
 
-    api.rst
     auth.rst
     constants.rst
     exceptions.rst
+    api.rst
     usage.rst
