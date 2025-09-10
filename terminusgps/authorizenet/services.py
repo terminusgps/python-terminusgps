@@ -1,18 +1,14 @@
 from abc import ABC
 from functools import cached_property
+from typing import Callable
 
-from authorizenet import apicontractsv1
-from authorizenet.apicontrollersbase import APIOperationBase
+from authorizenet.apicontractsv1 import merchantAuthenticationType
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from lxml.objectify import ObjectifiedElement
 
-from terminusgps.authorizenet.auth import (
-    get_environment,
-    get_merchant_auth,
-    get_validation_mode,
-)
-from terminusgps.authorizenet.controllers import execute_controller
+from .auth import get_environment, get_merchant_auth, get_validation_mode
+from .controllers import execute_controller
 
 
 class AuthorizenetService(ABC):
@@ -26,31 +22,30 @@ class AuthorizenetService(ABC):
     )
 
     def __init__(self) -> None:
+        """Raises :py:exc:`~django.core.exceptions.ImproperlyConfigured` if required settings weren't set."""
         for setting in self.REQUIRED_SETTINGS:
             if not hasattr(settings, setting):
                 raise ImproperlyConfigured(f"'{setting}' setting is required.")
 
-    def execute_controller(
-        self, controller: APIOperationBase
-    ) -> ObjectifiedElement:
+    def call_api(self, func: Callable, *args, **kwargs) -> ObjectifiedElement:
         """
-        Executes an Authorizenet API controller.
+        Calls the Authorizenet API function with arguments and returns the result.
 
-        :param controller: An Authorizenet controller.
-        :type controller: ~authorizenet.apicontrollersbase.APIOperationBase
+        :param func: An Authorizenet API function.
+        :type func: ~typing.Callable
+        :param args: Positional arguments for the API call.
+        :param kwargs: Keyword arguments for the API call.
         :raises ~terminusgps.authorizenet.controllers.AuthorizenetControllerExecutionError: If the API call failed.
-        :returns: The Authorizenet API controller response.
+        :returns: The Authorizenet API call response.
         :rtype: ~lxml.objectify.ObjectifiedElement
 
         """
-        controller.setenvironment(self.environment)
-        controller.setmerchantauthentication(self.merchantAuthentication)
-        return execute_controller(controller)
+        request, controller_cls = func(*args, **kwargs)
+        request.merchantAuthentication = self.merchantAuthentication
+        return execute_controller(controller_cls(request), self.environment)
 
     @cached_property
-    def merchantAuthentication(
-        self,
-    ) -> apicontractsv1.merchantAuthenticationType:
+    def merchantAuthentication(self) -> merchantAuthenticationType:
         """Merchant authentication element for Authorizenet API requests."""
         return get_merchant_auth()
 

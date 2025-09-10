@@ -3,7 +3,7 @@ from lxml.objectify import ObjectifiedElement
 
 
 def execute_controller(
-    controller: APIOperationBase,
+    controller: APIOperationBase, environment: str
 ) -> ObjectifiedElement | None:
     """
     Executes an Authorizenet API controller and returns its response.
@@ -19,8 +19,10 @@ def execute_controller(
     :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
+    controller.setenvironment(environment)
     controller.execute()
     response = controller.getresponse()
+
     if response is None:
         raise AuthorizenetControllerExecutionError(
             message="Authorizenet controller response didn't exist.", code="1"

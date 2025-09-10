@@ -2,8 +2,6 @@ from authorizenet import apicontractsv1, apicontrollers
 from authorizenet.apicontrollersbase import APIOperationBase
 from lxml.objectify import ObjectifiedElement
 
-from terminusgps.authorizenet.auth import get_validation_mode
-
 __all__ = [
     "create_customer_payment_profile",
     "get_customer_payment_profile",
@@ -16,7 +14,6 @@ __all__ = [
 def create_customer_payment_profile(
     customer_profile_id: int,
     payment_profile: apicontractsv1.customerPaymentProfileType,
-    validate: bool = True,
 ) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `createCustomerPaymentProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-create-customer-payment-profile>`_.
@@ -33,8 +30,6 @@ def create_customer_payment_profile(
     request = apicontractsv1.createCustomerPaymentProfileRequest()
     request.customerProfileId = str(customer_profile_id)
     request.paymentProfile = payment_profile
-    if validate:
-        request.validationMode = get_validation_mode()
     return request, apicontrollers.createCustomerPaymentProfileController
 
 
@@ -80,7 +75,6 @@ def validate_customer_payment_profile(
     request = apicontractsv1.validateCustomerPaymentProfileRequest()
     request.customerProfileId = str(customer_profile_id)
     request.customerPaymentProfileId = str(payment_profile_id)
-    request.validationMode = get_validation_mode()
     return request, apicontrollers.validateCustomerPaymentProfileController
 
 
@@ -88,7 +82,6 @@ def update_customer_payment_profile(
     customer_profile_id: int,
     payment_profile_id: int,
     payment_profile: apicontractsv1.customerPaymentProfileType,
-    validate: bool = True,
 ) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `updateCustomerPaymentProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-update-customer-payment-profile>`_.
@@ -99,8 +92,6 @@ def update_customer_payment_profile(
     :type payment_profile_id: int
     :param payment_profile: An Authorizenet payment profile element.
     :type payment_profile: ~authorizenet.apicontractsv1.customerPaymentProfileType
-    :param validate: Whether to validate the payment profile. Default is True.
-    :type validate: bool
     :returns: A tuple containing an Authorizenet API request element and controller class.
     :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
@@ -111,8 +102,6 @@ def update_customer_payment_profile(
     request = apicontractsv1.updateCustomerPaymentProfileRequest()
     request.customerProfileId = str(customer_profile_id)
     request.paymentProfile = payment_profile
-    if validate:
-        request.validationMode = get_validation_mode()
     return request, apicontrollers.updateCustomerPaymentProfileController
 
 
