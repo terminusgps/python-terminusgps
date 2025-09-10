@@ -1,12 +1,9 @@
-from authorizenet import apicontractsv1
 from authorizenet.apicontrollersbase import APIOperationBase
 from lxml.objectify import ObjectifiedElement
 
 
 def execute_controller(
     controller: APIOperationBase,
-    environment: str,
-    merchant_auth: apicontractsv1.merchantAuthenticationType,
 ) -> ObjectifiedElement | None:
     """
     Executes an Authorizenet API controller and returns its response.
@@ -22,10 +19,12 @@ def execute_controller(
     :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
-    controller.setenvironment(environment)
-    controller.setmerchantauthentication(merchant_auth)
     controller.execute()
     response = controller.getresponse()
+    if response is None:
+        raise AuthorizenetControllerExecutionError(
+            message="Authorizenet controller response didn't exist.", code="1"
+        )
     if response is not None and response.messages.resultCode != "Ok":
         raise AuthorizenetControllerExecutionError(
             message=response.messages.message[0]["text"].text,
