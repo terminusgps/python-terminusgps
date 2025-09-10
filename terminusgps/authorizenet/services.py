@@ -1,4 +1,3 @@
-from abc import ABC
 from functools import cached_property
 from typing import Callable
 
@@ -8,11 +7,14 @@ from django.core.exceptions import ImproperlyConfigured
 from lxml.objectify import ObjectifiedElement
 
 from .auth import get_environment, get_merchant_auth, get_validation_mode
-from .controllers import execute_controller
+from .controllers import (
+    AuthorizenetControllerExecutionError,
+    execute_controller,
+)
 
 
-class AuthorizenetService(ABC):
-    """Base class for services that interact with the Authorizenet API."""
+class AuthorizenetService:
+    """A service that safely interacts with the Authorizenet API."""
 
     REQUIRED_SETTINGS = (
         "MERCHANT_AUTH_ENVIRONMENT",
@@ -27,7 +29,7 @@ class AuthorizenetService(ABC):
             if not hasattr(settings, setting):
                 raise ImproperlyConfigured(f"'{setting}' setting is required.")
 
-    def call_api(self, func: Callable, *args, **kwargs) -> ObjectifiedElement:
+    def request(self, func: Callable, *args, **kwargs) -> ObjectifiedElement:
         """
         Calls the Authorizenet API function with arguments and returns the result.
 
@@ -35,14 +37,19 @@ class AuthorizenetService(ABC):
         :type func: ~typing.Callable
         :param args: Positional arguments for the API call.
         :param kwargs: Keyword arguments for the API call.
+        :raises ValueError: If any function arguments were invalid.
         :raises ~terminusgps.authorizenet.controllers.AuthorizenetControllerExecutionError: If the API call failed.
         :returns: The Authorizenet API call response.
         :rtype: ~lxml.objectify.ObjectifiedElement
 
         """
-        request, controller_cls = func(*args, **kwargs)
-        request.merchantAuthentication = self.merchantAuthentication
-        return execute_controller(controller_cls(request), self.environment)
+        try:
+            request, controller_cls = func(*args, **kwargs)
+            request.merchantAuthentication = self.merchantAuthentication
+            controller = controller_cls(request)
+            return execute_controller(controller, self.environment)
+        except AuthorizenetControllerExecutionError | ValueError:
+            raise
 
     @cached_property
     def merchantAuthentication(self) -> merchantAuthenticationType:
