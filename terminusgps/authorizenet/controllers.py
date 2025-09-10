@@ -1,7 +1,7 @@
 from authorizenet.apicontrollersbase import APIOperationBase
 from lxml.objectify import ObjectifiedElement
 
-from .auth import get_environment
+from .auth import get_environment, get_merchant_auth
 
 
 def execute_controller(
@@ -18,9 +18,10 @@ def execute_controller(
 
     """
     controller.setenvironment(get_environment())
+    controller.setmerchantauthentication(get_merchant_auth())
     controller.execute()
-    response = controller.getresponse()
 
+    response = controller.getresponse()
     if response is not None and response.messages.resultCode != "Ok":
         raise AuthorizenetControllerExecutionError(
             message=response.messages.message[0]["text"].text,

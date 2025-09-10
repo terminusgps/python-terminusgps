@@ -1,8 +1,6 @@
 from authorizenet import apicontractsv1, apicontrollers
+from authorizenet.apicontrollersbase import APIOperationBase
 from lxml.objectify import ObjectifiedElement
-
-from terminusgps.authorizenet.auth import get_merchant_auth
-from terminusgps.authorizenet.controllers import execute_controller
 
 __all__ = [
     "create_subscription",
@@ -15,28 +13,24 @@ __all__ = [
 
 def create_subscription(
     subscription: apicontractsv1.ARBSubscriptionType,
-) -> ObjectifiedElement | None:
+) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `ARBCreateSubscriptionRequest <https://developer.authorize.net/api/reference/index.html#recurring-billing-create-a-subscription>`_.
 
     :param subscription: An Authorizenet ARBSubscriptionType element.
     :type subscription: ~authorizenet.apicontractsv1.ARBSubscriptionType
-    :returns: An Authorizenet ARBCreateSubscriptionResponse element.
-    :rtype: ~lxml.objectify.ObjectifiedElement | None
+    :returns: A tuple containing an Authorizenet API request element and controller class.
+    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
     request = apicontractsv1.ARBCreateSubscriptionRequest()
-    request.merchantAuthentication = get_merchant_auth()
     request.subscription = subscription
-
-    return execute_controller(
-        apicontrollers.ARBCreateSubscriptionController(request)
-    )
+    return request, apicontrollers.ARBCreateSubscriptionController
 
 
 def get_subscription(
     subscription_id: int, include_transactions: bool = True
-) -> ObjectifiedElement | None:
+) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `ARBGetSubscriptionRequest <https://developer.authorize.net/api/reference/index.html#recurring-billing-get-subscription>`_.
 
@@ -44,42 +38,36 @@ def get_subscription(
     :type subscription_id: int
     :param include_transactions: Whether to include the subscription transaction list in the response. Default is True.
     :type include_transactions: bool
-    :returns: An Authorizenet ARBGetSubscriptionResponse element.
-    :rtype: ~lxml.objectify.ObjectifiedElement | None
+    :returns: A tuple containing an Authorizenet API request element and controller class.
+    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
     request = apicontractsv1.ARBGetSubscriptionRequest()
-    request.merchantAuthentication = get_merchant_auth()
     request.subscriptionId = str(subscription_id)
     request.includeTransactions = str(include_transactions).lower()
-
-    return execute_controller(
-        apicontrollers.ARBGetSubscriptionController(request)
-    )
+    return request, apicontrollers.ARBGetSubscriptionController
 
 
-def get_subscription_status(subscription_id: int) -> ObjectifiedElement | None:
+def get_subscription_status(
+    subscription_id: int,
+) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `ARBGetSubscriptionStatusRequest <https://developer.authorize.net/api/reference/index.html#recurring-billing-get-subscription-status>`_.
 
     :param subscription_id: An Authorizenet subscription id.
     :type subscription_id: int
-    :returns: An Authorizenet ARBGetSubscriptionStatusResponse element.
-    :rtype: ~lxml.objectify.ObjectifiedElement | None
+    :returns: A tuple containing an Authorizenet API request element and controller class.
+    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
     request = apicontractsv1.ARBGetSubscriptionStatusRequest()
-    request.merchantAuthentication = get_merchant_auth()
     request.subscriptionId = str(subscription_id)
-
-    return execute_controller(
-        apicontrollers.ARBGetSubscriptionStatusController(request)
-    )
+    return request, apicontrollers.ARBGetSubscriptionStatusController
 
 
 def update_subscription(
     subscription_id: int, subscription: apicontractsv1.ARBSubscriptionType
-) -> ObjectifiedElement | None:
+) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `ARBUpdateSubscriptionRequest <https://developer.authorize.net/api/reference/index.html#recurring-billing-update-a-subscription>`_.
 
@@ -87,34 +75,28 @@ def update_subscription(
     :type subscription_id: int
     :param subscription: An Authorizenet ARBSubscriptionType element.
     :type subscription: ~authorizenet.apicontractsv1.ARBSubscriptionType
-    :returns: An Authorizenet ARBUpdateSubscriptionResponse element.
-    :rtype: ~lxml.objectify.ObjectifiedElement | None
+    :returns: A tuple containing an Authorizenet API request element and controller class.
+    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
     request = apicontractsv1.ARBUpdateSubscriptionRequest()
-    request.merchantAuthentication = get_merchant_auth()
     request.subscriptionId = str(subscription_id)
     request.subscription = subscription
-
-    return execute_controller(
-        apicontrollers.ARBUpdateSubscriptionController(request)
-    )
+    return request, apicontrollers.ARBUpdateSubscriptionController
 
 
-def cancel_subscription(subscription_id: int) -> ObjectifiedElement | None:
+def cancel_subscription(
+    subscription_id: int,
+) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `ARBCancelSubscriptionRequest <https://developer.authorize.net/api/reference/index.html#recurring-billing-cancel-a-subscription>`_.
 
     :param subscription_id: An Authorizenet subscription id.
     :type subscription_id: int
-    :returns: An Authorizenet ARBCancelSubscriptionResponse element.
-    :rtype: ~lxml.objectify.ObjectifiedElement | None
+    :returns: A tuple containing an Authorizenet API request element and controller class.
+    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
     request = apicontractsv1.ARBCancelSubscriptionRequest()
-    request.merchantAuthentication = get_merchant_auth()
     request.subscriptionId = str(subscription_id)
-
-    return execute_controller(
-        apicontrollers.ARBCancelSubscriptionController(request)
-    )
+    return request, apicontrollers.ARBCancelSubscriptionController

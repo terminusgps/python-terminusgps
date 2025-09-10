@@ -1,8 +1,6 @@
 from authorizenet import apicontractsv1, apicontrollers
+from authorizenet.apicontrollersbase import APIOperationBase
 from lxml.objectify import ObjectifiedElement
-
-from terminusgps.authorizenet.auth import get_merchant_auth
-from terminusgps.authorizenet.controllers import execute_controller
 
 __all__ = [
     "create_customer_profile",
@@ -15,7 +13,7 @@ __all__ = [
 
 def create_customer_profile(
     merchant_id: str, email: str, description: str = ""
-) -> ObjectifiedElement | None:
+) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `createCustomerProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-create-customer-profile>`_.
 
@@ -25,99 +23,81 @@ def create_customer_profile(
     :type email: str
     :param description: An optional customer description.
     :type description: str
-    :returns: An Authorizenet createCustomerProfileResponse element.
-    :rtype: ~lxml.objectify.ObjectifiedElement | None
+    :returns: A tuple containing an Authorizenet API request element and controller class.
+    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
     request = apicontractsv1.createCustomerProfileRequest()
-    request.merchantAuthentication = get_merchant_auth()
     request.profile = apicontractsv1.customerProfileType()
     request.profile.merchantCustomerId = merchant_id
     request.profile.description = description
     request.profile.email = email
-
-    return execute_controller(
-        apicontrollers.createCustomerProfileController(request)
-    )
+    return request, apicontrollers.createCustomerProfileController
 
 
 def get_customer_profile(
     customer_profile_id: int, include_issuer_info: bool = False
-) -> ObjectifiedElement | None:
+) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `getCustomerProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-profile>`_.
 
-    :param customer_profile_id: An Authorizenet customer profile id.
+    :param customer_profile_id: Authorizenet customer profile id.
     :type customer_profile_id: int
-    :param include_issuer_info: Whether to include issuer info in the response. Default is False.
+    :param include_issuer_info: Whether to include issuer info in the response. Default is :py:obj:`False`.
     :type include_issuer_info: bool
-    :returns: An Authorizenet getCustomerProfileResponse element.
-    :rtype: ~lxml.objectify.ObjectifiedElement | None
+    :returns: A tuple containing an Authorizenet API request element and controller class.
+    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
     request = apicontractsv1.getCustomerProfileRequest()
-    request.merchantAuthentication = get_merchant_auth()
     request.customerProfileId = str(customer_profile_id)
     request.includeIssuerInfo = str(include_issuer_info).lower()
-
-    return execute_controller(
-        apicontrollers.getCustomerProfileController(request)
-    )
+    return request, apicontrollers.getCustomerProfileController
 
 
-def get_customer_profile_ids() -> ObjectifiedElement | None:
+def get_customer_profile_ids() -> tuple[
+    ObjectifiedElement, type[APIOperationBase]
+]:
     """
     `getCustomerProfileIdsRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-profile-ids>`_.
 
-    :returns: An Authorizenet getCustomerProfileIdsResponse element.
-    :rtype: ~lxml.objectify.ObjectifiedElement | None
+    :returns: A tuple containing an Authorizenet API request element and controller class.
+    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
     request = apicontractsv1.getCustomerProfileIdsRequest()
-    request.merchantAuthentication = get_merchant_auth()
-
-    return execute_controller(
-        apicontrollers.getCustomerProfileIdsController(request)
-    )
+    return request, apicontrollers.getCustomerProfileIdsController
 
 
 def update_customer_profile(
     profile: apicontractsv1.customerProfileExType,
-) -> ObjectifiedElement | None:
+) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `updateCustomerProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-update-customer-profile>`_.
 
     :param profile: An Authorizenet customer profile ex element.
     :type profile: ~authorizenet.apicontractsv1.customerProfileExType
-    :returns: An Authorizenet updateCustomerProfileResponse element.
-    :rtype: ~lxml.objectify.ObjectifiedElement | None
+    :returns: A tuple containing an Authorizenet API request element and controller class.
+    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
     request = apicontractsv1.updateCustomerProfileRequest()
-    request.merchantAuthentication = get_merchant_auth()
     request.profile = profile
-
-    return execute_controller(
-        apicontrollers.updateCustomerProfileController(request)
-    )
+    return request, apicontrollers.updateCustomerProfileController
 
 
 def delete_customer_profile(
     customer_profile_id: int,
-) -> ObjectifiedElement | None:
+) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `deleteCustomerProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-delete-customer-profile>`_.
 
     :param customer_profile_id: An Authorizenet customer profile id.
     :type customer_profile_id: int
-    :returns: An Authorizenet deleteCustomerProfileResponse element.
-    :rtype: ~lxml.objectify.ObjectifiedElement | None
+    :returns: A tuple containing an Authorizenet API request element and controller class.
+    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
     request = apicontractsv1.deleteCustomerProfileRequest()
-    request.merchantAuthentication = get_merchant_auth()
     request.customerProfileId = str(customer_profile_id)
-
-    return execute_controller(
-        apicontrollers.deleteCustomerProfileController(request)
-    )
+    return request, apicontrollers.deleteCustomerProfileController
