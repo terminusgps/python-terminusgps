@@ -1,26 +1,30 @@
+from authorizenet import apicontractsv1
 from authorizenet.apicontrollersbase import APIOperationBase
 from lxml.objectify import ObjectifiedElement
-
-from .auth import get_environment, get_merchant_auth
 
 
 def execute_controller(
     controller: APIOperationBase,
+    environment: str,
+    merchant_auth: apicontractsv1.merchantAuthenticationType,
 ) -> ObjectifiedElement | None:
     """
     Executes an Authorizenet API controller and returns its response.
 
     :param controller: An Authorizenet API controller.
     :type controller: ~authorizenet.apicontrollersbase.APIOperationBase
+    :param environment: Authorizenet environment to execute the controller in.
+    :type environment: :py:obj:`str`
+    :param merchant_auth: Authorizenet merchant authentication element.
+    :type merchant_auth: ~authorizenet.apicontractsv1.merchantAuthenticationType
     :raises AuthorizenetControllerExecutionError: If the API call fails.
     :returns: An Authorizenet API response, if any.
     :rtype: ~lxml.objectify.ObjectifiedElement | None
 
     """
-    controller.setenvironment(get_environment())
-    controller.setmerchantauthentication(get_merchant_auth())
+    controller.setenvironment(environment)
+    controller.setmerchantauthentication(merchant_auth)
     controller.execute()
-
     response = controller.getresponse()
     if response is not None and response.messages.resultCode != "Ok":
         raise AuthorizenetControllerExecutionError(
