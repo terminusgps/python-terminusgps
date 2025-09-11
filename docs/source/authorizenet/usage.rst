@@ -5,16 +5,13 @@ Check the Authorizenet API documentation for expected attributes in each respons
 
 .. code:: python
 
-    from terminusgps.authorizenet import api as anet
+    from terminusgps.authorizenet import api
+    from terminusgps.authorizenet.services import AuthorizenetService
 
-    # An Authorizenet 'createCustomerProfileRequest'
-    response = anet.create_customer_profile(
-        merchant_id="1",
-        email="blake@terminusgps.com",
-        description="Blake Nall"
+    service = AuthorizenetService()
+    response = service.request(
+        api.create_customer_profile,
+        merchant_id=str(67),
+        email="peter@terminusgps.com"
     )
-
-    # Authorizenet API calls may return None
-    # Check first before trying to access attributes on it
-    if response is not None and hasattr(response, "customerProfileId"):
-        response.customerProfileId
+    response.customerProfileId # Authorizenet generated customer profile id
