@@ -4,6 +4,29 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
+class CurrencyCode(models.TextChoices):
+    USD = "USD", _("United States Dollar")
+    """US dollar."""
+    CAD = "CAD", _("Canadian Dollar")
+    """Canadian dollar."""
+    GBP = "GBP", _("Great British Pound")
+    """Great British pound."""
+    DKK = "DKK", _("Danish Krone")
+    """Danish krone."""
+    NOK = "NOK", _("Norwegian Krone")
+    """Norwegian krone."""
+    PLN = "PLN", _("Polish Złoty")
+    """Polish zloty."""
+    SEK = "SEK", _("Swedish Krona")
+    """Swedish krona."""
+    EUR = "EUR", _("Euro")
+    """Euro."""
+    AUD = "AUD", _("Australian Dollar")
+    """Australian dollar."""
+    NZD = "NZD", _("New Zealand Dollar")
+    """New Zealand dollar."""
+
+
 class SubscriptionStatus(models.TextChoices):
     """An Authorizenet subscription status."""
 

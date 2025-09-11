@@ -14,7 +14,7 @@ from .controllers import (
 
 
 class AuthorizenetService:
-    """A service that safely interacts with the Authorizenet API."""
+    """A service for safely interacting with the Authorizenet API."""
 
     REQUIRED_SETTINGS = (
         "MERCHANT_AUTH_ENVIRONMENT",
@@ -37,7 +37,6 @@ class AuthorizenetService:
         :type func: ~typing.Callable
         :param args: Positional arguments for the API call.
         :param kwargs: Keyword arguments for the API call.
-        :raises ValueError: If any function arguments were invalid.
         :raises ~terminusgps.authorizenet.controllers.AuthorizenetControllerExecutionError: If the API call failed.
         :returns: The Authorizenet API call response.
         :rtype: ~lxml.objectify.ObjectifiedElement
@@ -48,7 +47,7 @@ class AuthorizenetService:
             request.merchantAuthentication = self.merchantAuthentication
             controller = controller_cls(request)
             return execute_controller(controller, self.environment)
-        except AuthorizenetControllerExecutionError | ValueError:
+        except AuthorizenetControllerExecutionError:
             raise
 
     @cached_property

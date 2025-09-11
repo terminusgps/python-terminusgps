@@ -4,7 +4,7 @@ from lxml.objectify import ObjectifiedElement
 
 def execute_controller(
     controller: APIOperationBase, environment: str
-) -> ObjectifiedElement | None:
+) -> ObjectifiedElement:
     """
     Executes an Authorizenet API controller and returns its response.
 
@@ -15,19 +15,19 @@ def execute_controller(
     :param merchant_auth: Authorizenet merchant authentication element.
     :type merchant_auth: ~authorizenet.apicontractsv1.merchantAuthenticationType
     :raises AuthorizenetControllerExecutionError: If the API call fails.
-    :returns: An Authorizenet API response, if any.
-    :rtype: ~lxml.objectify.ObjectifiedElement | None
+    :returns: An Authorizenet API response.
+    :rtype: ~lxml.objectify.ObjectifiedElement
 
     """
     controller.setenvironment(environment)
     controller.execute()
-    response = controller.getresponse()
+    response: ObjectifiedElement | None = controller.getresponse()
 
     if response is None:
         raise AuthorizenetControllerExecutionError(
             message="Authorizenet controller response didn't exist.", code="1"
         )
-    if response is not None and response.messages.resultCode != "Ok":
+    elif response is not None and response.messages.resultCode != "Ok":
         raise AuthorizenetControllerExecutionError(
             message=response.messages.message[0]["text"].text,
             code=response.messages.message[0]["code"].text,
@@ -40,8 +40,8 @@ class AuthorizenetControllerExecutionError(Exception):
 
     def __init__(self, message: str, code: str, *args, **kwargs) -> None:
         super().__init__(message, *args, **kwargs)
-        self._message = message
-        self._code = code
+        self._message: str = message
+        self._code: str = code
 
     def __str__(self) -> str:
         return f"{self.code}: {self.message}"
