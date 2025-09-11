@@ -1,7 +1,6 @@
 authorizenet>=1.1.5
 autoclasstoc>=1.7.0
 django>=5.2.1
-furo==2024.04.27
-lxml==4.8.0
 python-wialon>=1.2.4
+sphinx>=8.2.3
 sphinxawesome-theme>=5.3.2
