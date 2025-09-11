@@ -7,16 +7,16 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Authorizenet | python-terminusgps 45.6.1 documentation</title>
-<meta content="Authorizenet | python-terminusgps 45.6.1 documentation" property="og:title"/>
-<meta content="Authorizenet | python-terminusgps 45.6.1 documentation" name="twitter:title"/>
+<title>Services | python-terminusgps 45.6.1 documentation</title>
+<meta content="Services | python-terminusgps 45.6.1 documentation" property="og:title"/>
+<meta content="Services | python-terminusgps 45.6.1 documentation" name="twitter:title"/>
 <link href="../_static/pygments.css?v=d691ff6c" rel="stylesheet" type="text/css"/>
 <link href="../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../_static/autoclasstoc.css?v=08871587" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
-<link href="auth.html" rel="next" title="Authentication"/>
-<link href="../index.html" rel="prev" title="python-terminusgps documentation"/>
+<link href="../mixins.html" rel="next" title="Mixins"/>
+<link href="usage.html" rel="prev" title="Usage"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -71,13 +71,13 @@
 <div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="current reference internal expandable" href="#">Authorizenet<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
+<li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Authorizenet<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
 <li class="toctree-l2"><a class="reference internal" href="auth.html">Authentication</a></li>
 <li class="toctree-l2"><a class="reference internal" href="constants.html">Constants</a></li>
 <li class="toctree-l2"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html">Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Services</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mixins.html">Mixins</a></li>
@@ -109,77 +109,102 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Authorizenet</span>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="index.html">Authorizenet</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Services</span>
 </nav>
 <div id="content" role="main">
-<section id="authorizenet">
-<h1>Authorizenet<a class="headerlink" href="#authorizenet" title="Link to this heading">¶</a></h1>
-<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">terminusgps.authorizenet</span></code> package provides convenient functions for interacting with the Authorizenet API in a Pythonic interface.</p>
-<p>These functions may be executed via the <a class="reference internal" href="services.html#terminusgps.authorizenet.services.AuthorizenetService.request" title="terminusgps.authorizenet.services.AuthorizenetService.request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">request()</span></code></a> method on a service instance.</p>
-<p>Most <a class="reference external" href="https://developer.authorize.net/api/reference/index.html">Authorizenet API endpoints</a> are represented as plain Python functions.</p>
-<div class="admonition attention">
-<p class="admonition-title">Attention</p>
-<p>These functions require the following settings to be present in your Django project’s <code class="docutils literal notranslate"><span class="pre">settings.py</span></code> module.</p>
-<p>Using this package without setting these settings will raise <a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ImproperlyConfigured" title="(in Django v5.2)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImproperlyConfigured</span></code></a>.</p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>setting</p></th>
-<th class="head"><p>type</p></th>
-</tr>
-</thead>
+<section id="services">
+<h1>Services<a class="headerlink" href="#services" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.services.AuthorizenetService">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">terminusgps.authorizenet.services.</span></span><span class="sig-name descname"><span class="pre">AuthorizenetService</span></span><a class="reference internal" href="../_modules/terminusgps/authorizenet/services.html#AuthorizenetService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.authorizenet.services.AuthorizenetService" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.services.AuthorizenetService'">¶</a></dt>
+<dd><p>A service for safely interacting with the Authorizenet API.</p>
+<div class="autoclasstoc docutils container">
+<p class="rubric">Public Data Attributes:</p>
+<table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MERCHANT_AUTH_ENVIRONMENT</span></code></p></td>
-<td><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MERCHANT_AUTH_LOGIN_ID</span></code></p></td>
-<td><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MERCHANT_AUTH_TRANSACTION_KEY</span></code></p></td>
-<td><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MERCHANT_AUTH_VALIDATION_MODE</span></code></p></td>
-<td><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">REQUIRED_SETTINGS</span></code></p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<div class="autoclasstoc docutils container">
+<p class="rubric">Public Methods:</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code>()</p></td>
+<td><p>Raises <a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ImproperlyConfigured" title="(in Django v5.2)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImproperlyConfigured</span></code></a> if required settings weren't set.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.authorizenet.services.AuthorizenetService.request" title="terminusgps.authorizenet.services.AuthorizenetService.request"><code class="xref py py-obj docutils literal notranslate"><span class="pre">request</span></code></a>(func, *args, **kwargs)</p></td>
+<td><p>Calls the Authorizenet API function with arguments and returns the result.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.authorizenet.services.AuthorizenetService.merchantAuthentication" title="terminusgps.authorizenet.services.AuthorizenetService.merchantAuthentication"><code class="xref py py-obj docutils literal notranslate"><span class="pre">merchantAuthentication</span></code></a></p></td>
+<td><p>Merchant authentication element for Authorizenet API requests.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#terminusgps.authorizenet.services.AuthorizenetService.environment" title="terminusgps.authorizenet.services.AuthorizenetService.environment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">environment</span></code></a></p></td>
+<td><p>Environment for Authorizenet API requests.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#terminusgps.authorizenet.services.AuthorizenetService.validationMode" title="terminusgps.authorizenet.services.AuthorizenetService.validationMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validationMode</span></code></a></p></td>
+<td><p>Validation mode for Authorizenet API requests.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils"/>
+<dl class="py method">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.services.AuthorizenetService.request">
+<span class="sig-name descname"><span class="pre">request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.13)"><span class="pre">Callable</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">ObjectifiedElement</span></span></span><a class="reference internal" href="../_modules/terminusgps/authorizenet/services.html#AuthorizenetService.request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.authorizenet.services.AuthorizenetService.request" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.services.AuthorizenetService.request'">¶</a></dt>
+<dd><p>Calls the Authorizenet API function with arguments and returns the result.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.13)"><em>Callable</em></a>) – An Authorizenet API function.</p></li>
+<li><p><strong>args</strong> – Positional arguments for the API call.</p></li>
+<li><p><strong>kwargs</strong> – Keyword arguments for the API call.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="exceptions.html#terminusgps.authorizenet.controllers.AuthorizenetControllerExecutionError" title="terminusgps.authorizenet.controllers.AuthorizenetControllerExecutionError"><strong>AuthorizenetControllerExecutionError</strong></a> – If the API call failed.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The Authorizenet API call response.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>ObjectifiedElement</em></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.services.AuthorizenetService.environment">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">environment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#terminusgps.authorizenet.services.AuthorizenetService.environment" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.services.AuthorizenetService.environment'">¶</a></dt>
+<dd><p>Environment for Authorizenet API requests.</p>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.services.AuthorizenetService.merchantAuthentication">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">merchantAuthentication</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">merchantAuthenticationType</span></em><a class="headerlink" href="#terminusgps.authorizenet.services.AuthorizenetService.merchantAuthentication" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.services.AuthorizenetService.merchantAuthentication'">¶</a></dt>
+<dd><p>Merchant authentication element for Authorizenet API requests.</p>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.services.AuthorizenetService.validationMode">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validationMode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#terminusgps.authorizenet.services.AuthorizenetService.validationMode" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.services.AuthorizenetService.validationMode'">¶</a></dt>
+<dd><p>Validation mode for Authorizenet API requests.</p>
+</dd></dl>
+</dd></dl>
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="auth.html">Authentication</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="auth.html#terminusgps.authorizenet.auth.get_environment"><code class="docutils literal notranslate"><span class="pre">get_environment()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="auth.html#terminusgps.authorizenet.auth.get_merchant_auth"><code class="docutils literal notranslate"><span class="pre">get_merchant_auth()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="auth.html#terminusgps.authorizenet.auth.get_validation_mode"><code class="docutils literal notranslate"><span class="pre">get_validation_mode()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html">Constants</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="constants.html#terminusgps.authorizenet.constants.Environment"><code class="docutils literal notranslate"><span class="pre">Environment</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="constants.html#terminusgps.authorizenet.constants.SubscriptionStatus"><code class="docutils literal notranslate"><span class="pre">SubscriptionStatus</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="constants.html#terminusgps.authorizenet.constants.SubscriptionIntervalUnit"><code class="docutils literal notranslate"><span class="pre">SubscriptionIntervalUnit</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="constants.html#terminusgps.authorizenet.constants.ValidationMode"><code class="docutils literal notranslate"><span class="pre">ValidationMode</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="exceptions.html#terminusgps.authorizenet.controllers.AuthorizenetControllerExecutionError"><code class="docutils literal notranslate"><span class="pre">AuthorizenetControllerExecutionError</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-terminusgps.authorizenet.api.address_profiles">Address Profiles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-terminusgps.authorizenet.api.customer_profiles">Customer Profiles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-terminusgps.authorizenet.api.payment_profiles">Payment Profiles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-terminusgps.authorizenet.api.subscriptions">Subscriptions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-terminusgps.authorizenet.api.transactions">Transactions</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="services.html">Services</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="services.html#terminusgps.authorizenet.services.AuthorizenetService"><code class="docutils literal notranslate"><span class="pre">AuthorizenetService</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.services.AuthorizenetService'" class="reference internal" href="#terminusgps.authorizenet.services.AuthorizenetService"><code class="docutils literal notranslate"><span class="pre">AuthorizenetService</span></code></a><ul>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.services.AuthorizenetService.request'" class="reference internal" href="#terminusgps.authorizenet.services.AuthorizenetService.request"><code class="docutils literal notranslate"><span class="pre">AuthorizenetService.request()</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.services.AuthorizenetService.environment'" class="reference internal" href="#terminusgps.authorizenet.services.AuthorizenetService.environment"><code class="docutils literal notranslate"><span class="pre">AuthorizenetService.environment</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.services.AuthorizenetService.merchantAuthentication'" class="reference internal" href="#terminusgps.authorizenet.services.AuthorizenetService.merchantAuthentication"><code class="docutils literal notranslate"><span class="pre">AuthorizenetService.merchantAuthentication</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.services.AuthorizenetService.validationMode'" class="reference internal" href="#terminusgps.authorizenet.services.AuthorizenetService.validationMode"><code class="docutils literal notranslate"><span class="pre">AuthorizenetService.validationMode</span></code></a></li>
 </ul>
 </li>
 </ul>
 </div>
-</section>
-</div></div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">
