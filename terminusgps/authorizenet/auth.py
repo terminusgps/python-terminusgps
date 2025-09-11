@@ -1,6 +1,11 @@
 from authorizenet.apicontractsv1 import merchantAuthenticationType
 from django.conf import settings
 
+from .. import default_settings
+
+if not settings.configured:
+    settings.configure(default_settings)
+
 
 def get_merchant_auth() -> merchantAuthenticationType:
     """
