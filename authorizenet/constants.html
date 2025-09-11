@@ -116,20 +116,123 @@
 <h1>Constants<a class="headerlink" href="#constants" title="Link to this heading">¶</a></h1>
 <p>These constants inherit from <code class="xref py py-obj docutils literal notranslate"><span class="pre">TextChoices</span></code>, not the built-in Python <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.StrEnum" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StrEnum</span></code></a> type.</p>
 <p>Django <code class="xref py py-obj docutils literal notranslate"><span class="pre">TextChoices</span></code> provides attributes such as <code class="xref py py-attr docutils literal notranslate"><span class="pre">choices</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">values</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">labels</span></code> and more.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.constants.Environment">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">terminusgps.authorizenet.constants.</span></span><span class="sig-name descname"><span class="pre">Environment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/terminusgps/authorizenet/constants.html#Environment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.authorizenet.constants.Environment" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.constants.Environment'">¶</a></dt>
+<dd><p>An Authorizenet execution environment.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.constants.Environment.PRODUCTION">
+<span class="sig-name descname"><span class="pre">PRODUCTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://api2.authorize.net/xml/v1/request.api'</span></em><a class="headerlink" href="#terminusgps.authorizenet.constants.Environment.PRODUCTION" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.constants.Environment.PRODUCTION'">¶</a></dt>
+<dd><p>Production environment.</p>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.constants.Environment.SANDBOX">
+<span class="sig-name descname"><span class="pre">SANDBOX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://apitest.authorize.net/xml/v1/request.api'</span></em><a class="headerlink" href="#terminusgps.authorizenet.constants.Environment.SANDBOX" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.constants.Environment.SANDBOX'">¶</a></dt>
+<dd><p>Sandbox environment.</p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.constants.SubscriptionStatus">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">terminusgps.authorizenet.constants.</span></span><span class="sig-name descname"><span class="pre">SubscriptionStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/terminusgps/authorizenet/constants.html#SubscriptionStatus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.authorizenet.constants.SubscriptionStatus" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.constants.SubscriptionStatus'">¶</a></dt>
+<dd><p>An Authorizenet subscription status.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.constants.SubscriptionStatus.ACTIVE">
+<span class="sig-name descname"><span class="pre">ACTIVE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'active'</span></em><a class="headerlink" href="#terminusgps.authorizenet.constants.SubscriptionStatus.ACTIVE" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.constants.SubscriptionStatus.ACTIVE'">¶</a></dt>
+<dd><p>Active subscription.</p>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.constants.SubscriptionStatus.CANCELED">
+<span class="sig-name descname"><span class="pre">CANCELED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'canceled'</span></em><a class="headerlink" href="#terminusgps.authorizenet.constants.SubscriptionStatus.CANCELED" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.constants.SubscriptionStatus.CANCELED'">¶</a></dt>
+<dd><p>Canceled subscription.</p>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.constants.SubscriptionStatus.EXPIRED">
+<span class="sig-name descname"><span class="pre">EXPIRED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'expired'</span></em><a class="headerlink" href="#terminusgps.authorizenet.constants.SubscriptionStatus.EXPIRED" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.constants.SubscriptionStatus.EXPIRED'">¶</a></dt>
+<dd><p>Expired subscription.</p>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.constants.SubscriptionStatus.SUSPENDED">
+<span class="sig-name descname"><span class="pre">SUSPENDED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'suspended'</span></em><a class="headerlink" href="#terminusgps.authorizenet.constants.SubscriptionStatus.SUSPENDED" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.constants.SubscriptionStatus.SUSPENDED'">¶</a></dt>
+<dd><p>Suspended subscription.</p>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.constants.SubscriptionStatus.TERMINATED">
+<span class="sig-name descname"><span class="pre">TERMINATED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'terminated'</span></em><a class="headerlink" href="#terminusgps.authorizenet.constants.SubscriptionStatus.TERMINATED" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.constants.SubscriptionStatus.TERMINATED'">¶</a></dt>
+<dd><p>Terminated subscription.</p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.constants.SubscriptionIntervalUnit">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">terminusgps.authorizenet.constants.</span></span><span class="sig-name descname"><span class="pre">SubscriptionIntervalUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/terminusgps/authorizenet/constants.html#SubscriptionIntervalUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.authorizenet.constants.SubscriptionIntervalUnit" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.constants.SubscriptionIntervalUnit'">¶</a></dt>
+<dd><p>An Authorizenet subscription interval unit.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.constants.SubscriptionIntervalUnit.DAYS">
+<span class="sig-name descname"><span class="pre">DAYS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'days'</span></em><a class="headerlink" href="#terminusgps.authorizenet.constants.SubscriptionIntervalUnit.DAYS" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.constants.SubscriptionIntervalUnit.DAYS'">¶</a></dt>
+<dd><p>Days interval unit.</p>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.constants.SubscriptionIntervalUnit.MONTHS">
+<span class="sig-name descname"><span class="pre">MONTHS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'months'</span></em><a class="headerlink" href="#terminusgps.authorizenet.constants.SubscriptionIntervalUnit.MONTHS" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.constants.SubscriptionIntervalUnit.MONTHS'">¶</a></dt>
+<dd><p>Months interval unit.</p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.constants.ValidationMode">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">terminusgps.authorizenet.constants.</span></span><span class="sig-name descname"><span class="pre">ValidationMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/terminusgps/authorizenet/constants.html#ValidationMode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.authorizenet.constants.ValidationMode" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.constants.ValidationMode'">¶</a></dt>
+<dd><p>An Authorizenet validation mode.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.constants.ValidationMode.LIVE">
+<span class="sig-name descname"><span class="pre">LIVE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'liveMode'</span></em><a class="headerlink" href="#terminusgps.authorizenet.constants.ValidationMode.LIVE" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.constants.ValidationMode.LIVE'">¶</a></dt>
+<dd><p>Live mode.</p>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="terminusgps.authorizenet.constants.ValidationMode.TEST">
+<span class="sig-name descname"><span class="pre">TEST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'testMode'</span></em><a class="headerlink" href="#terminusgps.authorizenet.constants.ValidationMode.TEST" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.authorizenet.constants.ValidationMode.TEST'">¶</a></dt>
+<dd><p>Test mode.</p>
+</dd></dl>
+</dd></dl>
 </section>
-</div></div>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.constants.Environment'" class="reference internal" href="#terminusgps.authorizenet.constants.Environment"><code class="docutils literal notranslate"><span class="pre">Environment</span></code></a><ul>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.constants.Environment.PRODUCTION'" class="reference internal" href="#terminusgps.authorizenet.constants.Environment.PRODUCTION"><code class="docutils literal notranslate"><span class="pre">Environment.PRODUCTION</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.constants.Environment.SANDBOX'" class="reference internal" href="#terminusgps.authorizenet.constants.Environment.SANDBOX"><code class="docutils literal notranslate"><span class="pre">Environment.SANDBOX</span></code></a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.constants.SubscriptionStatus'" class="reference internal" href="#terminusgps.authorizenet.constants.SubscriptionStatus"><code class="docutils literal notranslate"><span class="pre">SubscriptionStatus</span></code></a><ul>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.constants.SubscriptionStatus.ACTIVE'" class="reference internal" href="#terminusgps.authorizenet.constants.SubscriptionStatus.ACTIVE"><code class="docutils literal notranslate"><span class="pre">SubscriptionStatus.ACTIVE</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.constants.SubscriptionStatus.CANCELED'" class="reference internal" href="#terminusgps.authorizenet.constants.SubscriptionStatus.CANCELED"><code class="docutils literal notranslate"><span class="pre">SubscriptionStatus.CANCELED</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.constants.SubscriptionStatus.EXPIRED'" class="reference internal" href="#terminusgps.authorizenet.constants.SubscriptionStatus.EXPIRED"><code class="docutils literal notranslate"><span class="pre">SubscriptionStatus.EXPIRED</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.constants.SubscriptionStatus.SUSPENDED'" class="reference internal" href="#terminusgps.authorizenet.constants.SubscriptionStatus.SUSPENDED"><code class="docutils literal notranslate"><span class="pre">SubscriptionStatus.SUSPENDED</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.constants.SubscriptionStatus.TERMINATED'" class="reference internal" href="#terminusgps.authorizenet.constants.SubscriptionStatus.TERMINATED"><code class="docutils literal notranslate"><span class="pre">SubscriptionStatus.TERMINATED</span></code></a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.constants.SubscriptionIntervalUnit'" class="reference internal" href="#terminusgps.authorizenet.constants.SubscriptionIntervalUnit"><code class="docutils literal notranslate"><span class="pre">SubscriptionIntervalUnit</span></code></a><ul>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.constants.SubscriptionIntervalUnit.DAYS'" class="reference internal" href="#terminusgps.authorizenet.constants.SubscriptionIntervalUnit.DAYS"><code class="docutils literal notranslate"><span class="pre">SubscriptionIntervalUnit.DAYS</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.constants.SubscriptionIntervalUnit.MONTHS'" class="reference internal" href="#terminusgps.authorizenet.constants.SubscriptionIntervalUnit.MONTHS"><code class="docutils literal notranslate"><span class="pre">SubscriptionIntervalUnit.MONTHS</span></code></a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.constants.ValidationMode'" class="reference internal" href="#terminusgps.authorizenet.constants.ValidationMode"><code class="docutils literal notranslate"><span class="pre">ValidationMode</span></code></a><ul>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.constants.ValidationMode.LIVE'" class="reference internal" href="#terminusgps.authorizenet.constants.ValidationMode.LIVE"><code class="docutils literal notranslate"><span class="pre">ValidationMode.LIVE</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.authorizenet.constants.ValidationMode.TEST'" class="reference internal" href="#terminusgps.authorizenet.constants.ValidationMode.TEST"><code class="docutils literal notranslate"><span class="pre">ValidationMode.TEST</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">
 <div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
 <div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2025, Terminus GPS, LLC Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 7.4.7</a></p>
+<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2025, Terminus GPS, LLC Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 8.2.3</a></p>
 </div>
 </div>
 </footer>
 </div>
 <script src="../_static/documentation_options.js?v=5926b587"></script>
-<script src="../_static/doctools.js?v=9a2dae69"></script>
+<script src="../_static/doctools.js?v=9bcbadda"></script>
 <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../_static/theme.js?v=073f68d9"></script>
 </body>
