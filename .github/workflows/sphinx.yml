@@ -19,6 +19,8 @@ jobs:
 
       - name: Build HTML
         uses: ammaraskar/sphinx-action@8.2.3
+        with:
+          pre-build-command: "which python && python --version"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
