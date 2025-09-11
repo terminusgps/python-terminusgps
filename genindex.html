@@ -103,12 +103,10 @@
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="authorizenet/index.html">Authorizenet</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="authorizenet/auth.html">Authentication</a></li>
 <li class="toctree-l2"><a class="reference internal" href="authorizenet/constants.html">Constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="authorizenet/exceptions.html">Exceptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="authorizenet/api.html">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authorizenet/service.html">Service</a></li>
 <li class="toctree-l2"><a class="reference internal" href="authorizenet/usage.html">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="authorizenet/services.html">Services</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mixins.html">Mixins</a></li>
@@ -184,9 +182,9 @@
 </li>
       <li><a href="authorizenet/constants.html#terminusgps.authorizenet.constants.CurrencyCode.AUD">AUD (terminusgps.authorizenet.constants.CurrencyCode attribute)</a>
 </li>
-      <li><a href="authorizenet/exceptions.html#terminusgps.authorizenet.controllers.AuthorizenetControllerExecutionError">AuthorizenetControllerExecutionError</a>
+      <li><a href="authorizenet/service.html#terminusgps.authorizenet.service.AuthorizenetControllerExecutionError">AuthorizenetControllerExecutionError</a>
 </li>
-      <li><a href="authorizenet/services.html#terminusgps.authorizenet.services.AuthorizenetService">AuthorizenetService (class in terminusgps.authorizenet.services)</a>
+      <li><a href="authorizenet/service.html#terminusgps.authorizenet.service.AuthorizenetService">AuthorizenetService (class in terminusgps.authorizenet.service)</a>
 </li>
   </ul></td>
   </tr>
@@ -212,14 +210,20 @@
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="authorizenet/constants.html#terminusgps.authorizenet.constants.CurrencyCode.CAD">CAD (terminusgps.authorizenet.constants.CurrencyCode attribute)</a>
 </li>
+      <li><a href="authorizenet/service.html#terminusgps.authorizenet.service.AuthorizenetService.call_api">call_api() (terminusgps.authorizenet.service.AuthorizenetService method)</a>
+</li>
       <li><a href="authorizenet/api.html#terminusgps.authorizenet.api.subscriptions.cancel_subscription">cancel_subscription() (in module terminusgps.authorizenet.api.subscriptions)</a>
 </li>
       <li><a href="authorizenet/constants.html#terminusgps.authorizenet.constants.SubscriptionStatus.CANCELED">CANCELED (terminusgps.authorizenet.constants.SubscriptionStatus attribute)</a>
 </li>
       <li><a href="wialon/constants.html#terminusgps.wialon.constants.WialonLogAction.CHANGE_ACCOUNT">CHANGE_ACCOUNT (terminusgps.wialon.constants.WialonLogAction attribute)</a>
 </li>
-      <li><a href="wialon/exceptions.html#terminusgps.wialon.session.WialonAPIError.code">code (terminusgps.wialon.session.WialonAPIError property)</a>
+      <li><a href="authorizenet/service.html#terminusgps.authorizenet.service.AuthorizenetControllerExecutionError.code">code (terminusgps.authorizenet.service.AuthorizenetControllerExecutionError property)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="wialon/exceptions.html#terminusgps.wialon.session.WialonAPIError.code">(terminusgps.wialon.session.WialonAPIError property)</a>
 </li>
+      </ul></li>
       <li><a href="wialon/constants.html#terminusgps.wialon.flags.TokenFlag.COMMUNICATION">COMMUNICATION (terminusgps.wialon.flags.TokenFlag attribute)</a>
 </li>
       <li><a href="wialon/constants.html#terminusgps.wialon.constants.WialonLogAction.CONVERT_MEASURE_UNITS">CONVERT_MEASURE_UNITS (terminusgps.wialon.constants.WialonLogAction attribute)</a>
@@ -258,10 +262,10 @@
 </li>
       <li><a href="wialon/constants.html#terminusgps.wialon.constants.WialonLogAction.CREATE_DRIVER">CREATE_DRIVER (terminusgps.wialon.constants.WialonLogAction attribute)</a>
 </li>
-      <li><a href="wialon/constants.html#terminusgps.wialon.constants.WialonLogAction.CREATE_DRIVERS_GROUP">CREATE_DRIVERS_GROUP (terminusgps.wialon.constants.WialonLogAction attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="wialon/constants.html#terminusgps.wialon.constants.WialonLogAction.CREATE_DRIVERS_GROUP">CREATE_DRIVERS_GROUP (terminusgps.wialon.constants.WialonLogAction attribute)</a>
+</li>
       <li><a href="wialon/constants.html#terminusgps.wialon.constants.WialonLogAction.CREATE_GROUP">CREATE_GROUP (terminusgps.wialon.constants.WialonLogAction attribute)</a>
 </li>
       <li><a href="wialon/constants.html#terminusgps.wialon.constants.WialonLogAction.CREATE_JOB">CREATE_JOB (terminusgps.wialon.constants.WialonLogAction attribute)</a>
@@ -424,7 +428,7 @@
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="authorizenet/constants.html#terminusgps.authorizenet.constants.Environment">Environment (class in terminusgps.authorizenet.constants)</a>
 </li>
-      <li><a href="authorizenet/services.html#terminusgps.authorizenet.services.AuthorizenetService.environment">environment (terminusgps.authorizenet.services.AuthorizenetService property)</a>
+      <li><a href="authorizenet/service.html#terminusgps.authorizenet.service.AuthorizenetService.environment">environment (terminusgps.authorizenet.service.AuthorizenetService property)</a>
 </li>
       <li><a href="authorizenet/constants.html#terminusgps.authorizenet.constants.CurrencyCode.EUR">EUR (terminusgps.authorizenet.constants.CurrencyCode attribute)</a>
 </li>
@@ -474,14 +478,10 @@
 </li>
       <li><a href="wialon/items.html#terminusgps.wialon.items.resource.WialonResource.get_driver_bindings">get_driver_bindings() (terminusgps.wialon.items.resource.WialonResource method)</a>
 </li>
-      <li><a href="authorizenet/auth.html#terminusgps.authorizenet.auth.get_environment">get_environment() (in module terminusgps.authorizenet.auth)</a>
-</li>
       <li><a href="wialon/items.html#terminusgps.wialon.items.unit.WialonUnit.get_imei">get_imei() (terminusgps.wialon.items.unit.WialonUnit method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
-      <li><a href="authorizenet/auth.html#terminusgps.authorizenet.auth.get_merchant_auth">get_merchant_auth() (in module terminusgps.authorizenet.auth)</a>
-</li>
       <li><a href="wialon/items.html#terminusgps.wialon.items.base.WialonObject.get_name">get_name() (terminusgps.wialon.items.base.WialonObject method)</a>
 </li>
       <li><a href="wialon/items.html#terminusgps.wialon.items.resource.WialonResource.get_notification_data">get_notification_data() (terminusgps.wialon.items.resource.WialonResource method)</a>
@@ -489,8 +489,6 @@
       <li><a href="authorizenet/api.html#terminusgps.authorizenet.api.subscriptions.get_subscription">get_subscription() (in module terminusgps.authorizenet.api.subscriptions)</a>
 </li>
       <li><a href="authorizenet/api.html#terminusgps.authorizenet.api.subscriptions.get_subscription_status">get_subscription_status() (in module terminusgps.authorizenet.api.subscriptions)</a>
-</li>
-      <li><a href="authorizenet/auth.html#terminusgps.authorizenet.auth.get_validation_mode">get_validation_mode() (in module terminusgps.authorizenet.auth)</a>
 </li>
       <li><a href="wialon/constants.html#terminusgps.wialon.flags.DataFlag.GROUP_ADMIN_FIELDS">GROUP_ADMIN_FIELDS (terminusgps.wialon.flags.DataFlag attribute)</a>
 </li>
@@ -590,7 +588,9 @@
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="wialon/constants.html#terminusgps.wialon.flags.AccessFlag.MANAGE_UNMENTIONED_FIELDS">MANAGE_UNMENTIONED_FIELDS (terminusgps.wialon.flags.AccessFlag attribute)</a>
 </li>
-      <li><a href="authorizenet/services.html#terminusgps.authorizenet.services.AuthorizenetService.merchantAuthentication">merchantAuthentication (terminusgps.authorizenet.services.AuthorizenetService property)</a>
+      <li><a href="authorizenet/service.html#terminusgps.authorizenet.service.AuthorizenetService.merchantAuthentication">merchantAuthentication (terminusgps.authorizenet.service.AuthorizenetService property)</a>
+</li>
+      <li><a href="authorizenet/service.html#terminusgps.authorizenet.service.AuthorizenetControllerExecutionError.message">message (terminusgps.authorizenet.service.AuthorizenetControllerExecutionError property)</a>
 </li>
       <li>
     module
@@ -605,8 +605,6 @@
         <li><a href="authorizenet/api.html#module-terminusgps.authorizenet.api.subscriptions">terminusgps.authorizenet.api.subscriptions</a>
 </li>
         <li><a href="authorizenet/api.html#module-terminusgps.authorizenet.api.transactions">terminusgps.authorizenet.api.transactions</a>
-</li>
-        <li><a href="authorizenet/auth.html#module-terminusgps.authorizenet.auth">terminusgps.authorizenet.auth</a>
 </li>
         <li><a href="validators.html#module-terminusgps.validators">terminusgps.validators</a>
 </li>
@@ -672,8 +670,6 @@
 </li>
       <li><a href="mixins.html#terminusgps.mixins.HtmxTemplateResponseMixin.render_to_response">render_to_response() (terminusgps.mixins.HtmxTemplateResponseMixin method)</a>
 </li>
-      <li><a href="authorizenet/services.html#terminusgps.authorizenet.services.AuthorizenetService.request">request() (terminusgps.authorizenet.services.AuthorizenetService method)</a>
-</li>
       <li><a href="wialon/constants.html#terminusgps.wialon.flags.DataFlag.RESOURCE_ADMIN_FIELDS">RESOURCE_ADMIN_FIELDS (terminusgps.wialon.flags.DataFlag attribute)</a>
 </li>
       <li><a href="wialon/constants.html#terminusgps.wialon.flags.DataFlag.RESOURCE_ALL">RESOURCE_ALL (terminusgps.wialon.flags.DataFlag attribute)</a>
@@ -732,10 +728,10 @@
 </li>
       <li><a href="wialon/constants.html#terminusgps.wialon.flags.DataFlag.RESOURCE_TAG_GROUPS">RESOURCE_TAG_GROUPS (terminusgps.wialon.flags.DataFlag attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="wialon/constants.html#terminusgps.wialon.flags.DataFlag.RESOURCE_TAGS">RESOURCE_TAGS (terminusgps.wialon.flags.DataFlag attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="wialon/constants.html#terminusgps.wialon.flags.DataFlag.RESOURCE_TRAILER_ATTACHABLE_UNITS">RESOURCE_TRAILER_ATTACHABLE_UNITS (terminusgps.wialon.flags.DataFlag attribute)</a>
 </li>
       <li><a href="wialon/constants.html#terminusgps.wialon.flags.DataFlag.RESOURCE_TRAILER_GROUPS">RESOURCE_TRAILER_GROUPS (terminusgps.wialon.flags.DataFlag attribute)</a>
@@ -903,13 +899,6 @@
 
       <ul style="list-style-type:none">
         <li><a href="authorizenet/api.html#module-terminusgps.authorizenet.api.transactions">module</a>
-</li>
-      </ul></li>
-      <li>
-    terminusgps.authorizenet.auth
-
-      <ul style="list-style-type:none">
-        <li><a href="authorizenet/auth.html#module-terminusgps.authorizenet.auth">module</a>
 </li>
       </ul></li>
       <li>
@@ -1211,7 +1200,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
-      <li><a href="authorizenet/services.html#terminusgps.authorizenet.services.AuthorizenetService.validationMode">validationMode (terminusgps.authorizenet.services.AuthorizenetService property)</a>
+      <li><a href="authorizenet/service.html#terminusgps.authorizenet.service.AuthorizenetService.validationMode">validationMode (terminusgps.authorizenet.service.AuthorizenetService property)</a>
 </li>
       <li><a href="wialon/constants.html#terminusgps.wialon.flags.TokenFlag.VIEW_ACCESS">VIEW_ACCESS (terminusgps.wialon.flags.TokenFlag attribute)</a>
 </li>

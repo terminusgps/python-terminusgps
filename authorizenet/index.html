@@ -15,7 +15,7 @@
 <link href="../_static/autoclasstoc.css?v=08871587" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
-<link href="auth.html" rel="next" title="Authentication"/>
+<link href="constants.html" rel="next" title="Constants"/>
 <link href="../index.html" rel="prev" title="python-terminusgps documentation"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
@@ -72,12 +72,10 @@
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="current reference internal expandable" href="#">Authorizenet<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-show="expanded">
-<li class="toctree-l2"><a class="reference internal" href="auth.html">Authentication</a></li>
 <li class="toctree-l2"><a class="reference internal" href="constants.html">Constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service.html">Service</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mixins.html">Mixins</a></li>
@@ -114,9 +112,8 @@
 <div id="content" role="main">
 <section id="authorizenet">
 <h1>Authorizenet<a class="headerlink" href="#authorizenet" title="Link to this heading">¶</a></h1>
-<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">terminusgps.authorizenet</span></code> package provides convenient functions for interacting with the Authorizenet API in a Pythonic interface.</p>
+<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">terminusgps.authorizenet</span></code> package provides a Pythonic interface for interacting with the Authorizenet API.</p>
 <p>Most <a class="reference external" href="https://developer.authorize.net/api/reference/index.html">Authorizenet API endpoints</a> are represented as plain Python functions.</p>
-<p>These functions return a constructed Authorizenet API request contract and its corresponding controller to execute it with.</p>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p><code class="xref py py-mod docutils literal notranslate"><span class="pre">terminusgps.authorizenet</span></code> requires the following settings to be present in your Django project’s <code class="docutils literal notranslate"><span class="pre">settings.py</span></code> module.</p>
@@ -146,22 +143,12 @@
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="auth.html">Authentication</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="auth.html#terminusgps.authorizenet.auth.get_environment"><code class="docutils literal notranslate"><span class="pre">get_environment()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="auth.html#terminusgps.authorizenet.auth.get_merchant_auth"><code class="docutils literal notranslate"><span class="pre">get_merchant_auth()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="auth.html#terminusgps.authorizenet.auth.get_validation_mode"><code class="docutils literal notranslate"><span class="pre">get_validation_mode()</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html">Constants</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="constants.html#terminusgps.authorizenet.constants.CurrencyCode"><code class="docutils literal notranslate"><span class="pre">CurrencyCode</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="constants.html#terminusgps.authorizenet.constants.Environment"><code class="docutils literal notranslate"><span class="pre">Environment</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="constants.html#terminusgps.authorizenet.constants.SubscriptionStatus"><code class="docutils literal notranslate"><span class="pre">SubscriptionStatus</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="constants.html#terminusgps.authorizenet.constants.SubscriptionIntervalUnit"><code class="docutils literal notranslate"><span class="pre">SubscriptionIntervalUnit</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="constants.html#terminusgps.authorizenet.constants.ValidationMode"><code class="docutils literal notranslate"><span class="pre">ValidationMode</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="exceptions.html#terminusgps.authorizenet.controllers.AuthorizenetControllerExecutionError"><code class="docutils literal notranslate"><span class="pre">AuthorizenetControllerExecutionError</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">Functions</a><ul>
@@ -172,11 +159,12 @@
 <li class="toctree-l2"><a class="reference internal" href="api.html#module-terminusgps.authorizenet.api.transactions">Transactions</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="services.html">Services</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="services.html#terminusgps.authorizenet.services.AuthorizenetService"><code class="docutils literal notranslate"><span class="pre">AuthorizenetService</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">Service</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="service.html#terminusgps.authorizenet.service.AuthorizenetControllerExecutionError"><code class="docutils literal notranslate"><span class="pre">AuthorizenetControllerExecutionError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="service.html#terminusgps.authorizenet.service.AuthorizenetService"><code class="docutils literal notranslate"><span class="pre">AuthorizenetService</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 </ul>
 </div>
 </section>

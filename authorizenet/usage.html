@@ -15,8 +15,8 @@
 <link href="../_static/autoclasstoc.css?v=08871587" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
-<link href="services.html" rel="next" title="Services"/>
-<link href="api.html" rel="prev" title="Functions"/>
+<link href="../mixins.html" rel="next" title="Mixins"/>
+<link href="service.html" rel="prev" title="Service"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -72,12 +72,10 @@
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Authorizenet<button @click.prevent.stop="expanded = !expanded" type="button"><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
-<li class="toctree-l2"><a class="reference internal" href="auth.html">Authentication</a></li>
 <li class="toctree-l2"><a class="reference internal" href="constants.html">Constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service.html">Service</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mixins.html">Mixins</a></li>
@@ -116,18 +114,7 @@
 <section id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h1>
 <p>Check the Authorizenet API documentation for expected attributes in each response.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.authorizenet</span><span class="w"> </span><span class="kn">import</span> <span class="n">api</span>
-</span><span id="line-2"><span class="kn">from</span><span class="w"> </span><span class="nn">terminusgps.authorizenet.services</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthorizenetService</span>
-</span><span id="line-3">
-</span><span id="line-4"><span class="n">service</span> <span class="o">=</span> <span class="n">AuthorizenetService</span><span class="p">()</span>
-</span><span id="line-5"><span class="n">response</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
-</span><span id="line-6">    <span class="n">api</span><span class="o">.</span><span class="n">create_customer_profile</span><span class="p">,</span>
-</span><span id="line-7">    <span class="n">merchant_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="mi">67</span><span class="p">),</span>
-</span><span id="line-8">    <span class="n">email</span><span class="o">=</span><span class="s2">"peter@terminusgps.com"</span>
-</span><span id="line-9"><span class="p">)</span>
-</span><span id="line-10"><span class="n">response</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="c1"># Authorizenet generated customer profile id</span>
-</span></code></pre></div>
-</div>
+<p>TODO</p>
 </section>
 </div></div>
 </main>
