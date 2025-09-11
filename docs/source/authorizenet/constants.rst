@@ -7,6 +7,9 @@ Django :py:obj:`~django.db.models.TextChoices` provides attributes such as :py:a
 
 .. py:currentmodule:: terminusgps.authorizenet.constants
 
+.. autoclass:: CurrencyCode
+    :members:
+
 .. autoclass:: Environment
     :members:
 
