@@ -115,12 +115,12 @@
 <section id="authorizenet">
 <h1>Authorizenet<a class="headerlink" href="#authorizenet" title="Link to this heading">¶</a></h1>
 <p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">terminusgps.authorizenet</span></code> package provides convenient functions for interacting with the Authorizenet API in a Pythonic interface.</p>
-<p>These functions may be executed via the <a class="reference internal" href="services.html#terminusgps.authorizenet.services.AuthorizenetService.request" title="terminusgps.authorizenet.services.AuthorizenetService.request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">request()</span></code></a> method on a service instance.</p>
 <p>Most <a class="reference external" href="https://developer.authorize.net/api/reference/index.html">Authorizenet API endpoints</a> are represented as plain Python functions.</p>
+<p>These functions return a constructed Authorizenet API request contract and its corresponding controller to execute it with.</p>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
-<p>These functions require the following settings to be present in your Django project’s <code class="docutils literal notranslate"><span class="pre">settings.py</span></code> module.</p>
-<p>Using this package without setting these settings will raise <a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ImproperlyConfigured" title="(in Django v5.2)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImproperlyConfigured</span></code></a>.</p>
+<p><code class="xref py py-mod docutils literal notranslate"><span class="pre">terminusgps.authorizenet</span></code> requires the following settings to be present in your Django project’s <code class="docutils literal notranslate"><span class="pre">settings.py</span></code> module.</p>
+<p>Using the package without setting these settings will raise <a class="reference external" href="https://docs.djangoproject.com/en/5.2/ref/exceptions/#django.core.exceptions.ImproperlyConfigured" title="(in Django v5.2)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImproperlyConfigured</span></code></a>.</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>setting</p></th>

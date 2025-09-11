@@ -3,13 +3,13 @@ Authorizenet
 
 The :py:mod:`terminusgps.authorizenet` package provides convenient functions for interacting with the Authorizenet API in a Pythonic interface.
 
-These functions may be executed via the :py:meth:`~terminusgps.authorizenet.services.AuthorizenetService.request` method on a service instance.
-
 Most `Authorizenet API endpoints <https://developer.authorize.net/api/reference/index.html>`_ are represented as plain Python functions.
 
-.. attention:: These functions require the following settings to be present in your Django project's ``settings.py`` module.
+These functions return a constructed Authorizenet API request contract and its corresponding controller to execute it with.
 
-   Using this package without setting these settings will raise :py:exc:`~django.core.exceptions.ImproperlyConfigured`.
+.. attention:: :py:mod:`terminusgps.authorizenet` requires the following settings to be present in your Django project's ``settings.py`` module.
+
+   Using the package without setting these settings will raise :py:exc:`~django.core.exceptions.ImproperlyConfigured`.
 
    +-----------------------------------+---------------+
    | setting                           | type          |
