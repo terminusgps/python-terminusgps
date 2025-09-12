@@ -4,6 +4,21 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
+class CreditCardType(models.TextChoices):
+    AMEX = apicontractsv1.cardTypeEnum.AmericanExpress, _("American Express")
+    """American express card."""
+    DINERS = apicontractsv1.cardTypeEnum.DinersClub, _("Diners Club")
+    """Diners club card."""
+    DISCOVER = apicontractsv1.cardTypeEnum.Discover, _("Discover")
+    """Disover card."""
+    JCB = apicontractsv1.cardTypeEnum.JCB, _("JCB")
+    """JCB card."""
+    MASTERCARD = apicontractsv1.cardTypeEnum.MasterCard, _("Mastercard")
+    """Mastercard card."""
+    VISA = apicontractsv1.cardTypeEnum.Visa, _("Visa")
+    """Visa card."""
+
+
 class CurrencyCode(models.TextChoices):
     USD = "USD", _("United States Dollar")
     """US dollar."""
