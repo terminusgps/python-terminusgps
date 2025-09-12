@@ -142,7 +142,7 @@ wheels = [
 
 [[package]]
 name = "django-stubs"
-version = "5.2.2"
+version = "5.2.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
@@ -150,22 +150,22 @@ dependencies = [
     { name = "types-pyyaml" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/bc/27/ab9813da817a29ae69ec92af31ad8fc58ce3c904f23ea604bd3bdd9adc37/django_stubs-5.2.2.tar.gz", hash = "sha256:2a04b510c7a812f88223fd7e6d87fb4ea98717f19c8e5c8b59691d83ad40a8a6", size = 243049 }
+sdist = { url = "https://files.pythonhosted.org/packages/fd/71/430901a1a799e1e66bb169a28e48a5f7b6e4ad5d6cadf60d9319d44b4181/django_stubs-5.2.4.tar.gz", hash = "sha256:89e1493d57ed091fdc990bf625bde77088e8660fcf6a3cdf0faf68e33c11c79b", size = 247751 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/55/cb/bb387a1d40691ad54fec2be9e5093becebd63cca0ccb9348cbb27602e1d1/django_stubs-5.2.2-py3-none-any.whl", hash = "sha256:79bd0fdbc78958a8f63e0b062bd9d03f1de539664476c0be62ade5f063c9e41e", size = 485188 },
+    { url = "https://files.pythonhosted.org/packages/e0/0a/6e1326888d2a8b5f390a28b543a9766105bff573641bbfd7edc7394ab5fe/django_stubs-5.2.4-py3-none-any.whl", hash = "sha256:000d59e826a15b032070d4b1b7f95b281005d690493173b95837c4c07b68dcf6", size = 490115 },
 ]
 
 [[package]]
 name = "django-stubs-ext"
-version = "5.2.2"
+version = "5.2.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fc/06/5e94715d103e6cc72380cb0d0b6682a7d5ad2c366cee478c94d77aad777d/django_stubs_ext-5.2.2.tar.gz", hash = "sha256:d9d151b919fe2438760f5bd938f03e1cb08c84d0651f9e5917f1313907e42683", size = 6244 }
+sdist = { url = "https://files.pythonhosted.org/packages/63/9a/d3554928fca79bc8e28dccb7f9c410c132667a47a216b53850c268a94114/django_stubs_ext-5.2.4.tar.gz", hash = "sha256:920bb81c1fbf95b8882db7dcd3fff2d851a3c01d49aef9c7b5d79da40ff39fe6", size = 6488 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4e/38/2903676f97f7902ee31984a06756b0e8836e897f4b617e1a03be4a43eb4f/django_stubs_ext-5.2.2-py3-none-any.whl", hash = "sha256:8833bbe32405a2a0ce168d3f75a87168f61bd16939caf0e8bf173bccbd8a44c5", size = 8816 },
+    { url = "https://files.pythonhosted.org/packages/59/20/4595270c02c5763ff751dab83df148f606de3738a236a4c961c71df7c005/django_stubs_ext-5.2.4-py3-none-any.whl", hash = "sha256:e539cb40c5281f291c285ba7ecd704e70343d8f610f13629c2b1521454364d1b", size = 9307 },
 ]
 
 [[package]]
@@ -298,7 +298,7 @@ wheels = [
 
 [[package]]
 name = "python-terminusgps"
-version = "45.7.0"
+version = "45.8.0"
 source = { editable = "." }
 dependencies = [
     { name = "authorizenet" },
