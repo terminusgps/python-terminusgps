@@ -52,8 +52,7 @@ class AuthorizenetService:
 
     def call_api(
         self,
-        request: ObjectifiedElement,
-        controller_cls: type[APIOperationBase],
+        request_tuple: tuple[ObjectifiedElement, type[APIOperationBase]],
         reference_id: str | None = None,
     ) -> ObjectifiedElement:
         """
@@ -61,10 +60,8 @@ class AuthorizenetService:
 
         If ``reference_id`` was provided, it is added to the request before execution.
 
-        :param request: An Authorizenet API request element.
-        :type request: ~lxml.objectify.ObjectifiedElement
-        :param controller_cls: An Authorizenet controller class.
-        :type controller_cls: type[~authorizenet.apicontrollersbase.APIOperationBase]
+        :param request_tuple: A tuple containing an Authorizenet API request contract and a controller class to execute it with.
+        :type request_tuple: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
         :param reference_id: An optional reference id string for the API call. Default is :py:obj:`None`.
         :type reference_id: str | None
         :raises AuthorizenetControllerExecutionError: If the API call failed.
@@ -72,6 +69,7 @@ class AuthorizenetService:
         :rtype: ~lxml.objectify.ObjectifiedElement
 
         """
+        request, controller_cls = request_tuple[0], request_tuple[1]
         request.merchantAuthentication = self.merchantAuthentication
         if reference_id is not None:
             request.refId = reference_id
@@ -79,8 +77,8 @@ class AuthorizenetService:
         controller = controller_cls(request)
         controller.setenvironment(self.environment)
         controller.execute()
+        response = controller.getresponse()
 
-        response: ObjectifiedElement | None = controller.getresponse()
         if response is None:
             raise AuthorizenetControllerExecutionError(
                 message="No response from the Authorizenet API controller.",
