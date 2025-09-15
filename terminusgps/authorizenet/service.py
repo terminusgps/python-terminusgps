@@ -1,3 +1,4 @@
+from abc import ABC
 from functools import cached_property
 
 from authorizenet.apicontractsv1 import merchantAuthenticationType
@@ -34,8 +35,8 @@ class AuthorizenetControllerExecutionError(Exception):
         return self._code
 
 
-class AuthorizenetService:
-    """A service for safely interacting with the Authorizenet API."""
+class AuthorizenetService(ABC):
+    """Base service for safely interacting with the Authorizenet API."""
 
     REQUIRED_SETTINGS = (
         "MERCHANT_AUTH_ENVIRONMENT",
@@ -50,13 +51,13 @@ class AuthorizenetService:
             if not hasattr(settings, setting):
                 raise ImproperlyConfigured(f"'{setting}' setting is required.")
 
-    def call_api(
+    def execute(
         self,
         request_tuple: tuple[ObjectifiedElement, type[APIOperationBase]],
         reference_id: str | None = None,
     ) -> ObjectifiedElement:
         """
-        Adds required authentication data to the request before executing it and returning its response.
+        Adds required authentication data to the Authorizenet API request before executing it and returning its response.
 
         If ``reference_id`` was provided, it is added to the request before execution.
 
