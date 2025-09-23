@@ -46,15 +46,17 @@ class SubscriptionStatus(models.TextChoices):
     """An Authorizenet subscription status."""
 
     ACTIVE = "active", _("Active")
-    """Active subscription."""
+    """Active status."""
     EXPIRED = "expired", _("Expired")
-    """Expired subscription."""
+    """Expired status."""
     SUSPENDED = "suspended", _("Suspended")
-    """Suspended subscription."""
+    """Suspended status."""
     CANCELED = "canceled", _("Canceled")
-    """Canceled subscription."""
+    """Canceled status."""
     TERMINATED = "terminated", _("Terminated")
-    """Terminated subscription."""
+    """Terminated status."""
+    UNKNOWN = "unknown", _("Unknown")
+    """Unknown status."""
 
 
 class SubscriptionIntervalUnit(models.TextChoices):
