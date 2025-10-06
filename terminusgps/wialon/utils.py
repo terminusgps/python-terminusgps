@@ -64,9 +64,9 @@ def get_user_by_name(name: str, session: WialonSession) -> WialonUser:
         raise ValueError(f"Multiple users returned for '{name}'.")
     elif num_items <= 0:
         raise ValueError(f"Couldn't find a Wialon user named '{name}'.")
-
     factory = WialonObjectFactory(session)
-    return factory.get("user", id=int(response.get("items")[0].get("id")))
+    user_id = response.get("items")[0].get("id")
+    return factory.get("user", id=int(user_id))
 
 
 def get_carrier_names(session: WialonSession) -> list[str]:
@@ -89,7 +89,8 @@ def get_carrier_names(session: WialonSession) -> list[str]:
                 "propType": "propitemname",
             },
             "force": 0,
-            "flags": flags.DataFlag.UNIT_BASE | flags.DataFlag.UNIT_ADMIN_FIELDS,
+            "flags": flags.DataFlag.UNIT_BASE
+            | flags.DataFlag.UNIT_ADMIN_FIELDS,
             "from": 0,
             "to": 0,
         }
@@ -103,7 +104,9 @@ def get_carrier_names(session: WialonSession) -> list[str]:
     return sorted(list(frozenset(carrier_names)))
 
 
-def get_units_by_carrier(carrier_name: str, session: WialonSession) -> list[WialonUnit]:
+def get_units_by_carrier(
+    carrier_name: str, session: WialonSession
+) -> list[WialonUnit]:
     """
     Returns a list of all units by telecommunications carrier company name.
 
@@ -125,14 +128,17 @@ def get_units_by_carrier(carrier_name: str, session: WialonSession) -> list[Wial
                 "propType": "propitemname",
             },
             "force": 0,
-            "flags": flags.DataFlag.UNIT_BASE | flags.DataFlag.UNIT_ADMIN_FIELDS,
+            "flags": flags.DataFlag.UNIT_BASE
+            | flags.DataFlag.UNIT_ADMIN_FIELDS,
             "from": 0,
             "to": 0,
         }
     )
     num_items: int = int(response.get("totalItemsCount"))
     if num_items <= 0:
-        raise ValueError(f"Couldn't find any units by carrier '{carrier_name}'.")
+        raise ValueError(
+            f"Couldn't find any units by carrier '{carrier_name}'."
+        )
 
     factory = WialonObjectFactory(session)
     unit_ids = [int(unit.get("id")) for unit in response.get("items")]
@@ -161,7 +167,8 @@ def get_unit_by_iccid(iccid: str, session: WialonSession) -> WialonUnit:
                 "propType": "propitemname",
             },
             "force": 0,
-            "flags": flags.DataFlag.UNIT_BASE | flags.DataFlag.UNIT_ADMIN_FIELDS,
+            "flags": flags.DataFlag.UNIT_BASE
+            | flags.DataFlag.UNIT_ADMIN_FIELDS,
             "from": 0,
             "to": 0,
         }
@@ -177,7 +184,9 @@ def get_unit_by_iccid(iccid: str, session: WialonSession) -> WialonUnit:
     return factory.get("avl_unit", id=int(response.get("items")[0].get("id")))
 
 
-def get_unit_by_imei(imei: int | str, session: WialonSession) -> WialonUnit | None:
+def get_unit_by_imei(
+    imei: int | str, session: WialonSession
+) -> WialonUnit | None:
     """
     Takes a Wialon unit's IMEI # and returns its unit id.
 
@@ -218,7 +227,9 @@ def get_unit_by_imei(imei: int | str, session: WialonSession) -> WialonUnit | No
     return factory.get("avl_unit", id=int(response.get("items")[0].get("id")))
 
 
-def get_vin_info(vin_number: str, session: WialonSession) -> dict[str, typing.Any]:
+def get_vin_info(
+    vin_number: str, session: WialonSession
+) -> dict[str, typing.Any]:
     """
     Retrieves vehicle data from a VIN number.
 
@@ -279,7 +290,9 @@ def generate_wialon_password(length: int = 32) -> str:
     s3 = list("!@#$%^*()[]-_+")
 
     while True:
-        password = "".join([secrets.choice(s0 + s1 + s2 + s3) for _ in range(length)])
+        password = "".join(
+            [secrets.choice(s0 + s1 + s2 + s3) for _ in range(length)]
+        )
         if (
             any(c.islower() for c in password)
             and any(c.isupper() for c in password)

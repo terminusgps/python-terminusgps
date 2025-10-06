@@ -57,7 +57,7 @@ class WialonSession:
         :type token: str | None
         :param auth_hash: A Wialon API authentication hash. Default is environment variable ``"WIALON_TOKEN"``.
         :type auth_hash: str | None
-        :param username: A Wialon user id to operate as during the session. Default is :py:obj:`None`.
+        :param username: A Wialon user id to operate as during the session. Default is environment variable ``"WIALON_USERNAME"``.
         :type username: str | None
         :param check_service: A Wialon service name to check before calling the Wialon API. Default is :py:obj:`None`.
         :type check_service: str | None
@@ -69,7 +69,7 @@ class WialonSession:
         self._wialon_api = Wialon(scheme=scheme, host=host, port=port, sid=sid)
 
         self._token = token if token else os.getenv("WIALON_TOKEN")
-        self._username = username
+        self._username = username if username else os.getenv("WIALON_USERNAME")
         self._auth_hash = auth_hash
         self._check_service = check_service
 
