@@ -224,7 +224,7 @@
 </span><span id="line-57"><span class="sd">        :type token: str | None</span>
 </span><span id="line-58"><span class="sd">        :param auth_hash: A Wialon API authentication hash. Default is environment variable ``&quot;WIALON_TOKEN&quot;``.</span>
 </span><span id="line-59"><span class="sd">        :type auth_hash: str | None</span>
-</span><span id="line-60"><span class="sd">        :param username: A Wialon user id to operate as during the session. Default is :py:obj:`None`.</span>
+</span><span id="line-60"><span class="sd">        :param username: A Wialon user id to operate as during the session. Default is environment variable ``&quot;WIALON_USERNAME&quot;``.</span>
 </span><span id="line-61"><span class="sd">        :type username: str | None</span>
 </span><span id="line-62"><span class="sd">        :param check_service: A Wialon service name to check before calling the Wialon API. Default is :py:obj:`None`.</span>
 </span><span id="line-63"><span class="sd">        :type check_service: str | None</span>
@@ -236,7 +236,7 @@
 </span><span id="line-69">        <span class="bp">self</span><span class="o">.</span><span class="n">_wialon_api</span> <span class="o">=</span> <span class="n">Wialon</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="n">scheme</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">sid</span><span class="o">=</span><span class="n">sid</span><span class="p">)</span>
 </span><span id="line-70">
 </span><span id="line-71">        <span class="bp">self</span><span class="o">.</span><span class="n">_token</span> <span class="o">=</span> <span class="n">token</span> <span class="k">if</span> <span class="n">token</span> <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;WIALON_TOKEN&quot;</span><span class="p">)</span>
-</span><span id="line-72">        <span class="bp">self</span><span class="o">.</span><span class="n">_username</span> <span class="o">=</span> <span class="n">username</span>
+</span><span id="line-72">        <span class="bp">self</span><span class="o">.</span><span class="n">_username</span> <span class="o">=</span> <span class="n">username</span> <span class="k">if</span> <span class="n">username</span> <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;WIALON_USERNAME&quot;</span><span class="p">)</span>
 </span><span id="line-73">        <span class="bp">self</span><span class="o">.</span><span class="n">_auth_hash</span> <span class="o">=</span> <span class="n">auth_hash</span>
 </span><span id="line-74">        <span class="bp">self</span><span class="o">.</span><span class="n">_check_service</span> <span class="o">=</span> <span class="n">check_service</span>
 </span><span id="line-75">
