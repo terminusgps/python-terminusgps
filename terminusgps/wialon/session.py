@@ -53,11 +53,11 @@ class WialonSession:
         :type port: int
         :param sid: A Wialon API session id. Default is :py:obj:`None`.
         :type sid: str | None
-        :param token: A Wialon API token. Default is :py:obj:`None`.
+        :param token: A Wialon API token. Default is environment variable ``"WIALON_TOKEN"``.
         :type token: str | None
-        :param auth_hash: A Wialon API authentication hash. Default is environment variable ``"WIALON_TOKEN"``.
+        :param auth_hash: A Wialon API authentication hash. Default is :py:obj:`None`.
         :type auth_hash: str | None
-        :param username: A Wialon user id to operate as during the session. Default is environment variable ``"WIALON_USERNAME"``.
+        :param username: A Wialon user to operate as during the session. Default is environment variable ``"WIALON_USERNAME"``.
         :type username: str | None
         :param check_service: A Wialon service name to check before calling the Wialon API. Default is :py:obj:`None`.
         :type check_service: str | None
