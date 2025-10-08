@@ -14,9 +14,9 @@ def get_hw_types(session: WialonSession) -> list[dict[str, str | int]]:
     Returns a list of hardware type objects for Wialon.
 
     :param session: A valid Wialon API session.
-    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :type session: ~terminusgps.wialon.session.WialonSession
     :returns: A list of hardware types.
-    :rtype: :py:obj:`list`
+    :rtype: list[dict[str, str | int]]
 
     Hardware type format:
 
@@ -37,11 +37,11 @@ def get_user_by_name(name: str, session: WialonSession) -> WialonUser:
     Returns a Wialon user by name.
 
     :param name: A Wialon user name.
-    :type name: :py:obj:`str`
+    :type name: str
     :param session: A valid Wialon API session.
-    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :type session: ~terminusgps.wialon.session.WialonSession
     :returns: A Wialon user.
-    :rtype: :py:obj:`~terminusgps.wialon.items.user.WialonUser` | :py:obj:`None`
+    :rtype: ~terminusgps.wialon.items.user.WialonUser | None
 
     """
     response = session.wialon_api.core_search_items(
@@ -74,9 +74,9 @@ def get_carrier_names(session: WialonSession) -> list[str]:
     Returns a list of all telecommunication carrier company names present in Wialon.
 
     :param session: A valid Wialon API session.
-    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :type session: ~terminusgps.wialon.session.WialonSession
     :returns: A list of telecommunication carrier company names.
-    :rtype: :py:obj:`list`
+    :rtype: list[str]
 
     """
     response = session.wialon_api.core_search_items(
@@ -110,12 +110,12 @@ def get_units_by_carrier(
     """
     Returns a list of all units by telecommunications carrier company name.
 
-    :param carrier_name: A telecommunications carrier company name, e.g. ``"US Cell"`` or ``"Conetixx"``.
-    :type carrier_name: :py:obj:`str`
+    :param carrier_name: Case-insensitive telecommunications carrier company name, e.g. ``"UScell"`` or ``"Conetixx"``.
+    :type carrier_name: str
     :param session: A valid Wialon API session.
-    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
-    :returns: A list of units, if any were found.
-    :rtype: :py:obj:`list`
+    :type session: ~terminusgps.wialon.session.WialonSession
+    :returns: A list of units.
+    :rtype: list[~terminusgps.wialon.items.unit.WialonUnit]
 
     """
     response = session.wialon_api.core_search_items(
@@ -123,7 +123,7 @@ def get_units_by_carrier(
             "spec": {
                 "itemsType": "avl_unit",
                 "propName": "admin_fields,rel_adminfield_value",
-                "propValueMask": f"carrier,{carrier_name}",
+                "propValueMask": f"carrier,{carrier_name.lower()}",
                 "sortType": "admin_fields,admin_fields",
                 "propType": "propitemname",
             },
@@ -137,7 +137,7 @@ def get_units_by_carrier(
     num_items: int = int(response.get("totalItemsCount"))
     if num_items <= 0:
         raise ValueError(
-            f"Couldn't find any units by carrier '{carrier_name}'."
+            f"Couldn't find any units by carrier '{carrier_name.lower()}'."
         )
 
     factory = WialonObjectFactory(session)
@@ -150,11 +150,11 @@ def get_unit_by_iccid(iccid: str, session: WialonSession) -> WialonUnit:
     Returns a unit by iccid (SIM card #).
 
     :param iccid: A SIM card #.
-    :type iccid: :py:obj:`str`
+    :type iccid: str
     :param session: A valid Wialon API session.
-    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :type session: ~terminusgps.wialon.session.WialonSession
     :returns: The Wialon unit.
-    :rtype: :py:obj:`~terminusgps.wialon.items.WialonUnit`
+    :rtype: ~terminusgps.wialon.items.WialonUnit
 
     """
     response = session.wialon_api.core_search_items(
@@ -191,13 +191,13 @@ def get_unit_by_imei(
     Takes a Wialon unit's IMEI # and returns its unit id.
 
     :param imei: A Wialon unit's IMEI #.
-    :type imei: :py:obj:`str`
+    :type imei: str
     :param session: A valid Wialon API session.
-    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :type session: ~terminusgps.wialon.session.WialonSession
     :raises ValueError: If ``imei`` wasn't a digit.
     :raises WialonAPIError: If something went wrong calling the Wialon API.
     :returns: A Wialon unit, if it was found.
-    :rtype: :py:obj:`str` | :py:obj:`None`
+    :rtype: ~terminusgps.wialon.items.unit.WialonUnit | None
 
     """
     if isinstance(imei, str) and not imei.isdigit():
@@ -234,11 +234,11 @@ def get_vin_info(
     Retrieves vehicle data from a VIN number.
 
     :param value: A vehicle's VIN number.
-    :type value: :py:obj:`str`
+    :type value: str
     :param session: A valid Wialon API session.
-    :type session: :py:obj:`~terminusgps.wialon.session.WialonSession`
+    :type session: ~terminusgps.wialon.session.WialonSession
     :returns: A dictionary of vehicle information, if any was found.
-    :rtype: :py:obj:`dict`
+    :rtype: dict[str, ~typing.Any]
 
     """
     response = session.wialon_api.unit_get_vin_info(**{"vin": vin_number})
@@ -246,14 +246,6 @@ def get_vin_info(
     if "error" in results.keys():
         return {}
     return {field.get("n"): field.get("v") for field in results.get("pflds")}
-
-
-def check_unique(object_type: str, name: str, session: WialonSession) -> bool:
-    return bool(
-        session.wialon_api.core_check_unique(
-            **{"type": object_type, "value": name}
-        ).get("result")
-    )
 
 
 def generate_wialon_password(length: int = 32) -> str:
@@ -267,11 +259,11 @@ def generate_wialon_password(length: int = 32) -> str:
         - At least one special symbol.
         - At least three digits.
 
-    :param length: Length of the generated password. Default is :py:obj:`32`.
-    :type length: :py:obj:`int`
-    :raises ValueError: If ``length`` is less than ``8`` or greater than ``64``.
+    :param length: Length of the generated password. Default is ``32``.
+    :type length: int
+    :raises ValueError: If ``length`` was less than ``8`` or greater than ``64``.
     :returns: A Wialon compliant password.
-    :rtype: :py:obj:`str`
+    :rtype: str
 
     """
     min_length, max_length = 8, 64
