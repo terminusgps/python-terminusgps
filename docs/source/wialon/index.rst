@@ -13,3 +13,4 @@ Most Wialon objects are modeled as plain Python classes which have methods that 
     items.rst
     session.rst
     usage.rst
+    utils.rst
