@@ -112,8 +112,198 @@
 <div id="content" role="main">
 <section id="module-terminusgps.wialon.utils">
 <span id="utilities"></span><h1>Utilities<a class="headerlink" href="#module-terminusgps.wialon.utils" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="terminusgps.wialon.utils.generate_wialon_password">
+<span class="sig-prename descclassname"><span class="pre">terminusgps.wialon.utils.</span></span><span class="sig-name descname"><span class="pre">generate_wialon_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">32</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/wialon/utils.html#generate_wialon_password"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.wialon.utils.generate_wialon_password" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.wialon.utils.generate_wialon_password'">¶</a></dt>
+<dd><p>Generates a Wialon compliant password between <code class="docutils literal notranslate"><span class="pre">8</span></code> and <code class="docutils literal notranslate"><span class="pre">64</span></code> characters.</p>
+<p>The generated password will contain:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>At least one uppercase letter.</p></li>
+<li><p>At least one lowercase letter.</p></li>
+<li><p>At least one special symbol.</p></li>
+<li><p>At least three digits.</p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – Length of the generated password. Default is <code class="xref py py-obj docutils literal notranslate"><span class="pre">32</span></code>.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If <code class="docutils literal notranslate"><span class="pre">length</span></code> is less than <code class="docutils literal notranslate"><span class="pre">8</span></code> or greater than <code class="docutils literal notranslate"><span class="pre">64</span></code>.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A Wialon compliant password.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="terminusgps.wialon.utils.get_carrier_names">
+<span class="sig-prename descclassname"><span class="pre">terminusgps.wialon.utils.</span></span><span class="sig-name descname"><span class="pre">get_carrier_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><span class="pre">WialonSession</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/terminusgps/wialon/utils.html#get_carrier_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.wialon.utils.get_carrier_names" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.wialon.utils.get_carrier_names'">¶</a></dt>
+<dd><p>Returns a list of all telecommunication carrier company names present in Wialon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a>) – A valid Wialon API session.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of telecommunication carrier company names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="terminusgps.wialon.utils.get_hw_types">
+<span class="sig-prename descclassname"><span class="pre">terminusgps.wialon.utils.</span></span><span class="sig-name descname"><span class="pre">get_hw_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><span class="pre">WialonSession</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/terminusgps/wialon/utils.html#get_hw_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.wialon.utils.get_hw_types" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.wialon.utils.get_hw_types'">¶</a></dt>
+<dd><p>Returns a list of hardware type objects for Wialon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a>) – A valid Wialon API session.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of hardware types.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+<p>Hardware type format:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>key</p></th>
+<th class="head"><p>value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">id</span></code></p></td>
+<td><p>Hardware type id</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>Hardware type name</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="terminusgps.wialon.utils.get_unit_by_iccid">
+<span class="sig-prename descclassname"><span class="pre">terminusgps.wialon.utils.</span></span><span class="sig-name descname"><span class="pre">get_unit_by_iccid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iccid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><span class="pre">WialonSession</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="items.html#terminusgps.wialon.items.unit.WialonUnit" title="terminusgps.wialon.items.unit.WialonUnit"><span class="pre">WialonUnit</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/wialon/utils.html#get_unit_by_iccid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.wialon.utils.get_unit_by_iccid" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.wialon.utils.get_unit_by_iccid'">¶</a></dt>
+<dd><p>Returns a unit by iccid (SIM card #).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iccid</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A SIM card #.</p></li>
+<li><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a>) – A valid Wialon API session.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Wialon unit.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonUnit</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="terminusgps.wialon.utils.get_unit_by_imei">
+<span class="sig-prename descclassname"><span class="pre">terminusgps.wialon.utils.</span></span><span class="sig-name descname"><span class="pre">get_unit_by_imei</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imei</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><span class="pre">WialonSession</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="items.html#terminusgps.wialon.items.unit.WialonUnit" title="terminusgps.wialon.items.unit.WialonUnit"><span class="pre">WialonUnit</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/wialon/utils.html#get_unit_by_imei"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.wialon.utils.get_unit_by_imei" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.wialon.utils.get_unit_by_imei'">¶</a></dt>
+<dd><p>Takes a Wialon unit’s IMEI # and returns its unit id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>imei</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A Wialon unit’s IMEI #.</p></li>
+<li><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a>) – A valid Wialon API session.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If <code class="docutils literal notranslate"><span class="pre">imei</span></code> wasn’t a digit.</p></li>
+<li><p><a class="reference internal" href="exceptions.html#terminusgps.wialon.session.WialonAPIError" title="terminusgps.wialon.session.WialonAPIError"><strong>WialonAPIError</strong></a> – If something went wrong calling the Wialon API.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A Wialon unit, if it was found.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="terminusgps.wialon.utils.get_units_by_carrier">
+<span class="sig-prename descclassname"><span class="pre">terminusgps.wialon.utils.</span></span><span class="sig-name descname"><span class="pre">get_units_by_carrier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">carrier_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><span class="pre">WialonSession</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="items.html#terminusgps.wialon.items.unit.WialonUnit" title="terminusgps.wialon.items.unit.WialonUnit"><span class="pre">WialonUnit</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/terminusgps/wialon/utils.html#get_units_by_carrier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.wialon.utils.get_units_by_carrier" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.wialon.utils.get_units_by_carrier'">¶</a></dt>
+<dd><p>Returns a list of all units by telecommunications carrier company name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>carrier_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A telecommunications carrier company name, e.g. <code class="docutils literal notranslate"><span class="pre">"US</span> <span class="pre">Cell"</span></code> or <code class="docutils literal notranslate"><span class="pre">"Conetixx"</span></code>.</p></li>
+<li><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a>) – A valid Wialon API session.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of units, if any were found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="terminusgps.wialon.utils.get_user_by_name">
+<span class="sig-prename descclassname"><span class="pre">terminusgps.wialon.utils.</span></span><span class="sig-name descname"><span class="pre">get_user_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><span class="pre">WialonSession</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="items.html#terminusgps.wialon.items.user.WialonUser" title="terminusgps.wialon.items.user.WialonUser"><span class="pre">WialonUser</span></a></span></span><a class="reference internal" href="../_modules/terminusgps/wialon/utils.html#get_user_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.wialon.utils.get_user_by_name" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.wialon.utils.get_user_by_name'">¶</a></dt>
+<dd><p>Returns a Wialon user by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A Wialon user name.</p></li>
+<li><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a>) – A valid Wialon API session.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Wialon user.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="items.html#terminusgps.wialon.items.user.WialonUser" title="terminusgps.wialon.items.user.WialonUser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonUser</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="terminusgps.wialon.utils.get_vin_info">
+<span class="sig-prename descclassname"><span class="pre">terminusgps.wialon.utils.</span></span><span class="sig-name descname"><span class="pre">get_vin_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vin_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><span class="pre">WialonSession</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/terminusgps/wialon/utils.html#get_vin_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#terminusgps.wialon.utils.get_vin_info" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#terminusgps.wialon.utils.get_vin_info'">¶</a></dt>
+<dd><p>Retrieves vehicle data from a VIN number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A vehicle’s VIN number.</p></li>
+<li><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a>) – A valid Wialon API session.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary of vehicle information, if any was found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 </section>
-</div></div>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#terminusgps.wialon.utils.generate_wialon_password'" class="reference internal" href="#terminusgps.wialon.utils.generate_wialon_password"><code class="docutils literal notranslate"><span class="pre">generate_wialon_password()</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.wialon.utils.get_carrier_names'" class="reference internal" href="#terminusgps.wialon.utils.get_carrier_names"><code class="docutils literal notranslate"><span class="pre">get_carrier_names()</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.wialon.utils.get_hw_types'" class="reference internal" href="#terminusgps.wialon.utils.get_hw_types"><code class="docutils literal notranslate"><span class="pre">get_hw_types()</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.wialon.utils.get_unit_by_iccid'" class="reference internal" href="#terminusgps.wialon.utils.get_unit_by_iccid"><code class="docutils literal notranslate"><span class="pre">get_unit_by_iccid()</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.wialon.utils.get_unit_by_imei'" class="reference internal" href="#terminusgps.wialon.utils.get_unit_by_imei"><code class="docutils literal notranslate"><span class="pre">get_unit_by_imei()</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.wialon.utils.get_units_by_carrier'" class="reference internal" href="#terminusgps.wialon.utils.get_units_by_carrier"><code class="docutils literal notranslate"><span class="pre">get_units_by_carrier()</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.wialon.utils.get_user_by_name'" class="reference internal" href="#terminusgps.wialon.utils.get_user_by_name"><code class="docutils literal notranslate"><span class="pre">get_user_by_name()</span></code></a></li>
+<li><a :data-current="activeSection === '#terminusgps.wialon.utils.get_vin_info'" class="reference internal" href="#terminusgps.wialon.utils.get_vin_info"><code class="docutils literal notranslate"><span class="pre">get_vin_info()</span></code></a></li>
+</ul>
+</div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">
