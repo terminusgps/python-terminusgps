@@ -227,21 +227,19 @@ def get_unit_by_imei(
     return factory.get("avl_unit", id=int(response.get("items")[0].get("id")))
 
 
-def get_vin_info(
-    vin_number: str, session: WialonSession
-) -> dict[str, typing.Any]:
+def get_vin_info(vin: str, session: WialonSession) -> dict[str, typing.Any]:
     """
     Retrieves vehicle data from a VIN number.
 
-    :param value: A vehicle's VIN number.
-    :type value: str
+    :param vin: A vehicle VIN #.
+    :type vin: str
     :param session: A valid Wialon API session.
     :type session: ~terminusgps.wialon.session.WialonSession
     :returns: A dictionary of vehicle information, if any was found.
     :rtype: dict[str, ~typing.Any]
 
     """
-    response = session.wialon_api.unit_get_vin_info(**{"vin": vin_number})
+    response = session.wialon_api.unit_get_vin_info(**{"vin": vin})
     results = response.get("vin_lookup_result", {})
     if "error" in results.keys():
         return {}
