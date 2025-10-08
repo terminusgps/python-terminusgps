@@ -127,16 +127,16 @@
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – Length of the generated password. Default is <code class="xref py py-obj docutils literal notranslate"><span class="pre">32</span></code>.</p>
+<dd class="field-odd"><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Length of the generated password. Default is <code class="docutils literal notranslate"><span class="pre">32</span></code>.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If <code class="docutils literal notranslate"><span class="pre">length</span></code> is less than <code class="docutils literal notranslate"><span class="pre">8</span></code> or greater than <code class="docutils literal notranslate"><span class="pre">64</span></code>.</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If <code class="docutils literal notranslate"><span class="pre">length</span></code> was less than <code class="docutils literal notranslate"><span class="pre">8</span></code> or greater than <code class="docutils literal notranslate"><span class="pre">64</span></code>.</p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A Wialon compliant password.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -146,13 +146,13 @@
 <dd><p>Returns a list of all telecommunication carrier company names present in Wialon.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a>) – A valid Wialon API session.</p>
+<dd class="field-odd"><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><em>WialonSession</em></a>) – A valid Wialon API session.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of telecommunication carrier company names.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -162,13 +162,13 @@
 <dd><p>Returns a list of hardware type objects for Wialon.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a>) – A valid Wialon API session.</p>
+<dd class="field-odd"><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><em>WialonSession</em></a>) – A valid Wialon API session.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of hardware types.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a>]]</p>
 </dd>
 </dl>
 <p>Hardware type format:</p>
@@ -195,15 +195,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>iccid</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A SIM card #.</p></li>
-<li><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a>) – A valid Wialon API session.</p></li>
+<li><p><strong>iccid</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A SIM card #.</p></li>
+<li><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><em>WialonSession</em></a>) – A valid Wialon API session.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The Wialon unit.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonUnit</span></code></p>
+<dd class="field-odd"><p><em>WialonUnit</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -214,8 +214,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>imei</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A Wialon unit’s IMEI #.</p></li>
-<li><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a>) – A valid Wialon API session.</p></li>
+<li><p><strong>imei</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A Wialon unit’s IMEI #.</p></li>
+<li><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><em>WialonSession</em></a>) – A valid Wialon API session.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -228,7 +228,7 @@
 <dd class="field-odd"><p>A Wialon unit, if it was found.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dd class="field-even"><p><a class="reference internal" href="items.html#terminusgps.wialon.items.unit.WialonUnit" title="terminusgps.wialon.items.unit.WialonUnit"><em>WialonUnit</em></a> | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -239,15 +239,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>carrier_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A telecommunications carrier company name, e.g. <code class="docutils literal notranslate"><span class="pre">"US</span> <span class="pre">Cell"</span></code> or <code class="docutils literal notranslate"><span class="pre">"Conetixx"</span></code>.</p></li>
-<li><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a>) – A valid Wialon API session.</p></li>
+<li><p><strong>carrier_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Case-insensitive telecommunications carrier company name, e.g. <code class="docutils literal notranslate"><span class="pre">"UScell"</span></code> or <code class="docutils literal notranslate"><span class="pre">"Conetixx"</span></code>.</p></li>
+<li><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><em>WialonSession</em></a>) – A valid Wialon API session.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of units, if any were found.</p>
+<dd class="field-even"><p>A list of units.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[<a class="reference internal" href="items.html#terminusgps.wialon.items.unit.WialonUnit" title="terminusgps.wialon.items.unit.WialonUnit"><em>WialonUnit</em></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -258,15 +258,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A Wialon user name.</p></li>
-<li><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a>) – A valid Wialon API session.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A Wialon user name.</p></li>
+<li><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><em>WialonSession</em></a>) – A valid Wialon API session.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A Wialon user.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="items.html#terminusgps.wialon.items.user.WialonUser" title="terminusgps.wialon.items.user.WialonUser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonUser</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="items.html#terminusgps.wialon.items.user.WialonUser" title="terminusgps.wialon.items.user.WialonUser"><em>WialonUser</em></a> | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -277,15 +277,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – A vehicle’s VIN number.</p></li>
-<li><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WialonSession</span></code></a>) – A valid Wialon API session.</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A vehicle’s VIN number.</p></li>
+<li><p><strong>session</strong> (<a class="reference internal" href="session.html#terminusgps.wialon.session.WialonSession" title="terminusgps.wialon.session.WialonSession"><em>WialonSession</em></a>) – A valid Wialon API session.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A dictionary of vehicle information, if any was found.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>]</p>
 </dd>
 </dl>
 </dd></dl>
