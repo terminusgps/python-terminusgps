@@ -96,7 +96,7 @@ def get_carrier_names(session: WialonSession) -> list[str]:
         }
     )
     carrier_names: list[str] = [
-        field["v"]
+        str(field["v"]).lower()
         for item in response.get("items", [{}])
         for field in item.get("aflds", {}).values()
         if field["n"] == "carrier" and field["v"]
