@@ -4,10 +4,12 @@ from lxml.objectify import ObjectifiedElement
 
 __all__ = [
     "create_customer_profile",
+    "delete_customer_profile",
     "get_customer_profile",
+    "get_customer_profile_by_email",
+    "get_customer_profile_by_merchant_id",
     "get_customer_profile_ids",
     "update_customer_profile",
-    "delete_customer_profile",
 ]
 
 
