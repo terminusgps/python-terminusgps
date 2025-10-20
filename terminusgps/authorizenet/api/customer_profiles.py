@@ -55,6 +55,46 @@ def get_customer_profile(
     return request, apicontrollers.getCustomerProfileController
 
 
+def get_customer_profile_by_email(
+    email: str, include_issuer_info: bool = False
+) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
+    """
+    `getCustomerProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-profile>`_.
+
+    :param email: Merchant designated customer profile email address.
+    :type email: str
+    :param include_issuer_info: Whether to include issuer info in the response. Default is :py:obj:`False`.
+    :type include_issuer_info: bool
+    :returns: A tuple containing an Authorizenet API request element and controller class.
+    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
+
+    """
+    request = apicontractsv1.getCustomerProfileRequest()
+    request.email = str(email)
+    request.includeIssuerInfo = str(include_issuer_info).lower()
+    return request, apicontrollers.getCustomerProfileController
+
+
+def get_customer_profile_by_merchant_id(
+    merchant_id: str, include_issuer_info: bool = False
+) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
+    """
+    `getCustomerProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-profile>`_.
+
+    :param merchant_id: Merchant designated customer profile id.
+    :type merchant_id: str
+    :param include_issuer_info: Whether to include issuer info in the response. Default is :py:obj:`False`.
+    :type include_issuer_info: bool
+    :returns: A tuple containing an Authorizenet API request element and controller class.
+    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
+
+    """
+    request = apicontractsv1.getCustomerProfileRequest()
+    request.merchantCustomerId = str(merchant_id)
+    request.includeIssuerInfo = str(include_issuer_info).lower()
+    return request, apicontrollers.getCustomerProfileController
+
+
 def get_customer_profile_ids() -> tuple[
     ObjectifiedElement, type[APIOperationBase]
 ]:
