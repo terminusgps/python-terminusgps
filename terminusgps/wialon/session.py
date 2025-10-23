@@ -12,8 +12,12 @@ class WialonAPIError(Exception):
 
     def __init__(self, message, *args, **kwargs) -> None:
         self.message = message
-        self._code = int(message._code)
-        super().__init__(message, *args, **kwargs)
+        try:
+            self._code = int(message._code)
+        except ValueError:
+            # 6 = 'Unknown Error' according to Wialon
+            self._code = 6
+        return super().__init__(message, *args, **kwargs)
 
     @property
     def code(self) -> int:
@@ -57,7 +61,7 @@ class WialonSession:
         :type token: str | None
         :param auth_hash: A Wialon API authentication hash. Default is :py:obj:`None`.
         :type auth_hash: str | None
-        :param username: A Wialon user to operate as during the session. Default is environment variable ``"WIALON_USERNAME"``.
+        :param username: A Wialon user to operate as during the session.
         :type username: str | None
         :param check_service: A Wialon service name to check before calling the Wialon API. Default is :py:obj:`None`.
         :type check_service: str | None
@@ -67,9 +71,8 @@ class WialonSession:
         """
         self._uid = None
         self._wialon_api = Wialon(scheme=scheme, host=host, port=port, sid=sid)
-
         self._token = token if token else os.getenv("WIALON_TOKEN")
-        self._username = username if username else os.getenv("WIALON_USERNAME")
+        self._username = username
         self._auth_hash = auth_hash
         self._check_service = check_service
 
