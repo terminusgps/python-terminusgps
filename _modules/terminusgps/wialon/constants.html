@@ -480,54 +480,48 @@
 
 </span><span id="line-315">
 </span><span id="line-316">
-</span><span id="line-317"><span class="n">ACCESSMASK_RESOURCE_BASIC</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
-</span><span id="line-318">    <span class="p">[</span>
-</span><span id="line-319">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">MANAGE_CUSTOM_FIELDS</span><span class="p">,</span>
-</span><span id="line-320">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_MANAGE_DRIVERS</span><span class="p">,</span>
-</span><span id="line-321">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_MANAGE_GEOFENCES</span><span class="p">,</span>
-</span><span id="line-322">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_MANAGE_NOTIFICATIONS</span><span class="p">,</span>
-</span><span id="line-323">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_VIEW_DRIVERS</span><span class="p">,</span>
-</span><span id="line-324">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_VIEW_GEOFENCES</span><span class="p">,</span>
-</span><span id="line-325">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_VIEW_NOTIFICATIONS</span><span class="p">,</span>
-</span><span id="line-326">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_VIEW_ORDERS</span><span class="p">,</span>
-</span><span id="line-327">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_VIEW_POIS</span><span class="p">,</span>
-</span><span id="line-328">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_VIEW_TRAILERS</span><span class="p">,</span>
-</span><span id="line-329">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_ADMIN_FIELDS</span><span class="p">,</span>
-</span><span id="line-330">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_CUSTOM_FIELDS</span><span class="p">,</span>
-</span><span id="line-331">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_ITEM_BASIC</span><span class="p">,</span>
-</span><span id="line-332">    <span class="p">]</span>
-</span><span id="line-333"><span class="p">)</span>
-</span><span id="line-334"><span class="sd">&quot;&quot;&quot;Basic resource permissions&quot;&quot;&quot;</span>
-</span><span id="line-335">
-</span><span id="line-336"><span class="n">ACCESSMASK_UNIT_BASIC</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
-</span><span id="line-337">    <span class="p">[</span>
-</span><span id="line-338">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">MANAGE_CUSTOM_FIELDS</span><span class="p">,</span>
-</span><span id="line-339">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">MANAGE_ICON</span><span class="p">,</span>
-</span><span id="line-340">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">QUERY_REPORTS</span><span class="p">,</span>
-</span><span id="line-341">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RENAME_ITEM</span><span class="p">,</span>
-</span><span id="line-342">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">UNIT_EXECUTE_COMMANDS</span><span class="p">,</span>
-</span><span id="line-343">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">UNIT_EXPORT_MESSAGES</span><span class="p">,</span>
-</span><span id="line-344">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">UNIT_IMPORT_MESSAGES</span><span class="p">,</span>
-</span><span id="line-345">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">UNIT_REGISTER_EVENTS</span><span class="p">,</span>
-</span><span id="line-346">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">UNIT_VIEW_SERVICE_INTERVALS</span><span class="p">,</span>
-</span><span id="line-347">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_ATTACHED_FILES</span><span class="p">,</span>
-</span><span id="line-348">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_CUSTOM_FIELDS</span><span class="p">,</span>
-</span><span id="line-349">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_ITEM_BASIC</span><span class="p">,</span>
-</span><span id="line-350">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_ITEM_DETAILED</span><span class="p">,</span>
-</span><span id="line-351">    <span class="p">]</span>
-</span><span id="line-352"><span class="p">)</span>
-</span><span id="line-353"><span class="sd">&quot;&quot;&quot;Basic unit permissions&quot;&quot;&quot;</span>
-</span><span id="line-354">
-</span><span id="line-355"><span class="n">ACCESSMASK_UNIT_MIGRATION</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
-</span><span id="line-356">    <span class="p">[</span>
-</span><span id="line-357">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">DELETE_ITEM</span><span class="p">,</span>
-</span><span id="line-358">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">MANAGE_ITEM_ACCESS</span><span class="p">,</span>
-</span><span id="line-359">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">UNIT_DELETE_MESSAGES</span><span class="p">,</span>
-</span><span id="line-360">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">UNIT_MANAGE_CONNECTIVITY</span><span class="p">,</span>
-</span><span id="line-361">        <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_ITEM_BASIC</span><span class="p">,</span>
-</span><span id="line-362">    <span class="p">]</span>
-</span><span id="line-363"><span class="p">)</span>
-</span><span id="line-364"><span class="sd">&quot;&quot;&quot;Unit migration permissions&quot;&quot;&quot;</span>
+</span><span id="line-317"><span class="n">ACCESSMASK_RESOURCE_BASIC</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="line-318">    <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">MANAGE_CUSTOM_FIELDS</span>
+</span><span id="line-319">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_MANAGE_DRIVERS</span>
+</span><span id="line-320">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_MANAGE_GEOFENCES</span>
+</span><span id="line-321">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_MANAGE_NOTIFICATIONS</span>
+</span><span id="line-322">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_VIEW_DRIVERS</span>
+</span><span id="line-323">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_VIEW_GEOFENCES</span>
+</span><span id="line-324">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_VIEW_NOTIFICATIONS</span>
+</span><span id="line-325">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_VIEW_ORDERS</span>
+</span><span id="line-326">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_VIEW_POIS</span>
+</span><span id="line-327">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RESOURCE_VIEW_TRAILERS</span>
+</span><span id="line-328">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_ADMIN_FIELDS</span>
+</span><span id="line-329">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_CUSTOM_FIELDS</span>
+</span><span id="line-330">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_ITEM_BASIC</span>
+</span><span id="line-331"><span class="p">)</span>
+</span><span id="line-332"><span class="sd">&quot;&quot;&quot;Basic resource permissions&quot;&quot;&quot;</span>
+</span><span id="line-333">
+</span><span id="line-334"><span class="n">ACCESSMASK_UNIT_BASIC</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="line-335">    <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">MANAGE_CUSTOM_FIELDS</span>
+</span><span id="line-336">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">MANAGE_ICON</span>
+</span><span id="line-337">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">QUERY_REPORTS</span>
+</span><span id="line-338">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">RENAME_ITEM</span>
+</span><span id="line-339">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">UNIT_EXECUTE_COMMANDS</span>
+</span><span id="line-340">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">UNIT_EXPORT_MESSAGES</span>
+</span><span id="line-341">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">UNIT_IMPORT_MESSAGES</span>
+</span><span id="line-342">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">UNIT_REGISTER_EVENTS</span>
+</span><span id="line-343">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">UNIT_VIEW_SERVICE_INTERVALS</span>
+</span><span id="line-344">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_ATTACHED_FILES</span>
+</span><span id="line-345">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_CUSTOM_FIELDS</span>
+</span><span id="line-346">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_ITEM_BASIC</span>
+</span><span id="line-347">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_ITEM_DETAILED</span>
+</span><span id="line-348"><span class="p">)</span>
+</span><span id="line-349"><span class="sd">&quot;&quot;&quot;Basic unit permissions&quot;&quot;&quot;</span>
+</span><span id="line-350">
+</span><span id="line-351"><span class="n">ACCESSMASK_UNIT_MIGRATION</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="line-352">    <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">DELETE_ITEM</span>
+</span><span id="line-353">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">MANAGE_ITEM_ACCESS</span>
+</span><span id="line-354">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">UNIT_DELETE_MESSAGES</span>
+</span><span id="line-355">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">UNIT_MANAGE_CONNECTIVITY</span>
+</span><span id="line-356">    <span class="o">|</span> <span class="n">flags</span><span class="o">.</span><span class="n">AccessFlag</span><span class="o">.</span><span class="n">VIEW_ITEM_BASIC</span>
+</span><span id="line-357"><span class="p">)</span>
+</span><span id="line-358"><span class="sd">&quot;&quot;&quot;Unit migration permissions&quot;&quot;&quot;</span>
 </span></code></pre></div>
     </div></div>
         </main>

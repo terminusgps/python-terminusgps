@@ -169,306 +169,307 @@
 </span><span id="line-6">
 </span><span id="line-7">
 </span><span id="line-8"><span class="k">def</span><span class="w"> </span><span class="nf">requires_id</span><span class="p">(</span><span class="n">meth</span><span class="p">):</span>
-</span><span id="line-9"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Raises :py:exec:`AssertionError` before calling the method if the Wialon object&#39;s id wasn&#39;t set.&quot;&quot;&quot;</span>
+</span><span id="line-9"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Raises :py:exec:`AttributeError` before calling the method if the Wialon object&#39;s id wasn&#39;t set.&quot;&quot;&quot;</span>
 </span><span id="line-10">
 </span><span id="line-11">    <span class="nd">@wraps</span><span class="p">(</span><span class="n">meth</span><span class="p">)</span>
 </span><span id="line-12">    <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span id="line-13">        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;Wialon object id wasn&#39;t set.&quot;</span>
-</span><span id="line-14">        <span class="k">return</span> <span class="n">meth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</span><span id="line-15">
-</span><span id="line-16">    <span class="k">return</span> <span class="n">wrapper</span>
-</span><span id="line-17">
+</span><span id="line-13">        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+</span><span id="line-14">            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Wialon object id wasn&#39;t set.&quot;</span><span class="p">)</span>
+</span><span id="line-15">        <span class="k">return</span> <span class="n">meth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="line-16">
+</span><span id="line-17">    <span class="k">return</span> <span class="n">wrapper</span>
 </span><span id="line-18">
+</span><span id="line-19">
 <div class="viewcode-block" id="WialonObject">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.base.WialonObject">[docs]</a>
-</span><span id="line-19"><span class="k">class</span><span class="w"> </span><span class="nc">WialonObject</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
-</span><span id="line-20"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for Wialon objects in a Wialon session.&quot;&quot;&quot;</span>
-</span><span id="line-21">
-</span><span id="line-22">    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-</span><span id="line-23">        <span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">WialonSession</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="line-24">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-25"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-26"><span class="sd">        Sets the Wialon object&#39;s session and id.</span>
-</span><span id="line-27">
-</span><span id="line-28"><span class="sd">        :param session: An active Wialon API session.</span>
-</span><span id="line-29"><span class="sd">        :type session: ~terminusgps.wialon.session.WialonSession</span>
-</span><span id="line-30"><span class="sd">        :param id: A Wialon object id. Default is :py:obj:`None`.</span>
-</span><span id="line-31"><span class="sd">        :type id: int | str | None</span>
-</span><span id="line-32"><span class="sd">        :returns: Nothing.</span>
-</span><span id="line-33"><span class="sd">        :rtype: None</span>
-</span><span id="line-34">
-</span><span id="line-35"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-36">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
-</span><span id="line-37">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;id&#39; must be a digit, got &#39;</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
-</span><span id="line-38">        <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="nb">id</span>
-</span><span id="line-39">        <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">session</span>
-</span><span id="line-40">
-</span><span id="line-41">    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="line-42"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the Wialon object id as a string.&quot;&quot;&quot;</span>
-</span><span id="line-43">        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-</span><span id="line-44">
-</span><span id="line-45">    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="line-46"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the Wialon object type and parameters used to initialize it.&quot;&quot;&quot;</span>
-</span><span id="line-47">        <span class="k">return</span> <span class="p">(</span>
-</span><span id="line-48">            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">, session=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">)&quot;</span>
-</span><span id="line-49">        <span class="p">)</span>
-</span><span id="line-50">
-</span><span id="line-51">    <span class="nd">@property</span>
-</span><span id="line-52">    <span class="k">def</span><span class="w"> </span><span class="nf">session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WialonSession</span><span class="p">:</span>
-</span><span id="line-53"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Wialon object API session.&quot;&quot;&quot;</span>
-</span><span id="line-54">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span>
-</span><span id="line-55">
-</span><span id="line-56">    <span class="nd">@property</span>
-</span><span id="line-57">    <span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-58"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Wialon object id.&quot;&quot;&quot;</span>
-</span><span id="line-59">        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
-</span><span id="line-60">
-</span><span id="line-61">    <span class="nd">@id</span><span class="o">.</span><span class="n">setter</span>
-</span><span id="line-62">    <span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-63"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets :py:attr:`_id` to ``other``.&quot;&quot;&quot;</span>
-</span><span id="line-64">        <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="n">other</span>
-</span><span id="line-65">
+</span><span id="line-20"><span class="k">class</span><span class="w"> </span><span class="nc">WialonObject</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+</span><span id="line-21"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for Wialon objects in a Wialon session.&quot;&quot;&quot;</span>
+</span><span id="line-22">
+</span><span id="line-23">    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="line-24">        <span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">WialonSession</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="line-25">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-26"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-27"><span class="sd">        Sets the Wialon object&#39;s session and id.</span>
+</span><span id="line-28">
+</span><span id="line-29"><span class="sd">        :param session: An active Wialon API session.</span>
+</span><span id="line-30"><span class="sd">        :type session: ~terminusgps.wialon.session.WialonSession</span>
+</span><span id="line-31"><span class="sd">        :param id: A Wialon object id. Default is :py:obj:`None`.</span>
+</span><span id="line-32"><span class="sd">        :type id: int | str | None</span>
+</span><span id="line-33"><span class="sd">        :returns: Nothing.</span>
+</span><span id="line-34"><span class="sd">        :rtype: None</span>
+</span><span id="line-35">
+</span><span id="line-36"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-37">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+</span><span id="line-38">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;id&#39; must be a digit, got &#39;</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+</span><span id="line-39">        <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="nb">id</span>
+</span><span id="line-40">        <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">session</span>
+</span><span id="line-41">
+</span><span id="line-42">    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="line-43"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the Wialon object id as a string.&quot;&quot;&quot;</span>
+</span><span id="line-44">        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+</span><span id="line-45">
+</span><span id="line-46">    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="line-47"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the Wialon object type and parameters used to initialize it.&quot;&quot;&quot;</span>
+</span><span id="line-48">        <span class="k">return</span> <span class="p">(</span>
+</span><span id="line-49">            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">, session=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">)&quot;</span>
+</span><span id="line-50">        <span class="p">)</span>
+</span><span id="line-51">
+</span><span id="line-52">    <span class="nd">@property</span>
+</span><span id="line-53">    <span class="k">def</span><span class="w"> </span><span class="nf">session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WialonSession</span><span class="p">:</span>
+</span><span id="line-54"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Wialon object API session.&quot;&quot;&quot;</span>
+</span><span id="line-55">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span>
+</span><span id="line-56">
+</span><span id="line-57">    <span class="nd">@property</span>
+</span><span id="line-58">    <span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-59"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Wialon object id.&quot;&quot;&quot;</span>
+</span><span id="line-60">        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+</span><span id="line-61">
+</span><span id="line-62">    <span class="nd">@id</span><span class="o">.</span><span class="n">setter</span>
+</span><span id="line-63">    <span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-64"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets :py:attr:`_id` to ``other``.&quot;&quot;&quot;</span>
+</span><span id="line-65">        <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="n">other</span>
+</span><span id="line-66">
 <div class="viewcode-block" id="WialonObject.create">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.base.WialonObject.create">[docs]</a>
-</span><span id="line-66">    <span class="nd">@abstractmethod</span>
-</span><span id="line-67">    <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-68"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates the object in Wialon and sets its id.&quot;&quot;&quot;</span>
-</span><span id="line-69">        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Subclasses must implement this method.&quot;</span><span class="p">)</span></div>
+</span><span id="line-67">    <span class="nd">@abstractmethod</span>
+</span><span id="line-68">    <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-69"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates the object in Wialon and sets its id.&quot;&quot;&quot;</span>
+</span><span id="line-70">        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Subclasses must implement this method.&quot;</span><span class="p">)</span></div>
 
-</span><span id="line-70">
+</span><span id="line-71">
 <div class="viewcode-block" id="WialonObject.delete">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.base.WialonObject.delete">[docs]</a>
-</span><span id="line-71">    <span class="nd">@requires_id</span>
-</span><span id="line-72">    <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-73"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Deletes the object in Wialon.&quot;&quot;&quot;</span>
-</span><span id="line-74">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_delete_item</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">})</span></div>
+</span><span id="line-72">    <span class="nd">@requires_id</span>
+</span><span id="line-73">    <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-74"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Deletes the object in Wialon.&quot;&quot;&quot;</span>
+</span><span id="line-75">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_delete_item</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">})</span></div>
 
-</span><span id="line-75">
+</span><span id="line-76">
 <div class="viewcode-block" id="WialonObject.set_name">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.base.WialonObject.set_name">[docs]</a>
-</span><span id="line-76">    <span class="nd">@requires_id</span>
-</span><span id="line-77">    <span class="k">def</span><span class="w"> </span><span class="nf">set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-78"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the object&#39;s name in Wialon.&quot;&quot;&quot;</span>
-</span><span id="line-79">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_update_name</span><span class="p">(</span>
-</span><span id="line-80">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>
-</span><span id="line-81">        <span class="p">)</span></div>
+</span><span id="line-77">    <span class="nd">@requires_id</span>
+</span><span id="line-78">    <span class="k">def</span><span class="w"> </span><span class="nf">set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-79"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the object&#39;s name in Wialon.&quot;&quot;&quot;</span>
+</span><span id="line-80">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_update_name</span><span class="p">(</span>
+</span><span id="line-81">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>
+</span><span id="line-82">        <span class="p">)</span></div>
 
-</span><span id="line-82">
+</span><span id="line-83">
 <div class="viewcode-block" id="WialonObject.get_name">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.base.WialonObject.get_name">[docs]</a>
-</span><span id="line-83">    <span class="nd">@requires_id</span>
-</span><span id="line-84">    <span class="k">def</span><span class="w"> </span><span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="line-85"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets and returns the object&#39;s name from Wialon.&quot;&quot;&quot;</span>
-</span><span id="line-86">        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span>
-</span><span id="line-87">            <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_search_item</span><span class="p">(</span>
-</span><span id="line-88">                <span class="o">**</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;flags&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
-</span><span id="line-89">            <span class="p">)</span>
-</span><span id="line-90">            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">,</span> <span class="p">{})</span>
-</span><span id="line-91">            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;nm&quot;</span><span class="p">)</span>
-</span><span id="line-92">        <span class="p">)</span></div>
+</span><span id="line-84">    <span class="nd">@requires_id</span>
+</span><span id="line-85">    <span class="k">def</span><span class="w"> </span><span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="line-86"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets and returns the object&#39;s name from Wialon.&quot;&quot;&quot;</span>
+</span><span id="line-87">        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span>
+</span><span id="line-88">            <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_search_item</span><span class="p">(</span>
+</span><span id="line-89">                <span class="o">**</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;flags&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+</span><span id="line-90">            <span class="p">)</span>
+</span><span id="line-91">            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">,</span> <span class="p">{})</span>
+</span><span id="line-92">            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;nm&quot;</span><span class="p">)</span>
+</span><span id="line-93">        <span class="p">)</span></div>
 
-</span><span id="line-93">
+</span><span id="line-94">
 <div class="viewcode-block" id="WialonObject.log_action">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.base.WialonObject.log_action">[docs]</a>
-</span><span id="line-94">    <span class="nd">@requires_id</span>
-</span><span id="line-95">    <span class="k">def</span><span class="w"> </span><span class="nf">log_action</span><span class="p">(</span>
-</span><span id="line-96">        <span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">constants</span><span class="o">.</span><span class="n">WialonLogAction</span><span class="p">,</span> <span class="n">new_value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">old_value</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="line-97">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-98"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a log record for the Wialon object.&quot;&quot;&quot;</span>
-</span><span id="line-99">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_add_log_record</span><span class="p">(</span>
-</span><span id="line-100">            <span class="o">**</span><span class="p">{</span>
-</span><span id="line-101">                <span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-</span><span id="line-102">                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">action</span><span class="p">),</span>
-</span><span id="line-103">                <span class="s2">&quot;newValue&quot;</span><span class="p">:</span> <span class="n">new_value</span><span class="p">,</span>
-</span><span id="line-104">                <span class="s2">&quot;oldValue&quot;</span><span class="p">:</span> <span class="n">old_value</span><span class="p">,</span>
-</span><span id="line-105">            <span class="p">}</span>
-</span><span id="line-106">        <span class="p">)</span></div>
+</span><span id="line-95">    <span class="nd">@requires_id</span>
+</span><span id="line-96">    <span class="k">def</span><span class="w"> </span><span class="nf">log_action</span><span class="p">(</span>
+</span><span id="line-97">        <span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">constants</span><span class="o">.</span><span class="n">WialonLogAction</span><span class="p">,</span> <span class="n">new_value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">old_value</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="line-98">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-99"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a log record for the Wialon object.&quot;&quot;&quot;</span>
+</span><span id="line-100">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_add_log_record</span><span class="p">(</span>
+</span><span id="line-101">            <span class="o">**</span><span class="p">{</span>
+</span><span id="line-102">                <span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+</span><span id="line-103">                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">action</span><span class="p">),</span>
+</span><span id="line-104">                <span class="s2">&quot;newValue&quot;</span><span class="p">:</span> <span class="n">new_value</span><span class="p">,</span>
+</span><span id="line-105">                <span class="s2">&quot;oldValue&quot;</span><span class="p">:</span> <span class="n">old_value</span><span class="p">,</span>
+</span><span id="line-106">            <span class="p">}</span>
+</span><span id="line-107">        <span class="p">)</span></div>
 
-</span><span id="line-107">
+</span><span id="line-108">
 <div class="viewcode-block" id="WialonObject.get_afields">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.base.WialonObject.get_afields">[docs]</a>
-</span><span id="line-108">    <span class="nd">@requires_id</span>
-</span><span id="line-109">    <span class="k">def</span><span class="w"> </span><span class="nf">get_afields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
-</span><span id="line-110"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-111"><span class="sd">        Returns a list of admin field dictionaries from Wialon.</span>
-</span><span id="line-112">
-</span><span id="line-113"><span class="sd">        :raises AssertionError: If the Wialon object id wasn&#39;t set.</span>
-</span><span id="line-114"><span class="sd">        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-115"><span class="sd">        :returns: A list of admin field dictionaries.</span>
-</span><span id="line-116"><span class="sd">        :rtype: list[dict[str, str]]</span>
-</span><span id="line-117">
-</span><span id="line-118"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-119">        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span>
-</span><span id="line-120">            <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_search_item</span><span class="p">(</span>
-</span><span id="line-121">                <span class="o">**</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;flags&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">DataFlag</span><span class="o">.</span><span class="n">UNIT_ADMIN_FIELDS</span><span class="p">}</span>
-</span><span id="line-122">            <span class="p">)</span>
-</span><span id="line-123">            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">,</span> <span class="p">{})</span>
-</span><span id="line-124">            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;aflds&quot;</span><span class="p">)</span>
-</span><span id="line-125">            <span class="o">.</span><span class="n">values</span><span class="p">()</span>
-</span><span id="line-126">        <span class="p">)</span></div>
+</span><span id="line-109">    <span class="nd">@requires_id</span>
+</span><span id="line-110">    <span class="k">def</span><span class="w"> </span><span class="nf">get_afields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+</span><span id="line-111"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-112"><span class="sd">        Returns a list of admin field dictionaries from Wialon.</span>
+</span><span id="line-113">
+</span><span id="line-114"><span class="sd">        :raises AssertionError: If the Wialon object id wasn&#39;t set.</span>
+</span><span id="line-115"><span class="sd">        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-116"><span class="sd">        :returns: A list of admin field dictionaries.</span>
+</span><span id="line-117"><span class="sd">        :rtype: list[dict[str, str]]</span>
+</span><span id="line-118">
+</span><span id="line-119"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-120">        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span>
+</span><span id="line-121">            <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_search_item</span><span class="p">(</span>
+</span><span id="line-122">                <span class="o">**</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;flags&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">DataFlag</span><span class="o">.</span><span class="n">UNIT_ADMIN_FIELDS</span><span class="p">}</span>
+</span><span id="line-123">            <span class="p">)</span>
+</span><span id="line-124">            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">,</span> <span class="p">{})</span>
+</span><span id="line-125">            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;aflds&quot;</span><span class="p">)</span>
+</span><span id="line-126">            <span class="o">.</span><span class="n">values</span><span class="p">()</span>
+</span><span id="line-127">        <span class="p">)</span></div>
 
-</span><span id="line-127">
+</span><span id="line-128">
 <div class="viewcode-block" id="WialonObject.set_afield">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.base.WialonObject.set_afield">[docs]</a>
-</span><span id="line-128">    <span class="nd">@requires_id</span>
-</span><span id="line-129">    <span class="k">def</span><span class="w"> </span><span class="nf">set_afield</span><span class="p">(</span>
-</span><span id="line-130">        <span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="line-131">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-132"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-133"><span class="sd">        Sets an admin field in Wialon.</span>
-</span><span id="line-134">
-</span><span id="line-135"><span class="sd">        If ``id`` isn&#39;t provided, a new admin field is created.</span>
-</span><span id="line-136">
-</span><span id="line-137"><span class="sd">        :param key: Admin field key.</span>
-</span><span id="line-138"><span class="sd">        :type key: str</span>
-</span><span id="line-139"><span class="sd">        :param value: Admin key value.</span>
-</span><span id="line-140"><span class="sd">        :type value: str</span>
-</span><span id="line-141"><span class="sd">        :param id: Admin field id. If not provided, a new admin field is created. Default is :py:obj:`None`.</span>
-</span><span id="line-142"><span class="sd">        :type id: int | str | None</span>
-</span><span id="line-143"><span class="sd">        :raises AssertionError: If the Wialon object id wasn&#39;t set.</span>
-</span><span id="line-144"><span class="sd">        :raises ValueError: If ``id`` wasn&#39;t a digit.</span>
-</span><span id="line-145"><span class="sd">        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-146"><span class="sd">        :returns: An admin field dictionary.</span>
-</span><span id="line-147"><span class="sd">        :rtype: dict[str, str]</span>
-</span><span id="line-148">
-</span><span id="line-149"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-150">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
-</span><span id="line-151">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;id&#39; must be a digit, got &#39;</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
-</span><span id="line-152">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_update_admin_field</span><span class="p">(</span>
-</span><span id="line-153">            <span class="o">**</span><span class="p">{</span>
-</span><span id="line-154">                <span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-</span><span id="line-155">                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="k">if</span> <span class="nb">id</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
-</span><span id="line-156">                <span class="s2">&quot;callMode&quot;</span><span class="p">:</span> <span class="s2">&quot;update&quot;</span> <span class="k">if</span> <span class="nb">id</span> <span class="k">else</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span>
-</span><span id="line-157">                <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span>
-</span><span id="line-158">                <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">,</span>
-</span><span id="line-159">            <span class="p">}</span>
-</span><span id="line-160">        <span class="p">)</span></div>
+</span><span id="line-129">    <span class="nd">@requires_id</span>
+</span><span id="line-130">    <span class="k">def</span><span class="w"> </span><span class="nf">set_afield</span><span class="p">(</span>
+</span><span id="line-131">        <span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="line-132">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-133"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-134"><span class="sd">        Sets an admin field in Wialon.</span>
+</span><span id="line-135">
+</span><span id="line-136"><span class="sd">        If ``id`` isn&#39;t provided, a new admin field is created.</span>
+</span><span id="line-137">
+</span><span id="line-138"><span class="sd">        :param key: Admin field key.</span>
+</span><span id="line-139"><span class="sd">        :type key: str</span>
+</span><span id="line-140"><span class="sd">        :param value: Admin key value.</span>
+</span><span id="line-141"><span class="sd">        :type value: str</span>
+</span><span id="line-142"><span class="sd">        :param id: Admin field id. If not provided, a new admin field is created. Default is :py:obj:`None`.</span>
+</span><span id="line-143"><span class="sd">        :type id: int | str | None</span>
+</span><span id="line-144"><span class="sd">        :raises AssertionError: If the Wialon object id wasn&#39;t set.</span>
+</span><span id="line-145"><span class="sd">        :raises ValueError: If ``id`` wasn&#39;t a digit.</span>
+</span><span id="line-146"><span class="sd">        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-147"><span class="sd">        :returns: An admin field dictionary.</span>
+</span><span id="line-148"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-149">
+</span><span id="line-150"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-151">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+</span><span id="line-152">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;id&#39; must be a digit, got &#39;</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+</span><span id="line-153">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_update_admin_field</span><span class="p">(</span>
+</span><span id="line-154">            <span class="o">**</span><span class="p">{</span>
+</span><span id="line-155">                <span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+</span><span id="line-156">                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="k">if</span> <span class="nb">id</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+</span><span id="line-157">                <span class="s2">&quot;callMode&quot;</span><span class="p">:</span> <span class="s2">&quot;update&quot;</span> <span class="k">if</span> <span class="nb">id</span> <span class="k">else</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span>
+</span><span id="line-158">                <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span>
+</span><span id="line-159">                <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">,</span>
+</span><span id="line-160">            <span class="p">}</span>
+</span><span id="line-161">        <span class="p">)</span></div>
 
-</span><span id="line-161">
+</span><span id="line-162">
 <div class="viewcode-block" id="WialonObject.delete_afield">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.base.WialonObject.delete_afield">[docs]</a>
-</span><span id="line-162">    <span class="nd">@requires_id</span>
-</span><span id="line-163">    <span class="k">def</span><span class="w"> </span><span class="nf">delete_afield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-164"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-165"><span class="sd">        Deletes an admin field by id in Wialon.</span>
-</span><span id="line-166">
-</span><span id="line-167"><span class="sd">        :param id: Admin field id.</span>
-</span><span id="line-168"><span class="sd">        :type id: int | str</span>
-</span><span id="line-169"><span class="sd">        :raises AssertionError: If the Wialon object id wasn&#39;t set.</span>
-</span><span id="line-170"><span class="sd">        :raises ValueError: If ``id`` wasn&#39;t a digit.</span>
-</span><span id="line-171"><span class="sd">        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-172"><span class="sd">        :returns: An empty dictionary.</span>
-</span><span id="line-173"><span class="sd">        :rtype: dict[str, str]</span>
-</span><span id="line-174">
-</span><span id="line-175"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-176">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
-</span><span id="line-177">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;id&#39; must be a digit, got &#39;</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
-</span><span id="line-178">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_update_admin_field</span><span class="p">(</span>
-</span><span id="line-179">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">id</span><span class="p">),</span> <span class="s2">&quot;callMode&quot;</span><span class="p">:</span> <span class="s2">&quot;delete&quot;</span><span class="p">}</span>
-</span><span id="line-180">        <span class="p">)</span></div>
+</span><span id="line-163">    <span class="nd">@requires_id</span>
+</span><span id="line-164">    <span class="k">def</span><span class="w"> </span><span class="nf">delete_afield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-165"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-166"><span class="sd">        Deletes an admin field by id in Wialon.</span>
+</span><span id="line-167">
+</span><span id="line-168"><span class="sd">        :param id: Admin field id.</span>
+</span><span id="line-169"><span class="sd">        :type id: int | str</span>
+</span><span id="line-170"><span class="sd">        :raises AssertionError: If the Wialon object id wasn&#39;t set.</span>
+</span><span id="line-171"><span class="sd">        :raises ValueError: If ``id`` wasn&#39;t a digit.</span>
+</span><span id="line-172"><span class="sd">        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-173"><span class="sd">        :returns: An empty dictionary.</span>
+</span><span id="line-174"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-175">
+</span><span id="line-176"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-177">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+</span><span id="line-178">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;id&#39; must be a digit, got &#39;</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+</span><span id="line-179">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_update_admin_field</span><span class="p">(</span>
+</span><span id="line-180">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">id</span><span class="p">),</span> <span class="s2">&quot;callMode&quot;</span><span class="p">:</span> <span class="s2">&quot;delete&quot;</span><span class="p">}</span>
+</span><span id="line-181">        <span class="p">)</span></div>
 
-</span><span id="line-181">
+</span><span id="line-182">
 <div class="viewcode-block" id="WialonObject.get_cfields">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.base.WialonObject.get_cfields">[docs]</a>
-</span><span id="line-182">    <span class="nd">@requires_id</span>
-</span><span id="line-183">    <span class="k">def</span><span class="w"> </span><span class="nf">get_cfields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
-</span><span id="line-184"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-185"><span class="sd">        Returns a list of custom field dictionaries from Wialon.</span>
-</span><span id="line-186">
-</span><span id="line-187"><span class="sd">        :raises AssertionError: If the Wialon object id wasn&#39;t set.</span>
-</span><span id="line-188"><span class="sd">        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-189"><span class="sd">        :returns: A list of admin field dictionaries.</span>
-</span><span id="line-190"><span class="sd">        :rtype: list[dict[str, str]]</span>
-</span><span id="line-191">
-</span><span id="line-192"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-193">        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span>
-</span><span id="line-194">            <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_search_item</span><span class="p">(</span>
-</span><span id="line-195">                <span class="o">**</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;flags&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">DataFlag</span><span class="o">.</span><span class="n">UNIT_CUSTOM_FIELDS</span><span class="p">}</span>
-</span><span id="line-196">            <span class="p">)</span>
-</span><span id="line-197">            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">,</span> <span class="p">{})</span>
-</span><span id="line-198">            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;flds&quot;</span><span class="p">)</span>
-</span><span id="line-199">            <span class="o">.</span><span class="n">values</span><span class="p">()</span>
-</span><span id="line-200">        <span class="p">)</span></div>
+</span><span id="line-183">    <span class="nd">@requires_id</span>
+</span><span id="line-184">    <span class="k">def</span><span class="w"> </span><span class="nf">get_cfields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+</span><span id="line-185"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-186"><span class="sd">        Returns a list of custom field dictionaries from Wialon.</span>
+</span><span id="line-187">
+</span><span id="line-188"><span class="sd">        :raises AssertionError: If the Wialon object id wasn&#39;t set.</span>
+</span><span id="line-189"><span class="sd">        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-190"><span class="sd">        :returns: A list of admin field dictionaries.</span>
+</span><span id="line-191"><span class="sd">        :rtype: list[dict[str, str]]</span>
+</span><span id="line-192">
+</span><span id="line-193"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-194">        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span>
+</span><span id="line-195">            <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">core_search_item</span><span class="p">(</span>
+</span><span id="line-196">                <span class="o">**</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;flags&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">DataFlag</span><span class="o">.</span><span class="n">UNIT_CUSTOM_FIELDS</span><span class="p">}</span>
+</span><span id="line-197">            <span class="p">)</span>
+</span><span id="line-198">            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">,</span> <span class="p">{})</span>
+</span><span id="line-199">            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;flds&quot;</span><span class="p">)</span>
+</span><span id="line-200">            <span class="o">.</span><span class="n">values</span><span class="p">()</span>
+</span><span id="line-201">        <span class="p">)</span></div>
 
-</span><span id="line-201">
+</span><span id="line-202">
 <div class="viewcode-block" id="WialonObject.set_cfield">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.base.WialonObject.set_cfield">[docs]</a>
-</span><span id="line-202">    <span class="nd">@requires_id</span>
-</span><span id="line-203">    <span class="k">def</span><span class="w"> </span><span class="nf">set_cfield</span><span class="p">(</span>
-</span><span id="line-204">        <span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="line-205">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-206"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-207"><span class="sd">        Sets a custom field in Wialon.</span>
-</span><span id="line-208">
-</span><span id="line-209"><span class="sd">        :param key: Custom field key.</span>
-</span><span id="line-210"><span class="sd">        :type key: str</span>
-</span><span id="line-211"><span class="sd">        :param value: Custom field key value.</span>
-</span><span id="line-212"><span class="sd">        :type value: str</span>
-</span><span id="line-213"><span class="sd">        :param id: Custom field id. If not provided, a new custom field is created. Default is :py:obj:`None`.</span>
-</span><span id="line-214"><span class="sd">        :type id: int | str | None</span>
-</span><span id="line-215"><span class="sd">        :raises AssertionError: If the Wialon object id wasn&#39;t set.</span>
-</span><span id="line-216"><span class="sd">        :raises ValueError: If ``id`` wasn&#39;t a digit.</span>
-</span><span id="line-217"><span class="sd">        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-218"><span class="sd">        :returns: A custom field dictionary.</span>
-</span><span id="line-219"><span class="sd">        :rtype: dict[str, str]</span>
-</span><span id="line-220">
-</span><span id="line-221"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-222">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
-</span><span id="line-223">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;id&#39; must be a digit, got &#39;</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
-</span><span id="line-224">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_update_custom_field</span><span class="p">(</span>
-</span><span id="line-225">            <span class="o">**</span><span class="p">{</span>
-</span><span id="line-226">                <span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-</span><span id="line-227">                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="k">if</span> <span class="nb">id</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
-</span><span id="line-228">                <span class="s2">&quot;callMode&quot;</span><span class="p">:</span> <span class="s2">&quot;update&quot;</span> <span class="k">if</span> <span class="nb">id</span> <span class="k">else</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span>
-</span><span id="line-229">                <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span>
-</span><span id="line-230">                <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">,</span>
-</span><span id="line-231">            <span class="p">}</span>
-</span><span id="line-232">        <span class="p">)</span></div>
+</span><span id="line-203">    <span class="nd">@requires_id</span>
+</span><span id="line-204">    <span class="k">def</span><span class="w"> </span><span class="nf">set_cfield</span><span class="p">(</span>
+</span><span id="line-205">        <span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="line-206">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-207"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-208"><span class="sd">        Sets a custom field in Wialon.</span>
+</span><span id="line-209">
+</span><span id="line-210"><span class="sd">        :param key: Custom field key.</span>
+</span><span id="line-211"><span class="sd">        :type key: str</span>
+</span><span id="line-212"><span class="sd">        :param value: Custom field key value.</span>
+</span><span id="line-213"><span class="sd">        :type value: str</span>
+</span><span id="line-214"><span class="sd">        :param id: Custom field id. If not provided, a new custom field is created. Default is :py:obj:`None`.</span>
+</span><span id="line-215"><span class="sd">        :type id: int | str | None</span>
+</span><span id="line-216"><span class="sd">        :raises AssertionError: If the Wialon object id wasn&#39;t set.</span>
+</span><span id="line-217"><span class="sd">        :raises ValueError: If ``id`` wasn&#39;t a digit.</span>
+</span><span id="line-218"><span class="sd">        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-219"><span class="sd">        :returns: A custom field dictionary.</span>
+</span><span id="line-220"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-221">
+</span><span id="line-222"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-223">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+</span><span id="line-224">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;id&#39; must be a digit, got &#39;</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+</span><span id="line-225">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_update_custom_field</span><span class="p">(</span>
+</span><span id="line-226">            <span class="o">**</span><span class="p">{</span>
+</span><span id="line-227">                <span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+</span><span id="line-228">                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="k">if</span> <span class="nb">id</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+</span><span id="line-229">                <span class="s2">&quot;callMode&quot;</span><span class="p">:</span> <span class="s2">&quot;update&quot;</span> <span class="k">if</span> <span class="nb">id</span> <span class="k">else</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span>
+</span><span id="line-230">                <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span>
+</span><span id="line-231">                <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">,</span>
+</span><span id="line-232">            <span class="p">}</span>
+</span><span id="line-233">        <span class="p">)</span></div>
 
-</span><span id="line-233">
+</span><span id="line-234">
 <div class="viewcode-block" id="WialonObject.delete_cfield">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.base.WialonObject.delete_cfield">[docs]</a>
-</span><span id="line-234">    <span class="nd">@requires_id</span>
-</span><span id="line-235">    <span class="k">def</span><span class="w"> </span><span class="nf">delete_cfield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-236"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-237"><span class="sd">        Deletes a custom field by id in Wialon.</span>
-</span><span id="line-238">
-</span><span id="line-239"><span class="sd">        :param id: Custom field id.</span>
-</span><span id="line-240"><span class="sd">        :type id: int | str</span>
-</span><span id="line-241"><span class="sd">        :raises AssertionError: If the Wialon object id wasn&#39;t set.</span>
-</span><span id="line-242"><span class="sd">        :raises ValueError: If ``id`` wasn&#39;t a digit.</span>
-</span><span id="line-243"><span class="sd">        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-244"><span class="sd">        :returns: An empty dictionary.</span>
-</span><span id="line-245"><span class="sd">        :rtype: dict[str, str]</span>
-</span><span id="line-246">
-</span><span id="line-247"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-248">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
-</span><span id="line-249">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;id&#39; must be a digit, got &#39;</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
-</span><span id="line-250">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_update_custom_field</span><span class="p">(</span>
-</span><span id="line-251">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">id</span><span class="p">),</span> <span class="s2">&quot;callMode&quot;</span><span class="p">:</span> <span class="s2">&quot;delete&quot;</span><span class="p">}</span>
-</span><span id="line-252">        <span class="p">)</span></div>
+</span><span id="line-235">    <span class="nd">@requires_id</span>
+</span><span id="line-236">    <span class="k">def</span><span class="w"> </span><span class="nf">delete_cfield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-237"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-238"><span class="sd">        Deletes a custom field by id in Wialon.</span>
+</span><span id="line-239">
+</span><span id="line-240"><span class="sd">        :param id: Custom field id.</span>
+</span><span id="line-241"><span class="sd">        :type id: int | str</span>
+</span><span id="line-242"><span class="sd">        :raises AssertionError: If the Wialon object id wasn&#39;t set.</span>
+</span><span id="line-243"><span class="sd">        :raises ValueError: If ``id`` wasn&#39;t a digit.</span>
+</span><span id="line-244"><span class="sd">        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-245"><span class="sd">        :returns: An empty dictionary.</span>
+</span><span id="line-246"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-247">
+</span><span id="line-248"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-249">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+</span><span id="line-250">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;id&#39; must be a digit, got &#39;</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+</span><span id="line-251">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_update_custom_field</span><span class="p">(</span>
+</span><span id="line-252">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">id</span><span class="p">),</span> <span class="s2">&quot;callMode&quot;</span><span class="p">:</span> <span class="s2">&quot;delete&quot;</span><span class="p">}</span>
+</span><span id="line-253">        <span class="p">)</span></div>
 
-</span><span id="line-253">
+</span><span id="line-254">
 <div class="viewcode-block" id="WialonObject.set_pfield">
 <a class="viewcode-back" href="../../../../wialon/items.html#terminusgps.wialon.items.base.WialonObject.set_pfield">[docs]</a>
-</span><span id="line-254">    <span class="nd">@requires_id</span>
-</span><span id="line-255">    <span class="k">def</span><span class="w"> </span><span class="nf">set_pfield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span id="line-256"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-257"><span class="sd">        Sets a profile field for the object in Wialon.</span>
-</span><span id="line-258">
-</span><span id="line-259"><span class="sd">        :param key: Profile field key.</span>
-</span><span id="line-260"><span class="sd">        :type key: str</span>
-</span><span id="line-261"><span class="sd">        :param value: Profile field value.</span>
-</span><span id="line-262"><span class="sd">        :type value: str</span>
-</span><span id="line-263"><span class="sd">        :raises AssertionError: If the Wialon object id wasn&#39;t set.</span>
-</span><span id="line-264"><span class="sd">        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.</span>
-</span><span id="line-265"><span class="sd">        :returns: A profile field dictionary.</span>
-</span><span id="line-266"><span class="sd">        :rtype: dict[str, str]</span>
-</span><span id="line-267">
-</span><span id="line-268"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="line-269">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_update_profile_field</span><span class="p">(</span>
-</span><span id="line-270">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">}</span>
-</span><span id="line-271">        <span class="p">)</span></div>
+</span><span id="line-255">    <span class="nd">@requires_id</span>
+</span><span id="line-256">    <span class="k">def</span><span class="w"> </span><span class="nf">set_pfield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span id="line-257"><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-258"><span class="sd">        Sets a profile field for the object in Wialon.</span>
+</span><span id="line-259">
+</span><span id="line-260"><span class="sd">        :param key: Profile field key.</span>
+</span><span id="line-261"><span class="sd">        :type key: str</span>
+</span><span id="line-262"><span class="sd">        :param value: Profile field value.</span>
+</span><span id="line-263"><span class="sd">        :type value: str</span>
+</span><span id="line-264"><span class="sd">        :raises AssertionError: If the Wialon object id wasn&#39;t set.</span>
+</span><span id="line-265"><span class="sd">        :raises ~terminusgps.wialon.session.WialonAPIError: If something went wrong calling the Wialon API.</span>
+</span><span id="line-266"><span class="sd">        :returns: A profile field dictionary.</span>
+</span><span id="line-267"><span class="sd">        :rtype: dict[str, str]</span>
+</span><span id="line-268">
+</span><span id="line-269"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="line-270">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">wialon_api</span><span class="o">.</span><span class="n">item_update_profile_field</span><span class="p">(</span>
+</span><span id="line-271">            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;itemId&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">}</span>
+</span><span id="line-272">        <span class="p">)</span></div>
 </div>
 
 </span></code></pre></div>
