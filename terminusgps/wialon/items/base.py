@@ -6,11 +6,12 @@ from terminusgps.wialon.session import WialonSession
 
 
 def requires_id(meth):
-    """Raises :py:exec:`AssertionError` before calling the method if the Wialon object's id wasn't set."""
+    """Raises :py:exec:`AttributeError` before calling the method if the Wialon object's id wasn't set."""
 
     @wraps(meth)
     def wrapper(self, *args, **kwargs):
-        assert self.id, "Wialon object id wasn't set."
+        if not hasattr(self, "id") or not self.id:
+            raise AttributeError("Wialon object id wasn't set.")
         return meth(self, *args, **kwargs)
 
     return wrapper
