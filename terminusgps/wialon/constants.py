@@ -314,51 +314,45 @@ class WialonLogAction(enum.StrEnum):
     """
 
 
-ACCESSMASK_RESOURCE_BASIC: int = sum(
-    [
-        flags.AccessFlag.MANAGE_CUSTOM_FIELDS,
-        flags.AccessFlag.RESOURCE_MANAGE_DRIVERS,
-        flags.AccessFlag.RESOURCE_MANAGE_GEOFENCES,
-        flags.AccessFlag.RESOURCE_MANAGE_NOTIFICATIONS,
-        flags.AccessFlag.RESOURCE_VIEW_DRIVERS,
-        flags.AccessFlag.RESOURCE_VIEW_GEOFENCES,
-        flags.AccessFlag.RESOURCE_VIEW_NOTIFICATIONS,
-        flags.AccessFlag.RESOURCE_VIEW_ORDERS,
-        flags.AccessFlag.RESOURCE_VIEW_POIS,
-        flags.AccessFlag.RESOURCE_VIEW_TRAILERS,
-        flags.AccessFlag.VIEW_ADMIN_FIELDS,
-        flags.AccessFlag.VIEW_CUSTOM_FIELDS,
-        flags.AccessFlag.VIEW_ITEM_BASIC,
-    ]
+ACCESSMASK_RESOURCE_BASIC: int = (
+    flags.AccessFlag.MANAGE_CUSTOM_FIELDS
+    | flags.AccessFlag.RESOURCE_MANAGE_DRIVERS
+    | flags.AccessFlag.RESOURCE_MANAGE_GEOFENCES
+    | flags.AccessFlag.RESOURCE_MANAGE_NOTIFICATIONS
+    | flags.AccessFlag.RESOURCE_VIEW_DRIVERS
+    | flags.AccessFlag.RESOURCE_VIEW_GEOFENCES
+    | flags.AccessFlag.RESOURCE_VIEW_NOTIFICATIONS
+    | flags.AccessFlag.RESOURCE_VIEW_ORDERS
+    | flags.AccessFlag.RESOURCE_VIEW_POIS
+    | flags.AccessFlag.RESOURCE_VIEW_TRAILERS
+    | flags.AccessFlag.VIEW_ADMIN_FIELDS
+    | flags.AccessFlag.VIEW_CUSTOM_FIELDS
+    | flags.AccessFlag.VIEW_ITEM_BASIC
 )
 """Basic resource permissions"""
 
-ACCESSMASK_UNIT_BASIC: int = sum(
-    [
-        flags.AccessFlag.MANAGE_CUSTOM_FIELDS,
-        flags.AccessFlag.MANAGE_ICON,
-        flags.AccessFlag.QUERY_REPORTS,
-        flags.AccessFlag.RENAME_ITEM,
-        flags.AccessFlag.UNIT_EXECUTE_COMMANDS,
-        flags.AccessFlag.UNIT_EXPORT_MESSAGES,
-        flags.AccessFlag.UNIT_IMPORT_MESSAGES,
-        flags.AccessFlag.UNIT_REGISTER_EVENTS,
-        flags.AccessFlag.UNIT_VIEW_SERVICE_INTERVALS,
-        flags.AccessFlag.VIEW_ATTACHED_FILES,
-        flags.AccessFlag.VIEW_CUSTOM_FIELDS,
-        flags.AccessFlag.VIEW_ITEM_BASIC,
-        flags.AccessFlag.VIEW_ITEM_DETAILED,
-    ]
+ACCESSMASK_UNIT_BASIC: int = (
+    flags.AccessFlag.MANAGE_CUSTOM_FIELDS
+    | flags.AccessFlag.MANAGE_ICON
+    | flags.AccessFlag.QUERY_REPORTS
+    | flags.AccessFlag.RENAME_ITEM
+    | flags.AccessFlag.UNIT_EXECUTE_COMMANDS
+    | flags.AccessFlag.UNIT_EXPORT_MESSAGES
+    | flags.AccessFlag.UNIT_IMPORT_MESSAGES
+    | flags.AccessFlag.UNIT_REGISTER_EVENTS
+    | flags.AccessFlag.UNIT_VIEW_SERVICE_INTERVALS
+    | flags.AccessFlag.VIEW_ATTACHED_FILES
+    | flags.AccessFlag.VIEW_CUSTOM_FIELDS
+    | flags.AccessFlag.VIEW_ITEM_BASIC
+    | flags.AccessFlag.VIEW_ITEM_DETAILED
 )
 """Basic unit permissions"""
 
-ACCESSMASK_UNIT_MIGRATION: int = sum(
-    [
-        flags.AccessFlag.DELETE_ITEM,
-        flags.AccessFlag.MANAGE_ITEM_ACCESS,
-        flags.AccessFlag.UNIT_DELETE_MESSAGES,
-        flags.AccessFlag.UNIT_MANAGE_CONNECTIVITY,
-        flags.AccessFlag.VIEW_ITEM_BASIC,
-    ]
+ACCESSMASK_UNIT_MIGRATION: int = (
+    flags.AccessFlag.DELETE_ITEM
+    | flags.AccessFlag.MANAGE_ITEM_ACCESS
+    | flags.AccessFlag.UNIT_DELETE_MESSAGES
+    | flags.AccessFlag.UNIT_MANAGE_CONNECTIVITY
+    | flags.AccessFlag.VIEW_ITEM_BASIC
 )
 """Unit migration permissions"""
