@@ -16,15 +16,15 @@ class HtmxTemplateResponseMixin(TemplateResponseMixin):
     """
     A partial template rendered by htmx.
 
-    :type: :py:obj:`str` | :py:obj:`None`
-    :value: :py:obj:`None`
+    :type: str | None
+    :value: None
 
     """
 
     def render_to_response(
         self, context: dict[str, typing.Any], **response_kwargs: typing.Any
     ) -> HttpResponse:
-        """Sets :py:attr:`template_name` to :py:attr:`partial_template_name` if necessary."""
+        """Sets :py:attr:`template_name` to :py:attr:`partial_template_name` according to request headers."""
         htmx_request = self.request.headers.get("HX-Request", False)
         boosted = self.request.headers.get("HX-Boosted", False)
 
