@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.abspath("../../"))
 project = "python-terminusgps"
 copyright = "2025, Terminus GPS, LLC"
 author = "Terminus GPS, LLC"
-release = "47.3.1"
+release = "47.3.2"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
