@@ -83,7 +83,7 @@ class WialonObject(ABC):
 
     @requires_id
     def get_name(self) -> str:
-        """Gets and returns the object's name from Wialon."""
+        """Returns the object's name from Wialon."""
         return str(
             self.session.wialon_api.core_search_item(
                 **{"id": self.id, "flags": 1}
