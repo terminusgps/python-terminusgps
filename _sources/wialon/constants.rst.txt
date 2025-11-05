@@ -1,8 +1,19 @@
 Constants
 =========
 
-.. automodule:: terminusgps.wialon.constants
+.. currentmodule:: terminusgps.wialon.constants
+
+.. autoclass:: WialonMonthDayMask
     :members:
+    :member-order: bysource
+
+.. autoclass:: WialonMonthMask
+    :members:
+    :member-order: bysource
+
+.. autoclass:: WialonWeekDayMask
+    :members:
+    :member-order: bysource
 
 .. currentmodule:: terminusgps.wialon.flags
 
