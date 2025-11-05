@@ -41,36 +41,69 @@ WialonMonthDayMask = enum.IntEnum(
         }.items()
     },
 )
-"""Wialon day of the month mask."""
+"""
+Wialon day of the month mask.
+
+Usage:
+
+.. code::
+    
+    # First of the month
+    >> WialonMonthDayMask.DAY_1
+    > 1
+    # 16th day of the month
+    >> WialonMonthDayMask.DAY_16
+    > 32768
+
+"""
 
 
 class WialonMonthMask(enum.IntEnum):
     """Wialon month mask."""
 
     JANUARY = 2**0
+    """January."""
     FEBRUARY = 2**1
+    """February."""
     MARCH = 2**2
+    """March."""
     APRIL = 2**3
+    """April."""
     MAY = 2**4
+    """May."""
     JUNE = 2**5
+    """June."""
     JULY = 2**6
+    """July."""
     AUGUST = 2**7
+    """August."""
     SEPTEMBER = 2**8
+    """September."""
     OCTOBER = 2**9
+    """October."""
     NOVEMBER = 2**10
+    """November."""
     DECEMBER = 2**11
+    """December."""
 
 
 class WialonWeekDayMask(enum.IntEnum):
     """Wialon day of the week mask."""
 
     MONDAY = 2**0
+    """Monday."""
     TUESDAY = 2**1
+    """Tuesday."""
     WEDNESDAY = 2**2
+    """Wednesday."""
     THURSDAY = 2**3
+    """Thursday."""
     FRIDAY = 2**4
+    """Friday."""
     SATURDAY = 2**5
+    """Saturday."""
     SUNDAY = 2**6
+    """Sunday."""
 
 
 class WialonLogAction(enum.StrEnum):
