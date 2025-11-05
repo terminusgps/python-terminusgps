@@ -2,6 +2,76 @@ import enum
 
 from . import flags
 
+WialonMonthDayMask = enum.IntEnum(
+    "WialonMonthDayMask",
+    {
+        f"DAY_{day}": mask
+        for day, mask in {
+            1: 2**0,
+            2: 2**1,
+            3: 2**2,
+            4: 2**3,
+            5: 2**4,
+            6: 2**5,
+            7: 2**6,
+            8: 2**7,
+            9: 2**8,
+            10: 2**9,
+            11: 2**10,
+            12: 2**11,
+            13: 2**12,
+            14: 2**13,
+            15: 2**14,
+            16: 2**15,
+            17: 2**16,
+            18: 2**17,
+            19: 2**18,
+            20: 2**19,
+            21: 2**20,
+            22: 2**21,
+            23: 2**22,
+            24: 2**23,
+            25: 2**24,
+            26: 2**25,
+            27: 2**26,
+            28: 2**27,
+            29: 2**28,
+            30: 2**29,
+            31: 2**30,
+        }.items()
+    },
+)
+"""Wialon day of the month mask."""
+
+
+class WialonMonthMask(enum.IntEnum):
+    """Wialon month mask."""
+
+    JANUARY = 2**0
+    FEBRUARY = 2**1
+    MARCH = 2**2
+    APRIL = 2**3
+    MAY = 2**4
+    JUNE = 2**5
+    JULY = 2**6
+    AUGUST = 2**7
+    SEPTEMBER = 2**8
+    OCTOBER = 2**9
+    NOVEMBER = 2**10
+    DECEMBER = 2**11
+
+
+class WialonWeekDayMask(enum.IntEnum):
+    """Wialon day of the week mask."""
+
+    MONDAY = 2**0
+    TUESDAY = 2**1
+    WEDNESDAY = 2**2
+    THURSDAY = 2**3
+    FRIDAY = 2**4
+    SATURDAY = 2**5
+    SUNDAY = 2**6
+
 
 class WialonLogAction(enum.StrEnum):
     """Wialon `log actions <https://wialon-help.link/28412fdb>`_."""
