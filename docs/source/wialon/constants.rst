@@ -1,16 +1,8 @@
 Constants
 =========
 
-.. currentmodule:: terminusgps.wialon.constants
-
-.. autoclass:: WialonLogAction
+.. automodule:: terminusgps.wialon.constants
     :members:
-
-.. autodata:: ACCESSMASK_RESOURCE_BASIC
-
-.. autodata:: ACCESSMASK_UNIT_BASIC
-
-.. autodata:: ACCESSMASK_UNIT_MIGRATION
 
 .. currentmodule:: terminusgps.wialon.flags
 
