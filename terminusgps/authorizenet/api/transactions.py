@@ -9,6 +9,7 @@ __all__ = [
     "authorize_credit_card",
     "capture_authorized_amount",
     "refund_credit_card",
+    "charge_customer_profile",
 ]
 
 
@@ -197,5 +198,35 @@ def void_transaction(
     request.transactionRequest.refTransId = reference_id
     request.transactionRequest.transactionType = (
         apicontractsv1.transactionTypeEnum.voidTransaction
+    )
+    return request, apicontrollers.createTransactionController
+
+
+def charge_customer_profile(
+    customer_profile_id: int, payment_profile_id: int, amount: Decimal
+) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
+    """
+    `Charges a customer profile <https://developer.authorize.net/api/reference/index.html#payment-transactions-charge-a-customer-profile>_`.
+
+    :param customer_profile_id: An Authorizenet customer profile id.
+    :type customer_profile_id: int
+    :param payment_profile_id: An Authorizenet payment profile id.
+    :type payment_profile_id: int
+    :param amount: Amount to change the customer profile.
+    :type amount: ~decimal.Decimal
+    :returns: A tuple containing an Authorizenet API request element and controller class.
+    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
+
+    """
+    profile = apicontractsv1.customerProfilePaymentType()
+    profile.customerProfileId = str(customer_profile_id)
+    profile.paymentProfile = apicontractsv1.paymentProfile()
+    profile.paymentProfile.paymentProfileId = str(payment_profile_id)
+    request = apicontractsv1.createTransactionRequest()
+    request.transactionRequest = apicontractsv1.transactionRequestType()
+    request.transactionRequest.amount = amount
+    request.transactionRequest.profile = profile
+    request.transactionRequest.transactionType = (
+        apicontractsv1.transactionTypeEnum.authCaptureTransaction
     )
     return request, apicontrollers.createTransactionController
