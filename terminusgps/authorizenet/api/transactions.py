@@ -203,7 +203,10 @@ def void_transaction(
 
 
 def charge_customer_profile(
-    customer_profile_id: int, payment_profile_id: int, amount: Decimal
+    customer_profile_id: int,
+    payment_profile_id: int,
+    amount: Decimal,
+    line_items: apicontractsv1.ArrayOfLineItem | None = None,
 ) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `Charges a customer profile <https://developer.authorize.net/api/reference/index.html#payment-transactions-charge-a-customer-profile>`_.
@@ -214,6 +217,8 @@ def charge_customer_profile(
     :type payment_profile_id: int
     :param amount: Amount to change the customer profile.
     :type amount: ~decimal.Decimal
+    :param line_items: An array of line items. Default is :py:obj:`None`.
+    :type line_items: ~apicontractsv1.ArrayOfLineItem | None
     :returns: A tuple containing an Authorizenet API request element and controller class.
     :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
@@ -229,4 +234,6 @@ def charge_customer_profile(
     request.transactionRequest.transactionType = (
         apicontractsv1.transactionTypeEnum.authCaptureTransaction
     )
+    if line_items is not None:
+        request.transactionRequest.lineItems = line_items
     return request, apicontrollers.createTransactionController
