@@ -12,9 +12,9 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
   
-    <title>terminusgps.authorizenet.api.transactions | python-terminusgps 49.0.0 documentation</title>
-    <meta property="og:title" content="terminusgps.authorizenet.api.transactions | python-terminusgps 49.0.0 documentation" />
-    <meta name="twitter:title" content="terminusgps.authorizenet.api.transactions | python-terminusgps 49.0.0 documentation" />
+    <title>terminusgps.authorizenet.api.transactions | python-terminusgps 49.1.0 documentation</title>
+    <meta property="og:title" content="terminusgps.authorizenet.api.transactions | python-terminusgps 49.1.0 documentation" />
+    <meta name="twitter:title" content="terminusgps.authorizenet.api.transactions | python-terminusgps 49.1.0 documentation" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d691ff6c" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/theme.css?v=42baaae4" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/autoclasstoc.css?v=08871587" />
@@ -40,7 +40,7 @@
     </a><header
   class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
     <div class="hidden mr-4 md:flex">
-      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 49.0.0 documentation</span>
+      <a href="../../../../index.html" class="flex items-center mr-6"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">python-terminusgps 49.1.0 documentation</span>
       </a></div><button
       class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden"
       type="button" @click="showSidebar = true">
@@ -95,7 +95,7 @@
   class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky"
   :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }">
 
-    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 49.0.0 documentation</span>
+    <a href="../../../../index.html" class="!justify-start text-sm md:!hidden bg-background"><span class="font-bold text-clip whitespace-nowrap">python-terminusgps 49.1.0 documentation</span>
     </a>
 
     <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
@@ -139,7 +139,7 @@
      class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
   <a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground"
      href="../../../../index.html">
-    <span class="hidden md:inline">python-terminusgps 49.0.0 documentation</span>
+    <span class="hidden md:inline">python-terminusgps 49.1.0 documentation</span>
     <svg xmlns="http://www.w3.org/2000/svg"
          height="18"
          width="18"
@@ -380,33 +380,40 @@
 <div class="viewcode-block" id="charge_customer_profile">
 <a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.transactions.charge_customer_profile">[docs]</a>
 </span><span id="line-205"><span class="k">def</span><span class="w"> </span><span class="nf">charge_customer_profile</span><span class="p">(</span>
-</span><span id="line-206">    <span class="n">customer_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">payment_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="n">Decimal</span>
-</span><span id="line-207"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
-</span><span id="line-208"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-209"><span class="sd">    `Charges a customer profile &lt;https://developer.authorize.net/api/reference/index.html#payment-transactions-charge-a-customer-profile&gt;`_.</span>
-</span><span id="line-210">
-</span><span id="line-211"><span class="sd">    :param customer_profile_id: An Authorizenet customer profile id.</span>
-</span><span id="line-212"><span class="sd">    :type customer_profile_id: int</span>
-</span><span id="line-213"><span class="sd">    :param payment_profile_id: An Authorizenet payment profile id.</span>
-</span><span id="line-214"><span class="sd">    :type payment_profile_id: int</span>
-</span><span id="line-215"><span class="sd">    :param amount: Amount to change the customer profile.</span>
-</span><span id="line-216"><span class="sd">    :type amount: ~decimal.Decimal</span>
-</span><span id="line-217"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
-</span><span id="line-218"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
-</span><span id="line-219">
-</span><span id="line-220"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-221">    <span class="n">profile</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerProfilePaymentType</span><span class="p">()</span>
-</span><span id="line-222">    <span class="n">profile</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
-</span><span id="line-223">    <span class="n">profile</span><span class="o">.</span><span class="n">paymentProfile</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">paymentProfile</span><span class="p">()</span>
-</span><span id="line-224">    <span class="n">profile</span><span class="o">.</span><span class="n">paymentProfile</span><span class="o">.</span><span class="n">paymentProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">payment_profile_id</span><span class="p">)</span>
-</span><span id="line-225">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">createTransactionRequest</span><span class="p">()</span>
-</span><span id="line-226">    <span class="n">request</span><span class="o">.</span><span class="n">transactionRequest</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">transactionRequestType</span><span class="p">()</span>
-</span><span id="line-227">    <span class="n">request</span><span class="o">.</span><span class="n">transactionRequest</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">amount</span>
-</span><span id="line-228">    <span class="n">request</span><span class="o">.</span><span class="n">transactionRequest</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="n">profile</span>
-</span><span id="line-229">    <span class="n">request</span><span class="o">.</span><span class="n">transactionRequest</span><span class="o">.</span><span class="n">transactionType</span> <span class="o">=</span> <span class="p">(</span>
-</span><span id="line-230">        <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">transactionTypeEnum</span><span class="o">.</span><span class="n">authCaptureTransaction</span>
-</span><span id="line-231">    <span class="p">)</span>
-</span><span id="line-232">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">createTransactionController</span></div>
+</span><span id="line-206">    <span class="n">customer_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span><span id="line-207">    <span class="n">payment_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span><span id="line-208">    <span class="n">amount</span><span class="p">:</span> <span class="n">Decimal</span><span class="p">,</span>
+</span><span id="line-209">    <span class="n">line_items</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">ArrayOfLineItem</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="line-210"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
+</span><span id="line-211"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-212"><span class="sd">    `Charges a customer profile &lt;https://developer.authorize.net/api/reference/index.html#payment-transactions-charge-a-customer-profile&gt;`_.</span>
+</span><span id="line-213">
+</span><span id="line-214"><span class="sd">    :param customer_profile_id: An Authorizenet customer profile id.</span>
+</span><span id="line-215"><span class="sd">    :type customer_profile_id: int</span>
+</span><span id="line-216"><span class="sd">    :param payment_profile_id: An Authorizenet payment profile id.</span>
+</span><span id="line-217"><span class="sd">    :type payment_profile_id: int</span>
+</span><span id="line-218"><span class="sd">    :param amount: Amount to change the customer profile.</span>
+</span><span id="line-219"><span class="sd">    :type amount: ~decimal.Decimal</span>
+</span><span id="line-220"><span class="sd">    :param line_items: An array of line items. Default is :py:obj:`None`.</span>
+</span><span id="line-221"><span class="sd">    :type line_items: ~apicontractsv1.ArrayOfLineItem | None</span>
+</span><span id="line-222"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
+</span><span id="line-223"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
+</span><span id="line-224">
+</span><span id="line-225"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-226">    <span class="n">profile</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerProfilePaymentType</span><span class="p">()</span>
+</span><span id="line-227">    <span class="n">profile</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
+</span><span id="line-228">    <span class="n">profile</span><span class="o">.</span><span class="n">paymentProfile</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">paymentProfile</span><span class="p">()</span>
+</span><span id="line-229">    <span class="n">profile</span><span class="o">.</span><span class="n">paymentProfile</span><span class="o">.</span><span class="n">paymentProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">payment_profile_id</span><span class="p">)</span>
+</span><span id="line-230">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">createTransactionRequest</span><span class="p">()</span>
+</span><span id="line-231">    <span class="n">request</span><span class="o">.</span><span class="n">transactionRequest</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">transactionRequestType</span><span class="p">()</span>
+</span><span id="line-232">    <span class="n">request</span><span class="o">.</span><span class="n">transactionRequest</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">amount</span>
+</span><span id="line-233">    <span class="n">request</span><span class="o">.</span><span class="n">transactionRequest</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="n">profile</span>
+</span><span id="line-234">    <span class="n">request</span><span class="o">.</span><span class="n">transactionRequest</span><span class="o">.</span><span class="n">transactionType</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="line-235">        <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">transactionTypeEnum</span><span class="o">.</span><span class="n">authCaptureTransaction</span>
+</span><span id="line-236">    <span class="p">)</span>
+</span><span id="line-237">    <span class="k">if</span> <span class="n">line_items</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-238">        <span class="n">request</span><span class="o">.</span><span class="n">transactionRequest</span><span class="o">.</span><span class="n">lineItems</span> <span class="o">=</span> <span class="n">line_items</span>
+</span><span id="line-239">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">createTransactionController</span></div>
 
 </span></code></pre></div>
     </div></div>
@@ -423,7 +430,7 @@
 </footer>
   </div>
   
-    <script src="../../../../_static/documentation_options.js?v=c7b798a7"></script>
+    <script src="../../../../_static/documentation_options.js?v=b662d2fe"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script defer="defer" src="../../../../_static/theme.js?v=073f68d9"></script>
