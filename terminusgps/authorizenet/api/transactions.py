@@ -206,7 +206,7 @@ def charge_customer_profile(
     customer_profile_id: int, payment_profile_id: int, amount: Decimal
 ) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
-    `Charges a customer profile <https://developer.authorize.net/api/reference/index.html#payment-transactions-charge-a-customer-profile>_`.
+    `Charges a customer profile <https://developer.authorize.net/api/reference/index.html#payment-transactions-charge-a-customer-profile>`_.
 
     :param customer_profile_id: An Authorizenet customer profile id.
     :type customer_profile_id: int
