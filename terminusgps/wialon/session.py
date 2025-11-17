@@ -123,6 +123,7 @@ class WialonSession:
         self.wialon_api.sid = response.get("eid")
         self._username = response.get("au")
         self._uid = response.get("user", {}).get("id")
+        self._gis_sid = response.get("gis_sid")
 
     def auth_hash_login(
         self, auth_hash: str, username: str, check_service: str | None = None
@@ -191,6 +192,17 @@ class WialonSession:
 
         """
         return self._username
+
+    @property
+    def gis_sid(self) -> str | None:
+        """
+        GIS session id for the Wialon API session.
+
+        :type: str | None
+        :value: None
+
+        """
+        return self._gis_sid
 
     @property
     def id(self) -> str | None:
