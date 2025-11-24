@@ -4,6 +4,24 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
+class BankAccountType(models.TextChoices):
+    CHECKING = "checking", _("Checking account")
+    """Checking account."""
+    SAVINGS = "savings", _("Savings account")
+    """Savings account."""
+    BUSINESS_CHECKING = "businessChecking", _("Business checking account")
+    """Business checking account."""
+
+
+class ECheckType(models.TextChoices):
+    PPD = "PPD", _("Prearranged Payment and Deposit Entry")
+    """Prearranged Payment and Deposit Entry."""
+    TEL = "TEL", _("Telephone-Initiated Entry")
+    """Telephone-Initiated Entry."""
+    WEB = "WEB", _("Web-Initiated Entry")
+    """Web-Initiated Entry."""
+
+
 class CreditCardType(models.TextChoices):
     AMEX = apicontractsv1.cardTypeEnum.AmericanExpress, _("American Express")
     """American express card."""
