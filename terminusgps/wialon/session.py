@@ -15,8 +15,7 @@ class WialonAPIError(Exception):
         try:
             self._code = int(message._code)
         except ValueError:
-            # 6 = 'Unknown Error' according to Wialon
-            self._code = 6
+            self._code = 6  # 'Unknown Error' according to Wialon
         return super().__init__(message, *args, **kwargs)
 
     @property
