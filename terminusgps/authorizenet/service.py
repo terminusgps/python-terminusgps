@@ -1,4 +1,3 @@
-from abc import ABC
 from functools import cached_property
 
 from authorizenet.apicontractsv1 import merchantAuthenticationType
@@ -35,8 +34,8 @@ class AuthorizenetControllerExecutionError(Exception):
         return self._code
 
 
-class AuthorizenetService(ABC):
-    """Base service for safely interacting with the Authorizenet API."""
+class AuthorizenetService:
+    """Service for safely interacting with the Authorizenet API."""
 
     REQUIRED_SETTINGS = (
         "MERCHANT_AUTH_ENVIRONMENT",
