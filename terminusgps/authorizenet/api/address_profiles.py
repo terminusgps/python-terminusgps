@@ -57,6 +57,7 @@ def get_customer_shipping_address(
 
 def update_customer_shipping_address(
     customer_profile_id: int,
+    address_profile_id: int,
     address: apicontractsv1.customerAddressType,
     default: bool = False,
 ) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
@@ -65,6 +66,9 @@ def update_customer_shipping_address(
 
     :param customer_profile_id: An Authorizenet customer profile id.
     :type customer_profile_id: int
+    :param address_profile_id: An Authorizenet address profile id.
+    :type address_profile_id: int
+    :type address: ~authorizenet.apicontractsv1.customerAddressType
     :param address: An Authorizenet customer address element.
     :type address: ~authorizenet.apicontractsv1.customerAddressType
     :param default: Whether to set the address profile as default. Default is :py:obj:`False`.
@@ -73,9 +77,28 @@ def update_customer_shipping_address(
     :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
+    address_ex = apicontractsv1.customerAddressExType()
+    address_ex.customerAddressId = str(address_profile_id)
+    if first_name := getattr(address, "firstName", None):
+        address_ex.firstName = first_name
+    if last_name := getattr(address, "lastName", None):
+        address_ex.lastName = last_name
+    if street := getattr(address, "address", None):
+        address_ex.address = street
+    if city := getattr(address, "city", None):
+        address_ex.city = city
+    if state := getattr(address, "state", None):
+        address_ex.state = state
+    if country := getattr(address, "country", None):
+        address_ex.country = country
+    if phone_number := getattr(address, "phoneNumber", None):
+        address_ex.phoneNumber = phone_number
+    if zip_code := getattr(address, "zip", None):
+        address_ex.zip = zip_code
+
     request = apicontractsv1.updateCustomerShippingAddressRequest()
     request.customerProfileId = str(customer_profile_id)
-    request.address = address
+    request.address = address_ex
     request.defaultShippingAddress = str(default).lower()
     return request, apicontrollers.updateCustomerShippingAddressController
 
