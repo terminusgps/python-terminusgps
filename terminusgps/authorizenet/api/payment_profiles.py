@@ -130,7 +130,7 @@ def update_customer_payment_profile(
 
     request = apicontractsv1.updateCustomerPaymentProfileRequest()
     request.customerProfileId = str(customer_profile_id)
-    request.paymentProfile = apicontractsv1.customerPaymentProfileType()
+    request.paymentProfile = apicontractsv1.customerPaymentProfileExType()
     request.paymentProfile.customerPaymentProfileId = str(payment_profile_id)
 
     if payment is not None:
