@@ -59,7 +59,7 @@ def update_customer_shipping_address(
     customer_profile_id: int,
     address_profile_id: int,
     address: apicontractsv1.customerAddressType,
-    default: bool = False,
+    default: bool,
 ) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `updateCustomerShippingAddressRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-update-customer-shipping-address>`_.
@@ -71,7 +71,7 @@ def update_customer_shipping_address(
     :type address: ~authorizenet.apicontractsv1.customerAddressType
     :param address: An Authorizenet customer address element.
     :type address: ~authorizenet.apicontractsv1.customerAddressType
-    :param default: Whether to set the address profile as default. Default is :py:obj:`False`.
+    :param default: Whether to set the address profile as default.
     :type default: bool
     :returns: A tuple containing an Authorizenet API request element and controller class.
     :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
