@@ -123,9 +123,9 @@ def update_customer_payment_profile(
     :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
-    if payment is None and address is None:
+    if any([payment is None, address is None, default is None]):
         raise ValueError(
-            f"At least one of 'payment' or 'address' is required, got '{payment}' and '{address}'."
+            f"At least one of 'payment', 'address' or 'default' is required, got '{payment}', '{address}' and '{default}'."
         )
 
     request = apicontractsv1.updateCustomerPaymentProfileRequest()
