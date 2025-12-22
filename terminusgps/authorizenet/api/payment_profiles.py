@@ -123,7 +123,7 @@ def update_customer_payment_profile(
     :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
-    if any([payment is None, address is None, default is None]):
+    if all([payment is None, address is None, default is None]):
         raise ValueError(
             f"At least one of 'payment', 'address' or 'default' is required, got '{payment}', '{address}' and '{default}'."
         )
