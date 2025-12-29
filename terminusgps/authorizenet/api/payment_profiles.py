@@ -37,7 +37,7 @@ def create_customer_payment_profile(
     """
     request = apicontractsv1.createCustomerPaymentProfileRequest()
     request.customerProfileId = str(customer_profile_id)
-    request.validationMode = str(validation).lower()
+    request.validationMode = validation
     request.paymentProfile = apicontractsv1.customerPaymentProfileType()
     request.paymentProfile.payment = payment
     request.paymentProfile.billTo = address
