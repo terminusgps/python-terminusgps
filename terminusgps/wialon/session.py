@@ -98,9 +98,7 @@ class WialonSession:
                     check_service=self._check_service,
                 )
             else:
-                raise WialonAPIError(
-                    message="Failed to login to the Wialon API", code=9001
-                )
+                raise WialonAPIError("Failed to login to the Wialon API")
         return self
 
     def __exit__(self, *args, **kwargs) -> None:
