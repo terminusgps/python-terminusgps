@@ -6,16 +6,21 @@ import wialon.api
 
 logger = logging.getLogger(__name__)
 
+UNKNOWN_ERROR = 6
+
 
 class WialonAPIError(Exception):
     """Raised when a Wialon API call fails."""
 
     def __init__(self, message, *args, **kwargs) -> None:
         self.message = message
-        try:
-            self._code = int(message._code)
-        except ValueError:
-            self._code = 6  # 'Unknown Error' according to Wialon
+        if not hasattr(message, "_code"):
+            self._code = UNKNOWN_ERROR
+        else:
+            try:
+                self._code = int(message._code)
+            except ValueError:
+                self._code = UNKNOWN_ERROR
         return super().__init__(message, *args, **kwargs)
 
     @property
