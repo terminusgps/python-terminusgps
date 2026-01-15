@@ -34,7 +34,6 @@ class Wialon(wialon.api.Wialon):
         try:
             return super().call(action_name, *argc, **kwargs)
         except wialon.api.WialonError as e:
-            logger.warning(f"Failed to execute '{action_name}': '{e}'")
             raise WialonAPIError(e)
 
 
