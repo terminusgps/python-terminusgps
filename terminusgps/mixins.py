@@ -12,11 +12,11 @@ class HtmxTemplateResponseMixin(TemplateResponseMixin):
 
     """
 
-    partial_template_name: str | None = None
+    partial_name: str | None = None
     """
     A partial template rendered by htmx.
 
-    If not provided, :py:attr:`template_name` + '#partial' is used.
+    If not provided, :py:attr:`template_name` + '#main' is used.
 
     :type: str | None
     :value: None
@@ -26,12 +26,11 @@ class HtmxTemplateResponseMixin(TemplateResponseMixin):
     def render_to_response(
         self, context: dict[str, typing.Any], **response_kwargs: typing.Any
     ) -> HttpResponse:
-        """Sets :py:attr:`template_name` to :py:attr:`partial_template_name` according to request headers."""
+        """Sets :py:attr:`template_name` to :py:attr:`partial_name` according to request headers."""
         htmx_request = self.request.headers.get("HX-Request", False)
         boosted = self.request.headers.get("HX-Boosted", False)
-
-        if self.partial_template_name is None:
-            self.partial_template_name = f"{self.template_name}#partial"
         if htmx_request and not boosted:
-            self.template_name = self.partial_template_name
+            if not self.partial_name:
+                self.partial_name = f"{self.template_name}#main"
+            self.template_name = self.partial_name
         return super().render_to_response(context, **response_kwargs)
