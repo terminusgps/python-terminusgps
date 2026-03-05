@@ -1,6 +1,3 @@
-import typing
-
-from django.http import HttpResponse
 from django.views.generic.base import TemplateResponseMixin
 
 
@@ -12,25 +9,20 @@ class HtmxTemplateResponseMixin(TemplateResponseMixin):
 
     """
 
-    partial_name: str | None = None
+    partial_name: str = "#main"
     """
     A partial template rendered by htmx.
 
-    If not provided, :py:attr:`template_name` + '#main' is used.
-
-    :type: str | None
-    :value: None
+    :type: str
+    :value: ``"#main"``
 
     """
 
-    def render_to_response(
-        self, context: dict[str, typing.Any], **response_kwargs: typing.Any
-    ) -> HttpResponse:
-        """Sets :py:attr:`template_name` to :py:attr:`partial_name` according to request headers."""
-        htmx_request = self.request.headers.get("HX-Request", False)
-        boosted = self.request.headers.get("HX-Boosted", False)
-        if htmx_request and not boosted:
-            if not self.partial_name:
-                self.partial_name = f"{self.template_name}#main"
-            self.template_name = self.partial_name
-        return super().render_to_response(context, **response_kwargs)
+    def get_template_names(self) -> list[str]:
+        hx_request: bool = bool(self.request.headers.get("HX-Request"))
+        hx_boosted: bool = bool(self.request.headers.get("HX-Boosted"))
+
+        template_names: list[str] = super().get_template_names()
+        if hx_request and not hx_boosted:
+            template_names.insert(0, self.template_name + self.partial_name)
+        return template_names
