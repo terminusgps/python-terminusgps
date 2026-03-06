@@ -12,19 +12,19 @@ __all__ = [
 
 
 def create_subscription(
-    subscription: apicontractsv1.ARBSubscriptionType,
+    contract: apicontractsv1.ARBSubscriptionType,
 ) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `ARBCreateSubscriptionRequest <https://developer.authorize.net/api/reference/index.html#recurring-billing-create-a-subscription>`_.
 
-    :param subscription: An Authorizenet ARBSubscriptionType element.
-    :type subscription: ~authorizenet.apicontractsv1.ARBSubscriptionType
+    :param contract: An Authorizenet ARBSubscriptionType element.
+    :type contract: ~authorizenet.apicontractsv1.ARBSubscriptionType
     :returns: A tuple containing an Authorizenet API request element and controller class.
     :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
     request = apicontractsv1.ARBCreateSubscriptionRequest()
-    request.subscription = subscription
+    request.subscription = contract
     return request, apicontrollers.ARBCreateSubscriptionController
 
 
@@ -66,22 +66,22 @@ def get_subscription_status(
 
 
 def update_subscription(
-    subscription_id: int, subscription: apicontractsv1.ARBSubscriptionType
+    subscription_id: int, contract: apicontractsv1.ARBSubscriptionType
 ) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `ARBUpdateSubscriptionRequest <https://developer.authorize.net/api/reference/index.html#recurring-billing-update-a-subscription>`_.
 
     :param subscription_id: An Authorizenet subscription id.
     :type subscription_id: int
-    :param subscription: An Authorizenet ARBSubscriptionType element.
-    :type subscription: ~authorizenet.apicontractsv1.ARBSubscriptionType
+    :param contract: An Authorizenet ARBSubscriptionType element.
+    :type contract: ~authorizenet.apicontractsv1.ARBSubscriptionType
     :returns: A tuple containing an Authorizenet API request element and controller class.
     :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
     request = apicontractsv1.ARBUpdateSubscriptionRequest()
     request.subscriptionId = str(subscription_id)
-    request.subscription = subscription
+    request.subscription = contract
     return request, apicontrollers.ARBUpdateSubscriptionController
 
 

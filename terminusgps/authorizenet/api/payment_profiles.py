@@ -13,8 +13,7 @@ __all__ = [
 
 def create_customer_payment_profile(
     customer_profile_id: int,
-    payment: apicontractsv1.paymentType,
-    address: apicontractsv1.customerAddressType,
+    contract: apicontractsv1.customerPaymentProfileType,
     default: bool = False,
     validation: str = "liveMode",
 ) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
@@ -23,10 +22,8 @@ def create_customer_payment_profile(
 
     :param customer_profile_id: An Authorizenet customer profile id.
     :type customer_profile_id: int
-    :param payment: An Authorizenet payment element.
-    :type payment: ~authorizenet.apicontractsv1.paymentType
-    :param address: An Authorizenet address element.
-    :type address: ~authorizenet.apicontractsv1.customerAddressType
+    :param contract: A customer payment profile element.
+    :type contract: ~authorizenet.apicontractsv1.customerPaymentProfileType
     :param default: Whether to set the payment profile as default. Default is :py:obj:`False`.
     :type default: bool
     :param validation: Validation mode. Default is :py:obj:`"liveMode"`.
@@ -35,13 +32,15 @@ def create_customer_payment_profile(
     :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
+    if not contract.payment:
+        raise ValueError("'payment' attribute is required in contract")
+    if not contract.billTo:
+        raise ValueError("'billTo' attribute is required in contract")
     request = apicontractsv1.createCustomerPaymentProfileRequest()
     request.customerProfileId = str(customer_profile_id)
     request.validationMode = validation
-    request.paymentProfile = apicontractsv1.customerPaymentProfileType()
-    request.paymentProfile.payment = payment
-    request.paymentProfile.billTo = address
-    request.paymentProfile.defaultPaymentProfile = str(default).lower()
+    request.paymentProfile = contract
+    request.paymentProfile.defaultPaymentProfile = int(default)
     return request, apicontrollers.createCustomerPaymentProfileController
 
 
@@ -66,7 +65,7 @@ def get_customer_payment_profile(
     request = apicontractsv1.getCustomerPaymentProfileRequest()
     request.customerProfileId = str(customer_profile_id)
     request.customerPaymentProfileId = str(payment_profile_id)
-    request.includeIssuerInfo = str(include_issuer_info).lower()
+    request.includeIssuerInfo = int(include_issuer_info)
     return request, apicontrollers.getCustomerPaymentProfileController
 
 
@@ -97,9 +96,7 @@ def validate_customer_payment_profile(
 
 def update_customer_payment_profile(
     customer_profile_id: int,
-    payment_profile_id: int,
-    payment: apicontractsv1.paymentType,
-    address: apicontractsv1.customerAddressType,
+    contract: apicontractsv1.customerPaymentProfileExType,
     default: bool,
     validation: str = "liveMode",
 ) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
@@ -108,12 +105,8 @@ def update_customer_payment_profile(
 
     :param customer_profile_id: An Authorizenet customer profile id.
     :type customer_profile_id: int
-    :param payment_profile_id: An Authorizenet customer payment profile id.
-    :type payment_profile_id: int
-    :param payment: An Authorizenet payment element.
-    :type payment: ~authorizenet.apicontractsv1.paymentType
-    :param address: An Authorizenet address element.
-    :type address: ~authorizenet.apicontractsv1.customerAddressType
+    :param contract: A customer payment profile ex element.
+    :type contract: ~authorizenet.apicontractsv1.customerPaymentProfileExType
     :param default: Whether to set the payment profile as default.
     :type default: bool
     :param validation: Validation mode. Default is :py:obj:`"liveMode"`.
@@ -123,14 +116,17 @@ def update_customer_payment_profile(
     :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
     """
+    if not contract.payment:
+        raise ValueError("'payment' attribute is required in contract")
+    if not contract.billTo:
+        raise ValueError("'billTo' attribute is required in contract")
+    if not contract.customerPaymentProfileId:
+        raise ValueError("'customerPaymentProfileId' is required in contract")
     request = apicontractsv1.updateCustomerPaymentProfileRequest()
     request.customerProfileId = str(customer_profile_id)
     request.validationMode = validation
-    request.paymentProfile = apicontractsv1.customerPaymentProfileExType()
-    request.paymentProfile.customerPaymentProfileId = str(payment_profile_id)
-    request.paymentProfile.payment = payment
-    request.paymentProfile.billTo = address
-    request.paymentProfile.defaultPaymentProfile = str(default).lower()
+    request.paymentProfile = contract
+    request.paymentProfile.defaultPaymentProfile = int(default)
     return request, apicontrollers.updateCustomerPaymentProfileController
 
 

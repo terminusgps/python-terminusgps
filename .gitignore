@@ -3,6 +3,7 @@
 !.github/
 !.python-version
 docs/build/
+htmlcov/
 
 # Python-generated files
 __pycache__/
