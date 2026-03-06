@@ -181,19 +181,19 @@
 <div class="viewcode-block" id="create_subscription">
 <a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.subscriptions.create_subscription">[docs]</a>
 </span><span id="line-14"><span class="k">def</span><span class="w"> </span><span class="nf">create_subscription</span><span class="p">(</span>
-</span><span id="line-15">    <span class="n">subscription</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">ARBSubscriptionType</span><span class="p">,</span>
+</span><span id="line-15">    <span class="n">contract</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">ARBSubscriptionType</span><span class="p">,</span>
 </span><span id="line-16"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
 </span><span id="line-17"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="line-18"><span class="sd">    `ARBCreateSubscriptionRequest &lt;https://developer.authorize.net/api/reference/index.html#recurring-billing-create-a-subscription&gt;`_.</span>
 </span><span id="line-19">
-</span><span id="line-20"><span class="sd">    :param subscription: An Authorizenet ARBSubscriptionType element.</span>
-</span><span id="line-21"><span class="sd">    :type subscription: ~authorizenet.apicontractsv1.ARBSubscriptionType</span>
+</span><span id="line-20"><span class="sd">    :param contract: An Authorizenet ARBSubscriptionType element.</span>
+</span><span id="line-21"><span class="sd">    :type contract: ~authorizenet.apicontractsv1.ARBSubscriptionType</span>
 </span><span id="line-22"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
 </span><span id="line-23"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
 </span><span id="line-24">
 </span><span id="line-25"><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="line-26">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">ARBCreateSubscriptionRequest</span><span class="p">()</span>
-</span><span id="line-27">    <span class="n">request</span><span class="o">.</span><span class="n">subscription</span> <span class="o">=</span> <span class="n">subscription</span>
+</span><span id="line-27">    <span class="n">request</span><span class="o">.</span><span class="n">subscription</span> <span class="o">=</span> <span class="n">contract</span>
 </span><span id="line-28">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">ARBCreateSubscriptionController</span></div>
 
 </span><span id="line-29">
@@ -244,22 +244,22 @@
 <div class="viewcode-block" id="update_subscription">
 <a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.subscriptions.update_subscription">[docs]</a>
 </span><span id="line-68"><span class="k">def</span><span class="w"> </span><span class="nf">update_subscription</span><span class="p">(</span>
-</span><span id="line-69">    <span class="n">subscription_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">subscription</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">ARBSubscriptionType</span>
+</span><span id="line-69">    <span class="n">subscription_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">contract</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">ARBSubscriptionType</span>
 </span><span id="line-70"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
 </span><span id="line-71"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="line-72"><span class="sd">    `ARBUpdateSubscriptionRequest &lt;https://developer.authorize.net/api/reference/index.html#recurring-billing-update-a-subscription&gt;`_.</span>
 </span><span id="line-73">
 </span><span id="line-74"><span class="sd">    :param subscription_id: An Authorizenet subscription id.</span>
 </span><span id="line-75"><span class="sd">    :type subscription_id: int</span>
-</span><span id="line-76"><span class="sd">    :param subscription: An Authorizenet ARBSubscriptionType element.</span>
-</span><span id="line-77"><span class="sd">    :type subscription: ~authorizenet.apicontractsv1.ARBSubscriptionType</span>
+</span><span id="line-76"><span class="sd">    :param contract: An Authorizenet ARBSubscriptionType element.</span>
+</span><span id="line-77"><span class="sd">    :type contract: ~authorizenet.apicontractsv1.ARBSubscriptionType</span>
 </span><span id="line-78"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
 </span><span id="line-79"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
 </span><span id="line-80">
 </span><span id="line-81"><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="line-82">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">ARBUpdateSubscriptionRequest</span><span class="p">()</span>
 </span><span id="line-83">    <span class="n">request</span><span class="o">.</span><span class="n">subscriptionId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">)</span>
-</span><span id="line-84">    <span class="n">request</span><span class="o">.</span><span class="n">subscription</span> <span class="o">=</span> <span class="n">subscription</span>
+</span><span id="line-84">    <span class="n">request</span><span class="o">.</span><span class="n">subscription</span> <span class="o">=</span> <span class="n">contract</span>
 </span><span id="line-85">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">ARBUpdateSubscriptionController</span></div>
 
 </span><span id="line-86">

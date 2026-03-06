@@ -182,157 +182,153 @@
 <a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.payment_profiles.create_customer_payment_profile">[docs]</a>
 </span><span id="line-14"><span class="k">def</span><span class="w"> </span><span class="nf">create_customer_payment_profile</span><span class="p">(</span>
 </span><span id="line-15">    <span class="n">customer_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-</span><span id="line-16">    <span class="n">payment</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">paymentType</span><span class="p">,</span>
-</span><span id="line-17">    <span class="n">address</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerAddressType</span><span class="p">,</span>
-</span><span id="line-18">    <span class="n">default</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-</span><span id="line-19">    <span class="n">validation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;liveMode&quot;</span><span class="p">,</span>
-</span><span id="line-20"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
-</span><span id="line-21"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-22"><span class="sd">    `createCustomerPaymentProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-create-customer-payment-profile&gt;`_.</span>
-</span><span id="line-23">
-</span><span id="line-24"><span class="sd">    :param customer_profile_id: An Authorizenet customer profile id.</span>
-</span><span id="line-25"><span class="sd">    :type customer_profile_id: int</span>
-</span><span id="line-26"><span class="sd">    :param payment: An Authorizenet payment element.</span>
-</span><span id="line-27"><span class="sd">    :type payment: ~authorizenet.apicontractsv1.paymentType</span>
-</span><span id="line-28"><span class="sd">    :param address: An Authorizenet address element.</span>
-</span><span id="line-29"><span class="sd">    :type address: ~authorizenet.apicontractsv1.customerAddressType</span>
-</span><span id="line-30"><span class="sd">    :param default: Whether to set the payment profile as default. Default is :py:obj:`False`.</span>
-</span><span id="line-31"><span class="sd">    :type default: bool</span>
-</span><span id="line-32"><span class="sd">    :param validation: Validation mode. Default is :py:obj:`&quot;liveMode&quot;`.</span>
-</span><span id="line-33"><span class="sd">    :type validation: str</span>
-</span><span id="line-34"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
-</span><span id="line-35"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
-</span><span id="line-36">
-</span><span id="line-37"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-38">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">createCustomerPaymentProfileRequest</span><span class="p">()</span>
-</span><span id="line-39">    <span class="n">request</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
-</span><span id="line-40">    <span class="n">request</span><span class="o">.</span><span class="n">validationMode</span> <span class="o">=</span> <span class="n">validation</span>
-</span><span id="line-41">    <span class="n">request</span><span class="o">.</span><span class="n">paymentProfile</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerPaymentProfileType</span><span class="p">()</span>
-</span><span id="line-42">    <span class="n">request</span><span class="o">.</span><span class="n">paymentProfile</span><span class="o">.</span><span class="n">payment</span> <span class="o">=</span> <span class="n">payment</span>
-</span><span id="line-43">    <span class="n">request</span><span class="o">.</span><span class="n">paymentProfile</span><span class="o">.</span><span class="n">billTo</span> <span class="o">=</span> <span class="n">address</span>
-</span><span id="line-44">    <span class="n">request</span><span class="o">.</span><span class="n">paymentProfile</span><span class="o">.</span><span class="n">defaultPaymentProfile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">default</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-</span><span id="line-45">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">createCustomerPaymentProfileController</span></div>
+</span><span id="line-16">    <span class="n">contract</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerPaymentProfileType</span><span class="p">,</span>
+</span><span id="line-17">    <span class="n">default</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="line-18">    <span class="n">validation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;liveMode&quot;</span><span class="p">,</span>
+</span><span id="line-19"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
+</span><span id="line-20"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-21"><span class="sd">    `createCustomerPaymentProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-create-customer-payment-profile&gt;`_.</span>
+</span><span id="line-22">
+</span><span id="line-23"><span class="sd">    :param customer_profile_id: An Authorizenet customer profile id.</span>
+</span><span id="line-24"><span class="sd">    :type customer_profile_id: int</span>
+</span><span id="line-25"><span class="sd">    :param contract: A customer payment profile element.</span>
+</span><span id="line-26"><span class="sd">    :type contract: ~authorizenet.apicontractsv1.customerPaymentProfileType</span>
+</span><span id="line-27"><span class="sd">    :param default: Whether to set the payment profile as default. Default is :py:obj:`False`.</span>
+</span><span id="line-28"><span class="sd">    :type default: bool</span>
+</span><span id="line-29"><span class="sd">    :param validation: Validation mode. Default is :py:obj:`&quot;liveMode&quot;`.</span>
+</span><span id="line-30"><span class="sd">    :type validation: str</span>
+</span><span id="line-31"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
+</span><span id="line-32"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
+</span><span id="line-33">
+</span><span id="line-34"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-35">    <span class="k">if</span> <span class="ow">not</span> <span class="n">contract</span><span class="o">.</span><span class="n">payment</span><span class="p">:</span>
+</span><span id="line-36">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;payment&#39; attribute is required in contract&quot;</span><span class="p">)</span>
+</span><span id="line-37">    <span class="k">if</span> <span class="ow">not</span> <span class="n">contract</span><span class="o">.</span><span class="n">billTo</span><span class="p">:</span>
+</span><span id="line-38">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;billTo&#39; attribute is required in contract&quot;</span><span class="p">)</span>
+</span><span id="line-39">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">createCustomerPaymentProfileRequest</span><span class="p">()</span>
+</span><span id="line-40">    <span class="n">request</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
+</span><span id="line-41">    <span class="n">request</span><span class="o">.</span><span class="n">validationMode</span> <span class="o">=</span> <span class="n">validation</span>
+</span><span id="line-42">    <span class="n">request</span><span class="o">.</span><span class="n">paymentProfile</span> <span class="o">=</span> <span class="n">contract</span>
+</span><span id="line-43">    <span class="n">request</span><span class="o">.</span><span class="n">paymentProfile</span><span class="o">.</span><span class="n">defaultPaymentProfile</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+</span><span id="line-44">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">createCustomerPaymentProfileController</span></div>
 
+</span><span id="line-45">
 </span><span id="line-46">
-</span><span id="line-47">
 <div class="viewcode-block" id="get_customer_payment_profile">
 <a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.payment_profiles.get_customer_payment_profile">[docs]</a>
-</span><span id="line-48"><span class="k">def</span><span class="w"> </span><span class="nf">get_customer_payment_profile</span><span class="p">(</span>
-</span><span id="line-49">    <span class="n">customer_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-</span><span id="line-50">    <span class="n">payment_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-</span><span id="line-51">    <span class="n">include_issuer_info</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-</span><span id="line-52"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
-</span><span id="line-53"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-54"><span class="sd">    `getCustomerPaymentProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-payment-profile&gt;`_.</span>
-</span><span id="line-55">
-</span><span id="line-56"><span class="sd">    :param customer_profile_id: An Authorizenet customer profile id.</span>
-</span><span id="line-57"><span class="sd">    :type customer_profile_id: int</span>
-</span><span id="line-58"><span class="sd">    :param payment_profile_id: An Authorizenet customer payment profile id.</span>
-</span><span id="line-59"><span class="sd">    :type payment_profile_id: int</span>
-</span><span id="line-60"><span class="sd">    :param include_issuer_info: Whether to include issuer info in the response. Default is False.</span>
-</span><span id="line-61"><span class="sd">    :type include_issuer_info: bool</span>
-</span><span id="line-62"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
-</span><span id="line-63"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
-</span><span id="line-64">
-</span><span id="line-65"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-66">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">getCustomerPaymentProfileRequest</span><span class="p">()</span>
-</span><span id="line-67">    <span class="n">request</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
-</span><span id="line-68">    <span class="n">request</span><span class="o">.</span><span class="n">customerPaymentProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">payment_profile_id</span><span class="p">)</span>
-</span><span id="line-69">    <span class="n">request</span><span class="o">.</span><span class="n">includeIssuerInfo</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">include_issuer_info</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-</span><span id="line-70">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">getCustomerPaymentProfileController</span></div>
+</span><span id="line-47"><span class="k">def</span><span class="w"> </span><span class="nf">get_customer_payment_profile</span><span class="p">(</span>
+</span><span id="line-48">    <span class="n">customer_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span><span id="line-49">    <span class="n">payment_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span><span id="line-50">    <span class="n">include_issuer_info</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="line-51"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
+</span><span id="line-52"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-53"><span class="sd">    `getCustomerPaymentProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-payment-profile&gt;`_.</span>
+</span><span id="line-54">
+</span><span id="line-55"><span class="sd">    :param customer_profile_id: An Authorizenet customer profile id.</span>
+</span><span id="line-56"><span class="sd">    :type customer_profile_id: int</span>
+</span><span id="line-57"><span class="sd">    :param payment_profile_id: An Authorizenet customer payment profile id.</span>
+</span><span id="line-58"><span class="sd">    :type payment_profile_id: int</span>
+</span><span id="line-59"><span class="sd">    :param include_issuer_info: Whether to include issuer info in the response. Default is False.</span>
+</span><span id="line-60"><span class="sd">    :type include_issuer_info: bool</span>
+</span><span id="line-61"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
+</span><span id="line-62"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
+</span><span id="line-63">
+</span><span id="line-64"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-65">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">getCustomerPaymentProfileRequest</span><span class="p">()</span>
+</span><span id="line-66">    <span class="n">request</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
+</span><span id="line-67">    <span class="n">request</span><span class="o">.</span><span class="n">customerPaymentProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">payment_profile_id</span><span class="p">)</span>
+</span><span id="line-68">    <span class="n">request</span><span class="o">.</span><span class="n">includeIssuerInfo</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">include_issuer_info</span><span class="p">)</span>
+</span><span id="line-69">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">getCustomerPaymentProfileController</span></div>
 
+</span><span id="line-70">
 </span><span id="line-71">
-</span><span id="line-72">
 <div class="viewcode-block" id="validate_customer_payment_profile">
 <a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.payment_profiles.validate_customer_payment_profile">[docs]</a>
-</span><span id="line-73"><span class="k">def</span><span class="w"> </span><span class="nf">validate_customer_payment_profile</span><span class="p">(</span>
-</span><span id="line-74">    <span class="n">customer_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-</span><span id="line-75">    <span class="n">payment_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-</span><span id="line-76">    <span class="n">validation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;liveMode&quot;</span><span class="p">,</span>
-</span><span id="line-77"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
-</span><span id="line-78"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-79"><span class="sd">    `validateCustomerPaymentProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-validate-customer-payment-profile&gt;`_.</span>
-</span><span id="line-80">
-</span><span id="line-81"><span class="sd">    :param customer_profile_id: An Authorizenet customer profile id.</span>
-</span><span id="line-82"><span class="sd">    :type customer_profile_id: int</span>
-</span><span id="line-83"><span class="sd">    :param payment_profile_id: An Authorizenet customer payment profile id.</span>
-</span><span id="line-84"><span class="sd">    :type payment_profile_id: int</span>
-</span><span id="line-85"><span class="sd">    :param validation: Validation mode. Default is :py:obj:`&quot;liveMode&quot;`.</span>
-</span><span id="line-86"><span class="sd">    :type validation: str</span>
-</span><span id="line-87"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
-</span><span id="line-88"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
-</span><span id="line-89">
-</span><span id="line-90"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-91">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">validateCustomerPaymentProfileRequest</span><span class="p">()</span>
-</span><span id="line-92">    <span class="n">request</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
-</span><span id="line-93">    <span class="n">request</span><span class="o">.</span><span class="n">customerPaymentProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">payment_profile_id</span><span class="p">)</span>
-</span><span id="line-94">    <span class="n">request</span><span class="o">.</span><span class="n">validationMode</span> <span class="o">=</span> <span class="n">validation</span>
-</span><span id="line-95">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">validateCustomerPaymentProfileController</span></div>
+</span><span id="line-72"><span class="k">def</span><span class="w"> </span><span class="nf">validate_customer_payment_profile</span><span class="p">(</span>
+</span><span id="line-73">    <span class="n">customer_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span><span id="line-74">    <span class="n">payment_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span><span id="line-75">    <span class="n">validation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;liveMode&quot;</span><span class="p">,</span>
+</span><span id="line-76"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
+</span><span id="line-77"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-78"><span class="sd">    `validateCustomerPaymentProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-validate-customer-payment-profile&gt;`_.</span>
+</span><span id="line-79">
+</span><span id="line-80"><span class="sd">    :param customer_profile_id: An Authorizenet customer profile id.</span>
+</span><span id="line-81"><span class="sd">    :type customer_profile_id: int</span>
+</span><span id="line-82"><span class="sd">    :param payment_profile_id: An Authorizenet customer payment profile id.</span>
+</span><span id="line-83"><span class="sd">    :type payment_profile_id: int</span>
+</span><span id="line-84"><span class="sd">    :param validation: Validation mode. Default is :py:obj:`&quot;liveMode&quot;`.</span>
+</span><span id="line-85"><span class="sd">    :type validation: str</span>
+</span><span id="line-86"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
+</span><span id="line-87"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
+</span><span id="line-88">
+</span><span id="line-89"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-90">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">validateCustomerPaymentProfileRequest</span><span class="p">()</span>
+</span><span id="line-91">    <span class="n">request</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
+</span><span id="line-92">    <span class="n">request</span><span class="o">.</span><span class="n">customerPaymentProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">payment_profile_id</span><span class="p">)</span>
+</span><span id="line-93">    <span class="n">request</span><span class="o">.</span><span class="n">validationMode</span> <span class="o">=</span> <span class="n">validation</span>
+</span><span id="line-94">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">validateCustomerPaymentProfileController</span></div>
 
+</span><span id="line-95">
 </span><span id="line-96">
-</span><span id="line-97">
 <div class="viewcode-block" id="update_customer_payment_profile">
 <a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.payment_profiles.update_customer_payment_profile">[docs]</a>
-</span><span id="line-98"><span class="k">def</span><span class="w"> </span><span class="nf">update_customer_payment_profile</span><span class="p">(</span>
-</span><span id="line-99">    <span class="n">customer_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-</span><span id="line-100">    <span class="n">payment_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-</span><span id="line-101">    <span class="n">payment</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">paymentType</span><span class="p">,</span>
-</span><span id="line-102">    <span class="n">address</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerAddressType</span><span class="p">,</span>
-</span><span id="line-103">    <span class="n">default</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-</span><span id="line-104">    <span class="n">validation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;liveMode&quot;</span><span class="p">,</span>
-</span><span id="line-105"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
-</span><span id="line-106"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-107"><span class="sd">    `updateCustomerPaymentProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-update-customer-payment-profile&gt;`_.</span>
-</span><span id="line-108">
-</span><span id="line-109"><span class="sd">    :param customer_profile_id: An Authorizenet customer profile id.</span>
-</span><span id="line-110"><span class="sd">    :type customer_profile_id: int</span>
-</span><span id="line-111"><span class="sd">    :param payment_profile_id: An Authorizenet customer payment profile id.</span>
-</span><span id="line-112"><span class="sd">    :type payment_profile_id: int</span>
-</span><span id="line-113"><span class="sd">    :param payment: An Authorizenet payment element.</span>
-</span><span id="line-114"><span class="sd">    :type payment: ~authorizenet.apicontractsv1.paymentType</span>
-</span><span id="line-115"><span class="sd">    :param address: An Authorizenet address element.</span>
-</span><span id="line-116"><span class="sd">    :type address: ~authorizenet.apicontractsv1.customerAddressType</span>
-</span><span id="line-117"><span class="sd">    :param default: Whether to set the payment profile as default.</span>
-</span><span id="line-118"><span class="sd">    :type default: bool</span>
-</span><span id="line-119"><span class="sd">    :param validation: Validation mode. Default is :py:obj:`&quot;liveMode&quot;`.</span>
-</span><span id="line-120"><span class="sd">    :type validation: str</span>
-</span><span id="line-121"><span class="sd">    :raises ValueError: If neither payment nor address was provided.</span>
-</span><span id="line-122"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
-</span><span id="line-123"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
-</span><span id="line-124">
-</span><span id="line-125"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-126">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">updateCustomerPaymentProfileRequest</span><span class="p">()</span>
-</span><span id="line-127">    <span class="n">request</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
-</span><span id="line-128">    <span class="n">request</span><span class="o">.</span><span class="n">validationMode</span> <span class="o">=</span> <span class="n">validation</span>
-</span><span id="line-129">    <span class="n">request</span><span class="o">.</span><span class="n">paymentProfile</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerPaymentProfileExType</span><span class="p">()</span>
-</span><span id="line-130">    <span class="n">request</span><span class="o">.</span><span class="n">paymentProfile</span><span class="o">.</span><span class="n">customerPaymentProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">payment_profile_id</span><span class="p">)</span>
-</span><span id="line-131">    <span class="n">request</span><span class="o">.</span><span class="n">paymentProfile</span><span class="o">.</span><span class="n">payment</span> <span class="o">=</span> <span class="n">payment</span>
-</span><span id="line-132">    <span class="n">request</span><span class="o">.</span><span class="n">paymentProfile</span><span class="o">.</span><span class="n">billTo</span> <span class="o">=</span> <span class="n">address</span>
-</span><span id="line-133">    <span class="n">request</span><span class="o">.</span><span class="n">paymentProfile</span><span class="o">.</span><span class="n">defaultPaymentProfile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">default</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-</span><span id="line-134">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">updateCustomerPaymentProfileController</span></div>
+</span><span id="line-97"><span class="k">def</span><span class="w"> </span><span class="nf">update_customer_payment_profile</span><span class="p">(</span>
+</span><span id="line-98">    <span class="n">customer_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span><span id="line-99">    <span class="n">contract</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerPaymentProfileExType</span><span class="p">,</span>
+</span><span id="line-100">    <span class="n">default</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span><span id="line-101">    <span class="n">validation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;liveMode&quot;</span><span class="p">,</span>
+</span><span id="line-102"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
+</span><span id="line-103"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-104"><span class="sd">    `updateCustomerPaymentProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-update-customer-payment-profile&gt;`_.</span>
+</span><span id="line-105">
+</span><span id="line-106"><span class="sd">    :param customer_profile_id: An Authorizenet customer profile id.</span>
+</span><span id="line-107"><span class="sd">    :type customer_profile_id: int</span>
+</span><span id="line-108"><span class="sd">    :param contract: A customer payment profile ex element.</span>
+</span><span id="line-109"><span class="sd">    :type contract: ~authorizenet.apicontractsv1.customerPaymentProfileExType</span>
+</span><span id="line-110"><span class="sd">    :param default: Whether to set the payment profile as default.</span>
+</span><span id="line-111"><span class="sd">    :type default: bool</span>
+</span><span id="line-112"><span class="sd">    :param validation: Validation mode. Default is :py:obj:`&quot;liveMode&quot;`.</span>
+</span><span id="line-113"><span class="sd">    :type validation: str</span>
+</span><span id="line-114"><span class="sd">    :raises ValueError: If neither payment nor address was provided.</span>
+</span><span id="line-115"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
+</span><span id="line-116"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
+</span><span id="line-117">
+</span><span id="line-118"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-119">    <span class="k">if</span> <span class="ow">not</span> <span class="n">contract</span><span class="o">.</span><span class="n">payment</span><span class="p">:</span>
+</span><span id="line-120">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;payment&#39; attribute is required in contract&quot;</span><span class="p">)</span>
+</span><span id="line-121">    <span class="k">if</span> <span class="ow">not</span> <span class="n">contract</span><span class="o">.</span><span class="n">billTo</span><span class="p">:</span>
+</span><span id="line-122">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;billTo&#39; attribute is required in contract&quot;</span><span class="p">)</span>
+</span><span id="line-123">    <span class="k">if</span> <span class="ow">not</span> <span class="n">contract</span><span class="o">.</span><span class="n">customerPaymentProfileId</span><span class="p">:</span>
+</span><span id="line-124">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;customerPaymentProfileId&#39; is required in contract&quot;</span><span class="p">)</span>
+</span><span id="line-125">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">updateCustomerPaymentProfileRequest</span><span class="p">()</span>
+</span><span id="line-126">    <span class="n">request</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
+</span><span id="line-127">    <span class="n">request</span><span class="o">.</span><span class="n">validationMode</span> <span class="o">=</span> <span class="n">validation</span>
+</span><span id="line-128">    <span class="n">request</span><span class="o">.</span><span class="n">paymentProfile</span> <span class="o">=</span> <span class="n">contract</span>
+</span><span id="line-129">    <span class="n">request</span><span class="o">.</span><span class="n">paymentProfile</span><span class="o">.</span><span class="n">defaultPaymentProfile</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+</span><span id="line-130">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">updateCustomerPaymentProfileController</span></div>
 
-</span><span id="line-135">
-</span><span id="line-136">
+</span><span id="line-131">
+</span><span id="line-132">
 <div class="viewcode-block" id="delete_customer_payment_profile">
 <a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.payment_profiles.delete_customer_payment_profile">[docs]</a>
-</span><span id="line-137"><span class="k">def</span><span class="w"> </span><span class="nf">delete_customer_payment_profile</span><span class="p">(</span>
-</span><span id="line-138">    <span class="n">customer_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">payment_profile_id</span><span class="p">:</span> <span class="nb">int</span>
-</span><span id="line-139"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
-</span><span id="line-140"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-141"><span class="sd">    `deleteCustomerPaymentProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-delete-customer-payment-profile&gt;`_.</span>
-</span><span id="line-142">
-</span><span id="line-143"><span class="sd">    :param customer_profile_id: An Authorizenet customer profile id.</span>
-</span><span id="line-144"><span class="sd">    :type customer_profile_id: int</span>
-</span><span id="line-145"><span class="sd">    :param payment_profile_id: An Authorizenet customer payment profile id.</span>
-</span><span id="line-146"><span class="sd">    :type payment_profile_id: int</span>
-</span><span id="line-147"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
-</span><span id="line-148"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
-</span><span id="line-149">
-</span><span id="line-150"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-151">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">deleteCustomerPaymentProfileRequest</span><span class="p">()</span>
-</span><span id="line-152">    <span class="n">request</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
-</span><span id="line-153">    <span class="n">request</span><span class="o">.</span><span class="n">customerPaymentProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">payment_profile_id</span><span class="p">)</span>
-</span><span id="line-154">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">deleteCustomerPaymentProfileController</span></div>
+</span><span id="line-133"><span class="k">def</span><span class="w"> </span><span class="nf">delete_customer_payment_profile</span><span class="p">(</span>
+</span><span id="line-134">    <span class="n">customer_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">payment_profile_id</span><span class="p">:</span> <span class="nb">int</span>
+</span><span id="line-135"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
+</span><span id="line-136"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-137"><span class="sd">    `deleteCustomerPaymentProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-delete-customer-payment-profile&gt;`_.</span>
+</span><span id="line-138">
+</span><span id="line-139"><span class="sd">    :param customer_profile_id: An Authorizenet customer profile id.</span>
+</span><span id="line-140"><span class="sd">    :type customer_profile_id: int</span>
+</span><span id="line-141"><span class="sd">    :param payment_profile_id: An Authorizenet customer payment profile id.</span>
+</span><span id="line-142"><span class="sd">    :type payment_profile_id: int</span>
+</span><span id="line-143"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
+</span><span id="line-144"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
+</span><span id="line-145">
+</span><span id="line-146"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-147">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">deleteCustomerPaymentProfileRequest</span><span class="p">()</span>
+</span><span id="line-148">    <span class="n">request</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
+</span><span id="line-149">    <span class="n">request</span><span class="o">.</span><span class="n">customerPaymentProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">payment_profile_id</span><span class="p">)</span>
+</span><span id="line-150">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">deleteCustomerPaymentProfileController</span></div>
 
 </span></code></pre></div>
     </div></div>

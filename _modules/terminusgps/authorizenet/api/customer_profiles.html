@@ -173,163 +173,145 @@
 </span><span id="line-6">    <span class="s2">&quot;create_customer_profile&quot;</span><span class="p">,</span>
 </span><span id="line-7">    <span class="s2">&quot;delete_customer_profile&quot;</span><span class="p">,</span>
 </span><span id="line-8">    <span class="s2">&quot;get_customer_profile&quot;</span><span class="p">,</span>
-</span><span id="line-9">    <span class="s2">&quot;get_customer_profile_by_email&quot;</span><span class="p">,</span>
-</span><span id="line-10">    <span class="s2">&quot;get_customer_profile_by_merchant_id&quot;</span><span class="p">,</span>
-</span><span id="line-11">    <span class="s2">&quot;get_customer_profile_ids&quot;</span><span class="p">,</span>
-</span><span id="line-12">    <span class="s2">&quot;update_customer_profile&quot;</span><span class="p">,</span>
-</span><span id="line-13"><span class="p">]</span>
-</span><span id="line-14">
-</span><span id="line-15">
+</span><span id="line-9">    <span class="s2">&quot;get_customer_profile_ids&quot;</span><span class="p">,</span>
+</span><span id="line-10">    <span class="s2">&quot;update_customer_profile&quot;</span><span class="p">,</span>
+</span><span id="line-11"><span class="p">]</span>
+</span><span id="line-12">
+</span><span id="line-13">
 <div class="viewcode-block" id="create_customer_profile">
 <a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.customer_profiles.create_customer_profile">[docs]</a>
-</span><span id="line-16"><span class="k">def</span><span class="w"> </span><span class="nf">create_customer_profile</span><span class="p">(</span>
-</span><span id="line-17">    <span class="n">merchant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="line-18"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
-</span><span id="line-19"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-20"><span class="sd">    `createCustomerProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-create-customer-profile&gt;`_.</span>
-</span><span id="line-21">
-</span><span id="line-22"><span class="sd">    :param merchant_id: A merchant designated customer id.</span>
-</span><span id="line-23"><span class="sd">    :type merchant_id: str</span>
-</span><span id="line-24"><span class="sd">    :param email: A customer email address.</span>
-</span><span id="line-25"><span class="sd">    :type email: str</span>
-</span><span id="line-26"><span class="sd">    :param description: An optional customer description.</span>
-</span><span id="line-27"><span class="sd">    :type description: str</span>
-</span><span id="line-28"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
-</span><span id="line-29"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
-</span><span id="line-30">
-</span><span id="line-31"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-32">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">createCustomerProfileRequest</span><span class="p">()</span>
-</span><span id="line-33">    <span class="n">request</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerProfileType</span><span class="p">()</span>
-</span><span id="line-34">    <span class="n">request</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">merchantCustomerId</span> <span class="o">=</span> <span class="n">merchant_id</span>
-</span><span id="line-35">    <span class="n">request</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
-</span><span id="line-36">    <span class="n">request</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span>
-</span><span id="line-37">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">createCustomerProfileController</span></div>
+</span><span id="line-14"><span class="k">def</span><span class="w"> </span><span class="nf">create_customer_profile</span><span class="p">(</span>
+</span><span id="line-15">    <span class="n">contract</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerProfileType</span><span class="p">,</span>
+</span><span id="line-16"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
+</span><span id="line-17"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-18"><span class="sd">    `createCustomerProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-create-customer-profile&gt;`_.</span>
+</span><span id="line-19">
+</span><span id="line-20"><span class="sd">    :param contract: A customer profile contract element.</span>
+</span><span id="line-21"><span class="sd">    :type contract: ~apicontractsv1.customerProfileType</span>
+</span><span id="line-22"><span class="sd">    :raises ValueError: If the contract didn&#39;t have at least one of ``email``, ``merchantCustomerId`` or ``description``.</span>
+</span><span id="line-23"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
+</span><span id="line-24"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
+</span><span id="line-25">
+</span><span id="line-26"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-27">    <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span>
+</span><span id="line-28">        <span class="p">[</span><span class="n">contract</span><span class="o">.</span><span class="n">email</span><span class="p">,</span> <span class="n">contract</span><span class="o">.</span><span class="n">merchantCustomerId</span><span class="p">,</span> <span class="n">contract</span><span class="o">.</span><span class="n">description</span><span class="p">]</span>
+</span><span id="line-29">    <span class="p">):</span>
+</span><span id="line-30">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span><span id="line-31">            <span class="s2">&quot;At least one of &#39;email&#39;, &#39;merchantCustomerId&#39; or &#39;description&#39; is required in contract&quot;</span>
+</span><span id="line-32">        <span class="p">)</span>
+</span><span id="line-33">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">createCustomerProfileRequest</span><span class="p">()</span>
+</span><span id="line-34">    <span class="n">request</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="n">contract</span>
+</span><span id="line-35">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">createCustomerProfileController</span></div>
 
-</span><span id="line-38">
-</span><span id="line-39">
+</span><span id="line-36">
+</span><span id="line-37">
 <div class="viewcode-block" id="get_customer_profile">
 <a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.customer_profiles.get_customer_profile">[docs]</a>
-</span><span id="line-40"><span class="k">def</span><span class="w"> </span><span class="nf">get_customer_profile</span><span class="p">(</span>
-</span><span id="line-41">    <span class="n">customer_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">include_issuer_info</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="line-42"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
-</span><span id="line-43"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-44"><span class="sd">    `getCustomerProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-profile&gt;`_.</span>
-</span><span id="line-45">
-</span><span id="line-46"><span class="sd">    :param customer_profile_id: Authorizenet customer profile id.</span>
-</span><span id="line-47"><span class="sd">    :type customer_profile_id: int</span>
-</span><span id="line-48"><span class="sd">    :param include_issuer_info: Whether to include issuer info in the response. Default is :py:obj:`False`.</span>
-</span><span id="line-49"><span class="sd">    :type include_issuer_info: bool</span>
-</span><span id="line-50"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
-</span><span id="line-51"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
-</span><span id="line-52">
-</span><span id="line-53"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-54">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">getCustomerProfileRequest</span><span class="p">()</span>
-</span><span id="line-55">    <span class="n">request</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
-</span><span id="line-56">    <span class="n">request</span><span class="o">.</span><span class="n">includeIssuerInfo</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">include_issuer_info</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-</span><span id="line-57">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">getCustomerProfileController</span></div>
+</span><span id="line-38"><span class="k">def</span><span class="w"> </span><span class="nf">get_customer_profile</span><span class="p">(</span>
+</span><span id="line-39">    <span class="n">customer_profile_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="line-40">    <span class="n">email</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="line-41">    <span class="n">merchant_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="line-42">    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="line-43">    <span class="n">include_issuer_info</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="line-44">    <span class="n">unmask_expiration_date</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="line-45"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
+</span><span id="line-46"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-47"><span class="sd">    `getCustomerProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-profile&gt;`_.</span>
+</span><span id="line-48">
+</span><span id="line-49"><span class="sd">    :param customer_profile_id: Authorizenet customer profile id.</span>
+</span><span id="line-50"><span class="sd">    :type customer_profile_id: int | None</span>
+</span><span id="line-51"><span class="sd">    :param email: Authorizenet customer profile email.</span>
+</span><span id="line-52"><span class="sd">    :type email: str | None</span>
+</span><span id="line-53"><span class="sd">    :param merchant_id: Authorizenet customer profile merchant id.</span>
+</span><span id="line-54"><span class="sd">    :type merchant_id: str | None</span>
+</span><span id="line-55"><span class="sd">    :param description: Authorizenet customer profile description.</span>
+</span><span id="line-56"><span class="sd">    :type description: str | None</span>
+</span><span id="line-57"><span class="sd">    :param include_issuer_info: Whether to include issuer info in the response. Default is :py:obj:`False`.</span>
+</span><span id="line-58"><span class="sd">    :type include_issuer_info: bool</span>
+</span><span id="line-59"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
+</span><span id="line-60"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
+</span><span id="line-61">
+</span><span id="line-62"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-63">    <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">customer_profile_id</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">merchant_id</span><span class="p">,</span> <span class="n">description</span><span class="p">]):</span>
+</span><span id="line-64">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span><span id="line-65">            <span class="s2">&quot;At least one of &#39;customer_profile_id&#39;, &#39;email&#39;, &#39;merchant_id&#39; or &#39;description&#39; is required.&quot;</span>
+</span><span id="line-66">        <span class="p">)</span>
+</span><span id="line-67">
+</span><span id="line-68">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">getCustomerProfileRequest</span><span class="p">()</span>
+</span><span id="line-69">    <span class="n">request</span><span class="o">.</span><span class="n">includeIssuerInfo</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">include_issuer_info</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</span><span id="line-70">    <span class="n">request</span><span class="o">.</span><span class="n">unmaskExpirationDate</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">unmask_expiration_date</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</span><span id="line-71">    <span class="k">if</span> <span class="n">customer_profile_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-72">        <span class="n">request</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
+</span><span id="line-73">    <span class="k">if</span> <span class="n">email</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-74">        <span class="n">request</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span>
+</span><span id="line-75">    <span class="k">if</span> <span class="n">merchant_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-76">        <span class="n">request</span><span class="o">.</span><span class="n">merchantCustomerId</span> <span class="o">=</span> <span class="n">merchant_id</span>
+</span><span id="line-77">    <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-78">        <span class="n">request</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+</span><span id="line-79">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">getCustomerProfileController</span></div>
 
-</span><span id="line-58">
-</span><span id="line-59">
-<div class="viewcode-block" id="get_customer_profile_by_email">
-<a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.customer_profiles.get_customer_profile_by_email">[docs]</a>
-</span><span id="line-60"><span class="k">def</span><span class="w"> </span><span class="nf">get_customer_profile_by_email</span><span class="p">(</span>
-</span><span id="line-61">    <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">include_issuer_info</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="line-62"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
-</span><span id="line-63"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-64"><span class="sd">    `getCustomerProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-profile&gt;`_.</span>
-</span><span id="line-65">
-</span><span id="line-66"><span class="sd">    :param email: Merchant designated customer profile email address.</span>
-</span><span id="line-67"><span class="sd">    :type email: str</span>
-</span><span id="line-68"><span class="sd">    :param include_issuer_info: Whether to include issuer info in the response. Default is :py:obj:`False`.</span>
-</span><span id="line-69"><span class="sd">    :type include_issuer_info: bool</span>
-</span><span id="line-70"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
-</span><span id="line-71"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
-</span><span id="line-72">
-</span><span id="line-73"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-74">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">getCustomerProfileRequest</span><span class="p">()</span>
-</span><span id="line-75">    <span class="n">request</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
-</span><span id="line-76">    <span class="n">request</span><span class="o">.</span><span class="n">includeIssuerInfo</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">include_issuer_info</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-</span><span id="line-77">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">getCustomerProfileController</span></div>
-
-</span><span id="line-78">
-</span><span id="line-79">
-<div class="viewcode-block" id="get_customer_profile_by_merchant_id">
-<a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.customer_profiles.get_customer_profile_by_merchant_id">[docs]</a>
-</span><span id="line-80"><span class="k">def</span><span class="w"> </span><span class="nf">get_customer_profile_by_merchant_id</span><span class="p">(</span>
-</span><span id="line-81">    <span class="n">merchant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">include_issuer_info</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="line-82"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
-</span><span id="line-83"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-84"><span class="sd">    `getCustomerProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-profile&gt;`_.</span>
-</span><span id="line-85">
-</span><span id="line-86"><span class="sd">    :param merchant_id: Merchant designated customer profile id.</span>
-</span><span id="line-87"><span class="sd">    :type merchant_id: str</span>
-</span><span id="line-88"><span class="sd">    :param include_issuer_info: Whether to include issuer info in the response. Default is :py:obj:`False`.</span>
-</span><span id="line-89"><span class="sd">    :type include_issuer_info: bool</span>
-</span><span id="line-90"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
-</span><span id="line-91"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
-</span><span id="line-92">
-</span><span id="line-93"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-94">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">getCustomerProfileRequest</span><span class="p">()</span>
-</span><span id="line-95">    <span class="n">request</span><span class="o">.</span><span class="n">merchantCustomerId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">merchant_id</span><span class="p">)</span>
-</span><span id="line-96">    <span class="n">request</span><span class="o">.</span><span class="n">includeIssuerInfo</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">include_issuer_info</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-</span><span id="line-97">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">getCustomerProfileController</span></div>
-
-</span><span id="line-98">
-</span><span id="line-99">
+</span><span id="line-80">
+</span><span id="line-81">
 <div class="viewcode-block" id="get_customer_profile_ids">
 <a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.customer_profiles.get_customer_profile_ids">[docs]</a>
-</span><span id="line-100"><span class="k">def</span><span class="w"> </span><span class="nf">get_customer_profile_ids</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
-</span><span id="line-101">    <span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]</span>
-</span><span id="line-102"><span class="p">]:</span>
-</span><span id="line-103"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-104"><span class="sd">    `getCustomerProfileIdsRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-profile-ids&gt;`_.</span>
-</span><span id="line-105">
+</span><span id="line-82"><span class="k">def</span><span class="w"> </span><span class="nf">get_customer_profile_ids</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
+</span><span id="line-83">    <span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]</span>
+</span><span id="line-84"><span class="p">]:</span>
+</span><span id="line-85"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-86"><span class="sd">    `getCustomerProfileIdsRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-get-customer-profile-ids&gt;`_.</span>
+</span><span id="line-87">
+</span><span id="line-88"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
+</span><span id="line-89"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
+</span><span id="line-90">
+</span><span id="line-91"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-92">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">getCustomerProfileIdsRequest</span><span class="p">()</span>
+</span><span id="line-93">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">getCustomerProfileIdsController</span></div>
+
+</span><span id="line-94">
+</span><span id="line-95">
+<div class="viewcode-block" id="update_customer_profile">
+<a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.customer_profiles.update_customer_profile">[docs]</a>
+</span><span id="line-96"><span class="k">def</span><span class="w"> </span><span class="nf">update_customer_profile</span><span class="p">(</span>
+</span><span id="line-97">    <span class="n">contract</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerProfileExType</span><span class="p">,</span>
+</span><span id="line-98"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
+</span><span id="line-99"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-100"><span class="sd">    `updateCustomerProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-update-customer-profile&gt;`_.</span>
+</span><span id="line-101">
+</span><span id="line-102"><span class="sd">    :param contract: An Authorizenet customer profile ex contract.</span>
+</span><span id="line-103"><span class="sd">    :type contract: ~authorizenet.apicontractsv1.customerProfileExType</span>
+</span><span id="line-104"><span class="sd">    :raises TypeError: If the contract wasn&#39;t of type :py:class:`~apicontractsv1.customerProfileExType`.</span>
+</span><span id="line-105"><span class="sd">    :raises ValueError: If the contract didn&#39;t have all required attributes.</span>
 </span><span id="line-106"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
 </span><span id="line-107"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
 </span><span id="line-108">
 </span><span id="line-109"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-110">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">getCustomerProfileIdsRequest</span><span class="p">()</span>
-</span><span id="line-111">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">getCustomerProfileIdsController</span></div>
+</span><span id="line-110">    <span class="k">if</span> <span class="ow">not</span> <span class="n">contract</span><span class="o">.</span><span class="n">customerProfileId</span><span class="p">:</span>
+</span><span id="line-111">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span><span id="line-112">            <span class="sa">f</span><span class="s2">&quot;Invalid value for &#39;customerProfileId&#39;: &#39;</span><span class="si">{</span><span class="n">contract</span><span class="o">.</span><span class="n">customerProfileId</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+</span><span id="line-113">        <span class="p">)</span>
+</span><span id="line-114">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">updateCustomerProfileRequest</span><span class="p">()</span>
+</span><span id="line-115">    <span class="n">request</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="n">contract</span>
+</span><span id="line-116">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">updateCustomerProfileController</span></div>
 
-</span><span id="line-112">
-</span><span id="line-113">
-<div class="viewcode-block" id="update_customer_profile">
-<a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.customer_profiles.update_customer_profile">[docs]</a>
-</span><span id="line-114"><span class="k">def</span><span class="w"> </span><span class="nf">update_customer_profile</span><span class="p">(</span>
-</span><span id="line-115">    <span class="n">profile</span><span class="p">:</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">customerProfileExType</span><span class="p">,</span>
-</span><span id="line-116"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
-</span><span id="line-117"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-118"><span class="sd">    `updateCustomerProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-update-customer-profile&gt;`_.</span>
-</span><span id="line-119">
-</span><span id="line-120"><span class="sd">    :param profile: An Authorizenet customer profile ex element.</span>
-</span><span id="line-121"><span class="sd">    :type profile: ~authorizenet.apicontractsv1.customerProfileExType</span>
-</span><span id="line-122"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
-</span><span id="line-123"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
-</span><span id="line-124">
-</span><span id="line-125"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-126">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">updateCustomerProfileRequest</span><span class="p">()</span>
-</span><span id="line-127">    <span class="n">request</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="n">profile</span>
-</span><span id="line-128">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">updateCustomerProfileController</span></div>
-
-</span><span id="line-129">
-</span><span id="line-130">
+</span><span id="line-117">
+</span><span id="line-118">
 <div class="viewcode-block" id="delete_customer_profile">
 <a class="viewcode-back" href="../../../../authorizenet/api.html#terminusgps.authorizenet.api.customer_profiles.delete_customer_profile">[docs]</a>
-</span><span id="line-131"><span class="k">def</span><span class="w"> </span><span class="nf">delete_customer_profile</span><span class="p">(</span>
-</span><span id="line-132">    <span class="n">customer_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-</span><span id="line-133"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
-</span><span id="line-134"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="line-135"><span class="sd">    `deleteCustomerProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-delete-customer-profile&gt;`_.</span>
-</span><span id="line-136">
-</span><span id="line-137"><span class="sd">    :param customer_profile_id: An Authorizenet customer profile id.</span>
-</span><span id="line-138"><span class="sd">    :type customer_profile_id: int</span>
-</span><span id="line-139"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
-</span><span id="line-140"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
-</span><span id="line-141">
-</span><span id="line-142"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="line-143">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">deleteCustomerProfileRequest</span><span class="p">()</span>
-</span><span id="line-144">    <span class="n">request</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
-</span><span id="line-145">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">deleteCustomerProfileController</span></div>
+</span><span id="line-119"><span class="k">def</span><span class="w"> </span><span class="nf">delete_customer_profile</span><span class="p">(</span>
+</span><span id="line-120">    <span class="n">customer_profile_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span><span id="line-121"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObjectifiedElement</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">APIOperationBase</span><span class="p">]]:</span>
+</span><span id="line-122"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="line-123"><span class="sd">    `deleteCustomerProfileRequest &lt;https://developer.authorize.net/api/reference/index.html#customer-profiles-delete-customer-profile&gt;`_.</span>
+</span><span id="line-124">
+</span><span id="line-125"><span class="sd">    :param customer_profile_id: An Authorizenet customer profile id.</span>
+</span><span id="line-126"><span class="sd">    :type customer_profile_id: int</span>
+</span><span id="line-127"><span class="sd">    :returns: A tuple containing an Authorizenet API request element and controller class.</span>
+</span><span id="line-128"><span class="sd">    :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]</span>
+</span><span id="line-129">
+</span><span id="line-130"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="line-131">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">deleteCustomerProfileRequest</span><span class="p">()</span>
+</span><span id="line-132">    <span class="n">request</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
+</span><span id="line-133">    <span class="k">return</span> <span class="n">request</span><span class="p">,</span> <span class="n">apicontrollers</span><span class="o">.</span><span class="n">deleteCustomerProfileController</span></div>
 
 </span></code></pre></div>
     </div></div>
