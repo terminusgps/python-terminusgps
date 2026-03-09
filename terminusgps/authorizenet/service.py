@@ -3,13 +3,7 @@ from functools import cached_property
 from authorizenet.apicontractsv1 import merchantAuthenticationType
 from authorizenet.apicontrollersbase import APIOperationBase
 from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
 from lxml.objectify import ObjectifiedElement
-
-if not settings.configured:
-    from terminusgps import default_settings
-
-    settings.configure(default_settings)
 
 
 class AuthorizenetControllerExecutionError(Exception):
@@ -36,19 +30,6 @@ class AuthorizenetControllerExecutionError(Exception):
 
 class AuthorizenetService:
     """Service for safely interacting with the Authorizenet API."""
-
-    REQUIRED_SETTINGS = (
-        "MERCHANT_AUTH_ENVIRONMENT",
-        "MERCHANT_AUTH_LOGIN_ID",
-        "MERCHANT_AUTH_TRANSACTION_KEY",
-        "MERCHANT_AUTH_VALIDATION_MODE",
-    )
-
-    def __init__(self) -> None:
-        """Raises :py:exc:`~django.core.exceptions.ImproperlyConfigured` if required settings weren't set."""
-        for setting in self.REQUIRED_SETTINGS:
-            if not hasattr(settings, setting):
-                raise ImproperlyConfigured(f"'{setting}' setting is required.")
 
     def execute(
         self,
@@ -79,7 +60,7 @@ class AuthorizenetService:
         controller.execute()
         response = controller.getresponse()
 
-        if response is None:
+        if not response:
             raise AuthorizenetControllerExecutionError(
                 message="No response from the Authorizenet API controller.",
                 code="1",

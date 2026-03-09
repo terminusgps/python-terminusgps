@@ -21,7 +21,6 @@ class HtmxTemplateResponseMixin(TemplateResponseMixin):
     def get_template_names(self) -> list[str]:
         hx_request: bool = bool(self.request.headers.get("HX-Request"))
         hx_boosted: bool = bool(self.request.headers.get("HX-Boosted"))
-
         template_names: list[str] = super().get_template_names()
         if hx_request and not hx_boosted:
             template_names.insert(0, self.template_name + self.partial_name)
