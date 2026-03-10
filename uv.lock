@@ -833,7 +833,7 @@ wheels = [
 
 [[package]]
 name = "python-terminusgps"
-version = "52.1.0"
+version = "53.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "authorizenet" },
