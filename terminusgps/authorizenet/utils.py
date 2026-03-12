@@ -3,11 +3,12 @@ import typing
 T_contract = typing.TypeVar("T_contract")
 
 
-def build_contract(
-    contract_cls: type[T_contract], fields: dict[str, typing.Any]
-) -> T_contract:
-    contract = contract_cls()
-    for key, value in fields.items():
-        if value:
-            setattr(contract, key, value)
-    return contract
+class AuthorizenetContractBuilder(typing.Generic[T_contract]):
+    def __init__(self, contract_cls: type[T_contract]) -> None:
+        self.contract_cls = contract_cls
+
+    def build(self, fields: dict[str, typing.Any]) -> T_contract:
+        contract = self.contract_cls()
+        for field, value in fields.items():
+            setattr(contract, field, value)
+        return contract
