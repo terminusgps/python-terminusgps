@@ -6,16 +6,13 @@ from django.conf import settings
 from lxml.objectify import ObjectifiedElement
 
 
-class AuthorizenetControllerExecutionError(Exception):
+class AuthorizenetError(Exception):
     """Raised when an Authorizenet API controller fails to execute."""
 
     def __init__(self, message: str, code: str, *args, **kwargs) -> None:
         super().__init__(message, *args, **kwargs)
         self._message: str = message
         self._code: str = code
-
-    def __str__(self) -> str:
-        return f"{self.code}: {self.message}"
 
     @property
     def message(self) -> str:
@@ -45,7 +42,7 @@ class AuthorizenetService:
         :type request_tuple: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
         :param reference_id: An optional reference id string for the API call. Default is :py:obj:`None`.
         :type reference_id: str | None
-        :raises AuthorizenetControllerExecutionError: If the API call failed.
+        :raises AuthorizenetError: If the API call failed.
         :returns: An Authorizenet API response.
         :rtype: ~lxml.objectify.ObjectifiedElement
 
@@ -60,13 +57,13 @@ class AuthorizenetService:
         controller.execute()
         response = controller.getresponse()
 
-        if not response:
-            raise AuthorizenetControllerExecutionError(
+        if response is None:
+            raise AuthorizenetError(
                 message="No response from the Authorizenet API controller.",
                 code="1",
             )
         elif response is not None and response.messages.resultCode != "Ok":
-            raise AuthorizenetControllerExecutionError(
+            raise AuthorizenetError(
                 message=response.messages.message[0]["text"].text,
                 code=response.messages.message[0]["code"].text,
             )
@@ -84,8 +81,3 @@ class AuthorizenetService:
     def environment(self) -> str:
         """Environment for Authorizenet API requests."""
         return str(settings.MERCHANT_AUTH_ENVIRONMENT)
-
-    @cached_property
-    def validationMode(self) -> str:
-        """Validation mode for Authorizenet API requests."""
-        return str(settings.MERCHANT_AUTH_VALIDATION_MODE)

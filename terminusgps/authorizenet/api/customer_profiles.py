@@ -30,6 +30,7 @@ def create_customer_profile(
         raise ValueError(
             "At least one of 'email', 'merchantCustomerId' or 'description' is required in contract"
         )
+
     request = apicontractsv1.createCustomerProfileRequest()
     request.profile = contract
     return request, apicontrollers.createCustomerProfileController

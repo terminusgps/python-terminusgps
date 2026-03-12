@@ -1,7 +1,7 @@
 import os
 import pathlib
 
-from terminusgps.authorizenet.constants import Environment, ValidationMode
+from authorizenet.constants import constants as anet_constants
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent
 
@@ -10,8 +10,8 @@ SECRET_KEY = "xem*6no%8d9%^qzt2f3x3ar-uq4_+7h9myc$t0!+4%bj5us6f)"
 USE_TZ = False
 USE_I18N = False
 
-MERCHANT_AUTH_ENVIRONMENT = Environment.SANDBOX
-MERCHANT_AUTH_VALIDATION_MODE = ValidationMode.TEST
+MERCHANT_AUTH_ENVIRONMENT = anet_constants.SANDBOX
+MERCHANT_AUTH_VALIDATION_MODE = "testMode"
 
 # Secrets
 MERCHANT_AUTH_LOGIN_ID = os.getenv("MERCHANT_AUTH_LOGIN_ID")
