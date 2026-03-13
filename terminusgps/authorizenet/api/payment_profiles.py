@@ -93,7 +93,6 @@ def validate_customer_payment_profile(
 def update_customer_payment_profile(
     customer_profile_id: int,
     contract: apicontractsv1.customerPaymentProfileExType,
-    default: bool,
     validation: str = "liveMode",
 ) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
@@ -103,8 +102,6 @@ def update_customer_payment_profile(
     :type customer_profile_id: int
     :param contract: A customer payment profile ex element.
     :type contract: ~authorizenet.apicontractsv1.customerPaymentProfileExType
-    :param default: Whether to set the payment profile as default.
-    :type default: bool
     :param validation: Validation mode. Default is :py:obj:`"liveMode"`.
     :type validation: str
     :raises ValueError: If neither payment nor address was provided.
@@ -122,7 +119,6 @@ def update_customer_payment_profile(
     request.customerProfileId = str(customer_profile_id)
     request.validationMode = validation
     request.paymentProfile = contract
-    request.paymentProfile.defaultPaymentProfile = int(default)
     return request, apicontrollers.updateCustomerPaymentProfileController
 
 

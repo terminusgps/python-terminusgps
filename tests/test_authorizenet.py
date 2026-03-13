@@ -449,8 +449,8 @@ class UpdateCustomerPaymentProfileFunctionTestCase(unittest.TestCase):
                 payment=apicontractsv1.paymentType(),
                 billTo=apicontractsv1.customerAddressType(),
                 customerPaymentProfileId="1",
+                defaultPaymentProfile="1",
             ),
-            "default": False,
             "validation": "testMode",
         }
         expected = apicontrollers.updateCustomerPaymentProfileController
@@ -465,8 +465,8 @@ class UpdateCustomerPaymentProfileFunctionTestCase(unittest.TestCase):
                 payment=apicontractsv1.paymentType(),
                 billTo=apicontractsv1.customerAddressType(),
                 customerPaymentProfileId="1",
+                defaultPaymentProfile="1",
             ),
-            "default": True,
             "validation": "testMode",
         }
 
@@ -476,10 +476,7 @@ class UpdateCustomerPaymentProfileFunctionTestCase(unittest.TestCase):
         )
         self.assertEqual(request.paymentProfile, kwargs["contract"])
         self.assertEqual(request.validationMode, kwargs["validation"])
-        self.assertEqual(
-            request.paymentProfile.defaultPaymentProfile,
-            int(kwargs["default"]),
-        )
+        self.assertEqual(request.paymentProfile.defaultPaymentProfile, 1)
 
     def test_invalid_contract_values_raises_valueerror(self):
         """Fails if :py:exec:`ValueError` wasn't raised when calling the function with a contract with invalid values."""
@@ -490,8 +487,8 @@ class UpdateCustomerPaymentProfileFunctionTestCase(unittest.TestCase):
                     payment=apicontractsv1.paymentType(),
                     billTo=apicontractsv1.customerAddressType(),
                     customerPaymentProfileId=None,
+                    defaultPaymentProfile="1",
                 ),
-                "default": True,
                 "validation": "testMode",
             }
             self.func(**kwargs)
@@ -502,8 +499,8 @@ class UpdateCustomerPaymentProfileFunctionTestCase(unittest.TestCase):
                     payment=None,
                     billTo=apicontractsv1.customerAddressType(),
                     customerPaymentProfileId="1",
+                    defaultPaymentProfile="1",
                 ),
-                "default": True,
                 "validation": "testMode",
             }
             self.func(**kwargs)
@@ -514,8 +511,8 @@ class UpdateCustomerPaymentProfileFunctionTestCase(unittest.TestCase):
                     payment=apicontractsv1.paymentType(),
                     billTo=None,
                     customerPaymentProfileId="1",
+                    defaultPaymentProfile="1",
                 ),
-                "default": True,
                 "validation": "testMode",
             }
             self.func(**kwargs)
