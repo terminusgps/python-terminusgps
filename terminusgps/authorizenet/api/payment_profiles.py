@@ -14,7 +14,7 @@ __all__ = [
 def create_customer_payment_profile(
     customer_profile_id: int,
     contract: apicontractsv1.customerPaymentProfileType,
-    validation: str = "liveMode",
+    validation: str = apicontractsv1.validationModeEnum.liveMode,
 ) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `createCustomerPaymentProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-create-customer-payment-profile>`_.
@@ -25,6 +25,8 @@ def create_customer_payment_profile(
     :type contract: ~authorizenet.apicontractsv1.customerPaymentProfileType
     :param validation: Validation mode. Default is :py:obj:`"liveMode"`.
     :type validation: str
+    :raises ValueError: If :py:attr:`payment` wasn't in the contract.
+    :raises ValueError: If :py:attr:`billTo` wasn't in the contract.
     :returns: A tuple containing an Authorizenet API request element and controller class.
     :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
@@ -68,7 +70,7 @@ def get_customer_payment_profile(
 def validate_customer_payment_profile(
     customer_profile_id: int,
     payment_profile_id: int,
-    validation: str = "liveMode",
+    validation: str = apicontractsv1.validationModeEnum.liveMode,
 ) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `validateCustomerPaymentProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-validate-customer-payment-profile>`_.
@@ -93,7 +95,7 @@ def validate_customer_payment_profile(
 def update_customer_payment_profile(
     customer_profile_id: int,
     contract: apicontractsv1.customerPaymentProfileExType,
-    validation: str = "liveMode",
+    validation: str = apicontractsv1.validationModeEnum.liveMode,
 ) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
     `updateCustomerPaymentProfileRequest <https://developer.authorize.net/api/reference/index.html#customer-profiles-update-customer-payment-profile>`_.
@@ -104,7 +106,9 @@ def update_customer_payment_profile(
     :type contract: ~authorizenet.apicontractsv1.customerPaymentProfileExType
     :param validation: Validation mode. Default is :py:obj:`"liveMode"`.
     :type validation: str
-    :raises ValueError: If neither payment nor address was provided.
+    :raises ValueError: If :py:attr:`payment` wasn't in the contract.
+    :raises ValueError: If :py:attr:`billTo` wasn't in the contract.
+    :raises ValueError: If :py:attr:`customerProfileId` wasn't in the contract.
     :returns: A tuple containing an Authorizenet API request element and controller class.
     :rtype: tuple[~lxml.objectify.ObjectifiedElement, type[~authorizenet.apicontrollersbase.APIOperationBase]]
 
