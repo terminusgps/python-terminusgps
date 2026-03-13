@@ -14,7 +14,6 @@ __all__ = [
 def create_customer_payment_profile(
     customer_profile_id: int,
     contract: apicontractsv1.customerPaymentProfileType,
-    default: bool = False,
     validation: str = "liveMode",
 ) -> tuple[ObjectifiedElement, type[APIOperationBase]]:
     """
@@ -24,8 +23,6 @@ def create_customer_payment_profile(
     :type customer_profile_id: int
     :param contract: A customer payment profile element.
     :type contract: ~authorizenet.apicontractsv1.customerPaymentProfileType
-    :param default: Whether to set the payment profile as default. Default is :py:obj:`False`.
-    :type default: bool
     :param validation: Validation mode. Default is :py:obj:`"liveMode"`.
     :type validation: str
     :returns: A tuple containing an Authorizenet API request element and controller class.
@@ -40,7 +37,6 @@ def create_customer_payment_profile(
     request.customerProfileId = str(customer_profile_id)
     request.validationMode = validation
     request.paymentProfile = contract
-    request.paymentProfile.defaultPaymentProfile = int(default)
     return request, apicontrollers.createCustomerPaymentProfileController
 
 

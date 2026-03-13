@@ -316,8 +316,8 @@ class CreateCustomerPaymentProfileFunctionTestCase(unittest.TestCase):
             "contract": apicontractsv1.customerPaymentProfileType(
                 billTo=apicontractsv1.customerAddressType(),
                 payment=apicontractsv1.paymentType(),
+                defaultPaymentProfile="1",
             ),
-            "default": False,
             "validation": "testMode",
         }
         expected = apicontrollers.createCustomerPaymentProfileController
@@ -330,9 +330,10 @@ class CreateCustomerPaymentProfileFunctionTestCase(unittest.TestCase):
             kwargs = {
                 "customer_profile_id": 1,
                 "contract": apicontractsv1.customerPaymentProfileType(
-                    billTo=None, payment=apicontractsv1.paymentType()
+                    billTo=None,
+                    payment=apicontractsv1.paymentType(),
+                    defaultPaymentProfile="1",
                 ),
-                "default": False,
                 "validation": "testMode",
             }
             self.func(**kwargs)
@@ -340,9 +341,10 @@ class CreateCustomerPaymentProfileFunctionTestCase(unittest.TestCase):
             kwargs = {
                 "customer_profile_id": 1,
                 "contract": apicontractsv1.customerPaymentProfileType(
-                    billTo=apicontractsv1.customerAddressType(), payment=None
+                    billTo=apicontractsv1.customerAddressType(),
+                    payment=None,
+                    defaultPaymentProfile="1",
                 ),
-                "default": False,
                 "validation": "testMode",
             }
             self.func(**kwargs)
@@ -354,8 +356,8 @@ class CreateCustomerPaymentProfileFunctionTestCase(unittest.TestCase):
             "contract": apicontractsv1.customerPaymentProfileType(
                 billTo=apicontractsv1.customerAddressType(),
                 payment=apicontractsv1.paymentType(),
+                defaultPaymentProfile="1",
             ),
-            "default": True,
             "validation": "testMode",
         }
 
@@ -365,10 +367,7 @@ class CreateCustomerPaymentProfileFunctionTestCase(unittest.TestCase):
         self.assertEqual(
             request.customerProfileId, str(kwargs["customer_profile_id"])
         )
-        self.assertEqual(
-            request.paymentProfile.defaultPaymentProfile,
-            int(kwargs["default"]),
-        )
+        self.assertEqual(request.paymentProfile.defaultPaymentProfile, 1)
 
 
 class GetCustomerPaymentProfileFunctionTestCase(unittest.TestCase):
