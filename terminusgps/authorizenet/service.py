@@ -62,7 +62,7 @@ class AuthorizenetService:
                 message="No response from the Authorizenet API controller.",
                 code="1",
             )
-        elif response is not None and response.messages.resultCode != "Ok":
+        elif response.messages.resultCode != "Ok":
             raise AuthorizenetError(
                 message=response.messages.message[0]["text"].text,
                 code=response.messages.message[0]["code"].text,
