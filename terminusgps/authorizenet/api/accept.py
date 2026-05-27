@@ -20,7 +20,7 @@ def get_accept_customer_profile_page(
 
     """
     request = apicontractsv1.getHostedProfilePageRequest()
-    request.customerProfileId = customer_profile_id
+    request.customerProfileId = str(customer_profile_id)
     request.hostedProfileSettings = settings
     return request, apicontrollers.getHostedProfilePageController
 
