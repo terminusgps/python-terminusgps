@@ -10,9 +10,9 @@ import sys
 
 sys.path.insert(0, os.path.abspath("../../"))
 project = "python-terminusgps"
-copyright = "2025, Terminus GPS, LLC"
+copyright = "2026, Terminus GPS, LLC"
 author = "Terminus GPS, LLC"
-release = "54.1.0"
+release = "55.0.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -28,8 +28,8 @@ extensions = [
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3/", None),
     "django": (
-        "https://docs.djangoproject.com/en/5.2/",
-        "https://docs.djangoproject.com/en/5.2/objects.inv",
+        "https://docs.djangoproject.com/en/6.0/",
+        "https://docs.djangoproject.com/en/6.0/objects.inv",
     ),
 }
 
