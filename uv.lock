@@ -586,7 +586,7 @@ wheels = [
 
 [[package]]
 name = "python-terminusgps"
-version = "55.0.0"
+version = "55.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "django" },
@@ -750,15 +750,15 @@ wheels = [
 
 [[package]]
 name = "sphinxawesome-theme"
-version = "6.0.2"
+version = "6.0.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
     { name = "sphinx" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3c/15/96d7b46d987d9894d5fc69328f05596f6c9ca3a8cafc28ea73a250ba4c1c/sphinxawesome_theme-6.0.2.tar.gz", hash = "sha256:984c1a107584eb6a913ba4c2e4c74b23212fbffeee9ef60688810b46823ade25", size = 344034, upload-time = "2026-04-16T04:40:30.533Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/eb/7d/59c9913c03b51bd3719485a0ccea27afa5806aa80848b2744317bdfa58a8/sphinxawesome_theme-6.0.3.tar.gz", hash = "sha256:8c6ccb6c1bcfce2e3438e872274075d6f520843faa6f7fd0cb0972c39cb279ba", size = 343788, upload-time = "2026-06-10T06:53:23.215Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/17/d4/6bcc860549d4894fc30c79be0224f60ee190e37bdcb59a715c247358bbe6/sphinxawesome_theme-6.0.2-py3-none-any.whl", hash = "sha256:a35dcabe3b0906aff270e1d18948f93040769e76551a2eb26cf26b29e06d1e51", size = 377296, upload-time = "2026-04-16T04:40:28.88Z" },
+    { url = "https://files.pythonhosted.org/packages/e6/53/97df29dc6e3ffcc0f10fa48bc014f0c79e3286b9c8c5ec9caaf98eba2721/sphinxawesome_theme-6.0.3-py3-none-any.whl", hash = "sha256:6b7b74b9c2966f3607aebfd34b34aa2b697bbec7c710b1c9e2c73cf69e653063", size = 3040, upload-time = "2026-06-10T06:53:21.954Z" },
 ]
 
 [[package]]
