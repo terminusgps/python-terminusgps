@@ -28,7 +28,7 @@
   <meta name="twitter:title" content="terminusgps.authorizenet.api.customer_profiles | python-terminusgps 55.0.0 documentation" />
   <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=783e6f78" />
   <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../../../../_static/pygments_dark.css" />
-  <link rel="stylesheet" type="text/css" href="../../../../_static/theme.css?v=979577e3" />
+  <link rel="stylesheet" type="text/css" href="../../../../_static/theme.css?v=d6d7c91b" />
   <link rel="stylesheet" type="text/css" href="../../../../_static/autoclasstoc.css?v=08871587" />
   <link rel="search" title="Search" href="../../../../search.html" />
   <link rel="index" title="Index" href="../../../../genindex.html" />
@@ -239,8 +239,8 @@
 </span><span id="line-67">        <span class="p">)</span>
 </span><span id="line-68">
 </span><span id="line-69">    <span class="n">request</span> <span class="o">=</span> <span class="n">apicontractsv1</span><span class="o">.</span><span class="n">getCustomerProfileRequest</span><span class="p">()</span>
-</span><span id="line-70">    <span class="n">request</span><span class="o">.</span><span class="n">includeIssuerInfo</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">include_issuer_info</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-</span><span id="line-71">    <span class="n">request</span><span class="o">.</span><span class="n">unmaskExpirationDate</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">unmask_expiration_date</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</span><span id="line-70">    <span class="n">request</span><span class="o">.</span><span class="n">includeIssuerInfo</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">include_issuer_info</span><span class="p">)</span>
+</span><span id="line-71">    <span class="n">request</span><span class="o">.</span><span class="n">unmaskExpirationDate</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">unmask_expiration_date</span><span class="p">)</span>
 </span><span id="line-72">    <span class="k">if</span> <span class="n">customer_profile_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="line-73">        <span class="n">request</span><span class="o">.</span><span class="n">customerProfileId</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">customer_profile_id</span><span class="p">)</span>
 </span><span id="line-74">    <span class="k">if</span> <span class="n">email</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -332,7 +332,7 @@
     <script src="../../../../_static/documentation_options.js?v=9d921e93"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-    <script defer="defer" src="../../../../_static/theme.js?v=d6a9845b"></script>
+    <script defer="defer" src="../../../../_static/theme.js?v=5db23cf8"></script>
     
 </body>
 
