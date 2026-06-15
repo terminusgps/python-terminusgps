@@ -53,10 +53,10 @@ class AuthorizenetService:
         request, controller_cls = request_tuple[0], request_tuple[1]
         request.merchantAuthentication = self.merchantAuthentication
         if reference_id is not None:
-            logger.debug(f"Reference ID: {reference_id}")
             request.refId = reference_id
-        logger.debug(f"Authorizenet API call controller: {controller_cls}")
-        logger.debug(f"Authorizenet API call environment: {self.environment}")
+        logger.debug(f"Anet API call controller: {controller_cls.__name__}")
+        logger.debug(f"Anet API call environment: {self.environment}")
+        logger.debug(f"Anet API call request: {type(request).__name__}")
         controller = controller_cls(request)
         controller.setenvironment(self.environment)
         controller.execute()

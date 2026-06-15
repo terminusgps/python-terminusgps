@@ -67,8 +67,8 @@ def get_customer_profile(
         )
 
     request = apicontractsv1.getCustomerProfileRequest()
-    request.includeIssuerInfo = str(include_issuer_info).lower()
-    request.unmaskExpirationDate = str(unmask_expiration_date).lower()
+    request.includeIssuerInfo = int(include_issuer_info)
+    request.unmaskExpirationDate = int(unmask_expiration_date)
     if customer_profile_id is not None:
         request.customerProfileId = str(customer_profile_id)
     if email is not None:
