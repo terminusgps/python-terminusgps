@@ -608,7 +608,7 @@ docs = [
 
 [package.metadata]
 requires-dist = [
-    { name = "django", specifier = ">=6.0.3" },
+    { name = "django", specifier = ">=6.0.5" },
     { name = "py-aiowialon", specifier = ">=1.3.5" },
     { name = "python-wialon", specifier = ">=1.2.4" },
     { name = "terminusgps-authorizenet", specifier = ">=2.2.0" },

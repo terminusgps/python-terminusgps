@@ -1,12 +1,9 @@
-import logging
 from functools import cached_property
 
 from authorizenet.apicontractsv1 import merchantAuthenticationType
 from authorizenet.apicontrollersbase import APIOperationBase
 from django.conf import settings
 from lxml.objectify import ObjectifiedElement
-
-logger = logging.getLogger(__name__)
 
 
 class AuthorizenetError(Exception):
@@ -54,14 +51,10 @@ class AuthorizenetService:
         request.merchantAuthentication = self.merchantAuthentication
         if reference_id is not None:
             request.refId = reference_id
-        logger.debug(f"Anet API call controller: {controller_cls.__name__}")
-        logger.debug(f"Anet API call environment: {self.environment}")
-        logger.debug(f"Anet API call request: {type(request).__name__}")
         controller = controller_cls(request)
         controller.setenvironment(self.environment)
         controller.execute()
         response = controller.getresponse()
-
         if response is None:
             raise AuthorizenetError(
                 message="No response from the Authorizenet API controller.",
