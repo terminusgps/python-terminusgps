@@ -2,7 +2,6 @@ from functools import cached_property
 
 from authorizenet.apicontractsv1 import merchantAuthenticationType
 from authorizenet.apicontrollersbase import APIOperationBase
-from django.conf import settings
 from lxml.objectify import ObjectifiedElement
 
 
@@ -27,6 +26,13 @@ class AuthorizenetError(Exception):
 
 class AuthorizenetService:
     """Service for safely interacting with the Authorizenet API."""
+
+    def __init__(
+        self, login_id: str, transaction_key: str, environment: str
+    ) -> None:
+        self.login_id = login_id
+        self.transaction_key = transaction_key
+        self.environment = environment
 
     def execute(
         self,
@@ -71,11 +77,5 @@ class AuthorizenetService:
     def merchantAuthentication(self) -> merchantAuthenticationType:
         """Merchant authentication element for Authorizenet API requests."""
         return merchantAuthenticationType(
-            name=str(settings.MERCHANT_AUTH_LOGIN_ID),
-            transactionKey=str(settings.MERCHANT_AUTH_TRANSACTION_KEY),
+            name=self.login_id, transactionKey=self.transaction_key
         )
-
-    @cached_property
-    def environment(self) -> str:
-        """Environment for Authorizenet API requests."""
-        return str(settings.MERCHANT_AUTH_ENVIRONMENT)
